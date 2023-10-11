@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -6,14 +6,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Voucher {
     private int id;
+    private String code;
     private BigDecimal amount;
     private boolean status;
     private BigDecimal maxValue;
@@ -30,6 +38,16 @@ public class Voucher {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -97,11 +115,11 @@ public class Voucher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Voucher voucher = (Voucher) o;
-        return id == voucher.id && status == voucher.status && Objects.equals(amount, voucher.amount) && Objects.equals(maxValue, voucher.maxValue) && Objects.equals(type, voucher.type) && Objects.equals(startDate, voucher.startDate) && Objects.equals(expirationDate, voucher.expirationDate);
+        return id == voucher.id && status == voucher.status && Objects.equals(code, voucher.code) && Objects.equals(amount, voucher.amount) && Objects.equals(maxValue, voucher.maxValue) && Objects.equals(type, voucher.type) && Objects.equals(startDate, voucher.startDate) && Objects.equals(expirationDate, voucher.expirationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, status, maxValue, type, startDate, expirationDate);
+        return Objects.hash(id, code, amount, status, maxValue, type, startDate, expirationDate);
     }
 }
