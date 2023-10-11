@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -8,13 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class OrderTimeline {
     private int id;
+    private String code;
     private String status;
     private String description;
     private Timestamp timestamp;
@@ -30,6 +38,16 @@ public class OrderTimeline {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -67,12 +85,12 @@ public class OrderTimeline {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderTimeline that = (OrderTimeline) o;
-        return id == that.id && Objects.equals(status, that.status) && Objects.equals(description, that.description) && Objects.equals(timestamp, that.timestamp);
+        return id == that.id && Objects.equals(code, that.code) && Objects.equals(status, that.status) && Objects.equals(description, that.description) && Objects.equals(timestamp, that.timestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, description, timestamp);
+        return Objects.hash(id, code, status, description, timestamp);
     }
 
     @ManyToOne

@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -6,13 +6,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Category {
     private int id;
+    private String code;
     private String name;
     private boolean status;
     private Timestamp createDate;
@@ -27,6 +35,16 @@ public class Category {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -74,11 +92,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && status == category.status && Objects.equals(name, category.name) && Objects.equals(createDate, category.createDate) && Objects.equals(updateDate, category.updateDate);
+        return id == category.id && status == category.status && Objects.equals(code, category.code) && Objects.equals(name, category.name) && Objects.equals(createDate, category.createDate) && Objects.equals(updateDate, category.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, status, createDate, updateDate);
+        return Objects.hash(id, code, name, status, createDate, updateDate);
     }
 }

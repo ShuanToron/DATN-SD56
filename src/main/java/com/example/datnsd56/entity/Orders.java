@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -8,14 +8,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Orders {
     private int id;
+    private String code;
     private BigDecimal total;
     private BigDecimal shippingFee;
     private Timestamp createDate;
@@ -38,6 +46,16 @@ public class Orders {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -145,12 +163,12 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return id == orders.id && Objects.equals(total, orders.total) && Objects.equals(shippingFee, orders.shippingFee) && Objects.equals(createDate, orders.createDate) && Objects.equals(updateDate, orders.updateDate) && Objects.equals(address, orders.address) && Objects.equals(fullname, orders.fullname) && Objects.equals(email, orders.email) && Objects.equals(phone, orders.phone) && Objects.equals(saleMethod, orders.saleMethod) && Objects.equals(orderStatus, orders.orderStatus);
+        return id == orders.id && Objects.equals(code, orders.code) && Objects.equals(total, orders.total) && Objects.equals(shippingFee, orders.shippingFee) && Objects.equals(createDate, orders.createDate) && Objects.equals(updateDate, orders.updateDate) && Objects.equals(address, orders.address) && Objects.equals(fullname, orders.fullname) && Objects.equals(email, orders.email) && Objects.equals(phone, orders.phone) && Objects.equals(saleMethod, orders.saleMethod) && Objects.equals(orderStatus, orders.orderStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, total, shippingFee, createDate, updateDate, address, fullname, email, phone, saleMethod, orderStatus);
+        return Objects.hash(id, code, total, shippingFee, createDate, updateDate, address, fullname, email, phone, saleMethod, orderStatus);
     }
 
     @ManyToOne

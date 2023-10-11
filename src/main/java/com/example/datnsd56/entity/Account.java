@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -6,10 +6,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Account {
     private int id;
@@ -19,8 +26,9 @@ public class Account {
     private boolean status;
     private Timestamp createDate;
     private Timestamp updateDate;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;

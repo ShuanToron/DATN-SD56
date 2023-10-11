@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -8,13 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Products {
     private int id;
+    private String code;
     private String name;
     private String description;
     private boolean status;
@@ -36,6 +44,16 @@ public class Products {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -113,12 +131,12 @@ public class Products {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Products products = (Products) o;
-        return id == products.id && status == products.status && quantity == products.quantity && Objects.equals(name, products.name) && Objects.equals(description, products.description) && Objects.equals(createDate, products.createDate) && Objects.equals(updateDate, products.updateDate) && Objects.equals(productStatus, products.productStatus);
+        return id == products.id && status == products.status && quantity == products.quantity && Objects.equals(code, products.code) && Objects.equals(name, products.name) && Objects.equals(description, products.description) && Objects.equals(createDate, products.createDate) && Objects.equals(updateDate, products.updateDate) && Objects.equals(productStatus, products.productStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, status, createDate, updateDate, quantity, productStatus);
+        return Objects.hash(id, code, name, description, status, createDate, updateDate, quantity, productStatus);
     }
 
     @ManyToOne

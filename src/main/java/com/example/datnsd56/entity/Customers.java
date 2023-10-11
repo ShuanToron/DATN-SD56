@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -6,12 +6,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Customers {
     private int id;
+    private String code;
     private String fullname;
     private String phone;
     private String address;
@@ -26,6 +34,16 @@ public class Customers {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -73,11 +91,11 @@ public class Customers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customers customers = (Customers) o;
-        return id == customers.id && Objects.equals(fullname, customers.fullname) && Objects.equals(phone, customers.phone) && Objects.equals(address, customers.address) && Objects.equals(gender, customers.gender);
+        return id == customers.id && Objects.equals(code, customers.code) && Objects.equals(fullname, customers.fullname) && Objects.equals(phone, customers.phone) && Objects.equals(address, customers.address) && Objects.equals(gender, customers.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullname, phone, address, gender);
+        return Objects.hash(id, code, fullname, phone, address, gender);
     }
 }

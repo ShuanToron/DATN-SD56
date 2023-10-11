@@ -1,4 +1,4 @@
-package com.example.datnsd56.model;
+package com.example.datnsd56.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -8,14 +8,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 public class Transactions {
     private int id;
+    private String code;
     private BigDecimal amount;
     private Timestamp createDate;
     private Timestamp updateDate;
@@ -33,6 +41,16 @@ public class Transactions {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -90,12 +108,12 @@ public class Transactions {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transactions that = (Transactions) o;
-        return id == that.id && Objects.equals(amount, that.amount) && Objects.equals(createDate, that.createDate) && Objects.equals(updateDate, that.updateDate) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(status, that.status);
+        return id == that.id && Objects.equals(code, that.code) && Objects.equals(amount, that.amount) && Objects.equals(createDate, that.createDate) && Objects.equals(updateDate, that.updateDate) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, createDate, updateDate, paymentMethod, status);
+        return Objects.hash(id, code, amount, createDate, updateDate, paymentMethod, status);
     }
 
     @ManyToOne
