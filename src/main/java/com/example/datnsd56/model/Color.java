@@ -12,7 +12,8 @@ import java.util.Objects;
 
 @Entity
 public class Color {
-    private int id;
+    private Integer id;
+    private String code;
     private String name;
     private boolean status;
     private Timestamp createDate;
@@ -21,7 +22,7 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -29,6 +30,14 @@ public class Color {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
     @Basic
     @Column(name = "name")
     public String getName() {
@@ -81,4 +90,6 @@ public class Color {
     public int hashCode() {
         return Objects.hash(id, name, status, createDate, updateDate);
     }
+
+
 }

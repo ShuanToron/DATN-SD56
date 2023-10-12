@@ -12,7 +12,8 @@ import java.util.Objects;
 
 @Entity
 public class Material {
-    private int id;
+    private Integer id;
+    private String code;
     private String name;
     private boolean status;
     private Timestamp createDate;
@@ -21,14 +22,21 @@ public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
     @Basic
     @Column(name = "name")
     public String getName() {
