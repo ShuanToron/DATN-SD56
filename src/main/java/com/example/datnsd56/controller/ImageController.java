@@ -1,7 +1,7 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.Brand;
-import com.example.datnsd56.service.BrandService;
+import com.example.datnsd56.model.Image;
+import com.example.datnsd56.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,36 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/brand")
-public class BrandController {
+@RequestMapping("/api/image")
+public class ImageController {
     @Autowired
-    private BrandService brandService;
+    private ImageService imageService;
 
     @GetMapping("getAll")
-    public List<Brand> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<Brand> list = brandService.getAll(page).getContent();
+    public List<Image> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
+        List<Image> list = imageService.getAll(page).getContent();
         return list;
     }
 
     @PostMapping("add")
-    public void add(@RequestBody Brand brand) {
-        brandService.add(brand);
+    public void add(@RequestBody Image image) {
+        imageService.add(image);
     }
 
     @GetMapping("detail/{id}")
-    public Brand detail(@PathVariable("id") Integer id) {
-        Brand brand = brandService.getById(id);
-        return brand;
+    public Image detail(@PathVariable("id") Integer id) {
+        Image image = imageService.getById(id);
+        return image;
 
     }
 
     @PutMapping("update/{id}")
-    public void update(@RequestBody Brand brand) {
-        brandService.update(brand);
+    public void update(@RequestBody Image image) {
+        imageService.update(image);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") Integer id) {
-        brandService.delete(id);
+        imageService.delete(id);
     }
 }

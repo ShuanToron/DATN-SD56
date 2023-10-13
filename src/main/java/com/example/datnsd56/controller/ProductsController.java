@@ -1,7 +1,7 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.Brand;
-import com.example.datnsd56.service.BrandService;
+import com.example.datnsd56.model.Products;
+import com.example.datnsd56.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,36 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/brand")
-public class BrandController {
+@RequestMapping("/api/products")
+public class ProductsController {
     @Autowired
-    private BrandService brandService;
+    private ProductsService productsService;
 
     @GetMapping("getAll")
-    public List<Brand> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<Brand> list = brandService.getAll(page).getContent();
+    public List<Products> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
+        List<Products> list = productsService.getAll(page).getContent();
         return list;
     }
 
     @PostMapping("add")
-    public void add(@RequestBody Brand brand) {
-        brandService.add(brand);
+    public void add(@RequestBody Products products) {
+        productsService.add(products);
     }
 
     @GetMapping("detail/{id}")
-    public Brand detail(@PathVariable("id") Integer id) {
-        Brand brand = brandService.getById(id);
-        return brand;
+    public Products detail(@PathVariable("id") Integer id) {
+        Products products = productsService.getById(id);
+        return products;
 
     }
 
     @PutMapping("update/{id}")
-    public void update(@RequestBody Brand brand) {
-        brandService.update(brand);
+    public void update(@RequestBody Products products) {
+        productsService.update(products);
     }
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") Integer id) {
-        brandService.delete(id);
+        productsService.delete(id);
     }
 }

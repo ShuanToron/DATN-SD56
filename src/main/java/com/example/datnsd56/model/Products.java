@@ -14,7 +14,8 @@ import java.util.Objects;
 
 @Entity
 public class Products {
-    private int id;
+    private Integer id;
+    private String code;
     private String name;
     private String description;
     private boolean status;
@@ -26,16 +27,28 @@ public class Products {
     private Category categoryByCategoryId;
     private Material materialByMaterialId;
     private Brand brandByBrandId;
+    private Size sizeId;
+    private ShoeSole shoeSoleId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -159,5 +172,25 @@ public class Products {
 
     public void setBrandByBrandId(Brand brandByBrandId) {
         this.brandByBrandId = brandByBrandId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
+    public Size getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(Size sizeId) {
+        this.sizeId = sizeId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "shoe_sole_id", referencedColumnName = "id")
+    public ShoeSole getShoeSoleId() {
+        return shoeSoleId;
+    }
+
+    public void setShoeSoleId(ShoeSole shoeSoleId) {
+        this.shoeSoleId = shoeSoleId;
     }
 }

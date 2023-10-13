@@ -1,6 +1,5 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.Material;
 import com.example.datnsd56.model.ShoeSole;
 import com.example.datnsd56.service.ShoeSoleSevice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import java.util.List;
 public class ShoeSoleController {
     @Autowired
     private ShoeSoleSevice shoeSoleSevice;
+
     @GetMapping("getAll")
     public List<ShoeSole> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
         List<ShoeSole> list = shoeSoleSevice.getAll(page).getContent();
