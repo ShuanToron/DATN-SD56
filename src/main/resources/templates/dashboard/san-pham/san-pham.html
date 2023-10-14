@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en"
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 
 
@@ -9,13 +9,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title> SneakBeer - Sản phẩm </title>
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="../../../static/dashboard/css/app.min.css">
+    <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../../../static/dashboard/css/style.css">
-    <link rel="stylesheet" href="../../../static/dashboard/css/components.css">
+    <link th:href="@{/dashboard/css/style.css}" rel="stylesheet">
+    <link th:href="@{/dashboard/css/components.css}" rel="stylesheet">
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="../../../static/dashboard/css/custom.css">
-    <link rel='shortcut icon' type='image/x-icon' href="../../../static/dashboard/img/favicon.ico"/>
+    <link th:href="@{/dashboard/css/custom.css}">
+    <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
 </head>
 
 <body>
@@ -62,7 +62,7 @@
                         <div class="dropdown-list-content dropdown-list-message">
                             <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
             											text-white"> <img alt="image"
-                                                                          src="../../../static/dashboard/img/users/user-1.png"
+                                                                          th:src="@{/dashboard/img/users/user-1.png}"
                                                                           class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">John
                                   Deo</span>
@@ -70,7 +70,7 @@
                                 <span class="time">2 Min Ago</span>
                               </span>
                             </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                                <img alt="image" src="../../../static/dashboard/img/users/user-2.png"
+                                <img alt="image" th:src="@{/dashboard/img/users/user-2.png}"
                                      class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
                                   Smith</span> <span class="time messege-text">Request for leave
@@ -78,14 +78,14 @@
                                 <span class="time">5 Min Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                                <img alt="image" src="../../../static/dashboard/img/users/user-5.png"
+                                <img alt="image" th:src="@{/dashboard/img/users/user-5.png}"
                                      class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">Jacob
                                   Ryan</span> <span class="time messege-text">Your payment invoice is
                                   generated.</span> <span class="time">12 Min Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                                <img alt="image" src="../../../static/dashboard/img/users/user-4.png"
+                                <img alt="image" th:src="@{/dashboard/img/users/user-4.png}"
                                      class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">Lina
                                   Smith</span> <span class="time messege-text">hii John, I have upload
@@ -94,7 +94,7 @@
                                   Min Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                                <img alt="image" src="../../../static/dashboard/img/users/user-3.png"
+                                <img alt="image" th:src="@{/dashboard/img/users/user-3.png}"
                                      class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">Jalpa
                                   Joshi</span> <span class="time messege-text">Please do as specify.
@@ -103,7 +103,7 @@
                                   Days Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                                <img alt="image" src="../../../static/dashboard/img/users/user-2.png"
+                                <img alt="image" th:src="@{/dashboard/img/users/user-2.png}"
                                      class="rounded-circle">
                               </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
                                   Smith</span> <span class="time messege-text">Client Requirements</span>
@@ -171,7 +171,7 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         src="../../../static/dashboard/img/user.png"
+                                                                                                         th:src="@{/../../../static/dashboard/img/user.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
@@ -196,7 +196,7 @@
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
                     <a href="index.html">
-                        <img alt="image" src="../../../static/dashboard/img/logo.png"
+                        <img alt="image" th:src="@{/dashboard/img/users/logo.png}"
                              class="header-logo"/> <span
                             class="logo-name">Otika</span>
                     </a>
@@ -209,37 +209,38 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="/san-pham/hien-thi">Sản phẩm</a></li>
-                            <li><a class="nav-link" href="/mau-sac/hien-thi">Màu sắc</a></li>
-                            <li><a class="nav-link" href="/de-giay/hien-thi">Đế giày</a></li>
-                            <li><a class="nav-link" href="/thuong-hieu/hien-thi">Thương hiệu</a></li>
-                            <li><a class="nav-link" href="/chat-lieu/hien-thi">Chất liệu</a></li>
-                            <li><a class="nav-link" href="/kich-co/hien-thi">Loại giày</a></li>
-                            <li><a class="nav-link" href="/chi-tiet-san-pham/hien-thi">Chi tiết sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/san-pham/hien-thi}">Sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/chat-lieu/hien-thi}">Chất liệu</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Loại giày</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi}">Chi tiết sản phẩm</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="layout"></i><span>Hoá đơn</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="/ban-hang">Bán hàng</a></li>
-                            <li><a class="nav-link" href="/hoa-don">Hoá đơn</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/ban-hang}">Bán hàng</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/hoa-don}">Hoá đơn</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="image"></i><span>Voucher</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="/voucher/hien-thi">Voucher</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/voucher/hien-thi}">Voucher</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/chuc-vu/hien-thi">Chức vụ</a></li>
-                            <li><a href="/nhan-vien/hien-thi">Nhân viên</a></li>
-                            <li><a href="/khach-hang/hien-thi">Khách hàng</a></li>
+                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
+                            <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -259,20 +260,25 @@
                                 <div class="form-group">
                                     <label>Mã sản phẩm</label>
                                     <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập mã sản phẩm">
+                                        <input type="text" class="form-control" placeholder="Nhập mã sản phẩm"
+                                               th:field="*{code}">
+                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
+                                              th:errors="*{code}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Tên sản phẩm</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm">
+                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                                           th:field="*{code}">
+                                    <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
+                                          th:errors="*{code}"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Loại giày</label>
                                     <div class="input-group">
-                                        <select class="form-control">
-                                            <option>Loại 1</option>
-                                            <option>Loại 2</option>
-                                            <option>Loại 3</option>
+                                        <select class="form-control" th:field="*{categoryId}">
+                                            <option th:each="category:${categotylist}" th:value="${category.id}"
+                                                    th:text="${category.name}"></option>
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupLoaiGiay()">+
@@ -283,10 +289,9 @@
                                 <div class="form-group">
                                     <label>Thương hiệu</label>
                                     <div class="input-group">
-                                        <select class="form-control">
-                                            <option>Thuong hiệu 1</option>
-                                            <option>Thuong hiệu 1</option>
-                                            <option>Thuong hiệu 1</option>
+                                        <select class="form-control" th:field="*{brandId}">
+                                            <option th:each="brand:${brandlist}" th:value="${brand.id}"
+                                                    th:text="${brand.name}"></option>
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupThuongHieu()">
@@ -298,10 +303,9 @@
                                 <div class="form-group">
                                     <label>Chất liệu</label>
                                     <div class="input-group">
-                                        <select class="form-control">
-                                            <option>Chất liệu 1</option>
-                                            <option>Chất liệu 1</option>
-                                            <option>Chất liệu 1</option>
+                                        <select class="form-control" th:field="*{materialId}">
+                                            <option th:each="material:${materiallist}" th:value="${material.id}"
+                                                    th:text="${material.name}"></option>
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupChatLieu()">+
@@ -312,10 +316,9 @@
                                 <div class="form-group">
                                     <label>Đế giày</label>
                                     <div class="input-group">
-                                        <select class="form-control">
-                                            <option>Đế giày 1</option>
-                                            <option>Đế giày 1</option>
-                                            <option>Đế giày 1</option>
+                                        <select class="form-control" th:field="*{shoeSoleId}">
+                                            <option th:each="sole:${solelist}" th:value="${sole.id}"
+                                                    th:text="${sole.name}"></option>
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
@@ -326,13 +329,21 @@
                                 <div class="form-group">
                                     <label>Số lượng</label>
                                     <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng">
+                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                               th:field="*{quantity}">
+                                        <span th:if="${#fields.hasErrors('quantity')}"
+                                              style="color: red; font-size: 13px"
+                                              th:errors="*{quantity}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả</label>
                                     <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập mô tả">
+                                        <input type="text" class="form-control" placeholder="Nhập mô tả"
+                                               th:field="*{desciption}">
+                                        <span th:if="${#fields.hasErrors('desciption')}"
+                                              style="color: red; font-size: 13px"
+                                              th:errors="*{desciption}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -361,18 +372,48 @@
                         <div id="formLoaiGiay" class="popup-form">
                             <div class="card-body">
                                 <div class="section-title mt-0">Thêm loại giày</div>
-                                <form action="/loai-giay/add" method="post"
-                                      onsubmit="return  confirm('Bạn có muốn thêm không?')">
-                                    <div class="form-group">
-                                        <label>Mã</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tên</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">Thêm</button>
+                                <form action="/loai-giay/add" method="post" th:object="${loaigiay}"
+                                      onsubmit="return  confirm('Bạn có thêm không?')">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Mã loại giày</label>
+                                            <div class="input-group colorpickerinput">
+                                                <input type="text" class="form-control" placeholder="Nhập mã loại giày"
+                                                       th:field="*{code}">
+                                                <span th:if="${#fields.hasErrors('code')}"
+                                                      style="color: red; font-size: 13px"
+                                                      th:errors="*{code}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tên loại giày</label>
+                                            <input type="text" class="form-control" placeholder="Nhập tên loại giày"
+                                                   th:field="*{name}">
+                                            <span th:if="${#fields.hasErrors('name')}"
+                                                  style="color: red; font-size: 13px"
+                                                  th:errors="*{name}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="d-block">Trạng thái</label>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                                <label class="form-check-label">
+                                                    Hoạt động
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
+                                                <label class="form-check-label">
+                                                    Không hoạt động
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <a th:href="@{/admin/loai-giay/add}">
+                                                <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -399,18 +440,48 @@
                         <div id="formChatLieu" class="popup-form">
                             <div class="card-body">
                                 <div class="section-title mt-0">Thêm chất liệu</div>
-                                <form action="/loai-giay/add" method="post"
-                                      onsubmit="return  confirm('Bạn có muốn thêm không?')">
-                                    <div class="form-group">
-                                        <label>Mã</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tên</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">Thêm</button>
+                                <form action="/chat-lieu/add" method="post" th:object="${chatlieu}"
+                                      onsubmit="return  confirm('Bạn có thêm không?')">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Mã chất liệu</label>
+                                            <div class="input-group colorpickerinput">
+                                                <input type="text" class="form-control" placeholder="Nhập mã chất liệu"
+                                                       th:field="*{code}">
+                                                <span th:if="${#fields.hasErrors('code')}"
+                                                      style="color: red; font-size: 13px"
+                                                      th:errors="*{code}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tên chất liệu</label>
+                                            <input type="text" class="form-control" placeholder="Nhập tên chất liệu"
+                                                   th:field="*{name}">
+                                            <span th:if="${#fields.hasErrors('name')}"
+                                                  style="color: red; font-size: 13px"
+                                                  th:errors="*{name}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="d-block">Trạng thái</label>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                                <label class="form-check-label">
+                                                    Hoạt động
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
+                                                <label class="form-check-label">
+                                                    Không hoạt động
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <a th:href="@{/admin/chat-lieu/add}">
+                                                <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -418,18 +489,48 @@
                         <div id="formDeGiay" class="popup-form">
                             <div class="card-body">
                                 <div class="section-title mt-0">Thêm đế giày</div>
-                                <form action="/loai-giay/add" method="post"
-                                      onsubmit="return  confirm('Bạn có muốn thêm không?')">
-                                    <div class="form-group">
-                                        <label>Mã</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tên</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">Thêm</button>
+                                <form action="/chat-lieu/add" method="post" th:object="${degiay}"
+                                      onsubmit="return  confirm('Bạn có thêm không?')">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Mã đế giày</label>
+                                            <div class="input-group colorpickerinput">
+                                                <input type="text" class="form-control" placeholder="Nhập mã đế giày"
+                                                       th:field="*{code}">
+                                                <span th:if="${#fields.hasErrors('code')}"
+                                                      style="color: red; font-size: 13px"
+                                                      th:errors="*{code}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tên đế giày</label>
+                                            <input type="text" class="form-control" placeholder="Nhập tên đế giày"
+                                                   th:field="*{name}">
+                                            <span th:if="${#fields.hasErrors('name')}"
+                                                  style="color: red; font-size: 13px"
+                                                  th:errors="*{name}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="d-block">Trạng thái</label>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                                <label class="form-check-label">
+                                                    Hoạt động
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
+                                                <label class="form-check-label">
+                                                    Không hoạt động
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <a th:href="@{/admin/de-giay/add}">
+                                                <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -471,23 +572,23 @@
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr>
-                                        <td class="p-0 text-center">
-                                            <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       class="custom-control-input"
-                                                       id="checkbox-1">
-                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>BLACK</td>
-                                        <td>Màu đen</td>
+                                    <tr th:each="list:${list}">
+                                        <!--                                        <td th:text="*{index.count}"></td>-->
+                                        <td th:text="*{list.code}"></td>
+                                        <td th:text="*{list.name}"></td>
+                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <div class="badge badge-success">Hoạt động</div>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Chỉnh sửa</a>
-                                            <a href="#" class="btn btn-primary">Cập nhật</a>
+                                            <a th:href="@{/admin/san-pham/delete(id=${list.code})}">
+                                                <button type="button" class="btn btn-danger"
+                                                        onsubmit="return  confirm('Bạn có xoá không?')">
+                                                    Xoá
+                                                </button>
+                                            </a>
+                                            <a th:href="@{/san-pham/chat-lieu/view-update(id=${list.code})}">
+                                                <button type="button" class="btn btn-success">
+                                                    Cập nhật
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -496,17 +597,22 @@
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    <li class="page-item" th:if="${currentPage !=0}">
+                                        <a class="page-link"
+                                           th:href="@{'/admin/san-pham/page/'+ ${ currentPage - 1}}"><i
+                                                class="fas fa-chevron-left"></i></a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span
-                                            class="sr-only">(current)</span></a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                        <a class="page-link" th:href="@{'/admin/san-pham/'+${i - 1}}">
+                                            <span th:text="${i}"></span>
+                                        </a>
                                     </li>
                                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                        <a class="page-link"
+                                           th:href="@{'/admin/san-pham/page/'+ ${ currentPage + 1}}"><i
+                                                class="fas fa-chevron-right"></i></a>
                                     </li>
                                 </ul>
                             </nav>
@@ -621,15 +727,15 @@
 </div>
 </div>
 <!-- General JS Scripts -->
-<script src="../../../static/dashboard/js/app.min.js"></script>
+<script th:src="@{/dashboard/js/app.min.js}"></script>
 <!-- JS Libraies -->
-<script src="../../../static/dashboard/bundles/apexcharts/apexcharts.min.js"></script>
+<script th:src="@{/dashboard/bundles/apexcharts/apexcharts.min.js}"></script>
 <!-- Page Specific JS File -->
-<script src="../../../static/dashboard/js/page/index.js"></script>
+<script th:src="@{/dashboard/js/page/index.js}"></script>
 <!-- Template JS File -->
-<script src="../../../static/dashboard/js/scripts.js"></script>
+<script th:src="@{/dashboard/js/scripts.js}"></script>
 <!-- Custom JS File -->
-<script src="../../../static/dashboard/js/custom.js"></script>
+<script th:src="@{/dashboard/js/custom.js}"></script>
 </body>
 
 

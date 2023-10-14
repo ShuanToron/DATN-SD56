@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> SneakBeer - Cập nhật màu sắc </title>
+    <title> SneakBeer - Cập nhật loại giày </title>
     <!-- General CSS Files -->
     <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
@@ -252,14 +252,14 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Cập nhật màu sắc</h4>
+                            <h4>Cập nhật loại giày</h4>
                         </div>
-                        <form th:action="@{/mau-sac/update(id=${chatlieu.code})}" method="post"
-                              th:object="${mausac}"
+                        <form th:action="@{/loai-giay/update(id=${chatlieu.code})}" method="post"
+                              th:object="${loaigiay}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Mã màu sắc</label>
+                                    <label>Mã loại giày</label>
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control"
                                                th:field="*{code}">
@@ -268,7 +268,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tên màu sắc</label>
+                                    <label>Tên loại giày</label>
                                     <input type="text" class="form-control"
                                            th:field="*{name}">
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 13px"
@@ -290,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <a th:href="@{/mau-sac/update(id=${chatlieu.code})}">
+                                    <a th:href="@{/loai-giay/update(id=${chatlieu.code})}">
                                         <button class="btn btn-primary mr-1" type="submit">Cập nhật</button>
                                     </a>
                                 </div>
