@@ -67,5 +67,21 @@ function popupChucVu() {
     }
 }
 
+function addChatLieu(frm, data, type) {
+    $.ajax({
+        contentType: "application/json;charset=utf-8",
+        url: frm.attr("action"),
+        type: frm.attr("method"),
+        data: JSON.stringify(data),
+        dataType: "json",
+        success: function (data) {
+            toastr.success("data.message", "data.tittle", {
+                closeButton: true,
+            });
+            fetchlist(type);
+        }
+    });
+}
+
 "use strict";
 

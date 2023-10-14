@@ -15,6 +15,10 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- Toaste JS -->
+    <script type="text/javascript"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -348,18 +352,25 @@
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
-                                    <li class="page-item" th:if="${currentPage !=0}">
-                                        <a class="page-link" th:href="@{'/admin/chat-lieu/hien-thi/page/'+ ${ currentPage - 1}}"><i
-                                                class="fas fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
-                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                        <a class="page-link" th:href="@{'/admin/chat-lieu/hien-thi/page/'+${i - 1}}">
-                                            <span th:text="${i}"></span>
+                                    <li class="page-item" th:if="${currentPage != 0}">
+                                        <a class="page-link"
+                                           th:href="@{/admin/chat-lieu/hien-thi(page=${currentPage - 1})}">
+                                            <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </li>
+
+                                    <ul class="pagination">
+                                        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                            th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                            <a class="page-link" th:href="@{/admin/chat-lieu/hien-thi(page=${i - 1})}">
+                                                <span th:text="${i}"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
                                     <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                        <a class="page-link" th:href="@{'/admin/chat-lieu/hien-thi/page/'+ ${ currentPage + 1}}"><i
+                                        <a class="page-link"
+                                           th:href="@{/admin/chat-lieu/hien-thi(page=${currentPage + 1})}"><i
                                                 class="fas fa-chevron-right"></i></a>
                                     </li>
                                 </ul>
