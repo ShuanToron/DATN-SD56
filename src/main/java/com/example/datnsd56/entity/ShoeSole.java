@@ -1,5 +1,6 @@
 package com.example.datnsd56.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -38,5 +39,6 @@ public class ShoeSole {
 
     @Column(name = "update_date")
     private LocalDate updateDate;
+
 
 }
