@@ -58,5 +58,14 @@ function popupDeGiay() {
     }
 }
 
+function popupChucVu() {
+    var popup = document.getElementById("formChucVu");
+    if (popup.style.display === "block") {
+        popup.style.display = "none";
+    } else {
+        popup.style.display = "block";
+    }
+}
+
 "use strict";
 
