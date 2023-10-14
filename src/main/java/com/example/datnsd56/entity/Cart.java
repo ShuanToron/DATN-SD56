@@ -1,15 +1,18 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
 
-import java.sql.Timestamp;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Builder
+
+
 @Entity
 @Getter
 @Setter
@@ -39,5 +42,6 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account accountByAccountId;
+
 
 }

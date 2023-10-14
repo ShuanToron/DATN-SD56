@@ -1,30 +1,31 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
 
-import java.util.Objects;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Entity
+@Table(name = "Roles")
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
-@Entity
-@Table(name = "roles")
+
 public class Roles {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-
-
-    @Column(name = "code")
-    private String code;
-
-
 
     @Column(name = "name")
     private String name;
@@ -33,6 +34,7 @@ public class Roles {
 
     @Column(name = "status")
     private boolean status;
+
 
 
 

@@ -1,12 +1,12 @@
 package com.example.datnsd56.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -18,10 +18,11 @@ import java.util.Objects;
 @Table(name = "account")
 public class Account {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
 
 
     @Column(name = "username")
@@ -50,4 +51,9 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleid ",referencedColumnName = "id")
     private Roles roles;
+
+    @Column(name = "email")
+    private String email;
+
+
 }
