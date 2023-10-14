@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VoucherSeviceImpl implements VoucherService {
     @Autowired
@@ -18,6 +20,11 @@ public class VoucherSeviceImpl implements VoucherService {
     public Page<Voucher> getAll(Integer page) {
         Pageable pageable = PageRequest.of(page, 5);
         return voucherRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Voucher> get() {
+        return voucherRepository.findAll();
     }
 
     @Override

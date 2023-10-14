@@ -3,16 +3,22 @@ package com.example.datnsd56.controller;
 import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/voucher")
 public class VoucherController {
     @Autowired
     private VoucherService voucherService;
 
+    @GetMapping("get")
+    public List<Voucher> get(){
+        List<Voucher> list=voucherService.get();
+        return list;
+    }
     @GetMapping("getAll")
     public List<Voucher> getAll(@RequestParam(value = "page",defaultValue = "0")Integer page){
         List<Voucher> list=voucherService.getAll(page).getContent();
