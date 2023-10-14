@@ -1,113 +1,62 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.Basic;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.util.Objects;
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Builder
+import java.time.LocalDate;
+
+
 @Entity
+@Table(name = "Account")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
-    private int id;
-    private String username;
-    private String password;
-    private String fullname;
-    private boolean status;
-    private Timestamp createDate;
-    private Timestamp updateDate;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
-        return id;
-    }
+    private Integer id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Column(name = "email")
+    private String email;
 
-    @Basic
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Basic
     @Column(name = "password")
-    public String getPassword() {
-        return password;
-    }
+    private String password;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
     @Column(name = "fullname")
-    public String getFullname() {
-        return fullname;
-    }
+    private String fullname;
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    @Column(name = "gender")
+    private Boolean gender;
 
-    @Basic
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "status")
-    public boolean isStatus() {
-        return status;
-    }
+    private Boolean status;
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    @Basic
     @Column(name = "create_date")
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
+    private LocalDate createDate;
 
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-    @Basic
     @Column(name = "update_date")
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
+    private LocalDate updateDate;
 
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return id == account.id && status == account.status && Objects.equals(username, account.username) && Objects.equals(password, account.password) && Objects.equals(fullname, account.fullname) && Objects.equals(createDate, account.createDate) && Objects.equals(updateDate, account.updateDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, fullname, status, createDate, updateDate);
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id",referencedColumnName = "id")
+    private Roles roleId;
 }
