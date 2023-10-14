@@ -2,7 +2,10 @@ package com.example.datnsd56.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,10 +36,12 @@ public class OrderTimeline {
     @Column(name = "timestamp")
     private LocalDate timestamp;
 
-    @Column(name = "account_id")
-    private Integer accountId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account accountId;
 
-    @Column(name = "order_id")
-    private Integer orderId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Orders orderId;
 
 }
