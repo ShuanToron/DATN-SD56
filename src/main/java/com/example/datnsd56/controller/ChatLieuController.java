@@ -27,17 +27,7 @@ public class ChatLieuController {
     private ChatLieuService service;
 
     @GetMapping("/hien-thi")
-    public String viewChatLieu(Model model) {
-        model.addAttribute("chatlieu", new Material());
-        Page<Material> page = service.pageMaterial(0);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("list", page);
-        model.addAttribute("currentPage", 0);
-        return "/dashboard/chat-lieu/chat-lieu";
-    }
-
-    @GetMapping("/hien-thi/{page}")
-    public String pageChatLieu(@PathVariable("page") Integer pageNo, Model model) {
+    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("chatlieu", new Material());
         Page<Material> page = service.pageMaterial(pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -62,7 +52,10 @@ public class ChatLieuController {
     @PostMapping("/add")
     public String addChatLieu(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            model.addAttribute("list", service.getAllChatLieu());
+            Page<Material> page = service.pageMaterial(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
             return "/dashboard/chat-lieu/chat-lieu";
         }
         service.addChatLieu(material);
