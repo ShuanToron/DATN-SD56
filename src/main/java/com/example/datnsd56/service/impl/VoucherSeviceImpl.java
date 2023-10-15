@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,6 +23,12 @@ public class VoucherSeviceImpl implements VoucherService {
         return voucherRepository.findAll(pageable);
     }
 
+
+    @Override
+    public Page<Voucher> getAllbypad(Pageable pageable) {
+        return voucherRepository.findAll(pageable);
+    }
+
     @Override
     public List<Voucher> get() {
         return voucherRepository.findAll();
@@ -29,17 +36,24 @@ public class VoucherSeviceImpl implements VoucherService {
 
     @Override
     public Voucher detail(Integer id) {
-        Voucher voucher = voucherRepository.findById(id).get();
+        Voucher voucher = voucherRepository.findById(id).orElse(null);
         return voucher;
     }
 
     @Override
-    public void add(Voucher voucher) {
-        voucherRepository.save(voucher);
+    public Voucher add(Voucher voucher) {
+        voucher.setStartDate(LocalDate.now());
+        voucher.setExpirationDate(LocalDate.now());
+
+        return   voucherRepository.save(voucher);
     }
 
     @Override
     public void update(Voucher voucher) {
+        voucher.setStartDate(LocalDate.now());
+        voucher.setExpirationDate(LocalDate.now());
+
+
         voucherRepository.save(voucher);
 
     }
