@@ -1,15 +1,9 @@
 package com.example.datnsd56.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 
 @Entity
@@ -20,22 +14,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
+@ToString
 public class Roles {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
+    @NotBlank(message = "Không được để trống")
+    @Column(name = "code")
+    private String code;
+    @NotBlank(message = "Không được để trống")
     @Column(name = "name")
     private String name;
 
 
-
     @Column(name = "status")
     private boolean status;
-
-
 
 
 }

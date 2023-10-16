@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +49,7 @@ public class VoucherController {
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("voucher") Voucher voucher, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
-            model.addAttribute("list",voucherService.get());
+            model.addAttribute("list",voucherService.getAllbypad(Pageable.unpaged()));
             return "/dashboard/voucher/voucher";
 
         }
