@@ -238,7 +238,7 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
                         </ul>
@@ -254,7 +254,7 @@
                         <div class="card-header">
                             <h4>Voucher</h4>
                         </div>
-                        <form action="/account/add" method="post" th:object="${account}"
+                        <form th:action="@{/admin/account/add}" method="post" th:object="${account}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -313,13 +313,13 @@
                                 <div class="form-group">
                                     <label>Chức vụ</label>
                                     <div class="input-group">
-                                        <select class="form-control" th:field="*{roleId}">
+                                        <select class="form-control" th:field="*{role_id}">
                                             <option th:each="role:${rolelist}" th:value="${role.id}"
-                                                    th:text="${role.name}"></option>
+                                                    th:text="${role.name}" > </option>
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupChucVu()">
-                                                +
+
                                             </button>
                                         </div>
                                     </div>
@@ -350,11 +350,11 @@
                         <div id="formChucVu" class="popup-form">
                             <div class="card-body">
                                 <div class="section-title mt-0">Thêm chức vụ</div>
-                                <form action="/chuc-vu/add" method="post" th:object="${chucvu}"
+                                <form action="admin/roles/add" method="post" th:object="${roles}"
                                       onsubmit="return  confirm('Bạn có thêm không?')">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label>Tên loại giày</label>
+                                            <label>Tên chức vụ</label>
                                             <input type="text" class="form-control" placeholder="Nhập tên chuc vu"
                                                    th:field="*{name}">
                                             <span th:if="${#fields.hasErrors('name')}"
@@ -409,68 +409,76 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-center">
-                                            <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       data-checkbox-role="dad"
-                                                       class="custom-control-input" id="checkbox-all">
-                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </th>
-                                        <th>Mã voucher</th>
-                                        <th>Gias trị</th>
-                                        <th>Giá trị giảm tối đa</th>
-                                        <th>Hình thức giảm</th>
+<!--                                        <th class="text-center">-->
+<!--                                            <div class="custom-checkbox custom-checkbox-table custom-control">-->
+<!--                                                <input type="checkbox" data-checkboxes="mygroup"-->
+<!--                                                       data-checkbox-role="dad"-->
+<!--                                                       class="custom-control-input" id="checkbox-all">-->
+<!--                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>-->
+<!--                                            </div>-->
+<!--                                        </th>-->
+                                        <th>Họ và Tên</th>
+                                        <th>email</th>
+                                        <th>passwword</th>
+                                        <th>Vai trò</th>
                                         <th>Trạng thái</th>
+                                        <th>Giới tính</th>
+                                        <th>Ngày sinh</th>
+                                        <th>SDT</th>
                                         <th>Hành động</th>
                                     </tr>
                                     <tr th:each="list:${list}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
-                                        <td th:text="*{list.code}"></td>
-                                        <td th:text="*{list.amount}"></td>
-                                        <td th:text="*{list.maxValue}"></td>
-                                        <td th:text="*{list.type}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="*{list.fullname}"></td>
+                                        <td th:text="*{list.email}"></td>
+                                        <td th:text="*{list.password}"></td>
+                                        <td th:text="${list != null ? (list.role_id != null ? list.role_id.name : '') : ''}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.gender  ? 'Nam' : 'Nữ'}"></td>
+
+                                        <td th:text="*{list.birthdate}"></td>
+                                        <td th:text="*{list.phone}"></td>
                                         <td>
-                                            <a th:href="@{/admin/voucher/delete(id=${list.code})}">
-                                                <button type="button" class="btn btn-danger"
-                                                        onsubmit="return  confirm('Bạn có xoá không?')">
+                                            <a th:href="@{'/admin/account/delete/'+${list.id}}">
+                                                <button type="submit" class="btn btn-danger"
+                                                        onchange="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{/admin/voucher/view-update(id=${list.code})}">
-                                                <button type="button" class="btn btn-success">
+
+
+                                            <a th:href="@{'/admin/account/view-update/'+${list.id}}">
+                                                <button type="submit" class="btn btn-success">
                                                     Cập nhật
                                                 </button>
-                                            </a>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item" th:if="${currentPage !=0}">
-                                        <a class="page-link"
-                                           th:href="@{'/admin/voucher/page/'+ ${ currentPage - 1}}"><i
-                                                class="fas fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
-                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                        <a class="page-link" th:href="@{'/admin/voucher/page/'+${i - 1}}">
-                                            <span th:text="${i}"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                        <a class="page-link"
-                                           th:href="@{'/admin/voucher/page/'+ ${ currentPage + 1}}"><i
-                                                class="fas fa-chevron-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+<!--                        <div class="card-footer text-right">-->
+<!--                            <nav class="d-inline-block">-->
+<!--                                <ul class="pagination mb-0">-->
+<!--                                    <li class="page-item" th:if="${currentPage !=0}">-->
+<!--                                        <a class="page-link"-->
+<!--                                           th:href="@{'/admin/voucher/page/'+ ${ currentPage - 1}}"><i-->
+<!--                                                class="fas fa-chevron-left"></i></a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"-->
+<!--                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
+<!--                                        <a class="page-link" th:href="@{'/admin/voucher/page/'+${i - 1}}">-->
+<!--                                            <span th:text="${i}"></span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                                        <a class="page-link"-->
+<!--                                           th:href="@{'/admin/voucher/page/'+ ${ currentPage + 1}}"><i-->
+<!--                                                class="fas fa-chevron-right"></i></a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>

@@ -15,20 +15,20 @@ public class AccountSeviceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public Page<Account> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
+    public Page<Account> getAll(Pageable pageable) {
+//        Pageable pageable = PageRequest.of(page, 5);
         return accountRepository.findAll(pageable);
     }
 
     @Override
     public Account detail(Integer id) {
-        Account account = accountRepository.findById(id).get();
+        Account account = accountRepository.findById(id).orElse(null);
         return account;
     }
 
     @Override
-    public void add(Account account) {
-        accountRepository.save(account);
+    public Account add(Account account) {
+        return  accountRepository.save(account);
     }
 
     @Override
