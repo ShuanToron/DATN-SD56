@@ -1,6 +1,6 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.Color;
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

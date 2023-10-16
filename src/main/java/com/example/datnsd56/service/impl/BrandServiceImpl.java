@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.Brand;
+import com.example.datnsd56.entity.Brand;
 import com.example.datnsd56.repository.BrandRepository;
 import com.example.datnsd56.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;

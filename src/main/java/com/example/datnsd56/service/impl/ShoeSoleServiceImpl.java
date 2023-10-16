@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.ShoeSole;
+import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.repository.ShoeSoleRepository;
 import com.example.datnsd56.service.ShoeSoleSevice;
 import org.springframework.beans.factory.annotation.Autowired;

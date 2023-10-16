@@ -1,6 +1,6 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.Brand;
+import com.example.datnsd56.entity.Brand;
 import com.example.datnsd56.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

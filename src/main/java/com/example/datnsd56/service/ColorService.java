@@ -1,6 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Color;
+import com.example.datnsd56.entity.Color;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

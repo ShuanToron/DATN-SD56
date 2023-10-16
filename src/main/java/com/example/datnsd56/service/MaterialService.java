@@ -1,7 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Color;
-import com.example.datnsd56.model.Material;
+import com.example.datnsd56.entity.Material;
 import org.springframework.data.domain.Page;
 
 public interface MaterialService {

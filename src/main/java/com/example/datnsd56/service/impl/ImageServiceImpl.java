@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.Image;
+import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.repository.ImageRepository;
 import com.example.datnsd56.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;

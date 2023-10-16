@@ -1,6 +1,6 @@
 package com.example.datnsd56.repository;
 
-import com.example.datnsd56.model.Color;
+import com.example.datnsd56.entity.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.ShoeSole;
+import com.example.datnsd56.entity.ShoeSole;
 import org.springframework.data.domain.Page;
 
 public interface ShoeSoleSevice {

@@ -1,6 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Category;
+import com.example.datnsd56.entity.Category;
 import org.springframework.data.domain.Page;
 
 public interface CategoryService {

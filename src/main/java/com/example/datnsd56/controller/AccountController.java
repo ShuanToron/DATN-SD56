@@ -20,7 +20,7 @@ public class AccountController {
     }
     @GetMapping("detail/{id}")
     public Account detail(@PathVariable("id") Integer id){
-       Account account= accountService.detail(id);
+        Account account= accountService.detail(id);
         return account;
     }
     @PostMapping("add")
@@ -31,8 +31,8 @@ public class AccountController {
     public void update(@RequestBody Account account){
         accountService.update(account);
     }
-@DeleteMapping("delete/{id}")
+    @DeleteMapping("delete/{id}")
     public void delete(@PathVariable("id") Integer id){
         accountService.delete(id);
-}
+    }
 }

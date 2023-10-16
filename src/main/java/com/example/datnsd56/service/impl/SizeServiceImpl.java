@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.Size;
+import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.repository.SizeRepository;
 import com.example.datnsd56.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;

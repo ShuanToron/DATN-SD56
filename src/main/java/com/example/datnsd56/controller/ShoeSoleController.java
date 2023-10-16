@@ -1,6 +1,6 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.model.ShoeSole;
+import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.service.ShoeSoleSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

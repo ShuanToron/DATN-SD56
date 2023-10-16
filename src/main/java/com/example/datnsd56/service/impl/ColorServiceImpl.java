@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.Color;
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.repository.ColorRepository;
 import com.example.datnsd56.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ColorServiceImpl implements ColorService {

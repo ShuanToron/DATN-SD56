@@ -1,7 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Material;
-import com.example.datnsd56.model.Size;
+import com.example.datnsd56.entity.Size;
 import org.springframework.data.domain.Page;
 
 public interface SizeService {

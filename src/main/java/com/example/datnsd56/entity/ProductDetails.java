@@ -31,12 +31,6 @@ public class ProductDetails {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "color_id")
-    private Integer colorId;
-
-    @Column(name = "size_id")
-    private Integer sizeId;
-
     @Column(name = "create_date")
     private LocalDate createDate;
 
@@ -53,4 +47,11 @@ public class ProductDetails {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Products productId;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "size_id",referencedColumnName = "id")
+    private Size sizeId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "color_id",referencedColumnName = "id")
+    private Size colorId;
 }

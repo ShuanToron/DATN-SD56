@@ -1,7 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Image;
-import com.example.datnsd56.model.Material;
+import com.example.datnsd56.entity.Image;
 import org.springframework.data.domain.Page;
 
 public interface ImageService {

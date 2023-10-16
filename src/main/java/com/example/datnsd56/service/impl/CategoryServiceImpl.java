@@ -1,6 +1,6 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.model.Category;
+import com.example.datnsd56.entity.Category;
 import com.example.datnsd56.repository.CategoryRepository;
 import com.example.datnsd56.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,31 +21,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
-
-    private Integer id;
-    private int id;
-    private String code;
-    private String name;
-    private boolean status;
-    private Timestamp createDate;
-    private Timestamp updateDate;
-
-
     @Id
     @Column(name = "id")
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-
     private Integer id;
-
 
     @Column(name = "code")
     private String code;

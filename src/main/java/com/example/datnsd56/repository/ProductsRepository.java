@@ -1,6 +1,6 @@
 package com.example.datnsd56.repository;
 
-import com.example.datnsd56.model.Products;
+import com.example.datnsd56.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

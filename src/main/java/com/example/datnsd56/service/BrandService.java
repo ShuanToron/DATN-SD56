@@ -1,7 +1,6 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.model.Brand;
-import com.example.datnsd56.model.Category;
+import com.example.datnsd56.entity.Brand;
 import org.springframework.data.domain.Page;
 
 public interface BrandService {
