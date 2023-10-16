@@ -9,26 +9,32 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RolesSeviceImpl implements RolesService {
     @Autowired
     private RolesRepository rolesRepository;
 
     @Override
-    public Page<Roles> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
+    public Page<Roles> getAllbypage(Pageable pageable) {
         return rolesRepository.findAll(pageable);
     }
 
     @Override
+    public List<Roles> getAll() {
+        return rolesRepository.findAll();
+    }
+
+    @Override
     public Roles detail(Integer id) {
-        Roles roles = rolesRepository.findById(id).get();
+        Roles roles = rolesRepository.findById(id).orElse(null);
         return roles;
     }
 
     @Override
-    public void add(Roles roles) {
-        rolesRepository.save(roles);
+    public Roles add(Roles roles) {
+        return  rolesRepository.save(roles);
     }
 
     @Override

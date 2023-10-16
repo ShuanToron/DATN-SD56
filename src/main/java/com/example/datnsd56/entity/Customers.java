@@ -1,97 +1,47 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
-import java.util.Objects;
+import java.time.LocalDate;
+
+
+@Entity
+@Table(name = "Customers")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
-@Entity
-@Table(name = "customers")
+
 public class Customers {
-    private int id;
-    private String code;
+    @Id
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "fullname")
     private String fullname;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "gender")
     private Boolean gender;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "code")
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Basic
-    @Column(name = "fullname")
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    @Basic
-    @Column(name = "phone")
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Basic
-    @Column(name = "gender")
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customers customers = (Customers) o;
-        return id == customers.id && Objects.equals(code, customers.code) && Objects.equals(fullname, customers.fullname) && Objects.equals(phone, customers.phone) && Objects.equals(address, customers.address) && Objects.equals(gender, customers.gender);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, code, fullname, phone, address, gender);
-    }
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
 }

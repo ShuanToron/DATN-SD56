@@ -1,24 +1,27 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.Basic;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.util.Objects;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "Color")
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Builder
-@Entity
 public class Color {
+
     private Integer id;
     private int id;
     private String code;
@@ -27,19 +30,19 @@ public class Color {
     private Timestamp createDate;
     private Timestamp updateDate;
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    private Integer id;
 
-    @Basic
+
     @Column(name = "code")
+
     public String getCode() {
         return code;
     }
@@ -47,45 +50,21 @@ public class Color {
         this.code = code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    private String code;
 
-    @Basic
+
     @Column(name = "name")
-    public String getName() {
-        return name;
-    }
+    private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
     @Column(name = "status")
-    public boolean isStatus() {
-        return status;
-    }
+    private Boolean status;
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    @Basic
     @Column(name = "create_date")
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
+    private LocalDate createDate;
 
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-    @Basic
     @Column(name = "update_date")
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
+    private LocalDate updateDate;
+
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
@@ -103,6 +82,7 @@ public class Color {
     public int hashCode() {
         return Objects.hash(id, code, name, status, createDate, updateDate);
     }
+
 
 
 }
