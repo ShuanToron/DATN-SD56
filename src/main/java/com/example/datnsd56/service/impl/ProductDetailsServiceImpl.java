@@ -16,8 +16,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     private ProductDetailsRepository productDetailsRepository;
 
     @Override
-    public Page<ProductDetails> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page,3);
+    public Page<ProductDetails> getAll(Pageable pageable) {
         return productDetailsRepository.findAll(pageable);
     }
 

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 
@@ -23,29 +24,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Brand {
 
-    private Integer id;
-
-    private int id;
-
-    private String code;
-    private String name;
-    private boolean status;
-    private Timestamp createDate;
-    private Timestamp updateDate;
 
     @Id
     @Column(name = "id")
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-
     private Integer id;
 
     @Column(name = "code")

@@ -254,37 +254,46 @@
                         <div class="card-header">
                             <h4>Chi tiết sản phẩm</h4>
                         </div>
-                        <form action="/chi-tiet-san-pham/add" method="post" th:object="${chitietsp}"
+                        <form action="/productDetails/add" method="post" th:object="${ctsp}"
                               onsubmit="return  confirm('Bạn có muốn thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Sản phẩm</label>
-                                    <select class="form-control">
-                                        <option>Sản phẩm 1</option>
-                                        <option>Sản phẩm 2</option>
-                                        <option>Sản phẩm 3</option>
-                                    </select>
+                                    <label>Products</label>
+                                    <div class="input-group">
+                                        <select class="form-control" th:field="*{productId}">
+                                            <option th:each="product:${products}" th:value="${product.id}"
+                                                    th:text="${product.name}"></option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Màu sắc</label>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox">
-                                        <label>Màu đỏ</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox">
-                                        <label>Màu vàng</label>
+                                    <label>Color</label>
+                                    <div class="input-group">
+                                        <select class="form-control" th:field="*{colorId}">
+                                            <option th:each="color:${colors}" th:value="${color.id}"
+                                                    th:text="${color.name}"></option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Size</label>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox">
-                                        <label>40</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox">
-                                        <label>42</label>
+                                    <div class="input-group">
+                                        <select class="form-control" th:field="*{sizeId}">
+                                            <option th:each="size:${sizes}" th:value="${size.id}"
+                                                    th:text="${size.name}"></option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
