@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
-
-
-<!-- index.html  21 Nov 2019 03:44:50 GMT -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -294,6 +290,38 @@
                                             <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
                                             </button>
                                         </div>
+                                    <label>Sản phẩm</label>
+                                    <select class="form-control" th:field="*{productId}">
+                                        <option th:each="product:${productlist}" th:value="${product.id}"
+                                                th:text="${product.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Màu sắc</label>
+                                    <select class="form-control" th:field="*{colorId}">
+                                        <option th:each="color:${colorlist}" th:value="${color.id}"
+                                                th:text="${color.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Size</label>
+                                    <select class="form-control" th:field="*{sizeId}">
+                                        <option th:each="size:${sizelist}" th:value="${size.id}"
+                                                th:text="${size.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số lượng</label>
+                                    <div class="input-group colorpickerinput">
+                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                               th:field="*{quantity}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Đơn giá</label>
+                                    <div class="input-group colorpickerinput">
+                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                               th:field="*{sellPrice}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -321,13 +349,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Danh sách sản phẩm</h4>
                             <div class="card-header-form">
                                 <form>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            <button class="btn btn-primary"><i class="fas fa-search"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -337,40 +365,34 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-center">
-                                            <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       data-checkbox-role="dad"
-                                                       class="custom-control-input" id="checkbox-all">
-                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </th>
-                                        <th>Mã sản phẩm</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Mô tả</th>
-                                        <th>Trạng thái</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Màu sac</th>
+                                        <th>Size</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Trạng thai</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr>
-                                        <td class="p-0 text-center">
-                                            <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       class="custom-control-input"
-                                                       id="checkbox-1">
-                                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>BLACK</td>
-                                        <td>Màu đen</td>
+                                    <tr th:each="list:${list}">
+                                        <!--                                        <td th:text="*{index.count}"></td>-->
+                                        <td th:text="*{list.productId}"></td>
+                                        <td th:text="*{list.colorId}"></td>
+                                        <td th:text="*{list.sizeId}"></td>
+                                        <td th:text="*{list.quantity}"></td>
+                                        <td th:text="*{list.sellPrice}"></td>
+                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <input type="number" class="form-control" min="0">
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-success">Hoạt động</div>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Chỉnh sửa</a>
-                                            <a href="#" class="btn btn-primary">Cập nhật</a>
+                                            <a th:href="@{/admin/chi-tiet-san-pham/delete(id=${list.code})}">
+                                                <button type="button" class="btn btn-danger"
+                                                        onsubmit="return  confirm('Bạn có xoá không?')">
+                                                    Xoá
+                                                </button>
+                                            </a>
+                                            <a th:href="@{/admin/chi-tiet-san-pham/view-update(id=${list.code})}">
+                                                <button type="button" class="btn btn-success">
+                                                    Cập nhật
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -380,7 +402,8 @@
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
                                     <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                        <a class="page-link" href="#" tabindex="-1"><i
+                                                class="fas fa-chevron-left"></i></a>
                                     </li>
                                     <li class="page-item active"><a class="page-link" href="#">1 <span
                                             class="sr-only">(current)</span></a></li>
@@ -389,7 +412,8 @@
                                     </li>
                                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                                     <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                        <a class="page-link" href="#"><i
+                                                class="fas fa-chevron-right"></i></a>
                                     </li>
                                 </ul>
                             </nav>

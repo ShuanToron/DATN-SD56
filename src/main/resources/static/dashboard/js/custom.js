@@ -67,5 +67,65 @@ function popupChucVu() {
     }
 }
 
+function popupSize() {
+    var popup = document.getElementById("formSize");
+    if (popup.style.display === "block") {
+        popup.style.display = "none";
+    } else {
+        popup.style.display = "block";
+    }
+}
+
+function popupMauSac() {
+    var popup = document.getElementById("formMauSac");
+    if (popup.style.display === "block") {
+        popup.style.display = "none";
+    } else {
+        popup.style.display = "block";
+    }
+}
+
+function deleteData(type, id, successMessage) {
+    if (confirm("Bạn có muốn xoá không ?")) {
+        $.ajax({
+            type: "GET",
+            url: "/admin/" + type + "/delete/" + id,
+            success: function (data) {
+                alert(successMessage);
+            }
+        });
+    } else {
+        return false;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sizeSelect = document.getElementById("size");
+    const colorSelect = document.getElementById("color");
+    const productSelect = document.getElementById("product");
+    const quantityProduct = document.getElementById("quantity");
+    const addButton = document.getElementById("add-product");
+    const tableBody = document.querySelector("#product-table tbody");
+
+    addButton.addEventListener("click", function () {
+        const size = sizeSelect.value;
+        const color = colorSelect.value;
+        const product = productSelect.value;
+        const quantity = quantityProduct.value;
+
+        const newRow = tableBody.insertRow(tableBody.rows.length);
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+
+        cell4.innerHTML = quantity;
+        cell3.innerHTML = size;
+        cell2.innerHTML = color;
+        cell1.innerHTML = product;
+    });
+});
+
+
 "use strict";
 
