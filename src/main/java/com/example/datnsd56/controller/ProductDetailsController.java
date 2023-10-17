@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/productDetails/")
+@RequestMapping("/admin/chi-tiet-san-pham/")
 public class ProductDetailsController {
     @Autowired
     private ProductDetailsService productDetailsService;
@@ -37,17 +35,18 @@ public class ProductDetailsController {
     private ProductsService productsService;
 
     @GetMapping("hien-thi")
-    public String getAllBypage(Model model, @RequestParam(defaultValue = "0",name = "page") Integer page){
-        Pageable pageable = PageRequest.of(page,5);
-        Page<ProductDetails> productDetails= productDetailsService.getAll(pageable);
-        List<Products> products = productsService.getAll(page).getContent();
-        List<Color> colors = colorService.getAll(page).getContent();
-        List<Size> sizes =  sizeService.getAll(page).getContent();
+    public String getAllBypage(Model model, @RequestParam(defaultValue = "0",name = "pageNo") Integer pagaNo){
+        Page<ProductDetails> page= productDetailsService.getAll(pagaNo);
+        List<Products> products = productsService.getAllSP();
+        List<Color> colors = colorService.getAllCL();
+        List<Size> sizes =  sizeService.getAllSZ();
 //        model.addAttribute("totalPages", page1.getTotalPages());
-        model.addAttribute("productDetails", productDetails);
+        model.addAttribute("list", page);
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
         model.addAttribute("sizes", sizes);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pagaNo);
         model.addAttribute("ctsp",new ProductDetails());
 
 //        model.addAttribute("currentPage", pageNo);
@@ -55,24 +54,67 @@ public class ProductDetailsController {
 
     }
 
-    @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result,@RequestParam(defaultValue = "0",name = "page") Integer page, Model model, HttpSession session){
+    @PostMapping("add")
+    public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result , Model model, HttpSession session){
         if(result.hasErrors()){
-            Pageable pageable = PageRequest.of(page,5);
-            Page<ProductDetails> productDetail= productDetailsService.getAll(pageable);
-            List<Products> products = productsService.getAll(page).getContent();
-            List<Color> colors = colorService.getAll(page).getContent();
-            List<Size> sizes =  sizeService.getAll(page).getContent();
-            model.addAttribute("productDetail", productDetail);
+            Page<ProductDetails> productDetail= productDetailsService.getAll(0);
+            List<Products> products = productsService.getAllSP();
+            List<Color> colors = colorService.getAllCL();
+            List<Size> sizes =  sizeService.getAllSZ();
+            model.addAttribute("list", productDetail);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
+            model.addAttribute("totalPages", productDetail.getTotalPages());
+            model.addAttribute("currentPage", 0);
             return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
 
         }
         productDetailsService.add(productDetails);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/api/productDetails/hien-thi";
+        return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
+
+    @GetMapping("view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        ProductDetails productDetails= productDetailsService.getById(id);
+        model.addAttribute("ctsp", productDetails);
+        List<Products> products = productsService.getAllSP();
+        List<Color> colors = colorService.getAllCL();
+        List<Size> sizes =  sizeService.getAllSZ();
+        model.addAttribute("products", products);
+        model.addAttribute("colors", colors);
+        model.addAttribute("sizes", sizes);
+        return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
+    }
+
+    @DeleteMapping("delete/{id}")
+    public String delete(@PathVariable("id") Integer id){
+        productDetailsService.delete(id);
+        return "redirect:/admin/chi-tiet-san-pham/hien-thi";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<ProductDetails> productDetail= productDetailsService.getAll(0);
+            List<Products> products = productsService.getAllSP();
+            List<Color> colors = colorService.getAllCL();
+            List<Size> sizes =  sizeService.getAllSZ();
+            model.addAttribute("productDetails", productDetails);
+            model.addAttribute("products", products);
+            model.addAttribute("colors", colors);
+            model.addAttribute("sizes", sizes);
+            return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
+
+        }
+        productDetailsService.update(productDetails);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/chi-tiet-san-pham/hien-thi";
+    }
+
+
+
+
 }

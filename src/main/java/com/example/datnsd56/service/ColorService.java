@@ -1,12 +1,15 @@
 package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.ProductDetails;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ColorService {
     Page<Color> getAll(Integer page);
+
+    List<Color> getAllCL();
 
     void add(Color color);
 

@@ -254,27 +254,27 @@
                         <div class="card-header">
                             <h4>Chi tiết sản phẩm</h4>
                         </div>
-                        <form action="/chi-tiet-san-pham/update" method="post" th:object="${chitietsp}"
+                        <form th:action="@{'/admin/chi-tiet-san-pham/update/'+${id}}" method="post" th:object="${ctsp}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Sản phẩm</label>
                                     <select class="form-control" th:field="*{productId}">
-                                        <option th:each="product:${productlist}" th:value="${product.id}"
+                                        <option th:each="product:${products}" th:value="${product.id}"
                                                 th:text="${product.name}"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Màu sắc</label>
                                     <select class="form-control" th:field="*{colorId}">
-                                        <option th:each="color:${colorlist}" th:value="${color.id}"
+                                        <option th:each="color:${colors}" th:value="${color.id}"
                                                 th:text="${color.name}"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Size</label>
                                     <select class="form-control" th:field="*{sizeId}">
-                                        <option th:each="size:${sizelist}" th:value="${size.id}"
+                                        <option th:each="size:${sizes}" th:value="${size.id}"
                                                 th:text="${size.name}"></option>
                                     </select>
                                 </div>
@@ -295,12 +295,13 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios">
-                                        <label>
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0"
+                                               checked="checked">
+                                        <label class="form-check-label">
                                             Hoạt động
                                         </label>
-                                        <input type="radio" name="exampleRadios">
-                                        <label>
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                        <label class="form-check-label">
                                             Không hoạt động
                                         </label>
                                     </div>

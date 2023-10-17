@@ -1,12 +1,6 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ProductDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -50,8 +45,7 @@ public class ProductDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "size_id",referencedColumnName = "id")
     private Size sizeId;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "color_id",referencedColumnName = "id")
-    private Size colorId;
+    private Color colorId;
 }

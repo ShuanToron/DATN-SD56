@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductsServiceImpl implements ProductsService {
     @Autowired
@@ -18,6 +20,11 @@ public class ProductsServiceImpl implements ProductsService {
     public Page<Products> getAll(Integer page) {
         Pageable pageable = PageRequest.of(page, 5);
         return productsRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Products> getAllSP() {
+        return productsRepository.findAll();
     }
 
     @Override

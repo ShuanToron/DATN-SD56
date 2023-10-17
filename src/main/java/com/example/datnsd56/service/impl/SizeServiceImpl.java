@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SizeServiceImpl implements SizeService {
     @Autowired
@@ -18,6 +20,11 @@ public class SizeServiceImpl implements SizeService {
     public Page<Size> getAll(Integer page) {
         Pageable pageable = PageRequest.of(page, 5);
         return sizeRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Size> getAllSZ() {
+        return sizeRepository.findAll();
     }
 
     @Override

@@ -10,19 +10,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class ProductDetailsServiceImpl implements ProductDetailsService {
     @Autowired
     private ProductDetailsRepository productDetailsRepository;
 
     @Override
-    public Page<ProductDetails> getAll(Pageable pageable) {
+    public Page<ProductDetails> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo,5);
         return productDetailsRepository.findAll(pageable);
     }
 
     @Override
-    public void add(ProductDetails productDetails) {
-      productDetailsRepository.save(productDetails);
+    public List<ProductDetails> getAllCTSP() {
+        return productDetailsRepository.findAll();
+    }
+
+    @Override
+    public ProductDetails add(ProductDetails productDetails) {
+        productDetails.setCreateDate(LocalDate.now());
+        productDetails.setUpdateDate(LocalDate.now());
+        return productDetailsRepository.save(productDetails);
     }
 
     @Override
@@ -37,6 +48,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     public void update(ProductDetails productDetails) {
-     productDetailsRepository.save(productDetails);
+        productDetails.setCreateDate(LocalDate.now());
+        productDetails.setUpdateDate(LocalDate.now());
+        productDetailsRepository.save(productDetails);
     }
 }

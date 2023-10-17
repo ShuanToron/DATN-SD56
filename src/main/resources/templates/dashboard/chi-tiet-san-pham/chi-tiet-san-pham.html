@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+
+
+<!-- index.html  21 Nov 2019 03:44:50 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -250,63 +254,27 @@
                         <div class="card-header">
                             <h4>Chi tiết sản phẩm</h4>
                         </div>
-                        <form action="/productDetails/add" method="post" th:object="${ctsp}"
+                        <form action="/admin/chi-tiet-san-pham/add" method="post" th:object="${ctsp}"
                               onsubmit="return  confirm('Bạn có muốn thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Products</label>
-                                    <div class="input-group">
-                                        <select class="form-control" th:field="*{productId}">
-                                            <option th:each="product:${products}" th:value="${product.id}"
-                                                    th:text="${product.name}"></option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Color</label>
-                                    <div class="input-group">
-                                        <select class="form-control" th:field="*{colorId}">
-                                            <option th:each="color:${colors}" th:value="${color.id}"
-                                                    th:text="${color.name}"></option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Size</label>
-                                    <div class="input-group">
-                                        <select class="form-control" th:field="*{sizeId}">
-                                            <option th:each="size:${sizes}" th:value="${size.id}"
-                                                    th:text="${size.name}"></option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="popupDeGiay()">+
-                                            </button>
-                                        </div>
                                     <label>Sản phẩm</label>
                                     <select class="form-control" th:field="*{productId}">
-                                        <option th:each="product:${productlist}" th:value="${product.id}"
+                                        <option th:each="product:${products}" th:value="${product.id}"
                                                 th:text="${product.name}"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Màu sắc</label>
                                     <select class="form-control" th:field="*{colorId}">
-                                        <option th:each="color:${colorlist}" th:value="${color.id}"
+                                        <option th:each="color:${colors}" th:value="${color.id}"
                                                 th:text="${color.name}"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Size</label>
                                     <select class="form-control" th:field="*{sizeId}">
-                                        <option th:each="size:${sizelist}" th:value="${size.id}"
+                                        <option th:each="size:${sizes}" th:value="${size.id}"
                                                 th:text="${size.name}"></option>
                                     </select>
                                 </div>
@@ -320,25 +288,27 @@
                                 <div class="form-group">
                                     <label>Đơn giá</label>
                                     <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                        <input type="text" class="form-control" placeholder="Nhập Đơn Giá"
                                                th:field="*{sellPrice}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios">
-                                        <label>
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" th:value="0" checked/>
+                                        <label class="form-check-label">
                                             Hoạt động
                                         </label>
-                                        <input type="radio" name="exampleRadios">
-                                        <label>
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" th:value="1">
+                                        <label class="form-check-label">
                                             Không hoạt động
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                    <a th:href="@{/admin/chi-tiet-san-pham/add}">
+                                        <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -366,7 +336,7 @@
                                 <table class="table table-striped">
                                     <tr>
                                         <th>Sản phẩm</th>
-                                        <th>Màu sac</th>
+                                        <th>Màu sắc</th>
                                         <th>Size</th>
                                         <th>Số lượng</th>
                                         <th>Đơn giá</th>
@@ -375,20 +345,20 @@
                                     </tr>
                                     <tr th:each="list:${list}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
-                                        <td th:text="*{list.productId}"></td>
-                                        <td th:text="*{list.colorId}"></td>
-                                        <td th:text="*{list.sizeId}"></td>
+                                        <td th:text="${list.productId.name}"></td>
+                                        <td th:text="${list.colorId.name}"></td>
+                                        <td th:text="${list.sizeId.name}"></td>
                                         <td th:text="*{list.quantity}"></td>
                                         <td th:text="*{list.sellPrice}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status == 0 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <a th:href="@{/admin/chi-tiet-san-pham/delete(id=${list.code})}">
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
                                                         onsubmit="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{/admin/chi-tiet-san-pham/view-update(id=${list.code})}">
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/view-update/'+${list.id}}">
                                                 <button type="button" class="btn btn-success">
                                                     Cập nhật
                                                 </button>

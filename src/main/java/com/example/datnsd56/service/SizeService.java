@@ -1,10 +1,15 @@
 package com.example.datnsd56.service;
 
+import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Size;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface SizeService {
     Page<Size> getAll(Integer page);
+
+    List<Size> getAllSZ();
 
     void add(Size size );
 
