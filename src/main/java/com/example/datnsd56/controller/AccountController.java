@@ -2,6 +2,7 @@ package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Roles;
+import com.example.datnsd56.repository.AccountRepository;
 import com.example.datnsd56.service.AccountService;
 import com.example.datnsd56.service.RolesService;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private RolesService rolesService;
+    @Autowired
+    private AccountRepository accountRepository;
 
     //    @GetMapping("/hien-thi")
 //    public String get(Model model){
@@ -88,5 +92,17 @@ public class AccountController {
     public String delete(@PathVariable("id") Integer id){
         accountService.delete(id);
         return "redirect:/admin/account/hien-thi";
+    }
+    @GetMapping("search")
+    public String search(@RequestParam("phone") String phone, Model model, RedirectAttributes redirectAttributes) {
+        Page<Account> accounts = accountService.findByEmail(phone);
+        model.addAttribute("list", accounts);
+//        model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
+        model.addAttribute("account",new Account() );
+        model.addAttribute("roles",new Roles());
+        List<Roles> listr=rolesService.getAll();
+        model.addAttribute("rolelist",listr);
+//        redirectAttributes.addAttribute("phone", phone);
+        return "/dashboard/account/account";
     }
 }

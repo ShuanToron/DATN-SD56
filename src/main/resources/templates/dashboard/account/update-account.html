@@ -291,14 +291,14 @@
                                 <div class="form-group">
                                     <label>Ngày sinh</label>
                                     <input type="date" class="form-control" placeholder="Nhập ngày sinh"
-                                           th:field="*{birthdate}">
+                                           th:field="*{birthdate}" value="birthdate">
                                     <span th:if="${#fields.hasErrors('birthdate')}" style="color: red; font-size: 13px"
                                           th:errors="*{birthdate}"></span>
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Giới tính</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1">
+                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1" >
                                         <label class="form-check-label">
                                             Nữ
                                         </label>
@@ -327,7 +327,7 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1" >
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>

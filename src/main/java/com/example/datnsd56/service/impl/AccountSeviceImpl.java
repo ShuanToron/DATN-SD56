@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AccountSeviceImpl implements AccountService {
     @Autowired
@@ -41,5 +44,15 @@ public class AccountSeviceImpl implements AccountService {
     public void delete(Integer id) {
         Account account = detail(id);
         accountRepository.delete(account);
+    }
+    public Page<Account> findByEmail(String phone) {
+        Pageable page=PageRequest.of(0,5);
+    Page<Account> list=accountRepository.findAccountByPhone(phone,page);
+      return list;
+    }
+
+    @Override
+    public List<Account> get() {
+        return accountRepository.findAll();
     }
 }
