@@ -58,6 +58,18 @@ public class RolesController {
         return "redirect:/admin/roles/hien-thi";
 
     }
+    @PostMapping("/add1")
+    public String add1(@Valid @ModelAttribute("roles") Roles roles, BindingResult result, Model model, HttpSession session){
+        if(result.hasErrors()){
+            model.addAttribute("list",rolesService.getAllbypage(Pageable.unpaged()));
+            return "/dashboard/roles/roles";
+
+        }
+        rolesService.add(roles);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/account/hien-thi";
+
+    }
     @PostMapping("/update/{id}")
     public String update( @Valid @ModelAttribute("roles") Roles roles, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {
         if (result.hasErrors()) {
