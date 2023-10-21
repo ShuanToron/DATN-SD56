@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface ChatLieuService {
-    Material addChatLieu(Material material);
+public interface MaterialService {
+    Material add(Material material);
 
-    void removeChatLieu(Integer id);
+    void remove(Integer id);
 
     Page<Material> pageMaterial(Integer pageNo);
 
-    List<Material> getAllChatLieu();
+    List<Material> getAllMater();
+
+    Material getById(Integer id);
+
+    void update(Material material);
 }

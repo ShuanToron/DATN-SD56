@@ -1,8 +1,8 @@
 package com.example.datnsd56.service.impl;
 
 import com.example.datnsd56.entity.Material;
-import com.example.datnsd56.repository.ChatLieuRepository;
-import com.example.datnsd56.service.ChatLieuService;
+import com.example.datnsd56.repository.MaterialRepository;
+import com.example.datnsd56.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,19 +13,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class ChatLieuServiceImpl implements ChatLieuService {
+public class MaterialServiceImpl implements MaterialService {
     @Autowired
-    private ChatLieuRepository repository;
+    private MaterialRepository repository;
 
     @Override
-    public Material addChatLieu(Material material) {
+    public Material add(Material material) {
         material.setCreateDate(LocalDate.now());
         material.setUpdateDate(LocalDate.now());
         return repository.save(material);
     }
 
     @Override
-    public void removeChatLieu(Integer id) {
+    public void remove(Integer id) {
         Material material = repository.findById(id).orElse(null);
         repository.delete(material);
     }
@@ -38,7 +38,22 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     }
 
     @Override
-    public List<Material> getAllChatLieu() {
+    public List<Material> getAllMater() {
         return repository.findAll();
+    }
+
+    @Override
+    public Material getById(Integer id) {
+        Material material = repository.findById(id).orElse(null);
+        return material;
+    }
+
+    @Override
+    public void update(Material material) {
+        material.setCreateDate(LocalDate.now());
+        material.setUpdateDate(LocalDate.now());
+
+
+        repository.save(material);
     }
 }

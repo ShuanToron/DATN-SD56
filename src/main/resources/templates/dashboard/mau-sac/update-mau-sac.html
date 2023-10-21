@@ -254,8 +254,8 @@
                         <div class="card-header">
                             <h4>Cập nhật màu sắc</h4>
                         </div>
-                        <form th:action="@{/mau-sac/update(id=${chatlieu.code})}" method="post"
-                              th:object="${mausac}"
+                        <form th:action="@{'/admin/mau-sac/update/'+${id}}" method="post"
+                              th:object="${color}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -290,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <a th:href="@{/mau-sac/update(id=${chatlieu.code})}">
+                                    <a th:href="@{'/mau-sac/update/'+${id}}">
                                         <button class="btn btn-primary mr-1" type="submit">Cập nhật</button>
                                     </a>
                                 </div>
