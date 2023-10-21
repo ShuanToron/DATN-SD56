@@ -254,11 +254,11 @@
                         <div class="card-header">
                             <h4>Thương hiệu</h4>
                         </div>
-                        <form action="/thuong-hieu/add" method="post" th:object="${thuonghieu}"
+                        <form action="/admin/thuong-hieu/add" method="post" th:object="${brand}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Mã màu sắc</label>
+                                    <label>Mã thương hiệu</label>
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control" placeholder="Nhập mã màu sắc"
                                                th:field="*{code}">
@@ -267,7 +267,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tên màu sắc</label>
+                                    <label>Tên thương hiệu</label>
                                     <input type="text" class="form-control" placeholder="Nhập tên màu sắc"
                                            th:field="*{name}">
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 13px"
@@ -290,6 +290,8 @@
 
                                 </div>
                                 <div class="form-group">
+                                    <a class="btn btn-primary" type="button" href="/admin/san-pham/hien-thi"><-
+                                    </a>
                                     <a th:href="@{/admin/thuong-hieu/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                     </a>
@@ -338,13 +340,13 @@
                                         <td th:text="*{list.name}"></td>
                                         <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <a th:href="@{/admin/thuong-hieu/delete(id=${list.code})}">
+                                            <a th:href="@{'/admin/thuong-hieu/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
                                                         onsubmit="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{/admin/thuong-hieu/view-update(id=${list.code})}">
+                                            <a th:href="@{'/admin/thuong-hieu/view-update/'+${list.id}}">
                                                 <button type="button" class="btn btn-success">
                                                     Cập nhật
                                                 </button>
@@ -358,21 +360,18 @@
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
                                     <li class="page-item" th:if="${currentPage !=0}">
-                                        <a class="page-link"
-                                           th:href="@{'/admin/thuong-hieu/page/'+ ${ currentPage - 1}}"><i
+                                        <a class="page-link" th:href="@{/admin/thuong-hieu/hien-thi(page=${currentPage - 1})}"><i
                                                 class="fas fa-chevron-left"></i></a>
                                     </li>
                                     <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
                                         th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                        <a class="page-link" th:href="@{'/admin/psg/thuong-hieu/'+${i - 1}}">
+                                        <a class="page-link" th:href="@{/admin/thuong-hieu/hien-thi(page=${i - 1})}">
                                             <span th:text="${i}"></span>
                                         </a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                                     <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                        <a class="page-link"
-                                           th:href="@{'/admin/thuong-hieu/page/'+ ${ currentPage + 1}}"><i
-                                                class="fas fa-chevron-right"></i></a>
+                                        <a class="page-link" th:href="@{/admin/thuong-hieu/hien-thi(page=${currentPage + 1})}"><i
+                                                class="fas fa-chevron-rightgslgfds.f"></i></a>
                                     </li>
                                 </ul>
                             </nav>

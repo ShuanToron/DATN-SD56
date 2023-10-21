@@ -1,11 +1,15 @@
 package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.Category;
+import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.Material;
 import org.springframework.data.domain.Page;
 
-public interface CategoryService {
-    Page<Category> getAll(Integer page);
+import java.util.List;
 
+public interface CategoryService {
+    Page<Category> getAll(Integer pageNo);
+    List<Category> getAllCate();
     void add(Category category);
 
     Category getById(Integer id);

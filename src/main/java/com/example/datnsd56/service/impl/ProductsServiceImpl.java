@@ -9,41 +9,52 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class ProductsServiceImpl implements ProductsService {
     @Autowired
-    private ProductsRepository productsRepository;
-
+    private ProductsRepository repository;
     @Override
-    public Page<Products> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
-        return productsRepository.findAll(pageable);
+    public Page<Products> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<Products> page1 = repository.findAll(pageable);
+        return page1;
+
     }
 
     @Override
-    public List<Products> getAllSP() {
-        return productsRepository.findAll();
+    public List<Products> getAllPro() {
+        return repository.findAll();
     }
 
     @Override
     public void add(Products products) {
-        productsRepository.save(products);
+        products.setCreateDate(LocalDate.now());
+        products.setUpdateDate(LocalDate.now());
+
+        repository.save(products);
     }
 
     @Override
     public Products getById(Integer id) {
-        return productsRepository.findById(id).orElse(null);
+        Products products = repository.findById(id).orElse(null);
+        return products;
     }
 
     @Override
     public void delete(Integer id) {
-        productsRepository.deleteById(id);
+        Products products = getById(id);
+        repository.delete(products);
     }
 
     @Override
     public void update(Products products) {
+        products.setCreateDate(LocalDate.now());
+        products.setUpdateDate(LocalDate.now());
 
+
+        repository.save(products);
     }
 }

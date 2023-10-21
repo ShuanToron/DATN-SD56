@@ -7,37 +7,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import java.time.LocalDate;
+import java.util.List;
+
+@Component
 public class MaterialServiceImpl implements MaterialService {
     @Autowired
-    private MaterialRepository materialRepository;
+    private MaterialRepository repository;
 
     @Override
-    public Page<Material> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
-        return materialRepository.findAll(pageable);
+    public Material add(Material material) {
+        material.setCreateDate(LocalDate.now());
+        material.setUpdateDate(LocalDate.now());
+        return repository.save(material);
     }
 
     @Override
-    public void add(Material material) {
-        materialRepository.save(material);
+    public void remove(Integer id) {
+        Material material = repository.findById(id).orElse(null);
+        repository.delete(material);
+    }
+
+    @Override
+    public Page<Material> pageMaterial(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<Material> page = repository.findAll(pageable);
+        return page;
+    }
+
+    @Override
+    public List<Material> getAllMater() {
+        return repository.findAll();
     }
 
     @Override
     public Material getById(Integer id) {
-        return materialRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        materialRepository.deleteById(id);
-
+        Material material = repository.findById(id).orElse(null);
+        return material;
     }
 
     @Override
     public void update(Material material) {
-        materialRepository.save(material);
+        material.setCreateDate(LocalDate.now());
+        material.setUpdateDate(LocalDate.now());
+
+
+        repository.save(material);
     }
 }

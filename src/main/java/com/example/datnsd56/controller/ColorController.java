@@ -2,51 +2,75 @@ package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.service.ColorService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/color")
+@Controller
+@RequestMapping("/admin/mau-sac")
 public class ColorController {
+    @Qualifier("colorServiceImpl")
     @Autowired
-    private ColorService colorService;
+    private ColorService service;
 
-    @GetMapping("getAll")
-    public List<Color> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<Color> list = colorService.getAll(page).getContent();
-        return list;
+    @GetMapping("/hien-thi")
+    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("color", new Color());
+        Page<Color> page = service.getAll(pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/mau-sac/mau-sac";
     }
 
-    @PostMapping("add")
-    public void add(@RequestBody Color color) {
-        colorService.add(color);
+    @GetMapping("/view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        Color color = service.getById(id);
+        model.addAttribute("color", color);
+        return "/dashboard/mau-sac/update-mau-sac";
     }
 
-    @GetMapping("detail/{id}")
-    public Color detail(@PathVariable("id") Integer id) {
-        Color color = colorService.getById(id);
-        return color;
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("color") Color color, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            model.addAttribute("color", color);
+            return "/dashboard/mau-sac/update-mau-sac";
 
+        }
+        service.update(color);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/mau-sac/hien-thi";
     }
 
-    @PutMapping("update/{id}")
-    public void update(@RequestBody Color color) {
-        colorService.update(color);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        service.delete(id);
+        return "redirect:/admin/mau-sac/hien-thi";
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        colorService.delete(id);
-    }
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("color") Color color, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Color> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/mau-sac/mau-sac";
+        }
+        service.add(color);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/mau-sac/hien-thi";
 
+    }
 }

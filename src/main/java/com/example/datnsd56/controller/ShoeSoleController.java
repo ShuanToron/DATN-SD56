@@ -1,51 +1,78 @@
 package com.example.datnsd56.controller;
 
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.ShoeSole;
-import com.example.datnsd56.service.ShoeSoleSevice;
+import com.example.datnsd56.service.ColorService;
+import com.example.datnsd56.service.ShoeSoleService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/shoe_sole")
+@Controller
+@RequestMapping("/admin/de-giay")
 public class ShoeSoleController {
+    @Qualifier("shoeSoleServiceImpl")
     @Autowired
-    private ShoeSoleSevice shoeSoleSevice;
+    private ShoeSoleService service;
 
-    @GetMapping("getAll")
-    public List<ShoeSole> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<ShoeSole> list = shoeSoleSevice.getAll(page).getContent();
-        return list;
+    @GetMapping("/hien-thi")
+    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("shoeSole", new ShoeSole());
+        Page<ShoeSole> page = service.getAll(pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/de-giay/de-giay";
     }
 
-    @PostMapping("add")
-    public void add(@RequestBody ShoeSole shoeSole) {
-        shoeSoleSevice.add(shoeSole);
+    @GetMapping("/view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        ShoeSole shoeSole = service.getById(id);
+        model.addAttribute("shoeSole", shoeSole);
+        return "/dashboard/de-giay/update-de-giay";
     }
 
-    @GetMapping("detail/{id}")
-    public ShoeSole detail(@PathVariable("id") Integer id) {
-        ShoeSole shoeSole = shoeSoleSevice.getById(id);
-        return shoeSole;
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            model.addAttribute("shoeSole", shoeSole);
+            return "/dashboard/de-giay/update-de-giay";
 
+        }
+        service.update(shoeSole);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/de-giay/hien-thi";
     }
 
-    @PutMapping("update/{id}")
-    public void update(@RequestBody ShoeSole shoeSole) {
-        shoeSoleSevice.update(shoeSole);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        service.delete(id);
+        return "redirect:/admin/de-giay/hien-thi";
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        shoeSoleSevice.delete(id);
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<ShoeSole> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/de-giay/de-giay";
+        }
+        service.add(shoeSole);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/de-giay/hien-thi";
+
     }
 }

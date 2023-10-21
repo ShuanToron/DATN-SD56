@@ -21,9 +21,9 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @NotBlank(message = "Không được để trống")
-    @Column(name = "code")
-    private String code;
+//    @NotBlank(message = "Không được để trống")
+//    @Column(name = "code")
+//    private String code;
     @NotBlank(message = "Không được để trống")
     @Column(name = "name")
     private String name;

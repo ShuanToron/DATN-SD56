@@ -1,51 +1,77 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Category;
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.service.CategoryService;
+import com.example.datnsd56.service.ColorService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/category")
+@Controller
+@RequestMapping("/admin/loai-giay")
 public class CategoryController {
+    @Qualifier("categoryServiceImpl")
     @Autowired
-    private CategoryService categoryService;
+    private CategoryService service;
 
-    @GetMapping("getAll")
-    public List<Category> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<Category> list = categoryService.getAll(page).getContent();
-        return list;
+    @GetMapping("/hien-thi")
+    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("category", new Category());
+        Page<Category> page = service.getAll(pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/loai-giay/loai-giay";
     }
 
-    @PostMapping("add")
-    public void add(@RequestBody Category category) {
-        categoryService.add(category);
+    @GetMapping("/view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        Category category = service.getById(id);
+        model.addAttribute("category", category);
+        return "/dashboard/loai-giay/update-loai-giay";
     }
 
-    @GetMapping("detail/{id}")
-    public Category detail(@PathVariable("id") Integer id) {
-        Category category = categoryService.getById(id);
-        return category;
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            model.addAttribute("category", category);
+            return "/dashboard/loai-giay/update-loai-giay";
 
+        }
+        service.update(category);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/loai-giay/hien-thi";
     }
 
-    @PutMapping("update/{id}")
-    public void update(@RequestBody Category category) {
-        categoryService.update(category);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        service.delete(id);
+        return "redirect:/admin/loai-giay/hien-thi";
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        categoryService.delete(id);
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Category> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/loai-giay/update-loai-giay";
+        }
+        service.add(category);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/loai-giay/hien-thi";
+
     }
 }
