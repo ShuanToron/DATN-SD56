@@ -449,7 +449,7 @@
                                         <td th:text="*{list.password}"></td>
                                         <td th:text="${list != null ? (list.role_id != null ? list.role_id.name : '') : ''}"></td>
                                         <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
-                                        <td th:text="${list.gender  ? 'Nam' : 'Nữ'}"></td>
+                                        <td th:text="${list.gender ==1  ? 'Nam' : 'Nữ'}"></td>
 
                                         <td th:text="*{list.birthdate}"></td>
                                         <td th:text="*{list.phone}"></td>

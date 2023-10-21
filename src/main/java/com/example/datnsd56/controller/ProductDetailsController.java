@@ -38,8 +38,8 @@ public class ProductDetailsController {
     @GetMapping("hien-thi")
     public String getAllBypage(Model model, @RequestParam(defaultValue = "0",name = "pageNo") Integer pagaNo){
         Page<ProductDetails> page= productDetailsService.getAll(pagaNo);
-        List<Products> products = productsService.getAllSP();
-        List<Color> colors = colorService.getAllCL();
+        List<Products> products = productsService.getAllPro();
+        List<Color> colors = colorService.getAllColor();
         List<Size> sizes =  sizeService.getAllSZ();
 
         model.addAttribute("list", page);
@@ -59,8 +59,8 @@ public class ProductDetailsController {
     public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result , Model model, HttpSession session){
         if(result.hasErrors()){
             Page<ProductDetails> productDetail= productDetailsService.getAll(0);
-            List<Products> products = productsService.getAllSP();
-            List<Color> colors = colorService.getAllCL();
+            List<Products> products = productsService.getAllPro();
+            List<Color> colors = colorService.getAllColor();
             List<Size> sizes =  sizeService.getAllSZ();
             model.addAttribute("list", productDetail);
             model.addAttribute("products", products);
@@ -81,8 +81,8 @@ public class ProductDetailsController {
     public String detail(@PathVariable("id") Integer id, Model model) {
         ProductDetails productDetails= productDetailsService.getById(id);
         model.addAttribute("ctsp", productDetails);
-        List<Products> products = productsService.getAllSP();
-        List<Color> colors = colorService.getAllCL();
+        List<Products> products = productsService.getAllPro();
+        List<Color> colors = colorService.getAllColor();
         List<Size> sizes =  sizeService.getAllSZ();
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
@@ -100,8 +100,8 @@ public class ProductDetailsController {
     public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
         if (result.hasErrors()) {
             Page<ProductDetails> productDetail= productDetailsService.getAll(0);
-            List<Products> products = productsService.getAllSP();
-            List<Color> colors = colorService.getAllCL();
+            List<Products> products = productsService.getAllPro();
+            List<Color> colors = colorService.getAllColor();
             List<Size> sizes =  sizeService.getAllSZ();
             model.addAttribute("productDetails", productDetail);
             model.addAttribute("products", products);
@@ -127,9 +127,9 @@ public class ProductDetailsController {
             session.removeAttribute("successMessage");
         }
 
-        Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(quantity, sellPrice, 5);
-        List<Products> products = productsService.getAllSP();
-        List<Color> colors = colorService.getAllCL();
+        Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(quantity, sellPrice);
+        List<Products> products = productsService.getAllPro();
+        List<Color> colors = colorService.getAllColor();
         List<Size> sizes =  sizeService.getAllSZ();
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);

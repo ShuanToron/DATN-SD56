@@ -30,8 +30,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Page<ProductDetails> search( Integer quantity, Integer sellPrice,Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo,5);
+    public Page<ProductDetails> search( Integer quantity, Integer sellPrice) {
+        Pageable pageable = PageRequest.of(0,5);
         return productDetailsRepository.search(quantity,sellPrice,pageable);
     }
 

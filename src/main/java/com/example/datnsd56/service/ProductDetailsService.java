@@ -12,7 +12,7 @@ public interface ProductDetailsService {
 
     List<ProductDetails> getAllCTSP();
 
-    Page<ProductDetails> search(Integer quantity,Integer sellPrice,Integer pageNo);
+    Page<ProductDetails> search(Integer quantity,Integer sellPrice);
 
     ProductDetails add(ProductDetails productDetails );
 

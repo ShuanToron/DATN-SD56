@@ -34,7 +34,7 @@ public class Account {
 //    private String username;
 
 @NotBlank(message = "Không đuộc để trống!")
-    @Column(name = "passwords")
+    @Column(name = "password")
     private String password;
 
     @NotBlank(message = "Không đuộc để trống!")
