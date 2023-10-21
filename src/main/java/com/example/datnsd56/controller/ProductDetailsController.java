@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ProductDetailsController {
         List<Products> products = productsService.getAllSP();
         List<Color> colors = colorService.getAllCL();
         List<Size> sizes =  sizeService.getAllSZ();
-//        model.addAttribute("totalPages", page1.getTotalPages());
+
         model.addAttribute("list", page);
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
@@ -102,7 +103,7 @@ public class ProductDetailsController {
             List<Products> products = productsService.getAllSP();
             List<Color> colors = colorService.getAllCL();
             List<Size> sizes =  sizeService.getAllSZ();
-            model.addAttribute("productDetails", productDetails);
+            model.addAttribute("productDetails", productDetail);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
@@ -113,6 +114,39 @@ public class ProductDetailsController {
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
+
+    @GetMapping("search")
+    public String search(
+                         @RequestParam(value = "quantity", required = false) Integer quantity,
+                         @RequestParam(value = "sellPrice", required = false) Integer sellPrice,
+                         Model model, HttpSession session) {
+
+        if (session.getAttribute("successMessage") != null) {
+            String successMessage = (String) session.getAttribute("successMessage");
+            model.addAttribute("successMessage", successMessage);
+            session.removeAttribute("successMessage");
+        }
+
+        Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(quantity, sellPrice, 5);
+        List<Products> products = productsService.getAllSP();
+        List<Color> colors = colorService.getAllCL();
+        List<Size> sizes =  sizeService.getAllSZ();
+        model.addAttribute("products", products);
+        model.addAttribute("colors", colors);
+        model.addAttribute("sizes", sizes);
+        model.addAttribute("totalPages", ketQuaTimKiem.getTotalPages());
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("productlist",new Products());
+        model.addAttribute("colorlist",new Color());
+        model.addAttribute("sizelist",new Size());
+        model.addAttribute("list", ketQuaTimKiem);
+        model.addAttribute("ctsp", new ProductDetails()); // Add this line to set the "att" attribute in the model
+
+        // Add other model attributes if required
+
+        return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
+    }
+
 
 
 

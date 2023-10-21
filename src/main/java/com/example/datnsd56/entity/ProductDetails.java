@@ -1,6 +1,9 @@
 package com.example.datnsd56.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +27,7 @@ public class ProductDetails {
     private Integer id;
 
     @Column(name = "quantity")
+    @NotNull(message = "Không đuộc để trống!")
     private Integer quantity;
 
     @Column(name = "create_date")
@@ -36,6 +40,7 @@ public class ProductDetails {
     private Boolean status;
 
     @Column(name = "sell_price")
+    @Min(value = 1,message = "lon hon 0")
     private BigDecimal sellPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)

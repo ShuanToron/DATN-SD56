@@ -283,6 +283,8 @@
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control" placeholder="Nhập số lượng"
                                                th:field="*{quantity}">
+                                        <span th:if="${#fields.hasErrors('quantity')}" style="color: red; font-size: 13px"
+                                              th:errors="*{quantity}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -290,16 +292,19 @@
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control" placeholder="Nhập Đơn Giá"
                                                th:field="*{sellPrice}">
+                                        <span th:if="${#fields.hasErrors('sellPrice')}" style="color: red; font-size: 13px"
+                                              th:errors="*{sellPrice}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" th:value="0" checked/>
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="true"
+                                               checked="true">
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" th:value="1">
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="false">
                                         <label class="form-check-label">
                                             Không hoạt động
                                         </label>
@@ -320,12 +325,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-header-form">
-                                <form>
+                                <form action="/admin/chi-tiet-san-pham/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i>
-                                            </button>
+                                        <input name="quantity" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/chi-tiet-san-pham/search/{quantity}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -343,14 +350,14 @@
                                         <th>Trạng thai</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr th:each="list:${list}">
+                                    <tr th:each="list:${list.content}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
                                         <td th:text="${list.productId.name}"></td>
                                         <td th:text="${list.colorId.name}"></td>
                                         <td th:text="${list.sizeId.name}"></td>
                                         <td th:text="*{list.quantity}"></td>
                                         <td th:text="*{list.sellPrice}"></td>
-                                        <td th:text="${list.status == 0 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status == true  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/chi-tiet-san-pham/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
@@ -369,21 +376,23 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1"><i
-                                                class="fas fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span
-                                            class="sr-only">(current)</span></a></li>
+                            <nav aria-label="Page navigation example">
+
+                                <ul class="pagination">
                                     <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                        <a class="page-link" th:if="${list.hasPrevious()}"
+                                           th:href="@{/admin/chi-tiet-san-pham/hien-thi(pageNo=${list.number -1})}"> <span
+                                                aria-hidden="true">&laquo;</span> </a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">
+                                        <a class="page-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi(pageNO=${pageNumber})}"
+                                           th:text="${pageNumber+1}"></a>
+                                    </li>
+
                                     <li class="page-item">
-                                        <a class="page-link" href="#"><i
-                                                class="fas fa-chevron-right"></i></a>
+                                        <a class="page-link" th:if="${list.hasNext()}"
+                                           th:href="@{/admin/account/hien-thi(page=${list.number + 1})}"> <span
+                                                aria-hidden="true">&raquo;</span></a>
                                     </li>
                                 </ul>
                             </nav>

@@ -12,6 +12,8 @@ public interface ProductDetailsService {
 
     List<ProductDetails> getAllCTSP();
 
+    Page<ProductDetails> search(Integer quantity,Integer sellPrice,Integer pageNo);
+
     ProductDetails add(ProductDetails productDetails );
 
     ProductDetails getById(Integer id);
