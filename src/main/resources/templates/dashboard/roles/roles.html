@@ -230,14 +230,14 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="image"></i><span>Voucher</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/voucher/hien-thi}">Voucher</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/roles/hien-thi}">Voucher</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
                         </ul>
@@ -253,9 +253,16 @@
                         <div class="card-header">
                             <h4>Chức vụ</h4>
                         </div>
-                        <form action="/admin/chuc-vu/add" method="post" th:object="${chucvu}"
+                        <form action="/admin/roles/add" method="post" th:object="${roles}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
+<!--                                <div class="form-group">-->
+<!--                                    <label>Mã chức vụ</label>-->
+<!--                                    <input type="text" class="form-control" placeholder="Nhập tên chất liệu"-->
+<!--                                           th:field="*{code}">-->
+<!--                                    <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 10px"-->
+<!--                                          th:errors="*{code}"></span>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <label>Tên chức vụ</label>
                                     <input type="text" class="form-control" placeholder="Nhập tên chất liệu"
@@ -278,7 +285,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <a th:href="@{/admin/chuc-vu/add}">
+                                    <a th:href="@{/admin/roles/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                     </a>
                                 </div>
@@ -307,7 +314,10 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
+
                                         <!--                                        <th>STT</th>-->
+<!--                                        <th>Mã</th>-->
+
                                         <th>Chức vụ</th>
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
@@ -315,17 +325,19 @@
                                     <!--                                    <tr th:each="index,list:${list}">-->
                                     <tr th:each="list:${list}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
+<!--                                        <td th:text="*{list.code}"></td>-->
+
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <a th:href="@{/admin/chuc-vu/delete(id=${list.code})}">
-                                                <button type="button" class="btn btn-danger"
-                                                        onsubmit="return  confirm('Bạn có xoá không?')">
+                                            <a th:href="@{'/admin/roles/delete/'+${list.id}}">
+                                                <button type="submit" class="btn btn-danger"
+                                                        onchange="return confirm('bạn có muốn xóa không')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{/admin/chuc-vu/view-update(id=${list.code})}">
-                                                <button type="button" class="btn btn-success">
+                                            <a th:href="@{'/admin/roles/view-update/'+${list.id}}">
+                                                <button type="submit" class="btn btn-success">
                                                     Cập nhật
                                                 </button>
                                             </a>
@@ -334,27 +346,47 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item" th:if="${currentPage !=0}">
-                                        <a class="page-link" th:href="@{'/admin/chuc-vu/hien-thi/page/'+ ${ currentPage - 1}}"><i
-                                                class="fas fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
-                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                        <a class="page-link" th:href="@{'/admin/chuc-vu/hien-thi/page/'+${i - 1}}">
-                                            <span th:text="${i}"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                        <a class="page-link" th:href="@{'/admin/chuc-vu/hien-thi/page/'+ ${ currentPage + 1}}"><i
-                                                class="fas fa-chevron-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+<!--                        <div class="card-footer text-right">-->
+<!--                            <nav class="d-inline-block">-->
+<!--                                <ul class="pagination mb-0">-->
+<!--                                    <li class="page-item" th:if="${currentPage !=0}">-->
+<!--                                        <a class="page-link" th:href="@{'/admin/roles/hien-thi/page/'+ ${ currentPage - 1}}"><i-->
+<!--                                                class="fas fa-chevron-left"></i></a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"-->
+<!--                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
+<!--                                        <a class="page-link" th:href="@{'/admin/roles/hien-thi/page/'+${i - 1}}">-->
+<!--                                            <span th:text="${i}"></span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                                        <a class="page-link" th:href="@{'/admin/roles/hien-thi/page/'+ ${ currentPage + 1}}"><i-->
+<!--                                                class="fas fa-chevron-right"></i></a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                        <nav aria-label="Page navigation example">
+
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${list.hasPrevious()}"
+                                       th:href="@{/admin/roles/hien-thi(page=${list.number -1})}"> <span
+                                            aria-hidden="true">&laquo;</span> </a>
+                                </li>
+                                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">
+                                    <a class="page-link" th:href="@{/admin/roles/hien-thi(page=${pageNumber})}"
+                                       th:text="${pageNumber+1}"></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${list.hasNext()}"
+                                       th:href="@{/admin/roles/hien-thi(page=${list.number + 1})}"> <span
+                                            aria-hidden="true">&raquo;</span></a>
+                                </li>
+                            </ul>
+                        </nav>
                 </div>
             </div>
         </div>

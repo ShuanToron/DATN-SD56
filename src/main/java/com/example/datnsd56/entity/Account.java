@@ -1,62 +1,74 @@
 package com.example.datnsd56.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-
-@Entity
-@Table(name = "Account")
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
+@Entity
+@Table(name = "account")
 public class Account {
+
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "email")
-    private String email;
 
-    @Column(name = "password")
+
+//    @Column(name = "username")
+//    private String username;
+
+@NotBlank(message = "Không đuộc để trống!")
+    @Column(name = "passwords")
     private String password;
+
+    @NotBlank(message = "Không đuộc để trống!")
 
     @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "gender")
-    private Boolean gender;
-
-    @Column(name = "birthdate")
-    private LocalDate birthdate;
-
-    @Column(name = "phone")
-    private String phone;
 
     @Column(name = "status")
     private Boolean status;
 
+
     @Column(name = "create_date")
-    private LocalDate createDate;
+    private Date createDate;
+
 
     @Column(name = "update_date")
-    private LocalDate updateDate;
+    private Date updateDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id",referencedColumnName = "id")
-    private Roles roleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id ",referencedColumnName = "id")
+    private Roles role_id;
+    @NotBlank(message = "Không đuộc để trống!")
+
+    @Column(name = "email")
+    private String email;
+    @NotBlank(message = "Không đuộc để trống!")
+    @Pattern(regexp="\\d{10}", message="Số điện thoại phải có 10 chữ số")
+
+    @Column(name = "phone")
+    private String phone;
+@Column(name = "gender")
+    private Boolean gender;
+    @NotNull (message = "Không đuộc để trống!")
+@Column(name = "birthdate")
+    private LocalDate birthdate;
 }
