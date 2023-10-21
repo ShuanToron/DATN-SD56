@@ -238,7 +238,7 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
                         </ul>
@@ -254,7 +254,7 @@
                         <div class="card-header">
                             <h4>Voucher</h4>
                         </div>
-                        <form action="/account/update" method="post" th:object="${account}"
+                        <form th:action="@{'/admin/account/update/'+${id}}" method="post" th:object="${account}"
                               onsubmit="return  confirm('Bạn có cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -276,7 +276,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khâu</label>
-                                    <input type="password" class="form-control"
+                                    <input type="text" class="form-control" placeholder="Nhập mật khẩu"
                                            th:field="*{password}">
                                     <span th:if="${#fields.hasErrors('password')}" style="color: red; font-size: 13px"
                                           th:errors="*{password}"></span>
@@ -290,15 +290,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ngày sinh</label>
-                                    <input type="date" class="form-control"
-                                           th:field="*{birthdate}">
+                                    <input type="date" class="form-control" placeholder="Nhập ngày sinh"
+                                           th:field="*{birthdate}" value="birthdate">
                                     <span th:if="${#fields.hasErrors('birthdate')}" style="color: red; font-size: 13px"
                                           th:errors="*{birthdate}"></span>
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Giới tính</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1">
+                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1" >
                                         <label class="form-check-label">
                                             Nữ
                                         </label>
@@ -313,7 +313,7 @@
                                 <div class="form-group">
                                     <label>Chức vụ</label>
                                     <div class="input-group">
-                                        <select class="form-control" th:field="*{roleId}">
+                                        <select class="form-control" th:field="*{role_id}">
                                             <option th:each="role:${rolelist}" th:value="${role.id}"
                                                     th:text="${role.name}"></option>
                                         </select>
@@ -327,7 +327,7 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1" >
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>
@@ -347,45 +347,45 @@
                                 </div>
                             </div>
                         </form>
-                        <div id="formChucVu" class="popup-form">
-                            <div class="card-body">
-                                <div class="section-title mt-0">Thêm chức vụ</div>
-                                <form action="/chuc-vu/add" method="post" th:object="${chucvu}"
-                                      onsubmit="return  confirm('Bạn có thêm không?')">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label>Tên loại giày</label>
-                                            <input type="text" class="form-control" placeholder="Nhập chuc vu"
-                                                   th:field="*{name}">
-                                            <span th:if="${#fields.hasErrors('name')}"
-                                                  style="color: red; font-size: 13px"
-                                                  th:errors="*{name}"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-block">Trạng thái</label>
-                                            <div class="form-check">
-                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
-                                                <label class="form-check-label">
-                                                    Hoạt động
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                                <label class="form-check-label">
-                                                    Không hoạt động
-                                                </label>
-                                            </div>
+<!--                        <div id="formChucVu" class="popup-form">-->
+<!--                            <div class="card-body">-->
+<!--                                <div class="section-title mt-0">Thêm chức vụ</div>-->
+<!--                                <form action="/chuc-vu/add" method="post" th:object="${chucvu}"-->
+<!--                                      onsubmit="return  confirm('Bạn có thêm không?')">-->
+<!--                                    <div class="card-body">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Tên loại giày</label>-->
+<!--                                            <input type="text" class="form-control" placeholder="Nhập chuc vu"-->
+<!--                                                   th:field="*{name}">-->
+<!--                                            <span th:if="${#fields.hasErrors('name')}"-->
+<!--                                                  style="color: red; font-size: 13px"-->
+<!--                                                  th:errors="*{name}"></span>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="d-block">Trạng thái</label>-->
+<!--                                            <div class="form-check">-->
+<!--                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">-->
+<!--                                                <label class="form-check-label">-->
+<!--                                                    Hoạt động-->
+<!--                                                </label>-->
+<!--                                            </div>-->
+<!--                                            <div class="form-check">-->
+<!--                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                                <label class="form-check-label">-->
+<!--                                                    Không hoạt động-->
+<!--                                                </label>-->
+<!--                                            </div>-->
 
-                                        </div>
-                                        <div class="form-group">
-                                            <a th:href="@{/admin/chuc-vu/add}">
-                                                <button class="btn btn-primary mr-1" type="submit">Thêm</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <a th:href="@{/admin/chuc-vu/add}">-->
+<!--                                                <button class="btn btn-primary mr-1" type="submit">Thêm</button>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
