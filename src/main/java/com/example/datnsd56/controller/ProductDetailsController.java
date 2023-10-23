@@ -51,6 +51,7 @@ public class ProductDetailsController {
         model.addAttribute("currentPage", pagaNo);
         model.addAttribute("ctsp",new ProductDetails());
         model.addAttribute("color",new Color());
+        model.addAttribute("size", new Size());
 
 //        model.addAttribute("currentPage", pageNo);
         return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";

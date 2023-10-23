@@ -218,7 +218,7 @@
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chat-lieu/hien-thi}">Chất liệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Kích Cỡ</a></li>
-                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Loại giày</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/loai-giay/hien-thi}">Loại giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi}">Chi tiết sản phẩm</a>
                             </li>
                         </ul>
@@ -258,7 +258,7 @@
                         <div class="card-header">
                             <h4>Cập nhật Kích Cỡ</h4>
                         </div>
-                        <form action="/admin/kich-co/add" method="post" th:object="${size}"
+                        <form th:action="@{'/admin/kich-co/update/'+${id}}" method="post" th:object="${size}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -294,9 +294,7 @@
                                 <div class="form-group">
                                     <!--                                        <a class="btn btn-primary" type="button" href="/admin/kich-co/hien-thi"><- -->
                                     <!--                                        </a>-->
-                                    <a th:href="@{/admin/kich-co/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Cập Nhật</button>
-                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -306,33 +304,33 @@
 
 
         </div>
-        <div class="card-footer text-right">
-            <nav class="d-inline-block">
-                <ul class="pagination mb-0">
-                    <li class="page-item" th:if="${currentPage != 0}">
-                        <a class="page-link"
-                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage - 1})}">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                    </li>
+<!--        <div class="card-footer text-right">-->
+<!--            <nav class="d-inline-block">-->
+<!--                <ul class="pagination mb-0">-->
+<!--                    <li class="page-item" th:if="${currentPage != 0}">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage - 1})}">-->
+<!--                            <i class="fas fa-chevron-left"></i>-->
+<!--                        </a>-->
+<!--                    </li>-->
 
-                    <ul class="pagination">
-                        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"
-                            th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                            <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${i - 1})}">
-                                <span th:text="${i}"></span>
-                            </a>
-                        </li>
-                    </ul>
+<!--                    <ul class="pagination">-->
+<!--                        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"-->
+<!--                            th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
+<!--                            <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${i - 1})}">-->
+<!--                                <span th:text="${i}"></span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
 
-                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                        <a class="page-link"
-                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage + 1})}"><i
-                                class="fas fa-chevron-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+<!--                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                        <a class="page-link"-->
+<!--                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage + 1})}"><i-->
+<!--                                class="fas fa-chevron-right"></i></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+<!--        </div>-->
     </div>
 </div>
 </div>

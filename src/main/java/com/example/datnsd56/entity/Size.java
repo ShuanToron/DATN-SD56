@@ -2,6 +2,7 @@ package com.example.datnsd56.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Size {
     private String code;
 
     @Column(name = "name")
-    @NotBlank(message = "không được để trống")
+    @NotNull(message = "không được để trống")
     private Integer name;
 
     @Column(name = "status")

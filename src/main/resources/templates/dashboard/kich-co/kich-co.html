@@ -218,7 +218,7 @@
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chat-lieu/hien-thi}">Chất liệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Kích Cỡ</a></li>
-                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Loại giày</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/loai-giay/hien-thi}">Loại giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi}">Chi tiết sản phẩm</a>
                             </li>
                         </ul>
@@ -334,7 +334,7 @@
 
                                         <td th:text="*{list.code}"></td>
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/kich-co/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
