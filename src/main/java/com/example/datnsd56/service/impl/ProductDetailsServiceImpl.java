@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Page<ProductDetails> search( Integer quantity, Integer sellPrice) {
+    public Page<ProductDetails> search( Integer quantity, BigDecimal sellPrice) {
         Pageable pageable = PageRequest.of(0,5);
         return productDetailsRepository.search(quantity,sellPrice,pageable);
     }
@@ -49,7 +50,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     public void delete(Integer id) {
-     productDetailsRepository.deleteById(id);
+     productDetailsRepository.deletects(id);
     }
 
     @Override

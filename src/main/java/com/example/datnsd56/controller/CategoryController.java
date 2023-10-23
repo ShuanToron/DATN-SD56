@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/admin/loai-giay")
 public class CategoryController {
-    @Qualifier("categoryServiceImpl")
     @Autowired
     private CategoryService service;
 

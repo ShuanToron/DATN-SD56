@@ -1,51 +1,72 @@
 package com.example.datnsd56.controller;
 
+import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.service.SizeService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/size")
+@RequestMapping("/admin/kich-thuoc/")
 public class SizeController {
     @Autowired
     private SizeService sizeService;
 
-    @GetMapping("getAll")
-    public List<Size> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
-        List<Size> list = sizeService.getAll(page).getContent();
-        return list;
+
+    @GetMapping("hien-thi")
+    public String viewSize(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("size", new Size());
+        Page<Size> page = sizeService.getAll(pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/kich-thuoc/kich-thuoc";
+    }
+
+    @GetMapping("view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        Size size = sizeService.getById(id);
+        model.addAttribute("size", size);
+        return "/dashboard/kich-thuoc/update-kich-thuoc";
+    }
+
+    @PostMapping("update/{id}")
+    public String update(@Valid @ModelAttribute("size") Size size, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            model.addAttribute("size", size);
+            return "/dashboard/kich-thuoc/update-kich-thuoc";
+
+        }
+        sizeService.update(size);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/kich-thuoc/hien-thi";
+    }
+
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        sizeService.delete(id);
+        return "redirect:/admin/kich-thuoc/hien-thi";
     }
 
     @PostMapping("add")
-    public void add(@RequestBody Size size) {
+    public String add(@Valid @ModelAttribute("size") Size size, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Size> page = sizeService.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/kich-thuoc/loai-giay";
+        }
         sizeService.add(size);
-    }
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/kich-thuoc/hien-thi";
 
-    @GetMapping("detail/{id}")
-    public Size detail(@PathVariable("id") Integer id) {
-        Size size = sizeService.getById(id);
-        return size;
-
-    }
-
-    @PutMapping("update/{id}")
-    public void update(@RequestBody Size size) {
-        sizeService.update(size);
-    }
-
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        sizeService.delete(id);
     }
 }

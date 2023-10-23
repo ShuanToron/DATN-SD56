@@ -43,14 +43,14 @@ public class ProductDetails {
     @Min(value = 1,message = "lon hon 0")
     private BigDecimal sellPrice;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Products productId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "size_id",referencedColumnName = "id")
     private Size sizeId;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id",referencedColumnName = "id")
     private Color colorId;
 }

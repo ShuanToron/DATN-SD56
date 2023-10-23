@@ -1,10 +1,9 @@
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.entity.Material;
 import com.example.datnsd56.entity.ProductDetails;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductDetailsService {
@@ -12,7 +11,7 @@ public interface ProductDetailsService {
 
     List<ProductDetails> getAllCTSP();
 
-    Page<ProductDetails> search(Integer quantity,Integer sellPrice);
+    Page<ProductDetails> search(Integer quantity, BigDecimal sellPrice);
 
     ProductDetails add(ProductDetails productDetails );
 

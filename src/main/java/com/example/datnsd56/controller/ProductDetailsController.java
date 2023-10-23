@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -49,6 +50,7 @@ public class ProductDetailsController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", pagaNo);
         model.addAttribute("ctsp",new ProductDetails());
+        model.addAttribute("color",new Color());
 
 //        model.addAttribute("currentPage", pageNo);
         return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
@@ -90,7 +92,7 @@ public class ProductDetailsController {
         return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
     }
 
-    @DeleteMapping("delete/{id}")
+    @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") Integer id){
         productDetailsService.delete(id);
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
@@ -118,7 +120,7 @@ public class ProductDetailsController {
     @GetMapping("search")
     public String search(
                          @RequestParam(value = "quantity", required = false) Integer quantity,
-                         @RequestParam(value = "sellPrice", required = false) Integer sellPrice,
+                         @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice,
                          Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {
@@ -136,9 +138,9 @@ public class ProductDetailsController {
         model.addAttribute("sizes", sizes);
         model.addAttribute("totalPages", ketQuaTimKiem.getTotalPages());
         model.addAttribute("currentPage", 0);
-        model.addAttribute("productlist",new Products());
-        model.addAttribute("colorlist",new Color());
-        model.addAttribute("sizelist",new Size());
+        model.addAttribute("product",new Products());
+        model.addAttribute("color",new Color());
+        model.addAttribute("size",new Size());
         model.addAttribute("list", ketQuaTimKiem);
         model.addAttribute("ctsp", new ProductDetails()); // Add this line to set the "att" attribute in the model
 

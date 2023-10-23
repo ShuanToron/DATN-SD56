@@ -1,6 +1,7 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.Roles;
 import com.example.datnsd56.service.ColorService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/mau-sac")
 public class ColorController {
@@ -24,6 +27,13 @@ public class ColorController {
     @Autowired
     private ColorService service;
 
+    @GetMapping("/hien-thi1")
+    public String get(Model model){
+//        model.addAttribute("roles",new Roles());
+        List<Color> page = service.getAllColor();
+        model.addAttribute("list", page);
+        return "/dashboard/mau-sac/mau-sac";
+    }
     @GetMapping("/hien-thi")
     public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("color", new Color());
@@ -68,9 +78,24 @@ public class ColorController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/mau-sac/mau-sac";
         }
+
         service.add(color);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/mau-sac/hien-thi";
+
+    }
+    @PostMapping("/add1")
+    public String add1(@Valid @ModelAttribute("color") Color color, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Color> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/mau-sac/mau-sac";
+        }
+        service.add(color);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
 }
