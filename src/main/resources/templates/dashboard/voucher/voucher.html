@@ -283,7 +283,7 @@
                                 <div class="form-group">
                                     <label class="d-block">Loại giảm giá</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{type}" value="percent">
+                                        <input type="radio" name="type" th:field="*{type}" value="percent" th:checked="${type == 'percent'} ">
                                         <label class="form-check-label">
                                             Phần trăm
                                         </label>
@@ -341,14 +341,14 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-center">
-                                            <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       data-checkbox-role="dad"
-                                                       class="custom-control-input" id="checkbox-all">
-                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </th>
+<!--                                        <th class="text-center">-->
+<!--&lt;!&ndash;                                            <div class="custom-checkbox custom-checkbox-table custom-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <input type="checkbox" data-checkboxes="mygroup"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                       data-checkbox-role="dad"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                       class="custom-control-input" id="checkbox-all">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                        </th>-->
                                         <th>Mã voucher</th>
                                         <th>Gias trị</th>
                                         <th>Giá trị giảm tối đa</th>

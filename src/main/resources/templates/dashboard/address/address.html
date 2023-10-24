@@ -19,13 +19,14 @@
     <style>
         .popup {
             display: none;
-            position: fixed;
+            position: relative;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #ffffff;
             padding: 20px;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+width: 500px;
         }
     </style>
 </head>
@@ -253,7 +254,7 @@
                             <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
-                            <li><a th:href="@{/admin/dia-chi/hien-thi}">Địa Chỉ </a></li>
+                            <li><a th:href="@{/admin/address/hien-thi}">Địa Chỉ </a></li>
                         </ul>
                     </li>
                 </ul>
@@ -267,7 +268,7 @@
                         <div class="card-header">
                             <h4>Địa Chỉ</h4>
                         </div>
-                        <form th:action="@{/admin/dia-chi/add}" method="post" th:object="${address}"
+                        <form th:action="@{/admin/address/add}" method="post" th:object="${address}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -306,22 +307,22 @@
                                         <div class="form-group">
                                             <label>Mã Bưu Chính</label>
                                             <input type="number" class="form-control" placeholder="Nhập Mã Bưu Chính"
-                                                   th:field="*{phone}">
-                                            <span th:if="${#fields.hasErrors('phone')}"
+                                                   th:field="*{zipcode}">
+                                            <span th:if="${#fields.hasErrors('zipcode')}"
                                                   style="color: red; font-size: 13px"
-                                                  th:errors="*{phone}"></span>
+                                                  th:errors="*{zipcode}"></span>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Tài Khoản </label>
                                             <div class="input-group">
                                                 <select class="form-control" th:field="*{account_id}">
-                                                    <option th:each="role:${accountlist}" th:value="${account.id}"
-                                                            th:text="${account.name}"></option>
+                                                    <option th:each="account:${accountlist}" th:value="${account.id}"
+                                                            th:text="${account.fullname}"></option>
                                                 </select>
-                                                <div id="openButton" class="input-group-append">
+                                                <div  class="input-group-append">
                                                     <button class="btn btn-primary" type="button"
-                                                            onclick="popupChucVu()">
+                                                            onclick="popupacc()">
                                                         +
                                                     </button>
                                                 </div>
@@ -329,14 +330,15 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <a th:href="@{/admin/dia-chi/add}">
+                                            <a th:href="@{/admin/address/add}">
                                                 <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                             </a>
                                         </div>
                                     </div>
 
                         </form>
-                        <div id="popup" class="popup">
+<!--                     poup-->
+                        <div id="formacc" class="popup">
                             <div class="card-body">
                                 <div class="section-title mt-0">Thêm Tài Khoản </div>
                                 <form th:action="@{/admin/account/add1}" method="post" th:object="${account}"
@@ -412,13 +414,13 @@
                                         <div class="form-group">
                                             <label class="d-block">Trạng thái</label>
                                             <div class="form-check">
-                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                                <input type="radio" name="exampleRadios" th:field="*{statuss}" value="1">
                                                 <label class="form-check-label">
                                                     Hoạt động
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
+                                                <input type="radio" name="exampleRadios" th:field="*{statuss}" value="0">
                                                 <label class="form-check-label">
                                                     Không hoạt động
                                                 </label>
@@ -426,7 +428,7 @@
 
                                         </div>
                                         <div class="form-group">
-                                            <a th:href="@{/admin/account/add}">
+                                            <a th:href="@{/admin/account/add1}">
                                                 <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                             </a>
                                         </div>
@@ -443,11 +445,11 @@
                         <div class="card-header">
                             <h4>Danh sách Địa Chỉ</h4>
                             <div class="card-header-form">
-                                <form action="/admin/dia-chi/search " method="get">
+                                <form action="/admin/address/search " method="get">
                                     <div class="input-group">
                                         <input name="phone" type="text" class="form-control" placeholder="Search">
                                         <div lass="input-group-btn">
-                                            <a href="/admin/dia-chi/search/{phone}">
+                                            <a href="/admin/address/search/{phone}">
                                                 <button type="submit" class="btn btn-primary"><i
                                                         class="fas fa-search"></i></button>
                                             </a>
@@ -480,10 +482,10 @@
                                         <td th:text="*{list.zipcode}"></td>
                                         <td th:text="*{list.streetName}"></td>
                                         <td th:text="*{list.district}"></td>
-                                        <td th:text="*{list.provice}"></td>
-                                        <td th:text="${list != null ? (list.account_id != null ? list.account_id.name : '') : ''}"></td>
+                                        <td th:text="*{list.province}"></td>
+                                        <td th:text="${list != null ? (list.account_id != null ? list.account_id.fullname : '') : ''}"></td>
                                         <td>
-                                            <a th:href="@{'/admin/dia-chi/delete/'+${list.id}}">
+                                            <a th:href="@{'/admin/address/delete/'+${list.id}}">
                                                 <button type="submit" class="btn btn-danger"
                                                         onchange="return  confirm('Bạn có xoá không?')">
                                                     Xoá
@@ -491,7 +493,7 @@
                                             </a>
 
 
-                                            <a th:href="@{'/admin/dia-chi/view-update/'+${list.id}}">
+                                            <a th:href="@{'/admin/address/view-update/'+${list.id}}">
                                                 <button type="submit" class="btn btn-success">
                                                     Cập nhật
                                                 </button>
@@ -505,17 +507,17 @@
                             <ul class="pagination">
                                 <li class="page-item">
                                     <a class="page-link" th:if="${list.hasPrevious()}"
-                                       th:href="@{/admin/dia-chi/hien-thi(page=${list.number -1})}"> <span
+                                       th:href="@{/admin/address/hien-thi(page=${list.number -1})}"> <span
                                             aria-hidden="true">&laquo;</span> </a>
                                 </li>
                                 <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">
-                                    <a class="page-link" th:href="@{/admin/dia-chi/hien-thi(page=${pageNumber})}"
+                                    <a class="page-link" th:href="@{/admin/address/hien-thi(page=${pageNumber})}"
                                        th:text="${pageNumber+1}"></a>
                                 </li>
 
                                 <li class="page-item">
                                     <a class="page-link" th:if="${list.hasNext()}"
-                                       th:href="@{/admin/dia-chi/hien-thi(page=${list.number + 1})}"> <span
+                                       th:href="@{/admin/address/hien-thi(page=${list.number + 1})}"> <span
                                             aria-hidden="true">&raquo;</span></a>
                                 </li>
                             </ul>

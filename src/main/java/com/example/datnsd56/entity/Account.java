@@ -34,7 +34,7 @@ public class Account {
 //    private String username;
 
 @NotBlank(message = "Không đuộc để trống!")
-    @Column(name = "password")
+    @Column(name = "passwords")
     private String password;
 
     @NotBlank(message = "Không đuộc để trống!")
@@ -44,7 +44,7 @@ public class Account {
 
 
     @Column(name = "status")
-    private Boolean status;
+    private Boolean statuss;
 
 
     @Column(name = "create_date")
