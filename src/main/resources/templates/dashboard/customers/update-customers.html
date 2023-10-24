@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> SneakBeer - Tài Khoản  </title>
+    <title> SneakBeer - Customers </title>
     <!-- General CSS Files -->
     <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
@@ -266,7 +266,7 @@
                         <div class="card-header">
                             <h4>Customes</h4>
                         </div>
-                        <form th:action="@{/admin/customers/add}" method="post" th:object="${customers}"
+                        <form th:action="@{'/admin/customers/update/' +${id}}" method="post" th:object="${customers}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -316,13 +316,13 @@
                                     <div class="form-check">
                                         <input type="radio" name="exampleRadios" th:field="*{gender}" value="1">
                                         <label class="form-check-label">
-                                            Nữ
+                                           Nam
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input type="radio" name="exampleRadios" th:field="*{gender}" value="0">
                                         <label class="form-check-label">
-                                            Nam
+                                            Nữ
                                         </label>
                                     </div>
                                 </div>
@@ -336,8 +336,8 @@
 
 
                                 <div class="form-group">
-                                    <a th:href="@{/admin/customers/add}">
-                                        <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                    <a th:href="@{/admin/customers/update}">
+                                        <button class="btn btn-primary mr-1" type="submit">Cập Nhật</button>
                                     </a>
                                 </div>
                             </div>
@@ -346,223 +346,111 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Danh sách Khách Hàng </h4>
-                    <div class="card-header-form">
-                        <form action="/admin/customers/search " method="get">
-                            <div class="input-group">
-                                <input name="phone" type="text" class="form-control" placeholder="Search">
-                                <div lass="input-group-btn">
-                                    <a href="/admin/customers/search/{phone}">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fas fa-search"></i></button>
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
+
+
+        <div class="settingSidebar">
+            <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
+            </a>
+            <div class="settingSidebar-body ps-container ps-theme-default">
+                <div class=" fade show active">
+                    <div class="setting-panel-header">Setting Panel
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <h6 class="font-medium m-b-10">Select Layout</h6>
+                        <div class="selectgroup layout-color w-50">
+                            <label class="selectgroup-item">
+                                <input type="radio" name="value" value="1"
+                                       class="selectgroup-input-radio select-layout" checked>
+                                <span class="selectgroup-button">Light</span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="value" value="2"
+                                       class="selectgroup-input-radio select-layout">
+                                <span class="selectgroup-button">Dark</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <h6 class="font-medium m-b-10">Sidebar Color</h6>
+                        <div class="selectgroup selectgroup-pills sidebar-color">
+                            <label class="selectgroup-item">
+                                <input type="radio" name="icon-input" value="1"
+                                       class="selectgroup-input select-sidebar">
+                                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                                      data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" name="icon-input" value="2"
+                                       class="selectgroup-input select-sidebar" checked>
+                                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                                      data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <h6 class="font-medium m-b-10">Color Theme</h6>
+                        <div class="theme-setting-options">
+                            <ul class="choose-theme list-unstyled mb-0">
+                                <li title="white" class="active">
+                                    <div class="white"></div>
+                                </li>
+                                <li title="cyan">
+                                    <div class="cyan"></div>
+                                </li>
+                                <li title="black">
+                                    <div class="black"></div>
+                                </li>
+                                <li title="purple">
+                                    <div class="purple"></div>
+                                </li>
+                                <li title="orange">
+                                    <div class="orange"></div>
+                                </li>
+                                <li title="green">
+                                    <div class="green"></div>
+                                </li>
+                                <li title="red">
+                                    <div class="red"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <div class="theme-setting-options">
+                            <label class="m-b-0">
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                       id="mini_sidebar_setting">
+                                <span class="custom-switch-indicator"></span>
+                                <span class="control-label p-l-10">Mini Sidebar</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-15 border-bottom">
+                        <div class="theme-setting-options">
+                            <label class="m-b-0">
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                       id="sticky_header_setting">
+                                <span class="custom-switch-indicator"></span>
+                                <span class="control-label p-l-10">Sticky Header</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
+                        <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
+                            <i class="fas fa-undo"></i> Restore Default
+                        </a>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                                <!--                                        <th class="text-center">-->
-                                <!--                                            <div class="custom-checkbox custom-checkbox-table custom-control">-->
-                                <!--                                                <input type="checkbox" data-checkboxes="mygroup"-->
-                                <!--                                                       data-checkbox-role="dad"-->
-                                <!--                                                       class="custom-control-input" id="checkbox-all">-->
-                                <!--                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>-->
-                                <!--                                            </div>-->
-                                <!--                                        </th>-->
-                                <th>Họ và Tên</th>
-                                <th>email</th>
-                                <th>SDT</th>
-                                <th>Địa Chỉ </th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Hành động</th>
-                            </tr>
-                            <tr th:each="list:${list.content}">
-                                <!--                                        <td th:text="*{index.count}"></td>-->
-                                <td th:text="*{list.fullname}"></td>
-                                <td th:text="*{list.email}"></td>
-                                <td th:text="*{list.phone}"></td>
-                                <td th:text="*{list.address}"></td>
-                                <td th:text="${list.gender ==1  ? 'Nam' : 'Nữ'}"></td>
-                                <td th:text="*{list.birthdate}"></td>
-
-                                <td>
-                                    <a th:href="@{'/admin/customers/delete/'+${list.id}}">
-                                        <button type="submit" class="btn btn-danger"
-                                                onchange="return  confirm('Bạn có xoá không?')">
-                                            Xoá
-                                        </button>
-                                    </a>
-
-
-                                    <a th:href="@{'/admin/customers/view-update/'+${list.id}}">
-                                        <button type="submit" class="btn btn-success">
-                                            Cập nhật
-                                        </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <nav aria-label="Page navigation example">
-
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" th:if="${list.hasPrevious()}"
-                               th:href="@{/admin/customers/hien-thi(page=${list.number -1})}"> <span
-                                    aria-hidden="true">&laquo;</span> </a>
-                        </li>
-                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">
-                            <a class="page-link" th:href="@{/admin/customers/hien-thi(page=${pageNumber})}"
-                               th:text="${pageNumber+1}"></a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" th:if="${list.hasNext()}"
-                               th:href="@{/admin/customers/hien-thi(page=${list.number + 1})}"> <span
-                                    aria-hidden="true">&raquo;</span></a>
-                        </li>
-                    </ul>
-                </nav>
-                <!--                        <div class="card-footer text-right">-->
-                <!--                            <nav class="d-inline-block">-->
-                <!--                                <ul class="pagination mb-0">-->
-                <!--                                    <li class="page-item" th:if="${currentPage !=0}">-->
-                <!--                                        <a class="page-link"-->
-                <!--                                           th:href="@{'/admin/account/page/'+ ${ currentPage - 1}}"><i-->
-                <!--                                                class="fas fa-chevron-left"></i></a>-->
-                <!--                                    </li>-->
-                <!--                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"-->
-                <!--                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
-                <!--                                        <a class="page-link" th:href="@{'/admin/account/page/'+${i - 1}}">-->
-                <!--                                            <span th:text="${i}"></span>-->
-                <!--                                        </a>-->
-                <!--                                    </li>-->
-                <!--                                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-                <!--                                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
-                <!--                                        <a class="page-link"-->
-                <!--                                           th:href="@{'/admin/account/page/'+ ${ currentPage + 1}}"><i-->
-                <!--                                                class="fas fa-chevron-right"></i></a>-->
-                <!--                                    </li>-->
-                <!--                                </ul>-->
-                <!--                            </nav>-->
-                <!--                        </div>-->
             </div>
         </div>
     </div>
-</div>
-<div class="settingSidebar">
-    <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
-    </a>
-    <div class="settingSidebar-body ps-container ps-theme-default">
-        <div class=" fade show active">
-            <div class="setting-panel-header">Setting Panel
-            </div>
-            <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Select Layout</h6>
-                <div class="selectgroup layout-color w-50">
-                    <label class="selectgroup-item">
-                        <input type="radio" name="value" value="1"
-                               class="selectgroup-input-radio select-layout" checked>
-                        <span class="selectgroup-button">Light</span>
-                    </label>
-                    <label class="selectgroup-item">
-                        <input type="radio" name="value" value="2"
-                               class="selectgroup-input-radio select-layout">
-                        <span class="selectgroup-button">Dark</span>
-                    </label>
-                </div>
-            </div>
-            <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Sidebar Color</h6>
-                <div class="selectgroup selectgroup-pills sidebar-color">
-                    <label class="selectgroup-item">
-                        <input type="radio" name="icon-input" value="1"
-                               class="selectgroup-input select-sidebar">
-                        <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                              data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
-                    </label>
-                    <label class="selectgroup-item">
-                        <input type="radio" name="icon-input" value="2"
-                               class="selectgroup-input select-sidebar" checked>
-                        <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                              data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
-                    </label>
-                </div>
-            </div>
-            <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Color Theme</h6>
-                <div class="theme-setting-options">
-                    <ul class="choose-theme list-unstyled mb-0">
-                        <li title="white" class="active">
-                            <div class="white"></div>
-                        </li>
-                        <li title="cyan">
-                            <div class="cyan"></div>
-                        </li>
-                        <li title="black">
-                            <div class="black"></div>
-                        </li>
-                        <li title="purple">
-                            <div class="purple"></div>
-                        </li>
-                        <li title="orange">
-                            <div class="orange"></div>
-                        </li>
-                        <li title="green">
-                            <div class="green"></div>
-                        </li>
-                        <li title="red">
-                            <div class="red"></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                    <label class="m-b-0">
-                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                               id="mini_sidebar_setting">
-                        <span class="custom-switch-indicator"></span>
-                        <span class="control-label p-l-10">Mini Sidebar</span>
-                    </label>
-                </div>
-            </div>
-            <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                    <label class="m-b-0">
-                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                               id="sticky_header_setting">
-                        <span class="custom-switch-indicator"></span>
-                        <span class="control-label p-l-10">Sticky Header</span>
-                    </label>
-                </div>
-            </div>
-            <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
-                <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                    <i class="fas fa-undo"></i> Restore Default
-                </a>
-            </div>
+    <footer class="main-footer">
+        <div class="footer-left">
+            <!--          <a href="templateshub.net">Templateshub</a></a>-->
         </div>
-    </div>
-</div>
-</div>
-<footer class="main-footer">
-    <div class="footer-left">
-        <!--          <a href="templateshub.net">Templateshub</a></a>-->
-    </div>
-    <div class="footer-right">
-    </div>
-</footer>
+        <div class="footer-right">
+        </div>
+    </footer>
 </div>
 </div>
 <!-- General JS Scripts -->
