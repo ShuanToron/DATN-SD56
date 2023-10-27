@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/admin/kich-co/")
@@ -65,6 +66,10 @@ public class SizeController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/kich-co/kich-co";
         }
+        String code = "SZ" + new Random().nextInt(100000);
+        size.setCode(code);
+        size.setStatus(true);
+        model.addAttribute("size", size);
         sizeService.add(size);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/kich-co/hien-thi";
@@ -79,6 +84,10 @@ public class SizeController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/kich-co/kich-co";
         }
+        String code = "SZ" + new Random().nextInt(100000);
+        size.setCode(code);
+        size.setStatus(true);
+        model.addAttribute("size", size);
         sizeService.add(size);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";

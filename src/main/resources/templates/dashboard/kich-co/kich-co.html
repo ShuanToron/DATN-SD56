@@ -261,15 +261,15 @@
                         <form action="/admin/kich-co/add" method="post" th:object="${size}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Mã kích cỡ</label>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Nhập mã kích cỡ"
-                                               th:field="*{code}">
-                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 10px"
-                                              th:errors="*{code}"></span>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label>Mã kích cỡ</label>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <input type="text" class="form-control" placeholder="Nhập mã kích cỡ"-->
+<!--                                               th:field="*{code}">-->
+<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 10px"-->
+<!--                                              th:errors="*{code}"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <label>Số kích cỡ</label>
                                     <input type="number" class="form-control" placeholder="Nhập số kích cỡ"
@@ -277,20 +277,20 @@
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 10px"
                                           th:errors="*{name}"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"
-                                               checked="checked">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"-->
+<!--                                               checked="checked">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
 <!--                                        <a class="btn btn-primary" type="button" href="/admin/kich-co/hien-thi"><- -->
 <!--                                        </a>-->

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/admin/mau-sac")
@@ -78,7 +79,10 @@ public class ColorController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/mau-sac/mau-sac";
         }
-
+        String code = "MS" + new Random().nextInt(100000);
+        color.setCode(code);
+        color.setStatus(true);
+        model.addAttribute("color", color);
         service.add(color);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/mau-sac/hien-thi";
@@ -93,6 +97,10 @@ public class ColorController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/mau-sac/mau-sac";
         }
+        String code = "MS" + new Random().nextInt(100000);
+        color.setCode(code);
+        color.setStatus(true);
+        model.addAttribute("color", color);
         service.add(color);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
