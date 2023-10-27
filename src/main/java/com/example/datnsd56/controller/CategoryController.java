@@ -74,4 +74,18 @@ public class CategoryController {
         return "redirect:/admin/loai-giay/hien-thi";
 
     }
+    @PostMapping("/add1")
+    public String addd(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Category> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/loai-giay/update-loai-giay";
+        }
+        service.add(category);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham/hien-thi";
+
+    }
 }
