@@ -58,8 +58,16 @@ function popupDeGiay() {
     }
 }
 
+function popupacc() {
+    var popup = document.getElementById("formacc");
+    if (popup.style.display === "block") {
+        popup.style.display = "none";
+    } else {
+        popup.style.display = "block";
+    }
+}
 function popupChucVu() {
-    var popup = document.getElementById("formChucVu");
+    var popup = document.getElementById("formChucvu");
     if (popup.style.display === "block") {
         popup.style.display = "none";
     } else {
