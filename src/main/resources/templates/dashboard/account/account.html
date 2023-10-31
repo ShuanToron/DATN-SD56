@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> SneakBeer - Voucher </title>
+    <title> SneakBeer - Account </title>
     <!-- General CSS Files -->
     <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
@@ -242,9 +242,9 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="image"></i><span>Voucher</span></a>
+                            data-feather="image"></i><span>Account</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/account/hien-thi}">Voucher</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -265,7 +265,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Voucher</h4>
+                            <h4>Account</h4>
                         </div>
                         <form th:action="@{/admin/account/add}" method="post" th:object="${account}"
                               onsubmit="return  confirm('Bạn có thêm không?')">

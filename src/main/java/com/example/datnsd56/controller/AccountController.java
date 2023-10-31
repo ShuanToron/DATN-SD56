@@ -62,9 +62,12 @@ public class AccountController {
         return "dashboard/account/update-account";
     }
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
+    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,@RequestParam(defaultValue = "0") Integer page){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
+            Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
+//        model.addAttribute("totalPages", page1.getTotalPages());
+            model.addAttribute("list", page1);
             List<Roles> listr=rolesService.getAll();
             model.addAttribute("rolelist",listr);
             model.addAttribute("roles",new Roles());

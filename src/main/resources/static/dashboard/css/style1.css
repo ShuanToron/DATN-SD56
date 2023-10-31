@@ -198,7 +198,7 @@
 
 .page-header {
     background:
-        /* linear-gradient(rgba(136, 180, 78, 0.7), rgba(136, 180, 78, 0.7)), */ url(../../../static/dashboard/img/index/gbaner.png)
+        /* linear-gradient(rgba(136, 180, 78, 0.7), rgba(136, 180, 78, 0.7)), */ url(../../dashboard/img/index/gbaner.png)
     center center no-repeat;
     background-size: cover;
 }
@@ -253,7 +253,7 @@
 /*** Products ***/
 .product {
     background: linear-gradient(rgba(136, 180, 78, 0.1), rgba(136, 180, 78, 0.1)),
-    url(../../../static/dashboard/img/index/product-bg.png) left bottom no-repeat;
+    url(../../dashboard/img/index/product-bg.png) left bottom no-repeat;
     background-size: auto;
 }
 
@@ -291,7 +291,7 @@
         /* linear-gradient(
             rgba(136, 180, 78, 0.85),
             rgba(136, 180, 78, 0.85)
-          ), */ url(../../../static/dashboard/img/index/video.png)
+          ), */ url(../../dashboard/img/index/video.png)
     center center no-repeat;
     background-size: cover;
 }
@@ -423,7 +423,7 @@
             rgba(136, 180, 78, 0.85),
             rgba(136, 180, 78, 0.85)
     ),
-    url(../../../static/dashboard/img/index/gbaner.png) center center no-repeat;
+    url(../../dashboard/img/index/gbaner.png) center center no-repeat;
     background-size: cover;
 }
 
