@@ -69,6 +69,8 @@ public class ProductDetailsController {
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
+            model.addAttribute("color",new Color());
+            model.addAttribute("size", new Size());
             model.addAttribute("totalPages", productDetail.getTotalPages());
             model.addAttribute("currentPage", 0);
             return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
