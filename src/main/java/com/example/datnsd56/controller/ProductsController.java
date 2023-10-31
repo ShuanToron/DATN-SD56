@@ -82,31 +82,58 @@ public class ProductsController {
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-//    }@GetMapping("/display")
-//    public ResponseEntity<List<String>> getImage(@RequestParam("id") Integer productId) throws SQLException {
-//        List<Image> imageList = imageService.getImagesForProducts(productId);
-//        List<String> imageUrls = new ArrayList<>();
-//
-//        for (Image image : imageList) {
-//            Blob imageBlob = image.getUrl();
-//            try (InputStream is = imageBlob.getBinaryStream()) {
-//                byte[] imageBytes = is.readAllBytes();
-//                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-//                String imageUrl = "data:" + MediaType.IMAGE_JPEG_VALUE + ";base64," + base64Image;
-//                imageUrls.add(imageUrl);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return ResponseEntity.ok().body(imageUrls);
-//    }
     }
 
-        @GetMapping("/view-update/{id}")
-        public String detail (@PathVariable("id") Integer id, Model model){
-            Products products = service.getById(id);
+    @GetMapping("/view-update/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        Products products = service.getById(id);
+        model.addAttribute("product", products);
+        List<Brand> brands = brand.getAllBrand();
+        model.addAttribute("brand", brands);
+        List<Category> categories = category.getAllCate();
+        model.addAttribute("category", categories);
+
+        List<Material> materials = materialService.getAllMater();
+        model.addAttribute("material", materials);
+        List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+        model.addAttribute("shoeSole", shoeSoles);
+
+        return "/dashboard/san-pham/update-san-pham";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("product") Products products, BindingResult
+            result, @PathVariable("id") Integer id, @RequestParam("image") MultipartFile[] files, Model model, HttpSession session) throws SQLException, IOException {
+        if (result.hasErrors()) {
             model.addAttribute("product", products);
+            List<Brand> brands = brand.getAllBrand();
+            model.addAttribute("brand", brands);
+            List<Category> categories = category.getAllCate();
+
+
+            List<Material> materials = materialService.getAllMater();
+            model.addAttribute("material", materials);
+            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+
+            return "/dashboard/san-pham/update-san-pham";
+
+        }
+        service.update(products, files);
+        session.setAttribute("successMessage", "sửa thành công");
+        return "redirect:/admin/san-pham/hien-thi";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        service.delete(id);
+        return "redirect:/admin/san-pham/hien-thi";
+    }
+
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("product") Products products, BindingResult result, Model
+            model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
+        if (result.hasErrors()) {
+            Page<Products> page = service.getAll(0);
             List<Brand> brands = brand.getAllBrand();
             model.addAttribute("brand", brands);
             List<Category> categories = category.getAllCate();
@@ -117,62 +144,15 @@ public class ProductsController {
             List<ShoeSole> shoeSoles = shoeSole.getAllSole();
             model.addAttribute("shoeSole", shoeSoles);
 
-            return "/dashboard/san-pham/update-san-pham";
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "dashboard/san-pham/san-pham";
         }
-
-        @PostMapping("/update/{id}")
-        public String update (@Valid @ModelAttribute("product") Products products, BindingResult
-        result, @PathVariable("id") Integer id, Model model, HttpSession session){
-            if (result.hasErrors()) {
-                model.addAttribute("product", products);
-                List<Brand> brands = brand.getAllBrand();
-                model.addAttribute("brand", brands);
-                List<Category> categories = category.getAllCate();
-
-
-                List<Material> materials = materialService.getAllMater();
-                model.addAttribute("material", materials);
-                List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-
-
-                return "/dashboard/san-pham/update-san-pham";
-
-            }
-            service.update(products);
-            session.setAttribute("successMessage", "sửa thành công");
-            return "redirect:/admin/san-pham/hien-thi";
-        }
-
-        @GetMapping("/delete/{id}")
-        public String delete (@PathVariable("id") Integer id){
-            service.delete(id);
-            return "redirect:/admin/san-pham/hien-thi";
-        }
-
-        @PostMapping("/add")
-        public String add (@Valid @ModelAttribute("product") Products products, BindingResult result, Model
-        model, @RequestParam("image") MultipartFile[]files, HttpSession session) throws SQLException, IOException {
-            if (result.hasErrors()) {
-                Page<Products> page = service.getAll(0);
-                List<Brand> brands = brand.getAllBrand();
-                model.addAttribute("brand", brands);
-                List<Category> categories = category.getAllCate();
-                model.addAttribute("category", categories);
-
-                List<Material> materials = materialService.getAllMater();
-                model.addAttribute("material", materials);
-                List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-                model.addAttribute("shoeSole", shoeSoles);
-
-                model.addAttribute("totalPages", page.getTotalPages());
-                model.addAttribute("list", page);
-                model.addAttribute("currentPage", 0);
-                return "dashboard/san-pham/san-pham";
-            }
-            service.add(products, files);
-            session.setAttribute("successMessage", "Thêm thành công");
-            return "redirect:/admin/san-pham/hien-thi";
-
-        }
+        service.add(products, files);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham/hien-thi";
 
     }
+
+}

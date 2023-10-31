@@ -19,5 +19,5 @@ public interface ProductsService {
 
     void delete(Integer id);
 
-    void update(Products products);
+    void update(Products products,MultipartFile[] files) throws IOException, SQLException;
 }
