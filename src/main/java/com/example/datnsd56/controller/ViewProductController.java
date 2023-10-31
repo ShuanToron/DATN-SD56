@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewProductController {
     @GetMapping("/hien-thi")
     public String hienthi(){
-        return "/dashboard/index/index";
+        return "/website/index/index";
     }
 }
