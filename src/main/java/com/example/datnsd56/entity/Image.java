@@ -37,6 +37,6 @@ public class Image {
     private Blob url;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id")
-    private Products productId;
+    @JoinColumn(name = "productDetail_id",referencedColumnName = "id")
+    private ProductDetails productDetailId;
 }

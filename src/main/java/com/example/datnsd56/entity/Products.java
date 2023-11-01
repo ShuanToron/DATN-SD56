@@ -75,8 +75,5 @@ public class Products {
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brandId;
 
-    @Transient
-    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Image> images;
 
 }

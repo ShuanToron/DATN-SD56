@@ -1,10 +1,12 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
 import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.service.ColorService;
+import com.example.datnsd56.service.ImageService;
 import com.example.datnsd56.service.ProductDetailsService;
 import com.example.datnsd56.service.ProductsService;
 import com.example.datnsd56.service.SizeService;
@@ -12,13 +14,18 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -36,12 +43,15 @@ public class ProductDetailsController {
     @Autowired
     private ProductsService productsService;
 
+    @Autowired
+    private ImageService imageService;
+
     @GetMapping("hien-thi")
-    public String getAllBypage(Model model, @RequestParam(defaultValue = "0",name = "pageNo") Integer pagaNo){
-        Page<ProductDetails> page= productDetailsService.getAll(pagaNo);
+    public String getAllBypage(Model model, @RequestParam(defaultValue = "0", name = "pageNo") Integer pagaNo) {
+        Page<ProductDetails> page = productDetailsService.getAll(pagaNo);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
-        List<Size> sizes =  sizeService.getAllSZ();
+        List<Size> sizes = sizeService.getAllSZ();
 
         model.addAttribute("list", page);
         model.addAttribute("products", products);
@@ -49,8 +59,8 @@ public class ProductDetailsController {
         model.addAttribute("sizes", sizes);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", pagaNo);
-        model.addAttribute("ctsp",new ProductDetails());
-        model.addAttribute("color",new Color());
+        model.addAttribute("ctsp", new ProductDetails());
+        model.addAttribute("color", new Color());
         model.addAttribute("size", new Size());
 
 //        model.addAttribute("currentPage", pageNo);
@@ -59,12 +69,12 @@ public class ProductDetailsController {
     }
 
     @PostMapping("add")
-    public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result , Model model, HttpSession session){
-        if(result.hasErrors()){
-            Page<ProductDetails> productDetail= productDetailsService.getAll(0);
+    public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
+        if (result.hasErrors()) {
+            Page<ProductDetails> productDetail = productDetailsService.getAll(0);
             List<Products> products = productsService.getAllPro();
             List<Color> colors = colorService.getAllColor();
-            List<Size> sizes =  sizeService.getAllSZ();
+            List<Size> sizes = sizeService.getAllSZ();
             model.addAttribute("list", productDetail);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
@@ -74,19 +84,27 @@ public class ProductDetailsController {
             return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
 
         }
-        productDetailsService.add(productDetails);
+        productDetailsService.add(productDetails, files);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
 
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId);
+        byte[] imageBytes = null;
+        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+    }
+
     @GetMapping("view-update/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) {
-        ProductDetails productDetails= productDetailsService.getById(id);
+        ProductDetails productDetails = productDetailsService.getById(id);
         model.addAttribute("ctsp", productDetails);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
-        List<Size> sizes =  sizeService.getAllSZ();
+        List<Size> sizes = sizeService.getAllSZ();
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
         model.addAttribute("sizes", sizes);
@@ -94,18 +112,18 @@ public class ProductDetailsController {
     }
 
     @GetMapping("delete/{id}")
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         productDetailsService.delete(id);
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
         if (result.hasErrors()) {
-            Page<ProductDetails> productDetail= productDetailsService.getAll(0);
+            Page<ProductDetails> productDetail = productDetailsService.getAll(0);
             List<Products> products = productsService.getAllPro();
             List<Color> colors = colorService.getAllColor();
-            List<Size> sizes =  sizeService.getAllSZ();
+            List<Size> sizes = sizeService.getAllSZ();
             model.addAttribute("productDetails", productDetail);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
@@ -113,16 +131,16 @@ public class ProductDetailsController {
             return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
 
         }
-        productDetailsService.update(productDetails);
+        productDetailsService.update(productDetails, files);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
 
     @GetMapping("search")
     public String search(
-                         @RequestParam(value = "quantity", required = false) Integer quantity,
-                         @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice,
-                         Model model, HttpSession session) {
+            @RequestParam(value = "quantity", required = false) Integer quantity,
+            @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice,
+            Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {
             String successMessage = (String) session.getAttribute("successMessage");
@@ -133,15 +151,15 @@ public class ProductDetailsController {
         Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(quantity, sellPrice);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
-        List<Size> sizes =  sizeService.getAllSZ();
+        List<Size> sizes = sizeService.getAllSZ();
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
         model.addAttribute("sizes", sizes);
         model.addAttribute("totalPages", ketQuaTimKiem.getTotalPages());
         model.addAttribute("currentPage", 0);
-        model.addAttribute("product",new Products());
-        model.addAttribute("color",new Color());
-        model.addAttribute("size",new Size());
+        model.addAttribute("product", new Products());
+        model.addAttribute("color", new Color());
+        model.addAttribute("size", new Size());
         model.addAttribute("list", ketQuaTimKiem);
         model.addAttribute("ctsp", new ProductDetails()); // Add this line to set the "att" attribute in the model
 
@@ -149,9 +167,6 @@ public class ProductDetailsController {
 
         return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
     }
-
-
-
 
 
 }

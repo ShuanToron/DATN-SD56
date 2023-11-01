@@ -40,19 +40,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public void add(Products products, MultipartFile[] files) throws IOException, SQLException {
+    public void add(Products products) {
         products.setCreateDate(LocalDate.now());
         products.setUpdateDate(LocalDate.now());
 
         repository.save(products);
-        for (MultipartFile file : files) {
-            Image anhSanPham = new Image();
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(products);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
     }
 
     @Override
@@ -68,18 +60,9 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public void update(Products products, MultipartFile[] files) throws IOException, SQLException {
+    public void update(Products products) {
         products.setCreateDate(LocalDate.now());
         products.setUpdateDate(LocalDate.now());
-
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(products.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(products);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
         repository.save(products);
     }
 }

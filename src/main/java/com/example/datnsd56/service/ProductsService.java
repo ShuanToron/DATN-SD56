@@ -13,11 +13,11 @@ import java.util.List;
 public interface ProductsService {
     Page<Products> getAll(Integer pageNo);
     List<Products> getAllPro();
-    void add(Products products, MultipartFile[] files) throws IOException, SQLException;
+    void add(Products products);
 
     Products getById(Integer id);
 
     void delete(Integer id);
 
-    void update(Products products,MultipartFile[] files) throws IOException, SQLException;
+    void update(Products products);
 }

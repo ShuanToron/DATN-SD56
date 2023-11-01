@@ -54,8 +54,6 @@ public class ProductsController {
     private MaterialService materialService;
     @Autowired
     private ShoeSoleService shoeSole;
-    @Autowired
-    private ImageService imageService;
 
 
     @GetMapping("/hien-thi")
@@ -74,14 +72,6 @@ public class ProductsController {
         model.addAttribute("list", page);
         model.addAttribute("currentPage", pageNo);
         return "dashboard/san-pham/san-pham";
-    }
-
-    @GetMapping("/display")
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId);
-        byte[] imageBytes = null;
-        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
     }
 
     @GetMapping("/view-update/{id}")
@@ -103,7 +93,7 @@ public class ProductsController {
 
     @PostMapping("/update/{id}")
     public String update(@Valid @ModelAttribute("product") Products products, BindingResult
-            result, @PathVariable("id") Integer id, @RequestParam("image") MultipartFile[] files, Model model, HttpSession session) throws SQLException, IOException {
+            result, @PathVariable("id") Integer id, Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("product", products);
             List<Brand> brands = brand.getAllBrand();
@@ -118,7 +108,7 @@ public class ProductsController {
             return "/dashboard/san-pham/update-san-pham";
 
         }
-        service.update(products, files);
+        service.update(products);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/san-pham/hien-thi";
     }
@@ -131,7 +121,7 @@ public class ProductsController {
 
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("product") Products products, BindingResult result, Model
-            model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
+            model, HttpSession session) {
         if (result.hasErrors()) {
             Page<Products> page = service.getAll(0);
             List<Brand> brands = brand.getAllBrand();
@@ -149,7 +139,7 @@ public class ProductsController {
             model.addAttribute("currentPage", 0);
             return "dashboard/san-pham/san-pham";
         }
-        service.add(products, files);
+        service.add(products);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/san-pham/hien-thi";
 
