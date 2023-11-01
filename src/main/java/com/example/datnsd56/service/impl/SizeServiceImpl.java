@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.repository.SizeRepository;
 import com.example.datnsd56.service.SizeService;
@@ -18,9 +19,10 @@ public class SizeServiceImpl implements SizeService {
     private SizeRepository sizeRepository;
 
     @Override
-    public Page<Size> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
-        return sizeRepository.findAll(pageable);
+    public Page<Size> getAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        Page<Size> page1 = sizeRepository.findAll(pageable);
+        return page1;
     }
 
     @Override
@@ -37,7 +39,8 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public Size getById(Integer id) {
-        return sizeRepository.findById(id).orElse(null);
+        Size size =sizeRepository.findById(id).orElse(null);
+        return size;
     }
 
     @Override

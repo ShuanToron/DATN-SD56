@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> SneakBeer - Kích Cỡ </title>
+    <title> SneakBeer - Màu sắc </title>
+    <!-- General CSS Files -->
     <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
     <link th:href="@{/dashboard/css/style.css}" rel="stylesheet">
@@ -15,10 +16,6 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <!-- Toaste JS -->
-    <script type="text/javascript"
-            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -174,7 +171,7 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         th:src="@{/dashboard/img/user.png}"
+                                                                                                         th:src="@{/../../../static/dashboard/img/user.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
@@ -256,44 +253,44 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Kích Cỡ</h4>
+                            <h4>Kích cỡ</h4>
                         </div>
                         <form action="/admin/kich-co/add" method="post" th:object="${size}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
-<!--                                <div class="form-group">-->
-<!--                                    <label>Mã kích cỡ</label>-->
-<!--                                    <div class="form-group">-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập mã kích cỡ"-->
-<!--                                               th:field="*{code}">-->
-<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 10px"-->
-<!--                                              th:errors="*{code}"></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+<!--                                                                <div class="form-group">-->
+<!--                                                                    <label>Mã kích thước</label>-->
+<!--                                                                    <div class="input-group colorpickerinput">-->
+<!--                                                                        <input type="text" class="form-control" placeholder="Nhập mã màu sắc"-->
+<!--                                                                               th:field="*{code}">-->
+<!--                                                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"-->
+<!--                                                                              th:errors="*{code}"></span>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
                                 <div class="form-group">
                                     <label>Số kích cỡ</label>
                                     <input type="number" class="form-control" placeholder="Nhập số kích cỡ"
                                            th:field="*{name}">
-                                    <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 10px"
+                                    <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 13px"
                                           th:errors="*{name}"></span>
                                 </div>
-<!--                                <div class="form-group">-->
-<!--                                    <label class="d-block">Trạng thái</label>-->
-<!--                                    <div class="form-check">-->
-<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"-->
-<!--                                               checked="checked">-->
-<!--                                        <label class="form-check-label">-->
-<!--                                            Hoạt động-->
-<!--                                        </label>-->
-<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">-->
-<!--                                        <label class="form-check-label">-->
-<!--                                            Không hoạt động-->
-<!--                                        </label>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+<!--                                                                <div class="form-group">-->
+<!--                                                                    <label class="d-block">Trạng thái</label>-->
+<!--                                                                    <div class="form-check">-->
+<!--                                                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="true"-->
+<!--                                                                        checked="checked">-->
+<!--                                                                        <label class="form-check-label">-->
+<!--                                                                            Hoạt động-->
+<!--                                                                        </label>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div class="form-check">-->
+<!--                                                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="false">-->
+<!--                                                                        <label class="form-check-label">-->
+<!--                                                                            Không hoạt động-->
+<!--                                                                        </label>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
                                 <div class="form-group">
-<!--                                        <a class="btn btn-primary" type="button" href="/admin/kich-co/hien-thi"><- -->
-<!--                                        </a>-->
                                     <a th:href="@{/admin/kich-co/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                     </a>
@@ -307,7 +304,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Danh sách kích cỡ </h4>
+                            <h4>Danh sách kích thước</h4>
                             <div class="card-header-form">
                                 <form>
                                     <div class="input-group">
@@ -323,22 +320,28 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <!--                                        <th>STT</th>-->
+<!--                                        <th class="text-center">-->
+<!--                                            <div class="custom-checkbox custom-checkbox-table custom-control">-->
+<!--                                                <input type="checkbox" data-checkboxes="mygroup"-->
+<!--                                                       data-checkbox-role="dad"-->
+<!--                                                       class="custom-control-input" id="checkbox-all">-->
+<!--                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>-->
+<!--                                            </div>-->
+<!--                                        </th>-->
                                         <th>Mã kích cỡ</th>
-                                        <th>Số kích cỡ</th>
+                                        <th>Tên kích cỡ</th>
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
-
                                     <tr th:each="list:${list}">
 
                                         <td th:text="*{list.code}"></td>
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/kich-co/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
-                                                        >
+                                                        onsubmit="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
@@ -355,26 +358,19 @@
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
-                                    <li class="page-item" th:if="${currentPage != 0}">
-                                        <a class="page-link"
-                                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage - 1})}">
-                                            <i class="fas fa-chevron-left"></i>
+                                    <li class="page-item" th:if="${currentPage !=0}">
+                                        <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${currentPage - 1})}"><i
+                                                class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                        <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${i - 1})}">
+                                            <span th:text="${i}"></span>
                                         </a>
                                     </li>
-
-                                    <ul class="pagination">
-                                        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"
-                                            th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${i - 1})}">
-                                                <span th:text="${i}"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-
                                     <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                        <a class="page-link"
-                                           th:href="@{/admin/kich-co/hien-thi(page=${currentPage + 1})}"><i
-                                                class="fas fa-chevron-right"></i></a>
+                                        <a class="page-link" th:href="@{/admin/kich-co/hien-thi(page=${currentPage + 1})}"><i
+                                                class="fas fa-chevron-rightgslgfds.f"></i></a>
                                     </li>
                                 </ul>
                             </nav>

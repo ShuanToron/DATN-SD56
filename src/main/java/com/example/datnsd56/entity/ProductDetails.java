@@ -40,6 +40,7 @@ public class ProductDetails {
     private Boolean status;
 
     @Column(name = "sell_price")
+    @NotNull(message = "Không đuộc để trống!")
     @Min(value = 1,message = "lon hon 0")
     private BigDecimal sellPrice;
 
@@ -50,6 +51,7 @@ public class ProductDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "size_id",referencedColumnName = "id")
     private Size sizeId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id",referencedColumnName = "id")
     private Color colorId;

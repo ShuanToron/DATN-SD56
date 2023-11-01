@@ -25,12 +25,11 @@ public class Size {
     private Integer id;
 
     @Column(name = "code")
-    @NotBlank(message = "không được để trống")
     private String code;
 
     @Column(name = "name")
     @NotNull(message = "không được để trống")
-    private Integer name;
+    private String name;
 
     @Column(name = "status")
     private Boolean status;
