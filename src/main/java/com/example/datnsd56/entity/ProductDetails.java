@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Product_details")
@@ -40,7 +41,7 @@ public class ProductDetails {
     private Boolean status;
 
     @Column(name = "sell_price")
-    @Min(value = 1,message = "lon hon 0")
+    @Min(value = 1, message = "lon hon 0")
     private BigDecimal sellPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,9 +49,14 @@ public class ProductDetails {
     private Products productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "size_id",referencedColumnName = "id")
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
     private Size sizeId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "color_id",referencedColumnName = "id")
+    @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color colorId;
+
+    @Transient
+    @OneToMany(mappedBy = "productDetail_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Image> images;
 }

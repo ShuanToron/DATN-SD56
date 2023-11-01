@@ -16,6 +16,23 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        .preview-image {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    </style>
 </head>
 
 <body>
@@ -254,7 +271,7 @@
                         <div class="card-header">
                             <h4>Chi tiết sản phẩm</h4>
                         </div>
-                        <form th:action="@{'/admin/chi-tiet-san-pham/update/'+${id}}" method="post" th:object="${ctsp}"
+                        <form th:action="@{'/admin/chi-tiet-san-pham/update/'+${id}}" method="post" th:object="${ctsp}" enctype="multipart/form-data"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -291,6 +308,14 @@
                                         <input type="text" class="form-control" placeholder="Nhập số lượng"
                                                th:field="*{sellPrice}">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ảnh sản phẩm</label>
+                                    <input type="file" name="image" accept="image/*" id="files" multiple/><br>
+                                    <!--                                    <output id="list"></output>-->
+                                </div>
+                                <div id="image-preview">
+                                    <!-- Danh sách hình ảnh được hiển thị trước sẽ xuất hiện ở đây -->
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
@@ -420,6 +445,28 @@
     </footer>
 </div>
 </div>
+<script th:inline="javascript">
+    document.getElementById('files').addEventListener('change', function (e) {
+        var previewContainer = document.getElementById('image-preview');
+        previewContainer.innerHTML = ''; // Xóa bất kỳ hình ảnh trước nào
+
+        var files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var image = document.createElement('img');
+                image.src = e.target.result;
+                image.classList.add('preview-image');
+
+                previewContainer.appendChild(image);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 <!-- General JS Scripts -->
 <script th:src="@{/dashboard/js/app.min.js}"></script>
 <!-- JS Libraies -->
