@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 
 
@@ -214,7 +214,8 @@
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chat-lieu/hien-thi}">Chất liệu</a></li>
-                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Loại giày</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Kích Cỡ</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/loai-giay/hien-thi}">Loại giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi}">Chi tiết sản phẩm</a>
                             </li>
                         </ul>
@@ -257,15 +258,15 @@
                         <form action="/admin/mau-sac/add" method="post" th:object="${color}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Mã màu sắc</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập mã màu sắc"
-                                               th:field="*{code}">
-                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
-                                              th:errors="*{code}"></span>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label>Mã màu sắc</label>-->
+<!--                                    <div class="input-group colorpickerinput">-->
+<!--                                        <input type="text" class="form-control" placeholder="Nhập mã màu sắc"-->
+<!--                                               th:field="*{code}">-->
+<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"-->
+<!--                                              th:errors="*{code}"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <label>Tên màu sắc</label>
                                     <input type="text" class="form-control" placeholder="Nhập tên màu sắc"
@@ -273,25 +274,23 @@
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 13px"
                                           th:errors="*{name}"></span>
                                 </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="true"-->
+<!--                                        checked="checked">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="false">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-primary" type="button" href="/admin/san-pham/hien-thi"><-
-                                    </a>
                                     <a th:href="@{/admin/mau-sac/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                     </a>
@@ -330,7 +329,7 @@
                                             </div>
                                         </th>
                                         <th>Mã màu</th>
-                                        <th>Tên màu</th>
+                                        <th>Màu Sắc</th>
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
@@ -338,7 +337,7 @@
 
                                         <td th:text="*{list.code}"></td>
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/mau-sac/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"

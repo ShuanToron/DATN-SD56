@@ -44,7 +44,7 @@ public class Account {
 
 
     @Column(name = "status")
-    private Boolean status;
+    private Boolean statuss;
 
 
     @Column(name = "create_date")

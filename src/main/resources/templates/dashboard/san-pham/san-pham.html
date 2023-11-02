@@ -358,11 +358,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Ảnh sản phẩm</label>
-                                    <input type="file" accept="/media/upload" id="files" multiple/><br>
-                                    <output id="list"></output>
-                                </div>
-                                <div class="form-group">
+
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
                                         <input type="radio" name="exampleRadios" th:field="*{status}" value="1"
@@ -606,8 +602,6 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-
-
                                         <th>Mã sản phẩm</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Mô tả</th>
@@ -615,21 +609,20 @@
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr th:each="list:${list}">
-
-                                        <td th:text="*{list.code}"></td>
-                                        <td th:text="*{list.name}"></td>
-                                        <td th:text="*{list.description}"></td>
-                                        <td th:text="*{list.quantity}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                    <tr th:each="product:${list}">
+                                        <td th:text="*{product.code}"></td>
+                                        <td th:text="*{product.name}"></td>
+                                        <td th:text="*{product.description}"></td>
+                                        <td th:text="*{product.quantity}"></td>
+                                        <td th:text="${product.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <a th:href="@{'/admin/san-pham/delete/'+${list.id}}">
+                                            <a th:href="@{'/admin/san-pham/delete/'+${product.id}}">
                                                 <button type="button" class="btn btn-danger"
                                                         onsubmit="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{'/admin/san-pham/view-update/'+${list.id}}">
+                                            <a th:href="@{'/admin/san-pham/view-update/'+${product.id}}">
                                                 <button type="button" class="btn btn-success">
                                                     Cập nhật
                                                 </button>

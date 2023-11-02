@@ -1,9 +1,8 @@
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,13 +21,15 @@ import java.time.LocalDate;
 public class Size {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "code")
     private String code;
 
     @Column(name = "name")
-    private Integer name;
+    @NotNull(message = "không được để trống")
+    private String name;
 
     @Column(name = "status")
     private Boolean status;

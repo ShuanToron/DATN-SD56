@@ -1,55 +1,48 @@
-package com.example.datnsd56.controller;
 
-import com.example.datnsd56.entity.Image;
-import com.example.datnsd56.service.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.UUID;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/image/")
+@RequestMapping("/api/image")
 public class ImageController {
-    private static String UPLOAD_DIR = System.getProperty("user.home") + "/media/upload";
     @Autowired
     private ImageService imageService;
 
-    @PostMapping("upload")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        //Tạo thư mục chứa ảnh nếu không tồn tại
-        File uploadDir = new File(UPLOAD_DIR);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-        //Lấy tên file và đuôi mở rộng của file
-        String originalFilename = file.getOriginalFilename();
-        String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+    @GetMapping("getAll")
+    public List<Image> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
+        List<Image> list = imageService.getAll(page).getContent();
+        return list;
+    }
 
+    @PostMapping("add")
+    public void add(@RequestBody Image image) {
+        imageService.add(image);
+    }
 
-        Image image = new Image();
-        image.setUrl(file.getName());
+    @GetMapping("detail/{id}")
+    public Image detail(@PathVariable("id") Integer id) {
+        Image image = imageService.getById(id);
+        return image;
 
+    }
 
-        //Tạo file
-        File serveFile = new File(UPLOAD_DIR + "/" + image.getId() + "." + extension);
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serveFile));
-        bos.write(file.getBytes());
-        bos.close();
+    @PutMapping("update/{id}")
+    public void update(@RequestBody Image image) {
+        imageService.update(image);
+    }
 
-        imageService.saveImage(image);
-        return ResponseEntity.ok(image);
-
-
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable("id") Integer id) {
+        imageService.delete(id);
     }
 
 }

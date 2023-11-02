@@ -1,6 +1,8 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.repository.ImageRepository;
 import com.example.datnsd56.repository.ProductsRepository;
 import com.example.datnsd56.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +23,9 @@ import java.util.List;
 public class ProductsServiceImpl implements ProductsService {
     @Autowired
     private ProductsRepository repository;
+    @Autowired
+    private ImageRepository imageRepository;
+
     @Override
     public Page<Products> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
@@ -53,8 +63,6 @@ public class ProductsServiceImpl implements ProductsService {
     public void update(Products products) {
         products.setCreateDate(LocalDate.now());
         products.setUpdateDate(LocalDate.now());
-
-
         repository.save(products);
     }
 }

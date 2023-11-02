@@ -9,26 +9,29 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CustomersSeviceImpl implements CustomersService {
     @Autowired
     private CustomersRepository customersRepository;
 
     @Override
-    public Page<Customers> getAll(Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
+    public Page<Customers> getAll(Pageable pageable) {
+//        Pageable pageable = PageRequest.of(page, 5);
         return customersRepository.findAll(pageable);
     }
 
     @Override
     public Customers detail(Integer id) {
-        Customers customers = customersRepository.findById(id).get();
+        Customers customers = customersRepository.findById(id).orElse(null);
         return customers;
     }
 
     @Override
-    public void add(Customers customers) {
-        customersRepository.save(customers);
+    public Customers add(Customers customers) {
+        return  customersRepository.save(customers);
     }
 
     @Override
@@ -41,5 +44,15 @@ public class CustomersSeviceImpl implements CustomersService {
     public void delete(Integer id) {
         Customers customers = detail(id);
         customersRepository.delete(customers);
+    }
+    public Page<Customers> findByEmail(String phone) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Customers> list=customersRepository.findAddressesByPhone(phone,page);
+        return list;
+    }
+
+    @Override
+    public List<Customers> get() {
+        return customersRepository.findAll();
     }
 }

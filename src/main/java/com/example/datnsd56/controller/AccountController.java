@@ -47,7 +47,6 @@ public class AccountController {
         List<Roles> listr=rolesService.getAll();
         model.addAttribute("rolelist",listr);
         model.addAttribute("roles",new Roles());
-
 //        model.addAttribute("currentPage", pageNo);
         return "/dashboard/account/account";
 
@@ -63,9 +62,12 @@ public class AccountController {
         return "dashboard/account/update-account";
     }
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
+    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,@RequestParam(defaultValue = "0") Integer page){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
+            Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
+//        model.addAttribute("totalPages", page1.getTotalPages());
+            model.addAttribute("list", page1);
             List<Roles> listr=rolesService.getAll();
             model.addAttribute("rolelist",listr);
             model.addAttribute("roles",new Roles());
@@ -77,10 +79,29 @@ public class AccountController {
         return "redirect:/admin/account/hien-thi";
 
     }
+    @PostMapping("/add1")
+    public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
+        if(result.hasErrors()){
+            model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
+            List<Roles> listr=rolesService.getAll();
+            model.addAttribute("rolelist",listr);
+            model.addAttribute("roles",new Roles());
+            return "/dashboard/account/account";
+
+        }
+        accountService.add(account);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/address/hien-thi";
+
+
+    }
     @PostMapping("/update/{id}")
     public String update( @Valid @ModelAttribute("account") Account account, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("account",account);
+            List<Roles> listr=rolesService.getAll();
+            model.addAttribute("rolelist",listr);
+            model.addAttribute("roles",new Roles());
             return "dashboard/account/update-account";
 
         }
