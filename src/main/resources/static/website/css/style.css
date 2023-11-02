@@ -17,6 +17,12 @@
 .fw-medium {
   font-weight: 600;
 }
+.product-item {
+    display: inline-block;
+    margin: 10px; /* Thêm khoảng cách giữa các sản phẩm */
+    width: 200px; /* Đặt độ rộng tối đa cho mỗi sản phẩm */
+}
+
 
 .fw-bold {
   font-weight: 700;
@@ -287,7 +293,7 @@
 
 /*** About ***/
 .video {
-  background: 
+  background:
   /* linear-gradient(
       rgba(136, 180, 78, 0.85),
       rgba(136, 180, 78, 0.85)

@@ -72,6 +72,11 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         productDetailsRepository.deletects(id);
     }
 
+//    @Override
+//    public List<ProductDetails> getProductsByProductId(Integer productId) {
+//        return productDetailsRepository.findByProductId(productId);
+//    }
+
     @Override
     public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
         productDetails.setCreateDate(LocalDate.now());
