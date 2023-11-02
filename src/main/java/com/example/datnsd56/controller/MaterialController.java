@@ -62,6 +62,20 @@ public class MaterialController {
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
     }
+    @PostMapping("/add1")
+    public String add(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Material> page = service.pageMaterial(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/chat-lieu/chat-lieu";
+        }
+        service.add(material);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham/hien-thi";
+    }
+
     @PostMapping("/update/{id}")
     public String update(@Valid @ModelAttribute("color") Material material, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
         if (result.hasErrors()) {

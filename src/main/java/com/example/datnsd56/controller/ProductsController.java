@@ -61,13 +61,19 @@ public class ProductsController {
         model.addAttribute("product", new Products());
         Page<Products> page = service.getAll(pageNo);
         List<Brand> brands = brand.getAllBrand();
-        model.addAttribute("brand", brands);
+        model.addAttribute("brand",brands);
+        model.addAttribute("brands",new Brand());
         List<Category> categories = category.getAllCate();
-        model.addAttribute("category", categories);
+        model.addAttribute("category",categories);
+        model.addAttribute("categoris",new Category());
         List<Material> materials = materialService.getAllMater();
-        model.addAttribute("material", materials);
+        model.addAttribute("material",materials);
+        model.addAttribute("materials",new Material());
         List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-        model.addAttribute("shoeSole", shoeSoles);
+        model.addAttribute("shoeSole",shoeSoles);
+        model.addAttribute("shoeSoles",new ShoeSole());
+
+       
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("list", page);
         model.addAttribute("currentPage", pageNo);
@@ -125,14 +131,17 @@ public class ProductsController {
         if (result.hasErrors()) {
             Page<Products> page = service.getAll(0);
             List<Brand> brands = brand.getAllBrand();
-            model.addAttribute("brand", brands);
+            model.addAttribute("brand",brands);
+            model.addAttribute("brands",new Brand());
             List<Category> categories = category.getAllCate();
-            model.addAttribute("category", categories);
-
+            model.addAttribute("category",categories);
+            model.addAttribute("categoris",new Category());
             List<Material> materials = materialService.getAllMater();
-            model.addAttribute("material", materials);
+            model.addAttribute("material",materials);
+            model.addAttribute("materials",new Category());
             List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-            model.addAttribute("shoeSole", shoeSoles);
+            model.addAttribute("shoeSole",shoeSoles);
+            model.addAttribute("shoeSoles",new ShoeSole());
 
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);

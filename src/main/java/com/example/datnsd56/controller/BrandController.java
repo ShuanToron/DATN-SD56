@@ -59,7 +59,8 @@ public class BrandController {
         return "redirect:/admin/thuong-hieu/hien-thi";
     }
 
-    @PostMapping("/add")
+
+    @PostMapping("/add1")
     public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             Page<Brand> page = service.getAll(0);
@@ -70,7 +71,7 @@ public class BrandController {
         }
         service.add(brand);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/thuong-hieu/hien-thi";
+        return "redirect:/admin/san-pham/hien-thi";
 
     }
 }

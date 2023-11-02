@@ -75,4 +75,18 @@ public class ShoeSoleController {
         return "redirect:/admin/de-giay/hien-thi";
 
     }
+    @PostMapping("/add1")
+    public String addd(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<ShoeSole> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/de-giay/de-giay";
+        }
+        service.add(shoeSole);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham/hien-thi";
+
+    }
 }
