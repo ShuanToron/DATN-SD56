@@ -338,16 +338,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Số lượng</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
-                                               th:field="*{quantity}">
-                                        <span th:if="${#fields.hasErrors('quantity')}"
-                                              style="color: red; font-size: 13px"
-                                              th:errors="*{quantity}"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label>Mô tả</label>
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control" placeholder="Nhập mô tả"
@@ -613,7 +603,6 @@
                                         <td th:text="*{product.code}"></td>
                                         <td th:text="*{product.name}"></td>
                                         <td th:text="*{product.description}"></td>
-                                        <td th:text="*{product.quantity}"></td>
                                         <td th:text="${product.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/san-pham/delete/'+${product.id}}">
