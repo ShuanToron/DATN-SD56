@@ -1,6 +1,7 @@
 package com.example.datnsd56.repository;
 
 import com.example.datnsd56.entity.ProductDetails;
+import com.example.datnsd56.entity.Products;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 @Repository
 public interface ProductDetailsRepository extends JpaRepository<ProductDetails, Integer> {
@@ -30,6 +32,9 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
     Page<ProductDetails> search(@Param("quantity") Integer quantity,
                                 @Param("sellPrice") BigDecimal sellPrice,
                                 Pageable pageable);
+
+//    List<ProductDetails> findByProductId(Integer productId);
+
 }
 
 

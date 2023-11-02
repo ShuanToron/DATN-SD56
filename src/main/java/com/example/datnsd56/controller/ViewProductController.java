@@ -81,4 +81,9 @@ public class ViewProductController {
 //        }
 
     }
+
+    @GetMapping("nike/hien-thi")
+    public String viewNike(){
+        return "website/index/nike";
+    }
 }
