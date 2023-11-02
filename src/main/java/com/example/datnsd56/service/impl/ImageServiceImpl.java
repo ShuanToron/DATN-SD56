@@ -19,6 +19,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
+
     @Override
     public Page<Image> getAll(Integer page) {
         Pageable pageable = PageRequest.of(page, 5);

@@ -31,11 +31,9 @@ public class Image {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Lob
     @Column(name = "url")
     private Blob url;
-
     @ManyToOne
     @JoinColumn(name = "productDetail_id",referencedColumnName = "id")
     private ProductDetails productDetailId;

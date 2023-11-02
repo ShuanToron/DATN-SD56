@@ -61,4 +61,5 @@ public class ImageController {
     public void delete(@PathVariable("id") Integer id) {
         imageService.delete(id);
     }
+
 }

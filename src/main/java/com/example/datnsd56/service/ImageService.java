@@ -1,9 +1,7 @@
 package com.example.datnsd56.service;
-
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.Products;
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.Map;
 
@@ -19,5 +17,5 @@ public interface ImageService {
     void update(Image image);
 
     List<Image> getImagesForProducts(Integer id);
-    List<Image> getall();
+
 }
