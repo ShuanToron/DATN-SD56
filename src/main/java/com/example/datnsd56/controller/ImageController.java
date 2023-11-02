@@ -3,6 +3,8 @@ package com.example.datnsd56.controller;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +40,17 @@ public class ImageController {
         return image;
 
     }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
+//        Image image = (Image) imageService.getImagesForProducts(id);
+//        if (image != null && image.getImageData() != null) {
+//            return ResponseEntity.ok()
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .body(image.getImageData());
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+
 
     @PutMapping("update/{id}")
     public void update(@RequestBody Image image) {
