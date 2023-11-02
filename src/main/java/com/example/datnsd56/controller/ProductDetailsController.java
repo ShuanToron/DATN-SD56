@@ -47,8 +47,8 @@ public class ProductDetailsController {
     private ImageService imageService;
 
     @GetMapping("hien-thi")
-    public String getAllBypage(Model model, @RequestParam(defaultValue = "0", name = "pageNo") Integer pagaNo) {
-        Page<ProductDetails> page = productDetailsService.getAll(pagaNo);
+    public String getAllBypage(Model model, @RequestParam(value = "page", defaultValue = "0") Integer pageNo) {
+        Page<ProductDetails> page = productDetailsService.getAll(pageNo);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
         List<Size> sizes = sizeService.getAllSZ();
@@ -58,7 +58,7 @@ public class ProductDetailsController {
         model.addAttribute("colors", colors);
         model.addAttribute("sizes", sizes);
         model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("currentPage", pagaNo);
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("ctsp", new ProductDetails());
         model.addAttribute("color", new Color());
         model.addAttribute("size", new Size());
@@ -71,20 +71,18 @@ public class ProductDetailsController {
     @PostMapping("add")
     public String add(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
         if (result.hasErrors()) {
-            Page<ProductDetails> productDetail = productDetailsService.getAll(0);
+            Page<ProductDetails> page = productDetailsService.getAll(0);
             List<Products> products = productsService.getAllPro();
             List<Color> colors = colorService.getAllColor();
             List<Size> sizes = sizeService.getAllSZ();
-            model.addAttribute("list", productDetail);
+            model.addAttribute("list", page);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
             model.addAttribute("color",new Color());
             model.addAttribute("size", new Size());
-            model.addAttribute("totalPages", productDetail.getTotalPages());
+            model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("currentPage", 0);
-            model.addAttribute("color",new Color());
-            model.addAttribute("size", new Size());
             return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
 
         }
