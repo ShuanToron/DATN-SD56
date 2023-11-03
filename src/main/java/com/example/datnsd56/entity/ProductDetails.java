@@ -38,7 +38,7 @@ public class ProductDetails {
     private LocalDate updateDate;
 
     @Column(name = "status")
-    private Boolean status;
+    private boolean status;
 
     @Column(name = "sell_price")
     @Min(value = 1, message = "lon hon 0")
