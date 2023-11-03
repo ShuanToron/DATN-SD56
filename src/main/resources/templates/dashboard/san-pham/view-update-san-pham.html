@@ -271,9 +271,10 @@
                         <div class="card-header">
                             <h4>Sản phẩm</h4>
                         </div>
-                        <form th:action="@{/admin/san-pham-test/add-product}" method="post" th:object="${product}"
+                        <form th:action="@{/admin/san-pham-test/update-san-pham/{id}(id=${product.id})}" method="post"
+                              th:object="${product}"
                               enctype="multipart/form-data"
-                              onsubmit="return  confirm('Bạn có muốn thêm không?')">
+                              onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã sản phẩm</label>
@@ -697,8 +698,9 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <form action="/admin/san-pham-test/update-pending" method="post" id="updateForm"
-                                      onsubmit="return confirm('Bạn có thêm không?')">
+                                <form action="/admin/san-pham-test/update-chi-tiet-san-pham" method="post"
+                                      id="updateForm"
+                                      onsubmit="return confirm('Bạn có muốn cập nhật không?')">
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
@@ -712,7 +714,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="ctsp:${listPending}">
+                                        <tr th:each="ctsp:${listDetail}">
                                             <td th:text="*{ctsp.productId.code}"></td>
                                             <td th:text="*{ctsp.productId.name}"></td>
                                             <td th:text="*{ctsp.sizeId.name}"></td>

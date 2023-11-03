@@ -118,6 +118,24 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    public void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia) {
+        for (int i = 0; i < id.size(); i++) {
+            Integer ids = id.get(i);
+            Integer soLuongs = soLuong.get(i);
+            BigDecimal donGias = donGia.get(i);
+            Optional<ProductDetails> productDetails = getOne(ids);
+            if (productDetails.isPresent()) {
+                ProductDetails details = productDetails.get();
+                details.setStatus(true);
+                details.setQuantity(soLuongs);
+                details.setSellPrice(donGias);
+                details.setUpdateDate(LocalDate.now());
+                productDetailsRepository.save(details);
+            }
+        }
+    }
+
+    @Override
     public Optional<ProductDetails> getOne(Integer id) {
         return Optional.of(productDetailsRepository.findById(id).get());
     }
@@ -129,14 +147,16 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public void update(Products products) {
-        products.setCreateDate(LocalDate.now());
+    public void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException {
         products.setUpdateDate(LocalDate.now());
         productRepository.save(products);
+        for (MultipartFile file : files) {
+            Image anhSanPham = imageRepository.getImageByProductId(products.getId()).get(0);
+            byte[] bytes = file.getBytes();
+            Blob blob = new SerialBlob(bytes);
+            anhSanPham.setProductId(products);
+            anhSanPham.setUrl(blob);
+            imageRepository.save(anhSanPham);
+        }
     }
-
-//    @Override
-//    public List<Products> getProductsByBrandId(Long brandId) {
-//        return repository.findByBrandId(brandId);
-//    }
 }

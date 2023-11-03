@@ -137,4 +137,36 @@ public class ProController {
         return "dashboard/san-pham/view-update-san-pham";
     }
 
+    @PostMapping("/update-san-pham/{id}")
+    public String updateSanPham(@Valid @ModelAttribute("sanPham") Products products, BindingResult result, @RequestParam("image") MultipartFile[] files, Model model) throws SQLException, IOException {
+        if (result.hasErrors()) {
+            model.addAttribute("product", new Products());
+            List<Brand> brands = brand.getAllBrand();
+            model.addAttribute("brand", brands);
+            model.addAttribute("brands", new Brand());
+            List<Category> categories = category.getAllCate();
+            model.addAttribute("category", categories);
+            model.addAttribute("categoris", new Category());
+            List<Material> materials = materialService.getAllMater();
+            model.addAttribute("material", materials);
+            model.addAttribute("materials", new Material());
+            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+            model.addAttribute("shoeSole", shoeSoles);
+            model.addAttribute("shoeSoles", new ShoeSole());
+            model.addAttribute("color", new Color());
+            model.addAttribute("size", new Size());
+            model.addAttribute("listPending", productDetailsService.listPending());
+            model.addAttribute("listColor", colorService.getAllColor());
+            model.addAttribute("listSize", sizeService.getAllSZ());
+        }
+        productService.updateProduct(products, files);
+        return "redirect:/admin/san-pham-test/create";
+    }
+
+    @PostMapping("/update-chi-tiet-san-pham")
+    public String updateProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<BigDecimal> donGia) {
+        productService.updateProductDetail(id, soLuong, donGia);
+        return "redirect:/admin/san-pham-test/create";
+    }
+
 }

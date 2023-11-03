@@ -27,9 +27,11 @@ public interface ProductsService {
 
     void addProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
 
+    void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
+
     Optional<ProductDetails> getOne(Integer id);
 
     void delete(Integer id);
 
-    void update(Products products);
+    void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException;
 }
