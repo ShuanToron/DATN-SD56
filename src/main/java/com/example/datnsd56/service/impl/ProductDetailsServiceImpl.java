@@ -48,19 +48,24 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
-        productDetails.setCreateDate(LocalDate.now());
-        productDetails.setUpdateDate(LocalDate.now());
-        productDetailsRepository.save(productDetails);
-        for (MultipartFile file : files) {
-            Image anhSanPham = new Image();
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductDetailId(productDetails);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
-        return productDetails;
+        return null;
     }
+
+//    @Override
+//    public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+//        productDetails.setCreateDate(LocalDate.now());
+//        productDetails.setUpdateDate(LocalDate.now());
+//        productDetailsRepository.save(productDetails);
+//        for (MultipartFile file : files) {
+//            Image anhSanPham = new Image();
+//            byte[] bytes = file.getBytes();
+//            Blob blob = new SerialBlob(bytes);
+//            anhSanPham.setProductDetailId(productDetails);
+//            anhSanPham.setUrl(blob);
+//            imageRepository.save(anhSanPham);
+//        }
+//        return productDetails;
+//    }
 
     @Override
     public ProductDetails getById(Integer id) {
@@ -68,8 +73,18 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
+    public List<ProductDetails> listPending() {
+        return productDetailsRepository.listPending();
+    }
+
+    @Override
     public void delete(Integer id) {
         productDetailsRepository.deletects(id);
+    }
+
+    @Override
+    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+
     }
 
 //    @Override
@@ -77,19 +92,19 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 //        return productDetailsRepository.findByProductId(productId);
 //    }
 
-    @Override
-    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
-        productDetails.setCreateDate(LocalDate.now());
-        productDetails.setUpdateDate(LocalDate.now());
-        productDetailsRepository.save(productDetails);
-
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductDetailId(productDetails);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
-    }
+//    @Override
+//    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+//        productDetails.setCreateDate(LocalDate.now());
+//        productDetails.setUpdateDate(LocalDate.now());
+//        productDetailsRepository.save(productDetails);
+//
+//        for (MultipartFile file : files) {
+//            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
+//            byte[] bytes = file.getBytes();
+//            Blob blob = new SerialBlob(bytes);
+//            anhSanPham.setProductDetailId(productDetails);
+//            anhSanPham.setUrl(blob);
+//            imageRepository.save(anhSanPham);
+//        }
+//    }
 }

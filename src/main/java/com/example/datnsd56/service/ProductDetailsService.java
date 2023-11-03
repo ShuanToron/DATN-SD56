@@ -17,12 +17,14 @@ public interface ProductDetailsService {
 
     Page<ProductDetails> search(Integer quantity, BigDecimal sellPrice);
 
-    ProductDetails add(ProductDetails productDetails, MultipartFile[] files )throws IOException, SQLException;
+    ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 
     ProductDetails getById(Integer id);
+
+    List<ProductDetails> listPending();
 
     void delete(Integer id);
 //    List<ProductDetails> getProductsByProductId(Integer productId);
 
-    void update(ProductDetails productDetails, MultipartFile[] files)throws IOException, SQLException;
+    void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 }

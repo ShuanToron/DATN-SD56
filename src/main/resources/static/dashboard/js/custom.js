@@ -107,35 +107,5 @@ function deleteData(type, id, successMessage) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const sizeSelect = document.getElementById("size");
-    const colorSelect = document.getElementById("color");
-    const productSelect = document.getElementById("product");
-    const quantityProduct = document.getElementById("quantity");
-    const addButton = document.getElementById("add-product");
-    const tableBody = document.querySelector("#product-table tbody");
-
-    addButton.addEventListener("click", function () {
-        const size = sizeSelect.value;
-        const color = colorSelect.value;
-        const product = productSelect.value;
-        const quantity = quantityProduct.value;
-
-        const newRow = tableBody.insertRow(tableBody.rows.length);
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-        const cell4 = newRow.insertCell(3);
-
-        cell4.innerHTML = quantity;
-        cell3.innerHTML = size;
-        cell2.innerHTML = color;
-        cell1.innerHTML = product;
-    });
-});
-
-
-
-
 "use strict";
 

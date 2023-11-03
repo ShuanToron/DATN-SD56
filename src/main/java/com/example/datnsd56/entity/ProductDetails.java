@@ -56,7 +56,4 @@ public class ProductDetails {
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color colorId;
 
-    @Transient
-    @OneToMany(mappedBy = "productDetail_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Image> images;
 }

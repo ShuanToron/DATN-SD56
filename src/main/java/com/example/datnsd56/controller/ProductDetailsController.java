@@ -79,7 +79,7 @@ public class ProductDetailsController {
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
-            model.addAttribute("color",new Color());
+            model.addAttribute("color", new Color());
             model.addAttribute("size", new Size());
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("currentPage", 0);
@@ -98,6 +98,14 @@ public class ProductDetailsController {
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+    }
+
+    @GetMapping("/anhSP")
+    public ResponseEntity<byte[]> getAnh(@RequestParam("idSP") Integer id) throws SQLException {
+        Image image = imageService.getById(id);
+        byte[] imaBytes = null;
+        imaBytes = image.getUrl().getBytes(1, (int) image.getUrl().length());
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imaBytes);
     }
 
     @GetMapping("view-update/{id}")
@@ -139,10 +147,7 @@ public class ProductDetailsController {
     }
 
     @GetMapping("search")
-    public String search(
-            @RequestParam(value = "quantity", required = false) Integer quantity,
-            @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice,
-            Model model, HttpSession session) {
+    public String search(@RequestParam(value = "quantity", required = false) Integer quantity, @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice, Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {
             String successMessage = (String) session.getAttribute("successMessage");

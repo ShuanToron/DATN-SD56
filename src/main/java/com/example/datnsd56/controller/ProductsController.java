@@ -2,16 +2,21 @@ package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Brand;
 import com.example.datnsd56.entity.Category;
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.Material;
 import com.example.datnsd56.entity.Products;
 import com.example.datnsd56.entity.ShoeSole;
+import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.service.BrandService;
 import com.example.datnsd56.service.CategoryService;
+import com.example.datnsd56.service.ColorService;
 import com.example.datnsd56.service.ImageService;
 import com.example.datnsd56.service.MaterialService;
+import com.example.datnsd56.service.ProductDetailsService;
 import com.example.datnsd56.service.ProductsService;
 import com.example.datnsd56.service.ShoeSoleService;
+import com.example.datnsd56.service.SizeService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -54,104 +59,111 @@ public class ProductsController {
     private MaterialService materialService;
     @Autowired
     private ShoeSoleService shoeSole;
+    @Autowired
+    private ProductDetailsService productDetailsService;
+    @Autowired
+    private ColorService colorService;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private ImageService imageService;
 
-
-    @GetMapping("/hien-thi")
-    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model, HttpServletResponse response) {
-        model.addAttribute("product", new Products());
-        Page<Products> page = service.getAll(pageNo);
-        List<Brand> brands = brand.getAllBrand();
-        model.addAttribute("brand",brands);
-        model.addAttribute("brands",new Brand());
-        List<Category> categories = category.getAllCate();
-        model.addAttribute("category",categories);
-        model.addAttribute("categoris",new Category());
-        List<Material> materials = materialService.getAllMater();
-        model.addAttribute("material",materials);
-        model.addAttribute("materials",new Material());
-        List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-        model.addAttribute("shoeSole",shoeSoles);
-        model.addAttribute("shoeSoles",new ShoeSole());
-
-       
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("list", page);
-        model.addAttribute("currentPage", pageNo);
-        return "dashboard/san-pham/san-pham";
-    }
-
-    @GetMapping("/view-update/{id}")
-    public String detail(@PathVariable("id") Integer id, Model model) {
-        Products products = service.getById(id);
-        model.addAttribute("product", products);
-        List<Brand> brands = brand.getAllBrand();
-        model.addAttribute("brand", brands);
-        List<Category> categories = category.getAllCate();
-        model.addAttribute("category", categories);
-
-        List<Material> materials = materialService.getAllMater();
-        model.addAttribute("material", materials);
-        List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-        model.addAttribute("shoeSole", shoeSoles);
-
-        return "/dashboard/san-pham/update-san-pham";
-    }
-
-    @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("product") Products products, BindingResult
-            result, @PathVariable("id") Integer id, Model model, HttpSession session) {
-        if (result.hasErrors()) {
-            model.addAttribute("product", products);
-            List<Brand> brands = brand.getAllBrand();
-            model.addAttribute("brand", brands);
-            List<Category> categories = category.getAllCate();
-
-
-            List<Material> materials = materialService.getAllMater();
-            model.addAttribute("material", materials);
-            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-
-            return "/dashboard/san-pham/update-san-pham";
-
-        }
-        service.update(products);
-        session.setAttribute("successMessage", "sửa thành công");
-        return "redirect:/admin/san-pham/hien-thi";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id) {
-        service.delete(id);
-        return "redirect:/admin/san-pham/hien-thi";
-    }
-
-    @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("product") Products products, BindingResult result, Model
-            model, HttpSession session) {
-        if (result.hasErrors()) {
-            Page<Products> page = service.getAll(0);
-            List<Brand> brands = brand.getAllBrand();
-            model.addAttribute("brand",brands);
-            model.addAttribute("brands",new Brand());
-            List<Category> categories = category.getAllCate();
-            model.addAttribute("category",categories);
-            model.addAttribute("categoris",new Category());
-            List<Material> materials = materialService.getAllMater();
-            model.addAttribute("material",materials);
-            model.addAttribute("materials",new Category());
-            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
-            model.addAttribute("shoeSole",shoeSoles);
-            model.addAttribute("shoeSoles",new ShoeSole());
-
-            model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("list", page);
-            model.addAttribute("currentPage", 0);
-            return "dashboard/san-pham/san-pham";
-        }
-        service.add(products);
-        session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/san-pham/hien-thi";
-
-    }
+//    @GetMapping("/hien-thi")
+//    public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model, HttpServletResponse response) {
+//        model.addAttribute("product", new Products());
+//        Page<Products> page = service.getAll(pageNo);
+//        List<Brand> brands = brand.getAllBrand();
+//        model.addAttribute("brand", brands);
+//        model.addAttribute("brands", new Brand());
+//        List<Category> categories = category.getAllCate();
+//        model.addAttribute("category", categories);
+//        model.addAttribute("categoris", new Category());
+//        List<Material> materials = materialService.getAllMater();
+//        model.addAttribute("material", materials);
+//        model.addAttribute("materials", new Material());
+//        List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+//        model.addAttribute("shoeSole", shoeSoles);
+//        model.addAttribute("shoeSoles", new ShoeSole());
+//        model.addAttribute("color", new Color());
+//        model.addAttribute("size", new Size());
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("list", page);
+//        model.addAttribute("currentPage", pageNo);
+//        return "dashboard/san-pham/san-pham-2";
+//    }
+//
+//    @GetMapping("/view-update/{id}")
+//    public String detail(@PathVariable("id") Integer id, Model model) {
+//        Products products = service.getById(id);
+//        model.addAttribute("product", products);
+//        List<Brand> brands = brand.getAllBrand();
+//        model.addAttribute("brand", brands);
+//        List<Category> categories = category.getAllCate();
+//        model.addAttribute("category", categories);
+//
+//        List<Material> materials = materialService.getAllMater();
+//        model.addAttribute("material", materials);
+//        List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+//        model.addAttribute("shoeSole", shoeSoles);
+//
+//        return "/dashboard/san-pham/update-san-pham";
+//    }
+//
+//    @PostMapping("/update/{id}")
+//    public String update(@Valid @ModelAttribute("product") Products products, BindingResult
+//            result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("product", products);
+//            List<Brand> brands = brand.getAllBrand();
+//            model.addAttribute("brand", brands);
+//            List<Category> categories = category.getAllCate();
+//
+//
+//            List<Material> materials = materialService.getAllMater();
+//            model.addAttribute("material", materials);
+//            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+//
+//            return "/dashboard/san-pham/update-san-pham";
+//
+//        }
+//        service.update(products);
+//        session.setAttribute("successMessage", "sửa thành công");
+//        return "redirect:/admin/san-pham/hien-thi";
+//    }
+//
+//    @GetMapping("/delete/{id}")
+//    public String delete(@PathVariable("id") Integer id) {
+//        service.delete(id);
+//        return "redirect:/admin/san-pham/hien-thi";
+//    }
+//
+//    @PostMapping("/add")
+//    public String add(@Valid @ModelAttribute("product") Products products, BindingResult result, Model
+//            model, HttpSession session) {
+//        if (result.hasErrors()) {
+//            Page<Products> page = service.getAll(0);
+//            List<Brand> brands = brand.getAllBrand();
+//            model.addAttribute("brand", brands);
+//            model.addAttribute("brands", new Brand());
+//            List<Category> categories = category.getAllCate();
+//            model.addAttribute("category", categories);
+//            model.addAttribute("categoris", new Category());
+//            List<Material> materials = materialService.getAllMater();
+//            model.addAttribute("material", materials);
+//            model.addAttribute("materials", new Category());
+//            List<ShoeSole> shoeSoles = shoeSole.getAllSole();
+//            model.addAttribute("shoeSole", shoeSoles);
+//            model.addAttribute("shoeSoles", new ShoeSole());
+//
+//            model.addAttribute("totalPages", page.getTotalPages());
+//            model.addAttribute("list", page);
+//            model.addAttribute("currentPage", 0);
+//            return "dashboard/san-pham/san-pham";
+//        }
+//        service.add(products);
+//        session.setAttribute("successMessage", "Thêm thành công");
+//        return "redirect:/admin/san-pham/hien-thi";
+//
+//    }
 
 }
