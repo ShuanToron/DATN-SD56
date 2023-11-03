@@ -56,9 +56,6 @@ public class Products {
     @Column(name = "update_date")
     private LocalDate updateDate;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shoe_sole_id", referencedColumnName = "id")
     private ShoeSole shoeSoleId;
@@ -74,6 +71,7 @@ public class Products {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brandId;
+
 
 
 }

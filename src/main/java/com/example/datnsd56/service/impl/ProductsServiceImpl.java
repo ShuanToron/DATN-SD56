@@ -65,4 +65,9 @@ public class ProductsServiceImpl implements ProductsService {
         products.setUpdateDate(LocalDate.now());
         repository.save(products);
     }
+
+//    @Override
+//    public List<Products> getProductsByBrandId(Long brandId) {
+//        return repository.findByBrandId(brandId);
+//    }
 }

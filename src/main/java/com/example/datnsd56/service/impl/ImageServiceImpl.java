@@ -19,6 +19,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
+
     @Override
     public Page<Image> getAll(Integer page) {
         Pageable pageable = PageRequest.of(page, 5);
@@ -50,5 +51,10 @@ public class ImageServiceImpl implements ImageService {
         List<Image> list = imageRepository.getImageByProductId(id);
         return list;
     }
+
+//    @Override
+//    public List<Image> getall() {
+//        return imageRepository.findAll();
+//    }
 
 }

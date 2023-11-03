@@ -1,6 +1,7 @@
 package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.ProductDetails;
+import com.example.datnsd56.entity.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ public interface ProductDetailsService {
     ProductDetails getById(Integer id);
 
     void delete(Integer id);
+//    List<ProductDetails> getProductsByProductId(Integer productId);
 
     void update(ProductDetails productDetails, MultipartFile[] files)throws IOException, SQLException;
 }
