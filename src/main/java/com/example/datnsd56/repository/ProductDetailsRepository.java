@@ -26,12 +26,10 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
     void deletects(@Param("id") Integer id);
 
     @Query(value = "SELECT v.id,v.color_id,v.size_id,v.quantity,v.sell_price,v.create_date,v.update_date,v.product_id,v.status FROM Product_details v JOIN Products s ON v.product_id = s.id  \n" +
-            "            WHERE v.quantity = ? or v.sell_price= ?",nativeQuery = true)
+            "            WHERE v.quantity = ?1 or v.sell_price= ?1 or v.id = ?1",nativeQuery = true)
 //    @Query("SELECT v FROM ProductDetails v JOIN v.productId s\n" +
 //            "WHERE v.quantity = ?1 or v.sellPrice= ?1")
-    Page<ProductDetails> search(@Param("quantity") Integer quantity,
-                                @Param("sellPrice") BigDecimal sellPrice,
-                                Pageable pageable);
+    Page<ProductDetails> findProductDetailsBySellPrice(BigDecimal sellPrice, Pageable pageable);
 
 //    List<ProductDetails> findByProductId(Integer productId);
 

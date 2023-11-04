@@ -140,8 +140,7 @@ public class ProductDetailsController {
 
     @GetMapping("search")
     public String search(
-            @RequestParam(value = "quantity", required = false) Integer quantity,
-            @RequestParam(value = "sellPrice", required = false) BigDecimal sellPrice,
+            @RequestParam("sellPrice") BigDecimal sellPrice,
             Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {
@@ -150,7 +149,7 @@ public class ProductDetailsController {
             session.removeAttribute("successMessage");
         }
 
-        Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(quantity, sellPrice);
+        Page<ProductDetails> ketQuaTimKiem = productDetailsService.search(sellPrice);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
         List<Size> sizes = sizeService.getAllSZ();

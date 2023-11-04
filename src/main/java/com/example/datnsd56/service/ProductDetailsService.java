@@ -15,7 +15,8 @@ public interface ProductDetailsService {
 
     List<ProductDetails> getAllCTSP();
 
-    Page<ProductDetails> search(Integer quantity, BigDecimal sellPrice);
+    Page<ProductDetails> search( BigDecimal sellPrice);
+
 
     ProductDetails add(ProductDetails productDetails, MultipartFile[] files )throws IOException, SQLException;
 

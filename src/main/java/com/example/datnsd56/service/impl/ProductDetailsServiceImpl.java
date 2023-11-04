@@ -41,9 +41,11 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Page<ProductDetails> search(Integer quantity, BigDecimal sellPrice) {
+    public Page<ProductDetails> search( BigDecimal sellPrice) {
         Pageable pageable = PageRequest.of(0, 5);
-        return productDetailsRepository.search(quantity, sellPrice, pageable);
+        Page<ProductDetails> list = productDetailsRepository.findProductDetailsBySellPrice(sellPrice,pageable);
+        return list;
+
     }
 
     @Override
