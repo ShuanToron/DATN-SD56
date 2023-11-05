@@ -1,5 +1,6 @@
 package com.example.datnsd56.service;
 
+import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.Size;
 import org.springframework.data.domain.Page;
 
@@ -11,6 +12,7 @@ public interface SizeService {
     List<Size> getAllSZ();
 
     void add(Size size );
+    List<Size> getColorId(Integer id);
 
     Size getById(Integer id);
 

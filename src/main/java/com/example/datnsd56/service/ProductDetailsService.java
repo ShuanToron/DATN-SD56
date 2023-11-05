@@ -9,21 +9,23 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductDetailsService {
     Page<ProductDetails> getAll(Integer pageNo);
 
     List<ProductDetails> getAllCTSP();
 
-    Page<ProductDetails> search( BigDecimal sellPrice);
+    Page<ProductDetails> search(  BigDecimal sellPrice);
 
-
-    ProductDetails add(ProductDetails productDetails, MultipartFile[] files )throws IOException, SQLException;
+    ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 
     ProductDetails getById(Integer id);
+    Products getOneProdcut(Integer id);
 
+    List<ProductDetails> listPending();
     void delete(Integer id);
-//    List<ProductDetails> getProductsByProductId(Integer productId);
+    List<ProductDetails> getProductsByProductId(Integer productId);
 
-    void update(ProductDetails productDetails, MultipartFile[] files)throws IOException, SQLException;
+    void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 }

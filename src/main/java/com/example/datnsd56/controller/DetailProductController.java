@@ -2,8 +2,11 @@ package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
+import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.service.ColorService;
 import com.example.datnsd56.service.ImageService;
 import com.example.datnsd56.service.ProductDetailsService;
+import com.example.datnsd56.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +20,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product/detail")
 public class DetailProductController {
-
+    @Autowired
+    private SizeService sizeService ;
+    @Autowired
+    private ColorService colorService;
     @Autowired
     private ProductDetailsService productDetailsService;
     @Autowired
     private ImageService imageService;
     @GetMapping("chi-tiet/{id}")
     public String detail(@PathVariable("id") Integer id, Model model){
-      ProductDetails  list=productDetailsService.getById(id);
+      Products list=  productDetailsService.getOneProdcut(id);
+        model.addAttribute("listSize",sizeService.getColorId(id));
+        model.addAttribute("listColor",colorService.getColorId(id));
         model.addAttribute("views",list);
         return "website/index/detail";
 

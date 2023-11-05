@@ -12,7 +12,7 @@ public interface ColorService {
     void add(Color color);
 
     Color getById(Integer id);
-
+List<Color> getColorId(Integer id);
     void delete(Integer id);
 
     void update(Color color);

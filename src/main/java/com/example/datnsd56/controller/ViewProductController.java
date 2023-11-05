@@ -41,14 +41,14 @@ public class ViewProductController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        Collections.sort(list, Comparator.comparing(product -> product.getProductId().getBrandId().getName()));
-        model.addAttribute("views", list);
+        Collections.sort(lists, Comparator.comparing(product -> product.getBrandId().getName()));
+        model.addAttribute("views", lists);
 // Tạo một Map để nhóm sản phẩm theo brand
-        Map<String, List<ProductDetails>> productsByBrand = new HashMap<>();
+        Map<String, List<Products>> productsByBrand = new HashMap<>();
 
-        List<ProductDetails> productList = null;
-        for (ProductDetails product : list) {
-            String brandName = product.getProductId().getBrandId().getName();
+        List<Products> productList = null;
+        for (Products product : lists) {
+            String brandName = product.getBrandId().getName();
             productList = productsByBrand.getOrDefault(brandName, new ArrayList<>());
             productList.add(product);
             productsByBrand.put(brandName, productList);

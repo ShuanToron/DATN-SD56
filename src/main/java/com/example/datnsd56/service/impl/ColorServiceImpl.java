@@ -44,6 +44,11 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
+    public List<Color> getColorId(Integer id) {
+        return repository.findColorByid(id);
+    }
+
+    @Override
     public void delete(Integer id) {
         Color color = getById(id);
         repository.delete(color);
