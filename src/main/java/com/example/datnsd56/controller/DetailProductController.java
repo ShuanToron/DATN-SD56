@@ -3,24 +3,16 @@ package com.example.datnsd56.controller;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
-import com.example.datnsd56.service.ColorService;
-import com.example.datnsd56.service.ImageService;
-import com.example.datnsd56.service.ProductDetailsService;
-import com.example.datnsd56.service.SizeService;
+import com.example.datnsd56.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/product/detail")
@@ -32,14 +24,32 @@ public class DetailProductController {
     @Autowired
     private ProductDetailsService productDetailsService;
     @Autowired
+    private ProductsService productsService;
+    @Autowired
     private ImageService imageService;
     @GetMapping("chi-tiet/{id}")
     public String detail(@PathVariable("id") Integer id, Model model){
       Products list=  productDetailsService.getOneProdcut(id);
+//         Tính toán giá sản phẩm dựa trên màu sắc và kích cỡ được chọn
         model.addAttribute("listSize",sizeService.getColorId(id));
         model.addAttribute("listColor",colorService.getColorId(id));
+        model.addAttribute("sell",productDetailsService.getProductDetailsById(id));
+//        model.addAttribute("sells",productDetailsService.findProductDetailsByColorIdAndSizeIdAndAndProductId(colorid,sizeId,id));
+//        model.addAttribute("sell",productDetailsService.findProductDetailsBySellPrice(id));
         model.addAttribute("views",list);
         return "website/index/detail";
+
+
+    }
+
+    @PostMapping("/getPrice")
+    @ResponseBody
+    public ProductDetails getPrice(@RequestParam("color") Integer color, @RequestParam("size") Integer size, @RequestParam("productId") Integer productId) {
+//        ProductDetails productOptional = productDetailsService.findProductDetailsByColorIdAndSizeId(color, size,productId);
+
+        // Kiểm tra xem sản phẩm có tồn tại trong cơ sở dữ liệu không
+        ProductDetails productPrice = productDetailsService.findProductDetailsByColorIdAndSizeId(color, size,productId);
+        return productPrice;
 
 
     }

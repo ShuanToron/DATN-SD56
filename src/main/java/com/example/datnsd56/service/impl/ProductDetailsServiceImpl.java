@@ -6,6 +6,7 @@ import com.example.datnsd56.repository.ImageRepository;
 import com.example.datnsd56.repository.ProductDetailsRepository;
 import com.example.datnsd56.repository.ProductsRepository;
 import com.example.datnsd56.service.ProductDetailsService;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -83,6 +84,16 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
+    public List<ProductDetails> findProductDetailsBySellPrice(Integer sellprine) {
+        return null;
+    }
+
+    @Override
+    public List<ProductDetails> getProductDetailsById(Integer id) {
+        return productDetailsRepository.getProductDetailsById(id);
+    }
+
+    @Override
     public void delete(Integer id) {
         productDetailsRepository.deletects(id);
     }
@@ -93,8 +104,25 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
+    public ProductDetails findProductDetailsByColorIdAndSizeId(Integer color, Integer size,Integer productId) {
+        return  productDetailsRepository.findProductDetailsByColorIdAndSizeId(color,size,productId);
+    }
+
+    @Override
     public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
 
+    }
+
+    @Override
+    public List<ProductDetails> findProductDetailsByColorIdAndSizeIdAndAndProductId(Integer colorId, Integer sizeId, Integer id) {
+        return productDetailsRepository.findProductDetailsByColorIdAndSizeIdAndAndProductId(colorId,sizeId);
+    }
+
+    @Override
+    public @Min(value = 1, message = "lon hon 0") BigDecimal getprice(String color, String size) {
+        @Min(value = 1, message = "lon hon 0") BigDecimal productDetails=  productDetailsRepository.getPrice(color,size);
+
+        return productDetails;
     }
 
 //    @Override

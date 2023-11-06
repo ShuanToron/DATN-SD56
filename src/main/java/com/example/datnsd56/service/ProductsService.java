@@ -22,9 +22,9 @@ public interface ProductsService {
     void addProduct(Products products, List<Color> colorList, List<Size> sizeList, MultipartFile[] files) throws IOException, SQLException;
 
     List<ProductDetails> getAllDetail(Integer id);
-
+    Products findProductById(Integer id);
     Products getById(Integer id);
-
+    ProductDetails updatePrice(Integer id, BigDecimal price);
     void addProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
 
     void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
@@ -32,6 +32,7 @@ public interface ProductsService {
     Optional<ProductDetails> getOne(Integer id);
 
     void delete(Integer id);
+//    List<Products> getProductDetailsById(Integer id);
 
     void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException;
 }

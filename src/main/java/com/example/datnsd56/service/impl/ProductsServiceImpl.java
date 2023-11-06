@@ -140,11 +140,15 @@ public class ProductsServiceImpl implements ProductsService {
         return Optional.of(productDetailsRepository.findById(id).get());
     }
 
+
+
     @Override
     public void delete(Integer id) {
         Products products = getById(id);
         productRepository.delete(products);
     }
+
+
 
     @Override
     public void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException {
@@ -159,4 +163,26 @@ public class ProductsServiceImpl implements ProductsService {
             imageRepository.save(anhSanPham);
         }
     }
+
+
+
+
+    public void ProductsService(ProductsRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public Products findProductById(Integer id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public ProductDetails findProductsByColorIdAndSizeId(Integer color, Integer size,Integer productId) {
+        return productDetailsRepository.findProductDetailsByColorIdAndSizeId(color, size,productId);
+    }
+
+    public ProductDetails updatePrice(Integer id, BigDecimal price) {
+        ProductDetails product = (ProductDetails) productDetailsRepository.getAllDetail(id);
+        product.setSellPrice(price);
+        return productDetailsRepository.save(product);
+    }
+
 }
