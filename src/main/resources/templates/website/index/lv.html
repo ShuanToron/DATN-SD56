@@ -133,8 +133,8 @@
         <h1 class="display-2 text-dark mb-4 animated slideInDown">Brand</h1>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="product.html">Products</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/product/trang-chu}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/product/hien-thi}">Products</a></li>
                 <li class="breadcrumb-item text-dark" aria-current="page">Store</li>
             </ol>
         </nav>
@@ -151,7 +151,7 @@
             style="max-width: 500px"
         >
             <!-- <p class="fs-5 fw-medium fst-italic text-primary">Online Store</p> -->
-            <h1 class="display-6">LOUIS VUITTON</h1>
+            <h1 class="display-6">LV</h1>
         </div>
         <div  class="row g-4">
 
@@ -172,15 +172,15 @@
                           <small class="fa fa-star text-primary"></small>
                           <small class="fa fa-star text-primary"></small>
                         </div> -->
-                        <h4 class="mb-3" th:each="detail:${product.productId}" th:text="${detail.name}"></h4>
+                        <h4 class="mb-3"  th:text="${product.name}"></h4>
                         <!-- <p>
                           Aliqu diam amet diam et eos. Clita erat ipsum lorem erat ipsum
                           lorem sit sed
                         </p> -->
-                        <h4 class="text-primary" th:text="${product.sellPrice}"></h4>
+                        <h4 class="text-primary" >1000</h4>
                     </div>
                     <div class="store-overlay">
-                        <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2"
+                        <a th:href="@{'/product/detail/chi-tiet/' + ${product.id}}" class="btn btn-primary rounded-pill py-2 px-4 m-2"
                         >More Detail <i class="fa fa-arrow-right ms-2"></i
                         ></a>
                         <a href="" class="btn btn-dark rounded-pill py-2 px-4 m-2"

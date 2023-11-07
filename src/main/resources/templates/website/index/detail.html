@@ -15,10 +15,10 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}"/>
     <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin/>
-    <link
-        th:href="@{https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap}"
-        rel="stylesheet"
-    />
+    <!--    <link-->
+    <!--        th:href="@{https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap}"-->
+    <!--        rel="stylesheet"-->
+    <!--    />-->
 
     <!-- Icon Font Stylesheet -->
     <!-- Icon Font Stylesheet -->
@@ -26,10 +26,10 @@
         th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
         rel="stylesheet"
     />
-    <link
-        th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}"
-        rel="stylesheet"
-    />
+    <!--    <link-->
+    <!--        th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}"-->
+    <!--        rel="stylesheet"-->
+    <!--    />-->
     <!-- Libraries Stylesheet -->
     <link th:href="@{/website/lib/animate/animate.min.css}" rel="stylesheet"/>
     <link th:href="@{/website/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet"/>
@@ -41,22 +41,15 @@
     <link th:href="@{/website/css/style.css}" rel="stylesheet"/>
 
     <!-- Load fonts style after rendering the layout styles -->
-    <link
-        rel="stylesheet"
-        th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap}"
-    />
+    <!--    <link-->
+    <!--        rel="stylesheet"-->
+    <!--        th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap}"-->
+    <!--    />-->
     <link rel="stylesheet" th:href="@{/website/css/fontawesome.css}"/>
 
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" th:href="@{/website/css/slick.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/website/css/slick-theme.css}"/>
-    <!--
-
-TemplateMo 559 Zay Shop
-
-https://templatemo.com/tm-559-zay-shop
-
--->
 </head>
 
 <body>
@@ -130,8 +123,8 @@ https://templatemo.com/tm-559-zay-shop
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="product.html" class="nav-item nav-link">Products</a>
+                    <a th:href="@{/product/trang-chu}" class="nav-item nav-link ">Home</a>
+                    <a th:href="@{/product/hien-thi}" class="nav-item nav-link ">Products</a>
                     <div class="nav-item dropdown">
                         <a
                             href="#"
@@ -140,12 +133,12 @@ https://templatemo.com/tm-559-zay-shop
                         >Brand</a
                         >
                         <div class="dropdown-menu bg-light rounded-0 m-0">
-                            <a href="nike.html" class="dropdown-item">NIKE</a>
-                            <a href="converse.html" class="dropdown-item">CONVERSE</a>
-                            <a href="mlb.html" class="dropdown-item">MLB</a>
-                            <a href="adidas.html" class="dropdown-item">adidas</a>
-                            <a href="vans.html" class="dropdown-item">VANS</a>
-                            <a href="lv.html" class="dropdown-item">LOUIS VUITTON</a>
+                            <a th:href="@{/product/nike}" class="dropdown-item">NIKE</a>
+                            <a th:href="@{/product/converse}" class="dropdown-item">CONVERSE</a>
+                            <a th:href="@{/product/mlb}" class="dropdown-item">MLB</a>
+                            <a th:href="@{/product/adidas}" class="dropdown-item">ADIDAS</a>
+                            <a th:href="@{/product/vans}" class="dropdown-item">VANS</a>
+                            <a th:href="@{/product/lv}" class="dropdown-item">LOUIS VUITTON</a>
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -369,92 +362,47 @@ https://templatemo.com/tm-559-zay-shop
             <div class="col-lg-7 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <form th:action="@{/product/detail/getPrice}" method="post">
-                            <h1 class="h2" th:text="${product.name}"></h1>
-                            <p class="h3 py-2"><span id="product-price" th:each="sl:${sell}" th:value="${sl.id}"
-                                                     th:text="${sl.sellPrice} +'$'"></span></p>
-                            <!-- <p class="py-2">
-                              <i class="fa fa-star text-warning"></i>
-                              <i class="fa fa-star text-warning"></i>
-                              <i class="fa fa-star text-warning"></i>
-                              <i class="fa fa-star text-warning"></i>
-                              <i class="fa fa-star text-secondary"></i>
-                              <span class="list-inline-item text-dark"
-                                >Rating 4.8 | 36 Comments</span
-                              >
-                            </p> -->
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6>Brand:</h6>
-                                </li>
-                                <li class="list-inline-item">
-                                    <p class="text-muted" th:each="detail:${product.brandId}" th:text="${detail.name}">
-                                        <strong></strong></p>
-                                </li>
-                            </ul>
-
-                            <h6>Description:</h6>
-                            <p th:text="${product.description}">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod temp incididunt ut labore et dolore magna aliqua.
-                                Quis ipsum suspendisse. Donec condimentum elementum convallis.
-                                Nunc sed orci a diam ultrices aliquet interdum quis nulla.
-                            </p>
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6>Color :</h6>
-                                </li>
-                                <label class="check" th:each="kt:${listColor}"
-                                       style="margin-right: 15px;margin-top: 15px">
-                                        <input type="hidden" th:name="color" id="color" th:value="${kt.id}">
-                                            <span class="btn btn-success btn-size" th:text="${kt.name}"></span>
-                                </label>
-                                <!--                            <li class="list-inline-item">-->
-                                <!--                                <p class="text-muted" th:each="detail:${product.colorId}" th:text="${detail.name}"><strong> </strong></p>-->
-                                <!--                            </li>-->
-                            </ul>
-
-                            <!--                            <form action="/produc/detail/getPrice" method="GET">-->
-                            <input
-                                type="hidden"
-                                name="product-title"
-                                value="Activewear" th:value="${product.id}" th:name="productId"
-                            />
-                            <div class="row">
-                                <div class="col-auto">
-
-                                    <ul class="list-inline pb-3">
-                                        Size :
-                                        <li th:each="kt:${listSize}" class="list-inline-item">
-                                            <!--                                                <input-->
-                                            <!--                                                    type="hidden"-->
-                                            <!--                                                    th:name="size"-->
-                                            <!--                                                    onchange="updatePrice()"-->
-                                            <!--                                                    id="size"-->
-                                            <!--                                                    class="btn btn-success btn-size"-->
-                                            <!--                                                    th:value="${kt.id}" th:text="${kt.name}-->
-                                            <!--                                                />-->
-                                            <!--                                                <span class="btn btn-success btn-size" th:name="size"-->
-                                            <!--                                                      th:value="${kt.id}" th:text="${kt.name}"-->
-                                            <!--                                                >-->
-                                            <!--                                                </span>-->
-                                            <input type="hidden" th:name="size" id="size" th:value="${kt.id}">
-                                            <span class="btn btn-success btn-size" th:text="${kt.name}"></span>
-                                        </li>
-                                        <!--                                        <li class="list-inline-item">-->
-
-                                        <!--                                        </li>-->
-                                        <!--                                        <li class="list-inline-item">-->
-                                        <!--                                            <span class="btn btn-success btn-size">42</span>-->
-                                        <!--                                        </li>-->
-                                        <!--                                        <li class="list-inline-item">-->
-                                        <!--                                            <span class="btn btn-success btn-size">43</span>-->
-                                        <!--                                        </li>-->
-                                        <!--                                        <li class="list-inline-item">-->
-                                        <!--                                            <span class="btn btn-success btn-size">45</span>-->
-                                        <!--                                        </li>-->
-                                    </ul>
-                        </form>
+                        <h1 class="h2" th:text="${product.name}"></h1>
+                        <p class="h3 py-2">
+                            <span id="product-price">1000đ</span>
+                        </p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Brand:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted" th:each="detail:${product.brandId}" th:text="${detail.name}">
+                                    <strong></strong></p>
+                            </li>
+                        </ul>
+                        <h6>Description:</h6>
+                        <p th:text="${product.description}"></p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Color :</h6>
+                            </li>
+                            <label class="check" th:each="kt:${listColor}"
+                                   style="margin-right: 15px;margin-top: 15px">
+                                <input style="border-radius: 0;" type="radio" name="color" id="color" th:value="${kt.id}"
+                                       th:text="${kt.name}">
+                            </label>
+                        </ul>
+                        <input
+                            type="hidden"
+                            name="product-title"
+                            value="Activewear" th:value="${product.id}" th:name="productId"
+                            id="product"
+                        />
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Size :</h6>
+                            </li>
+                            <label class="check" th:each="kt:${listSize}"
+                                   style="margin-right: 15px;margin-top: 15px">
+                                <input style="border-radius: 0;" type="radio" name="size" id="size" th:value="${kt.id}"
+                                       th:text="${kt.name}">
+                            </label>
+                        </ul>
                     </div>
                     <div class="col-auto">
                         <ul class="list-inline pb-3">
@@ -506,11 +454,8 @@ https://templatemo.com/tm-559-zay-shop
                     </div>
 
                 </div>
-                </form>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 </section>
 <!-- Close Content -->
@@ -1427,6 +1372,13 @@ https://templatemo.com/tm-559-zay-shop
   </div>
 </section> -->
 <!-- End Article -->
+<div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+    <a
+        th:href="@{/product/hien-thi}"
+        class="btn btn-primary rounded-pill py-3 px-5"
+    >View More Products</a
+    >
+</div>
 
 <!-- Footer Start -->
 <div
@@ -1523,6 +1475,7 @@ https://templatemo.com/tm-559-zay-shop
 <!-- End Footer -->
 
 <!-- Start Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/website/js/jquery-1.11.0.min.js}"></script>
 <script th:src="@{/website/js/jquery-migrate-1.2.1.min.js}"></script>
 <script th:src="@{/website/js/bootstrap.bundle.min.js}"></script>
@@ -1586,27 +1539,52 @@ https://templatemo.com/tm-559-zay-shop
 
     // Tạo biến để lưu giá sản phẩm
 
+</script>
+<script th:inline="javascript">
+    function updateProductPrice() {
+        var productId = $('input[name="productId"]').val();
+        var color = $('input[name="color"]:checked').val();
+        var size = $('input[name="size"]:checked').val();
 
-    $('input[type="radio"]').on('change', function () {
-        var selectedColor = $('input[name="color"]:checked').val();
-        var selectedSize = $('input[name="size"]:checked').val();
-        var selectProductID = $('input[name="productId"]').val();
-        // Gửi yêu cầu AJAX để lấy giá dựa trên màu sắc và size được chọn
-        $.ajax({
-            type: "POST",
-            url: "/product/detail/getPrice",
-            data: {color: selectedColor, size: selectedSize,productID:selectProductID},
-            success: function (data) {
-                $('#product-price').text("Price: " + data);
-            }
-        });
+        // Kiểm tra xem cả color và size đã được chọn hay chưa
+        if (color && size) {
+
+            console.log("ID sản phẩm:"+productId);
+            console.log("ID màu:"+color);
+            console.log("ID size:"+size);
+            $.ajax({
+                type: 'GET',
+                url: '/product/detail/getProductPrice', // Điều hướng đến endpoint đã tạo trong DetailProductController
+                data: {
+                    productId: productId,
+                    color: color,
+                    size: size
+                },
+                success: function(response) {
+                    // Xử lý dữ liệu giá sản phẩm từ response và cập nhật lên trang Thymeleaf
+                    if (response != null) {
+                        $('#product-price').text(response + 'đ');
+                        console.log("Giá sản phẩm: "+response);
+                    }
+                },
+                error: function() {
+                    alert('Đã xảy ra lỗi khi lấy giá sản phẩm.');
+                }
+            });
+        }
+    }
+
+    $('input[name="color"]').change(function() {
+        updateProductPrice();
     });
 
-
+    $('input[name="size"]').change(function() {
+        updateProductPrice();
+    });
+    $(document).ready(function() {
+        updateProductPrice();
+    });
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 <!-- End Slider Script -->
 </body>
 </html>

@@ -47,9 +47,8 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
 //    @Query(value = "select * fgetrom Product_details where product_id=?1", nativeQuery = true)
 ////    List<ProductDetails> getAllDetail(Integer id);
 //   List< Products> findProductDetailsByProductId(Integer id);
-    @Query(value = "select * from Product_details where product_id=?1 and color_id=?2 and size_id=?3  ", nativeQuery = true)
-
-    ProductDetails findProductDetailsByColorIdAndSizeId(Integer color, Integer size,Integer productId);
+@Query(value = "select sell_price from Product_details where product_id=?1 and color_id=?2 and size_id=?3  ", nativeQuery = true)
+BigDecimal getDetail(Integer productId,Integer color, Integer size);
     @Query(value = "select * from Product_details where   color_id=?1 and size_id=?1  ", nativeQuery = true)
     @Min(value = 1, message = "lon hon 0") BigDecimal getPrice(String color, String size);
 

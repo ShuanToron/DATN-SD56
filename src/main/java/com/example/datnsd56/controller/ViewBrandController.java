@@ -42,8 +42,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("nike"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("nike"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/nike";
@@ -55,8 +55,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("mlb"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("mlb"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/mlb";
@@ -68,8 +68,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("adidas"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("adidas"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/adidas";
@@ -80,8 +80,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("lv"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("lv"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/lv";
@@ -93,8 +93,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("converse"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("converse"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/converse";
@@ -105,8 +105,8 @@ public class ViewBrandController {
         List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPro();
         // Sắp xếp sản phẩm theo brand
-        List<ProductDetails> nikeProducts = list.stream()
-            .filter(product -> product.getProductId().getBrandId().getName().equalsIgnoreCase("vans"))
+        List<Products> nikeProducts = lists.stream()
+            .filter(product -> product.getBrandId().getName().equalsIgnoreCase("vans"))
             .collect(Collectors.toList());
         model.addAttribute("views", nikeProducts);
         return "website/index/vans";

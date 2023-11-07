@@ -29,7 +29,7 @@ public interface ProductDetailsService {
     List<ProductDetails> listPending();
     void delete(Integer id);
     List<ProductDetails> getProductsByProductId(Integer productId);
-    ProductDetails findProductDetailsByColorIdAndSizeId(Integer color, Integer size,Integer productId);
+    BigDecimal getPrice(Integer id,Integer colorId, Integer sizeId);
 
     void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 

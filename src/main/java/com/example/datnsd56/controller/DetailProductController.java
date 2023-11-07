@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -41,17 +42,11 @@ public class DetailProductController {
 
 
     }
-
-    @PostMapping("/getPrice")
-    @ResponseBody
-    public ProductDetails getPrice(@RequestParam("color") Integer color, @RequestParam("size") Integer size, @RequestParam("productId") Integer productId) {
-//        ProductDetails productOptional = productDetailsService.findProductDetailsByColorIdAndSizeId(color, size,productId);
-
-        // Kiểm tra xem sản phẩm có tồn tại trong cơ sở dữ liệu không
-        ProductDetails productPrice = productDetailsService.findProductDetailsByColorIdAndSizeId(color, size,productId);
-        return productPrice;
-
-
+    @GetMapping("/getProductPrice")
+    public ResponseEntity<BigDecimal> getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color) {
+        BigDecimal productDetailPrice = productDetailsService.getPrice(id, color, size);
+        System.out.println(productDetailPrice);
+        return ResponseEntity.ok().body(productDetailPrice);
     }
     @GetMapping("/display")
     public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {

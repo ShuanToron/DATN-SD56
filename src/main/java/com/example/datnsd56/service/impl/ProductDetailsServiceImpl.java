@@ -104,8 +104,9 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public ProductDetails findProductDetailsByColorIdAndSizeId(Integer color, Integer size,Integer productId) {
-        return  productDetailsRepository.findProductDetailsByColorIdAndSizeId(color,size,productId);
+    public BigDecimal getPrice(Integer id, Integer colorId, Integer sizeId) {
+        BigDecimal price = productDetailsRepository.getDetail(id, colorId, sizeId);
+        return price;
     }
 
     @Override

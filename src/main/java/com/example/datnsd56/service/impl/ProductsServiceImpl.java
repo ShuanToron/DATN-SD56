@@ -175,9 +175,7 @@ public class ProductsServiceImpl implements ProductsService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public ProductDetails findProductsByColorIdAndSizeId(Integer color, Integer size,Integer productId) {
-        return productDetailsRepository.findProductDetailsByColorIdAndSizeId(color, size,productId);
-    }
+
 
     public ProductDetails updatePrice(Integer id, BigDecimal price) {
         ProductDetails product = (ProductDetails) productDetailsRepository.getAllDetail(id);
