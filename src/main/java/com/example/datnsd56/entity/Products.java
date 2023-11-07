@@ -72,6 +72,4 @@ public class Products {
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brandId;
 
-
-
 }

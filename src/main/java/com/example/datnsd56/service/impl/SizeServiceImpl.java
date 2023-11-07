@@ -38,6 +38,11 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
+    public List<Size> getColorId(Integer id) {
+        return sizeRepository.findSizeByid(id);
+    }
+
+    @Override
     public Size getById(Integer id) {
         Size size =sizeRepository.findById(id).orElse(null);
         return size;

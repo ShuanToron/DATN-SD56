@@ -38,7 +38,7 @@ public class ProductDetails {
     private LocalDate updateDate;
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status;
 
     @Column(name = "sell_price")
     @Min(value = 1, message = "lon hon 0")
@@ -56,7 +56,4 @@ public class ProductDetails {
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color colorId;
 
-    @Transient
-    @OneToMany(mappedBy = "productDetail_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Image> images;
 }

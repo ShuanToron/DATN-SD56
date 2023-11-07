@@ -140,8 +140,8 @@ public class ProductDetailsController {
 
     @GetMapping("search")
     public String search(
-            @RequestParam("sellPrice") BigDecimal sellPrice,
-            Model model, HttpSession session) {
+        @RequestParam("sellPrice") BigDecimal sellPrice,
+        Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {
             String successMessage = (String) session.getAttribute("successMessage");
