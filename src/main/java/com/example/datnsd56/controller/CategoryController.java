@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Random;
+
 @Controller
 @RequestMapping("/admin/loai-giay")
 public class CategoryController {
@@ -66,8 +69,11 @@ public class CategoryController {
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
-            return "/dashboard/loai-giay/update-loai-giay";
+            return "/dashboard/loai-giay/loai-giay";
         }
+        String code = "CL" + new Random().nextInt(100000);
+        category.setCode(code);
+        category.setStatus(true);
         service.add(category);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/loai-giay/hien-thi";
@@ -80,11 +86,14 @@ public class CategoryController {
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
-            return "/dashboard/loai-giay/update-loai-giay";
+            return "/dashboard/loai-giay/loai-giay";
         }
+        String code = "CL" + new Random().nextInt(100000);
+        category.setCode(code);
+        category.setStatus(true);
         service.add(category);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/san-pham/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
 
     }
 }
