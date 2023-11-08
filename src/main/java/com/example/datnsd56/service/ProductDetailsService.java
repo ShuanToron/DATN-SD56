@@ -20,6 +20,8 @@ public interface ProductDetailsService {
     Page<ProductDetails> search(  BigDecimal sellPrice);
 
     ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
+    ProductDetails getByIds(Integer id);
+
 
     ProductDetails getById(Integer id);
     Products getOneProdcut(Integer id);
