@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Random;
+
 @Controller
 @RequestMapping("/admin/de-giay")
 public class ShoeSoleController {
@@ -70,6 +72,9 @@ public class ShoeSoleController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/de-giay/de-giay";
         }
+        String code = "DG" + new Random().nextInt(100000);
+        shoeSole.setCode(code);
+        shoeSole.setStatus(true);
         service.add(shoeSole);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/de-giay/hien-thi";
@@ -84,9 +89,12 @@ public class ShoeSoleController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/de-giay/de-giay";
         }
+        String code = "DG" + new Random().nextInt(100000);
+        shoeSole.setCode(code);
+        shoeSole.setStatus(true);
         service.add(shoeSole);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/san-pham/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
 
     }
 }

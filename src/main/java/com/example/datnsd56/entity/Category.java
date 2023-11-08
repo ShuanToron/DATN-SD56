@@ -30,7 +30,7 @@ public class Category {
     private Integer id;
 
     @Column(name = "code")
-    @NotBlank(message = "Opps, không được để trống")
+
     private String code;
 
     @Column(name = "name")

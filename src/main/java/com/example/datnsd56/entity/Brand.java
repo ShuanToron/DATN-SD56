@@ -35,7 +35,7 @@ public class Brand {
 
 
     @Column(name = "code")
-    @NotBlank(message = "Opps, không được để trống")
+
 
     private String code;
 

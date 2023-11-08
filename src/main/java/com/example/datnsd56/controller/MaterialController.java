@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Random;
+
 @Controller
 @RequestMapping("/admin/chat-lieu")
 public class MaterialController {
@@ -58,6 +60,9 @@ public class MaterialController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/chat-lieu/chat-lieu";
         }
+        String code = "CL" + new Random().nextInt(100000);
+        material.setCode(code);
+        material.setStatus(true);
         service.add(material);
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
@@ -71,9 +76,12 @@ public class MaterialController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/chat-lieu/chat-lieu";
         }
+        String code = "CL" + new Random().nextInt(100000);
+        material.setCode(code);
+        material.setStatus(true);
         service.add(material);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/san-pham/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
     }
 
     @PostMapping("/update/{id}")

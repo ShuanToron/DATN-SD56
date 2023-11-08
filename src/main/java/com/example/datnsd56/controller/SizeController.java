@@ -100,6 +100,24 @@ public class SizeController {
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
+    @PostMapping("/add2")
+    public String add2(@Valid @ModelAttribute("size") Size size, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Size> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/kich-co/kich-co";
+        }
+        String code = "SZ" + new Random().nextInt(100000);
+        size.setCode(code);
+        size.setStatus(true);
+        model.addAttribute("size", size);
+        service.add(size);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham-test/create";
+
+    }
 
 
 
