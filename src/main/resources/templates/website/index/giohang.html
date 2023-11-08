@@ -1,56 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
   <head>
     <title>Zay Shop - Product Detail Page</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="apple-touch-icon" href="img/apple-icon.png" />
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="apple-touch-icon" th:href="@{img/apple-icon.png}" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}" />
 
-    <link rel="stylesheet" href="../../../static/website/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../../static/website/css/templatemo.css" />
-    <link rel="stylesheet" href="../../../static/website/../../../static/website/css/custom.css" />
+    <link rel="stylesheet"th:href="@{/website/css/bootstrap.min.css}" />
+    <link rel="stylesheet"th:href="@{/website/css/templatemo.css}" />
+    <link rel="stylesheet"th:href="@{/website/css/custom.css}" />
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+      th:href="@{https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap}"
       rel="stylesheet"
     />
 
     <!-- Icon Font Stylesheet -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
       rel="stylesheet"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      th:href="@{://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}"
       rel="stylesheet"
     />
 
     <!-- Libraries Stylesheet -->
-    <link href="../../../static/website/lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="../../../static/website/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link th:href="@{/website/lib/animate/animate.min.css}" rel="stylesheet" />
+    <link th:href="@{/website/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <!-- <link href="../../../static/website/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <!-- <linkth:href="@{/website/css/bootstrap.min.css" rel="stylesheet" /> -->
 
     <!-- Template Stylesheet -->
-    <link href="../../../static/website/css/style.css" rel="stylesheet" />
+    <link th:href="@{/website/css/style.css}" rel="stylesheet" />
 
     <!-- Load fonts style after rendering the layout styles -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
+     th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap}"
     />
-    <link rel="stylesheet" href="../../../static/website/css/fontawesome.min.css" />
+    <link rel="stylesheet"th:href="@{/website/css/fontawesome.min.css}" />
 
     <!-- Slick -->
-    <link rel="stylesheet" type="text/css" href="../../../static/website/css/slick.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../static/website/css/slick-theme.css" />
+    <link rel="stylesheet" type="text/css"th:href="@{/website/css/slick.min.css}" />
+    <link rel="stylesheet" type="text/css"th:href="@{/website/css/slick-theme.css}" />
     <!--
-    
+
 TemplateMo 559 Zay Shop
 
 https://templatemo.com/tm-559-zay-shop
@@ -86,64 +87,41 @@ https://templatemo.com/tm-559-zay-shop
                 </tr>
               </thead>
               <tbody>
-                <!-- Dòng sản phẩm trong giỏ hàng -->
-                <tr>
+              <tr id="cartItems" th:each="sl:${cartItem}">
                   <td>
-                    <img
-                      src="../../../static/website/img/giay-mlb-liner-mid-monogram-ny.jpeg"
-                      alt="Sản phẩm 1"
-                      style="max-width: 80px; max-height: 80px"
-                    />
+                      <img
+                          th:src="@{'/cart/display?id=' + ${sl.id}}"
+                          alt="Sản phẩm 1"
+                          style="max-width: 80px; max-height: 80px"
+                      />
                   </td>
-                  <td>Sản phẩm 1</td>
-                  <td>Đỏ</td>
+<!--                  <td th:text="${sl.id}"></td>-->
+                  <td th:text="${sl.productDetails.productId.name}"></td>
+                  <td th:text="${sl.productDetails.colorId.name}"></td>
+<!--                  <td th:text="${sl.productDetails.sizeId.name}"></td>-->
+                  <!--        <td th:text="${sl.productDetails.productId.brandId.name}"></td>-->
+                  <!--        <td th:text="${sl.getColorId()}"></td>-->
+                  <!--        <td th:text="${sl.getSizeId()}"></td>-->
+                  <td  >
+                      <input
+                          type="number"
+                          class="form-control quantity"
+                          th:value="${sl.quantity}"
+                          min="0"
+
+                      />
+                  </td>
+                          <td class="price" th:text="${sl.productDetails.sellPrice}" >3300</td>
+                          <td class="subtotal">200,000</td>
                   <td>
-                    <input
-                      type="number"
-                      class="form-control quantity"
-                      value="1"
-                      min="0"
-                    />
+                      <button type="button" class="btn btn-danger remove">
+                          <i class="bi bi-trash"></i>
+                      </button>
                   </td>
-                  <td class="price">200,000</td>
-                  <td class="subtotal">200,000</td>
-                  <td>
-                    <button type="button" class="btn btn-danger remove">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <!-- Thêm các sản phẩm khác ở đây -->
-                <!-- Dòng sản phẩm trong giỏ hàng -->
-                <tr>
-                  <td>
-                    <img
-                      src="../../../static/website/img/giay-nike-air-jordan-1-low-true-blue-cement-like-auth.jpg"
-                      alt="Sản phẩm 1"
-                      style="max-width: 80px; max-height: 80px"
-                    />
-                  </td>
-                  <td>Sản phẩm 2</td>
-                  <td>Xanh</td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control quantity"
-                      value="1"
-                      min="0"
-                    />
-                  </td>
-                  <td class="price">600,000</td>
-                  <td class="subtotal">600,000</td>
-                  <td>
-                    <button type="button" class="btn btn-danger remove">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
+              </tr>
               </tbody>
             </table>
-            <!-- Tổng số tiền -->
+             Tổng số tiền
             <div class="text-end">
               <label for="" style="color: red">
                 Tạm Tính : <span id="total">800,000</span>
@@ -228,9 +206,9 @@ https://templatemo.com/tm-559-zay-shop
     </div>
 
     <!-- Liên kết với tệp JavaScript của Bootstrap (tuỳ chọn) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js}"></script>
     <!-- Liên kết với tệp bi-icons của Bootstrap (để sử dụng bi bi-trash) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css}"></script>
     <!-- ... (các liên kết và mã HTML khác) ... -->
 
     <script>

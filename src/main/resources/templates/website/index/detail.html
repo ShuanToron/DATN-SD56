@@ -123,8 +123,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a th:href="@{/product/trang-chu}" class="nav-item nav-link ">Home</a>
-                    <a th:href="@{/product/hien-thi}" class="nav-item nav-link ">Products</a>
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="product.html" class="nav-item nav-link">Products</a>
                     <div class="nav-item dropdown">
                         <a
                             href="#"
@@ -133,12 +133,12 @@
                         >Brand</a
                         >
                         <div class="dropdown-menu bg-light rounded-0 m-0">
-                            <a th:href="@{/product/nike}" class="dropdown-item">NIKE</a>
-                            <a th:href="@{/product/converse}" class="dropdown-item">CONVERSE</a>
-                            <a th:href="@{/product/mlb}" class="dropdown-item">MLB</a>
-                            <a th:href="@{/product/adidas}" class="dropdown-item">ADIDAS</a>
-                            <a th:href="@{/product/vans}" class="dropdown-item">VANS</a>
-                            <a th:href="@{/product/lv}" class="dropdown-item">LOUIS VUITTON</a>
+                            <a href="nike.html" class="dropdown-item">NIKE</a>
+                            <a href="converse.html" class="dropdown-item">CONVERSE</a>
+                            <a href="mlb.html" class="dropdown-item">MLB</a>
+                            <a href="adidas.html" class="dropdown-item">adidas</a>
+                            <a href="vans.html" class="dropdown-item">VANS</a>
+                            <a href="lv.html" class="dropdown-item">LOUIS VUITTON</a>
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -153,8 +153,8 @@
                 </form>
                 <a href="">
                     <button type="submit" class="btn btn-sm p-0">
-                        <span id="cartItemCount">0</span>
-                        <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
+                        <i class="fa fa-cart-plus" style="margin-left: 20px">                         <span style="color: red" id="cartItemCount"></span>
+                        </i>
                     </button>
                 </a>
             </div>
@@ -206,8 +206,8 @@
 </div>
 
 <!-- Open Content -->
-<section class="bg-light">
-    <div th:each="product:${views}" class="container pb-5">
+<section  class="bg-light">
+    <div th:each="product:${views}"  class="container pb-5">
         <div class="row">
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
@@ -383,7 +383,7 @@
                             </li>
                             <label class="check" th:each="kt:${listColor}"
                                    style="margin-right: 15px;margin-top: 15px">
-                                <input style="border-radius: 0;" type="radio" name="color" id="color" th:value="${kt.id}"
+                                <input type="radio" name="color" id="color" th:value="${kt.id}"
                                        th:text="${kt.name}">
                             </label>
                         </ul>
@@ -399,7 +399,7 @@
                             </li>
                             <label class="check" th:each="kt:${listSize}"
                                    style="margin-right: 15px;margin-top: 15px">
-                                <input style="border-radius: 0;" type="radio" name="size" id="size" th:value="${kt.id}"
+                                <input type="radio" name="size" id="size" th:value="${kt.id}"
                                        th:text="${kt.name}">
                             </label>
                         </ul>
@@ -436,20 +436,25 @@
                             class="btn btn-success btn-lg"
                             name="submit"
                             value="buy"
+
                         >
-                            Buy
+                            <a  th:href="@{'/cart/add/' + ${product.id}}"> Buy</a>
+
                         </button>
                     </div>
 
                     <div class="col d-grid">
                         <button
                             type="submit"
-                            class="btn btn-success btn-lg"
+
                             name="submit"
                             value="addtocard"
                             id="addToCartButton"
+
+                            class="addToCartBtn"
                         >
-                            Add To Cart
+                            <a  th:href="@{'/cart/add/' + ${product.id}}">                            Add To Cart
+                            </a>
                         </button>
                     </div>
 
@@ -1372,13 +1377,6 @@
   </div>
 </section> -->
 <!-- End Article -->
-<div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-    <a
-        th:href="@{/product/hien-thi}"
-        class="btn btn-primary rounded-pill py-3 px-5"
-    >View More Products</a
-    >
-</div>
 
 <!-- Footer Start -->
 <div
@@ -1584,6 +1582,32 @@
     $(document).ready(function() {
         updateProductPrice();
     });
+
+    $(document).ready(function() {
+        $(".addToCartBtn").click(function() {
+            var productId = $(this).data("productid");
+            var quantity = $("#quantity").val();
+
+            // Gửi yêu cầu Ajax để thêm sản phẩm vào giỏ hàng
+            $.ajax({
+                type: "POST",
+                url: "/cart/add",
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    // Xử lý phản hồi từ server (nếu cần)
+                    // Cập nhật danh sách sản phẩm trong giỏ hàng
+                    $("#cartItems").html(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
 </script>
 <!-- End Slider Script -->
 </body>

@@ -4,6 +4,7 @@ import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Min;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,7 +43,7 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
 
     @Query(value = "select * from Product_details where product_id=?1", nativeQuery = true)
     List<ProductDetails> getAllDetail(Integer id);
-    @Query(value = "select * from Product_details where id=?1", nativeQuery = true)
+    @Query(value = "select * from Product_details ", nativeQuery = true)
     List<ProductDetails> getProductDetailsByProductId(Integer id);
 //    @Query(value = "select * fgetrom Product_details where product_id=?1", nativeQuery = true)
 ////    List<ProductDetails> getAllDetail(Integer id);
@@ -56,5 +57,9 @@ BigDecimal getDetail(Integer productId,Integer color, Integer size);
     List<ProductDetails> getProductDetailsById(Integer id);
 @Query(value = "select p.sell_price from Product_details AS p where color_id=?1 and size_id=?1 and id=?1 ",nativeQuery = true)
     List<ProductDetails> findProductDetailsByColorIdAndSizeIdAndAndProductId(Integer colorId,Integer sizeId);
+//    @UniqueElements/
+    @Query(value = "SELECT * AS product_id FROM Product_details     where id =?1 ;  ", nativeQuery = true)
+    ProductDetails getByIds(Integer id);
+
 //}
 }

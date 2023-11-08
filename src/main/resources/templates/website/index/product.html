@@ -106,9 +106,9 @@
                         </button>
                     </div>
                 </form>
-                <a href="">
+                <a th:href="@{/cart/view-cart}">
                     <button type="button" class="btn btn-sm p-0">
-                        <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
+                        <i class="fa fa-cart-plus" style="margin-left: 20px">      <span style="color: red" id="cartItemCount"></span></i>
                     </button>
                 </a>
                 <a href="">
@@ -308,7 +308,7 @@
                         <a th:href="@{'/product/detail/chi-tiet/' + ${product.id}}" class="btn btn-primary rounded-pill py-2 px-4 m-2"
                         >More Detail <i class="fa fa-arrow-right ms-2"></i
                         ></a>
-                        <a href="" class="btn btn-dark rounded-pill py-2 px-4 m-2"
+                        <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-dark rounded-pill py-2 px-4 m-2"  id="addToCartButton"
                         >Add to Cart <i class="fa fa-cart-plus ms-2"></i
                         ></a>
                     </div>
@@ -1051,5 +1051,22 @@
 
         <!-- Template Javascript -->
         <script th:src="@{/website/js/main.js}"></script>
+        <script>  var cartItemCount = 0;
+
+        // Lấy tham chiếu đến nút "Thêm vào giỏ hàng"
+        var addToCartButton = document.getElementById("addToCartButton");
+
+        // Gắn sự kiện click cho nút "Thêm vào giỏ hàng"
+        addToCartButton.addEventListener("click", function () {
+            // Thực hiện logic thêm sản phẩm vào giỏ hàng ở đây
+
+            // Tăng số lượng sản phẩm trong giỏ hàng lên 1 (hoặc số lượng sản phẩm được thêm vào giỏ hàng)
+            cartItemCount++;
+
+            // Cập nhật số lượng sản phẩm trên giao diện người dùng
+            // Đặt giá trị vào phần tử có id là cartItemCount
+            document.getElementById("cartItemCount").innerText = cartItemCount;
+        });
+        </script>
 </body>
 </html>

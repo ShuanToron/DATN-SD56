@@ -52,6 +52,11 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         return null;
     }
 
+    @Override
+    public ProductDetails getByIds(Integer id) {
+        return productDetailsRepository.getByIds(id);
+
+    }
 //    @Override
 //    public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
 //        productDetails.setCreateDate(LocalDate.now());
