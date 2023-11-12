@@ -42,7 +42,7 @@ public class ProductDetails {
 
     @Column(name = "sell_price")
     @Min(value = 1, message = "lon hon 0")
-    private BigDecimal sellPrice;
+    private Double sellPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

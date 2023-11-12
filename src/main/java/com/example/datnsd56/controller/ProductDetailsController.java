@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -140,7 +140,7 @@ public class ProductDetailsController {
 
     @GetMapping("search")
     public String search(
-        @RequestParam("sellPrice") BigDecimal sellPrice,
+        @RequestParam("sellPrice") Double sellPrice,
         Model model, HttpSession session) {
 
         if (session.getAttribute("successMessage") != null) {

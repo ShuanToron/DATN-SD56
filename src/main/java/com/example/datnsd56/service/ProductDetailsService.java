@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public interface ProductDetailsService {
 
     List<ProductDetails> getAllCTSP();
 
-    Page<ProductDetails> search(  BigDecimal sellPrice);
+    Page<ProductDetails> search(  Double sellPrice);
 
     ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
     ProductDetails getByIds(Integer id);
@@ -31,10 +31,10 @@ public interface ProductDetailsService {
     List<ProductDetails> listPending();
     void delete(Integer id);
     List<ProductDetails> getProductsByProductId(Integer productId);
-    BigDecimal getPrice(Integer id,Integer colorId, Integer sizeId);
-
+    Double getPrice(Integer id,Integer colorId, Integer sizeId);
+    ProductDetails getCart(Integer productId, Integer color, Integer size);
     void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
 
     List<ProductDetails> findProductDetailsByColorIdAndSizeIdAndAndProductId(Integer colorId,Integer sizeId,Integer d);
-@Min(value = 1, message = "lon hon 0") BigDecimal getprice(String color, String size);
+@Min(value = 1, message = "lon hon 0") Double getprice(String color, String size);
 }

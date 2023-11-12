@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +24,10 @@ public interface ProductsService {
     List<ProductDetails> getAllDetail(Integer id);
     Products findProductById(Integer id);
     Products getById(Integer id);
-    ProductDetails updatePrice(Integer id, BigDecimal price);
-    void addProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
+    ProductDetails updatePrice(Integer id, Double price);
+    void addProductDetail(List<Integer> id, List<Integer> soLuong, List<Double> donGia);
 
-    void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia);
+    void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<Double> donGia);
 
     Optional<ProductDetails> getOne(Integer id);
 
