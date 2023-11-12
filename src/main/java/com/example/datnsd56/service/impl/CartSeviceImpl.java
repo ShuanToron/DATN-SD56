@@ -1,6 +1,5 @@
 package com.example.datnsd56.service.impl;
 
-import com.example.datnsd56.ViewModel.ViewCart;
 import com.example.datnsd56.entity.CartItem;
 import com.example.datnsd56.repository.CartItemRepository;
 import com.example.datnsd56.service.CartService;
@@ -11,7 +10,6 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 @SessionScope
 @Service
@@ -61,6 +59,6 @@ public class CartSeviceImpl implements CartService {
     @Override
 public double getAmount(){
         return maps.values().stream()
-            .mapToInt(item -> item.getQuantity() * item.getProductDetails().getSellPrice().compareTo(BigDecimal.ONE)).sum();
+            .mapToDouble(item -> item.getQuantity() * item.getProductDetails().getSellPrice()).sum();
 }
 }

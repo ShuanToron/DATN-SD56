@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
+//import java.math.Double;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Page<ProductDetails> search( BigDecimal sellPrice) {
+    public Page<ProductDetails> search( Double sellPrice) {
         Pageable pageable = PageRequest.of(0, 5);
         return productDetailsRepository.findProductDetailsBySellPrice( sellPrice, pageable);
     }
@@ -109,8 +110,14 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public BigDecimal getPrice(Integer id, Integer colorId, Integer sizeId) {
-        BigDecimal price = productDetailsRepository.getDetail(id, colorId, sizeId);
+    public ProductDetails getCart(Integer productId, Integer color, Integer size) {
+        ProductDetails productDetails=productDetailsRepository.getCart(productId,color,size);
+        return productDetails;
+    }
+
+    @Override
+    public Double getPrice(Integer id, Integer colorId, Integer sizeId) {
+        Double price = productDetailsRepository.getDetail(id, colorId, sizeId);
         return price;
     }
 
@@ -125,11 +132,16 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public @Min(value = 1, message = "lon hon 0") BigDecimal getprice(String color, String size) {
-        @Min(value = 1, message = "lon hon 0") BigDecimal productDetails=  productDetailsRepository.getPrice(color,size);
-
-        return productDetails;
+    public Double getprice(String color, String size) {
+        return null;
     }
+
+//    @Override
+//    public @Min(value = 1, message = "lon hon 0") Double getprice(String color, String size) {
+//        @Min(value = 1, message = "lon hon 0") Double productDetails=  productDetailsRepository.getPrice(color,size);
+//
+//        return productDetails;
+//    }
 
 //    @Override
 //    public List<ProductDetails> getProductsByProductId(Integer productId) {

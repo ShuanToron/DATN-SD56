@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -108,7 +108,7 @@ public class ProductsController {
     }
 
     @PostMapping("/update-pending")
-    public String addProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<BigDecimal> donGia) {
+    public String addProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<Double> donGia) {
         productService.addProductDetail(id, soLuong, donGia);
         return "redirect:/admin/san-pham-test/create";
     }
@@ -134,7 +134,7 @@ public class ProductsController {
         model.addAttribute("listDetail", productService.getAllDetail(products.getId()));
         model.addAttribute("listColor", colorService.getAllColor());
         model.addAttribute("listSize", sizeService.getAllSZ());
-        return "dashboard/san-pham/view-update-san-pham";
+        return "dashboard/san-pham/update-san-pham";
     }
 
     @PostMapping("/update-san-pham/{id}")
@@ -164,7 +164,7 @@ public class ProductsController {
     }
 
     @PostMapping("/update-chi-tiet-san-pham")
-    public String updateProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<BigDecimal> donGia) {
+    public String updateProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<Double> donGia) {
         productService.updateProductDetail(id, soLuong, donGia);
         return "redirect:/admin/san-pham-test/create";
     }
