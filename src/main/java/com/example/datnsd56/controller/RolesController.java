@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ public class RolesController {
     private RolesService rolesService;
 
         @GetMapping("/hien-thi1")
+        @PreAuthorize("hasAuthority('user')")
     public String get(Model model){
 //        model.addAttribute("roles",new Roles());
         List<Roles> page = rolesService.getAll();
@@ -39,6 +41,7 @@ public class RolesController {
 
     }
     @GetMapping("/view-update/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public String detail(@PathVariable("id") Integer id,Model model){
 //        model.addAttribute("roles",new Roles());
         Roles roles= rolesService.detail(id);
