@@ -85,7 +85,7 @@ public class BrandController {
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
-            return "/dashboard/thuong-hieu/thuong-hieu";;
+            return "/dashboard/thuong-hieu/thuong-hieu";
         }
         String code = "TH" + new Random().nextInt(100000);
         brand.setCode(code);

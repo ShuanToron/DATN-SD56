@@ -33,14 +33,14 @@ public class Account {
 //    @Column(name = "username")
 //    private String username;
 
-@NotBlank(message = "Không đuộc để trống!")
+//@NotBlank(message = "Không đuộc để trống!")
     @Column(name = "passwords")
     private String password;
 
-    @NotBlank(message = "Không đuộc để trống!")
+//    @NotBlank(message = "Không đuộc để trống!")
 
     @Column(name = "fullname")
-    private String fullname;
+    private String name;
 
 
     @Column(name = "status")
@@ -54,9 +54,15 @@ public class Account {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id ",referencedColumnName = "id")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "role_id ",referencedColumnName = "id")
+//    private Roles role_id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Roles role_id;
+
+
     @NotBlank(message = "Không đuộc để trống!")
 
     @Column(name = "email")
