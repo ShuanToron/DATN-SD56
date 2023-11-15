@@ -209,7 +209,7 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/san-pham/hien-thi}">Sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/san-pham-test/create}">Sản phẩm</a></li>
                             <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
@@ -257,15 +257,15 @@
                         <form th:action="@{'/admin/thuong-hieu/update/'+${id}}" method="post" th:object="${brand}"
                               onsubmit="return  confirm('Bạn có muốn câp nhật không?')">
                             <div class="card-body">
-<!--                                <div class="form-group">-->
-<!--                                    <label>Mã thương hiệu</label>-->
-<!--                                    <div class="input-group colorpickerinput">-->
-<!--                                        <input type="text" class="form-control"-->
-<!--                                               th:field="*{code}">-->
-<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"-->
-<!--                                              th:errors="*{code}"></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="form-group">
+                                    <label>Mã thương hiệu</label>
+                                    <div class="input-group colorpickerinput">
+                                        <input type="text" class="form-control"
+                                               th:field="*{code}">
+                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
+                                              th:errors="*{code}"></span>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Tên thương hiệu</label>
                                     <input type="text" class="form-control"

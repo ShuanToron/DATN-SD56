@@ -209,7 +209,7 @@
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/san-pham/hien-thi}">Sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/san-pham-test/create}">Sản phẩm</a></li>
                             <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
@@ -254,7 +254,7 @@
                         <div class="card-header">
                             <h4>Sản phẩm</h4>
                         </div>
-                        <form th:action="@{'/admin/san-pham/update/'+${id}}" method="post" th:object="${product}"
+                        <form th:action="@{'/admin/san-pham-test/update-san-pham/'+${id}}" method="post" th:object="${product}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
                             <div class="card-body">
                                 <div class="form-group">
@@ -328,13 +328,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Số lượng</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control"
-                                               th:field="*{quantity}">
-                                        <span th:if="${#fields.hasErrors('quantity')}"
-                                              style="color: red; font-size: 13px"
-                                              th:errors="*{quantity}"></span>
-                                    </div>
+<!--                                    <div class="input-group colorpickerinput">-->
+<!--                                        <input type="text" class="form-control"-->
+<!--                                               th:field="*{quantity}">-->
+<!--                                        <span th:if="${#fields.hasErrors('quantity')}"-->
+<!--                                              style="color: red; font-size: 13px"-->
+<!--                                              th:errors="*{quantity}"></span>-->
+<!--                                    </div>-->
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả</label>
@@ -362,7 +362,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <a th:href="@{'/san-pham/update/'+${id}}">
+                                    <a th:href="@{'admin/san-pham-test/update-san-pham/'+${id}}">
                                         <button class="btn btn-primary mr-1" type="submit">Cập nhật</button>
                                     </a>
 
