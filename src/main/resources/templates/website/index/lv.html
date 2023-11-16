@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="utf-8" />
     <title>sneaker_sneakerBeer</title>
@@ -97,7 +98,7 @@
                             <a th:href="@{/product/lv}" class="dropdown-item">LOUIS VUITTON</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a th:href="@{/product/contact}" class="nav-item nav-link">Contact</a>
                 </div>
                 <form action="">
                     <div class="border-start ps-4 d-none d-lg-block">
