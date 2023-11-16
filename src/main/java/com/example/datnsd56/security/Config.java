@@ -87,9 +87,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/dashboard/css/**", "/dashboard/js/**", "/dashboard/img/**","/dashboard/bundles/**","/dashboard/fonts/**","/dashboard/lib/**","/dashboard/scss/**").permitAll()
-            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**").permitAll()
+            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/customer/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
