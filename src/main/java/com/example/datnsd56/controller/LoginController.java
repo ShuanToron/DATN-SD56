@@ -18,6 +18,6 @@ public class LoginController  {
         return "auth_login/auth-login"; // Remove the leading "/"
     }
 
-      
+
 
 }

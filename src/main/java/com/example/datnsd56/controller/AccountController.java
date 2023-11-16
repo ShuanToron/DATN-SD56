@@ -41,7 +41,7 @@ public class AccountController {
 //        return "/dashboard/account/account";
 //    }
     @GetMapping("/hien-thi")
-//    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     public String getAllBypage( Model model,@RequestParam(defaultValue = "0") Integer page){
         model.addAttribute("account",new Account());
         Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
@@ -142,18 +142,22 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
             return "dashboard/account/update-account";
 
         }
+        // Hash the password using BCryptPasswordEncoder
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashedPassword = encoder.encode(account.getPassword());
+        account.setPassword(hashedPassword);
         accountService.update(account);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/account/hien-thi";
     }
     @GetMapping("delete/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String delete(@PathVariable("id") Integer id){
         accountService.delete(id);
         return "redirect:/admin/account/hien-thi";
     }
     @GetMapping("search")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("phone") String phone, Model model, RedirectAttributes redirectAttributes) {
         Page<Account> accounts = accountService.findByEmail(phone);
         model.addAttribute("list", accounts);
