@@ -97,9 +97,9 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .and().formLogin()// trả về page login nếu chưa authenticate
            .defaultSuccessUrl("/admin/thuong-hieu/hien-thi")
 
-//            .loginPage("/login/custom-login").permitAll()//.successHandler(new SimpleUrlAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler())
-//            .and()
-//            .logout().permitAll()
+            .loginPage("/login/custom-login").permitAll()//.successHandler(new SimpleUrlAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler())
+            .and()
+            .logout().permitAll()
             .and().build();
 }
 //@Bean
