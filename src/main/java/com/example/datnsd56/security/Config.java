@@ -78,9 +78,11 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+
 //            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
              .requestMatchers("/error/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .requestMatchers("/login/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/customer/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
