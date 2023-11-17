@@ -33,12 +33,11 @@ public class Account {
 //    @Column(name = "username")
 //    private String username;
 
-//@NotBlank(message = "Không đuộc để trống!")
+@NotBlank(message = "Không đuộc để trống!")
     @Column(name = "passwords")
     private String password;
 
-//    @NotBlank(message = "Không đuộc để trống!")
-
+    @NotBlank(message = "Không đuộc để trống!")
     @Column(name = "fullname")
     private String name;
 

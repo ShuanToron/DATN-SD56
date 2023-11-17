@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Otika - Admin Dashboard Template</title>
+  <title>Sneaker_SneakerBeer</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" th:href="@{/dashboard/css/app.min.css}">
   <link rel="stylesheet" th:href="@{/dashboard/bundles/bootstrap-social/bootstrap-social.css}">
@@ -43,7 +43,7 @@
                     <div class="d-block">
                       <label for="password" class="control-label">Password</label>
                       <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small">
+                        <a th:href="@{auth-forgot-password.html}" class="text-small">
                           Forgot Password?
                         </a>
                       </div>
@@ -65,25 +65,25 @@
                     </button>
                   </div>
                 </form>
-                <div class="text-center mt-4 mb-3">
-                  <div class="text-job text-muted">Login With Social</div>
-                </div>
-                <div class="row sm-gutters">
-                  <div class="col-6">
-                    <a class="btn btn-block btn-social btn-facebook">
-                      <span class="fab fa-facebook"></span> Facebook
-                    </a>
-                  </div>
-                  <div class="col-6">
-                    <a class="btn btn-block btn-social btn-twitter">
-                      <span class="fab fa-twitter"></span> Twitter
-                    </a>
-                  </div>
-                </div>
+<!--                <div class="text-center mt-4 mb-3">-->
+<!--                  <div class="text-job text-muted">Login With Social</div>-->
+<!--                </div>-->
+<!--                <div class="row sm-gutters">-->
+<!--                  <div class="col-6">-->
+<!--                    <a class="btn btn-block btn-social btn-facebook">-->
+<!--                      <span class="fab fa-facebook"></span> Facebook-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <div class="col-6">-->
+<!--                    <a class="btn btn-block btn-social btn-twitter">-->
+<!--                      <span class="fab fa-twitter"></span> Twitter-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                </div>-->
               </div>
             </div>
             <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="auth-register.html">Create One</a>
+              Don't have an account? <a th:href="@{/login/register}">Create One</a>
             </div>
           </div>
         </div>
