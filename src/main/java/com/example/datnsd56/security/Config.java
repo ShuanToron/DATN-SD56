@@ -70,18 +70,6 @@ public class Config {
     }
 
 
-
-
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf().disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/hello","/admin/account/hien-thi").permitAll() // với endpoint /hello thì sẽ được cho qua
-//                .and()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/customer/**,").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
-//                .and().formLogin() // trả về page login nếu chưa authenticate
-//                .and().build();
-//    }
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf().disable()
@@ -90,11 +78,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
-            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+//            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+             .requestMatchers("/error/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+            .requestMatchers("/login/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/customer/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
+            .requestMatchers("/cart/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .and().formLogin()// trả về page login nếu chưa authenticate
            .defaultSuccessUrl("/admin/thuong-hieu/hien-thi")
 
@@ -103,45 +94,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .logout().permitAll()
             .and().build();
 }
-//@Bean
-//public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    return http.csrf().disable()
-//            .authorizeHttpRequests()
-//            .requestMatchers("/dashboard/css/**", "/dashboard/js/**", "/dashboard/img/**","/dashboard/bundles/**","/dashboard/fonts/**","/dashboard/lib/**","/dashboard/scss/**").permitAll()
-//            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**").permitAll()
-//            .requestMatchers("/hello").permitAll()
-//            .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
-//            .and()
-//            .authorizeHttpRequests()
-//            .requestMatchers("/customer/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
-//            .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
-//            .and()
-//            .formLogin()
-//            .loginPage("/login/custom-login") // Specify the custom login page URL
-//            .loginProcessingUrl("/login") // Specify the login processing URL
-//            .defaultSuccessUrl("/admin/thuong-hieu/hien-thi")
-//            .and()
-//            .build();
-//}
-
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf().disable()
-//                .authorizeHttpRequests()
-//                .antMatchers("/hello").permitAll()
-//                .antMatchers("/admin/account/hien-thi").permitAll()
-//                .antMatchers("/customer/**").authenticated()
-//                .antMatchers("/admin/**").authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/admin/account/custom-login") // Uncomment this line if you have a custom login page
-//                .defaultSuccessUrl("/admin") // Redirect to /admin after successful login
-//                .and()
-//                .build();
-//    }
-
-
 //sql
 @Bean
 public AuthenticationProvider authenticationProvider(){
