@@ -85,7 +85,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
 
     // Set the role ID to 4 by default
     Roles userRole = new Roles();
-    userRole.setId(4);
+    userRole.setId(3);
     account.setRole_id(userRole);
 
     account.setStatuss(true);

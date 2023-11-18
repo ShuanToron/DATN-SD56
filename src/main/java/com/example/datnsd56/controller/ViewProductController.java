@@ -39,7 +39,7 @@ public class ViewProductController {
     public String productView(Model model) {
 //List<Products>lists=productsService.getAllPro();
         List<ProductDetails> list = productDetailsService.getAllCTSP();
-        List<Products> lists = productsService.getAllPro();
+        List<Products> lists = productsService.getAllPros();
         // Sắp xếp sản phẩm theo brand
         Collections.sort(lists, Comparator.comparing(product -> product.getBrandId().getName()));
         model.addAttribute("views", lists);

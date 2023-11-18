@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
 import com.example.datnsd56.repository.ImageRepository;
@@ -14,10 +15,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 //import java.math.Double;
 //import java.math.Double;
+import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,7 +127,18 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+        productDetails.setCreateDate(LocalDate.now());
+        productDetails.setUpdateDate(LocalDate.now());
+        productDetailsRepository.save(productDetails);
 
+        for (MultipartFile file : files) {
+            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
+            byte[] bytes = file.getBytes();
+            Blob blob = new SerialBlob(bytes);
+            anhSanPham.setProductId(productDetails.getProductId());
+            anhSanPham.setUrl(blob);
+            imageRepository.save(anhSanPham);
+        }
     }
 
     @Override
@@ -148,19 +163,5 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 //        return productDetailsRepository.findByProductId(productId);
 //    }
 
-//    @Override
-//    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
-//        productDetails.setCreateDate(LocalDate.now());
-//        productDetails.setUpdateDate(LocalDate.now());
-//        productDetailsRepository.save(productDetails);
-//
-//        for (MultipartFile file : files) {
-//            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
-//            byte[] bytes = file.getBytes();
-//            Blob blob = new SerialBlob(bytes);
-//            anhSanPham.setProductDetailId(productDetails);
-//            anhSanPham.setUrl(blob);
-//            imageRepository.save(anhSanPham);
-//        }
-//    }
+
 }
