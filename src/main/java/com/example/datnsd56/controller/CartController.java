@@ -36,7 +36,7 @@ public class CartController {
 //    private ColorService colorService;
 
     @GetMapping("/view-cart")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
     public String viewCart(Model model) {
 
         model.addAttribute("cartItem", cartService.getAllItem());

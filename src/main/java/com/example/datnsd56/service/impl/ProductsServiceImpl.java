@@ -55,6 +55,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    public List<Products> getAllPros() {
+        return productRepository.getAllPros();
+    }
+
+    @Override
     public void addProduct(Products products, List<Color> colorList, List<Size> sizeList, MultipartFile[] files) throws IOException, SQLException {
         productRepository.save(products);
         for (MultipartFile file : files) {
