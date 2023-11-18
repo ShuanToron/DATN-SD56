@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 //import java.math.Double;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -91,16 +93,53 @@ public class ProductDetailsController {
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
-
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,Model model) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId);
-        byte[] imageBytes = null;
-        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-        model.addAttribute("image",imageList);
+    public ResponseEntity<List<byte[]>> getImages(@RequestParam("id") Integer id,@RequestParam("productId") Integer productId) {
+        List<Image> imageList = imageService.getImageByProductId(id,productId);
 
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        // Kiểm tra xem danh sách ảnh có phần tử không
+        if (imageList.isEmpty()) {
+            // Trả về 404 Not Found nếu không có ảnh
+            return ResponseEntity.notFound().build();
+        }
+
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        try {
+            for (Image image : imageList) {
+                byte[] imageBytes = image.getUrl().getBytes(1, (int) image.getUrl().length());
+                imageBytesList.add(imageBytes);
+            }
+
+            // Trả về danh sách byte array của ảnh dưới dạng phản hồi HTTP
+            return ResponseEntity.ok()
+                .contentType(MediaType.ALL)
+                .body(imageBytesList);
+        } catch (SQLException e) {
+            // Xử lý exception nếu có
+            e.printStackTrace();
+            // Trả về 500 Internal Server Error nếu có lỗi
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            // Đảm bảo giải phóng tài nguyên
+            if (imageList instanceof AutoCloseable) {
+                try {
+                    ((AutoCloseable) imageList).close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
+//    @GetMapping("/display")
+//    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,Model model) throws SQLException {
+//        List<Image> imageList = imageService.getImagesForProducts(productId);
+//        byte[] imageBytes = null;
+//        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+//        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+//    }
+
 
     @GetMapping("view-update/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) {

@@ -131,14 +131,14 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         productDetails.setUpdateDate(LocalDate.now());
         productDetailsRepository.save(productDetails);
 
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(productDetails.getProductId());
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
+//        for (MultipartFile file : files) {
+//            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
+//            byte[] bytes = file.getBytes();
+//            Blob blob = new SerialBlob(bytes);
+//            anhSanPham.setProductId(productDetails.getProductId());
+//            anhSanPham.setUrl(blob);
+//            imageRepository.save(anhSanPham);
+//        }
     }
 
     @Override

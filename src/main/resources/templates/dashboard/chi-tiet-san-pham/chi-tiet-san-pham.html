@@ -496,34 +496,30 @@
                                         <th>Trạng thai</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr th:each="list:${list.content}">
+                                    <tr th:each="lists:${list.content}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
-                                        <td th:text="${list.productId.name}"></td>
-                                        <td th:text="${list != null ? (list.colorId != null ? list.colorId.name : '') : ''}"></td>
-                                        <td th:text="${list != null ? (list.sizeId != null ? list.sizeId.name : '') : ''}"></td>
-                                        <td th:text="*{list.quantity}"></td>
-                                        <td th:text="*{list.sellPrice}"></td>
+                                        <td th:text="${lists.productId.name}"></td>
+                                        <td th:text="${lists != null ? (lists.colorId != null ? lists.colorId.name : '') : ''}"></td>
+                                        <td th:text="${lists != null ? (lists.sizeId != null ? lists.sizeId.name : '') : ''}"></td>
+                                        <td th:text="*{lists.quantity}"></td>
+                                        <td th:text="*{lists.sellPrice}"></td>
                                         <td>
-                                            <div >
-                                                <img th:src="@{${'/admin/chi-tiet-san-pham/display?id=' + list.productId.id}}"
+                                            <div th:each="image, imageIndex: ${lists.productId.images}">
+                                                <img th:src="@{${'/admin/chi-tiet-san-pham/display?id=' + image.id }}"
                                                      alt="Product Image"
-                                                     style="width: 70px; height: 70px;border-radius: 10%;object-fit: cover"
+                                                     style="width: 70px; height: 70px; border-radius: 10%; object-fit: cover"
                                                 />
-                                                <!--                                                <div th:each="image, imageIndex: ${product.imageUrls}">-->
-                                                <!--                                                    <img th:src="${image}" alt="Product Image"-->
-                                                <!--                                                         style="width: 70px; height: 70px; border-radius: 10%; object-fit: cover" />-->
-                                                <!--                                                </div>-->
                                             </div>
                                         </td>
-                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${lists.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
-                                            <a th:href="@{'/admin/chi-tiet-san-pham/delete/'+${list.id}}">
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/delete/'+${lists.id}}">
                                                 <button type="button" class="btn btn-danger"
                                                         onsubmit="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{'/admin/chi-tiet-san-pham/view-update/'+${list.id}}">
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/view-update/'+${lists.id}}">
                                                 <button type="button" class="btn btn-success">
                                                     Cập nhật
                                                 </button>

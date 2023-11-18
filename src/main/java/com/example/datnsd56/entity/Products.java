@@ -71,5 +71,7 @@ public class Products {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brandId;
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
+    private List<Image> images;
 
 }

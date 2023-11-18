@@ -159,14 +159,14 @@ public class ProductsServiceImpl implements ProductsService {
     public void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException {
         products.setUpdateDate(LocalDate.now());
         productRepository.save(products);
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(products.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(products);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
+//        for (MultipartFile file : files) {
+//            Image anhSanPham = imageRepository.getImageByProductId(products.getId()).get(0);
+//            byte[] bytes = file.getBytes();
+//            Blob blob = new SerialBlob(bytes);
+//            anhSanPham.setProductId(products);
+//            anhSanPham.setUrl(blob);
+//            imageRepository.save(anhSanPham);
+//        }
     }
 
 
