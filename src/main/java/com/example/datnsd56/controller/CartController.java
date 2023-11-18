@@ -49,7 +49,8 @@ public class CartController {
     }
 
     @GetMapping("/getadd")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
     public String getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color, RedirectAttributes redirectAttributes,  HttpSession session) {
         ProductDetails productDetails = productDetailsService.getCart(id, color, size);
         if (productDetails != null) {
@@ -72,21 +73,23 @@ public class CartController {
     }
 
     @GetMapping("/clear")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
     public String clear() {
         cartService.clear();
         return "redirect:/cart/view-cart";
     }
 
     @GetMapping("/remove/{id}")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
     public String removeclear(@PathVariable("id") Integer id) {
         cartService.remove(id);
         return "redirect:/cart/view-cart";
     }
 
     @PostMapping ("/update")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
     public String update(@RequestParam("id") Integer id,@RequestParam("quantity") Integer quantity) {
         System.out.println(id + " " + quantity);
         cartService.update(id,quantity);
@@ -95,7 +98,7 @@ public class CartController {
     }
 
     @GetMapping("add/{id}")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
     public String addCart(@PathVariable("id") Integer id, Model model) {
         ProductDetails productDetails = productDetailsService.getByIds(id);
         model.addAttribute("listSize", sizeService.getColorId(id));
@@ -112,7 +115,8 @@ public class CartController {
     }
 
     @GetMapping("/display")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
     public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
         List<Image> imageList = imageService.getImagesForProducts(productId);
         byte[] imageBytes = null;
