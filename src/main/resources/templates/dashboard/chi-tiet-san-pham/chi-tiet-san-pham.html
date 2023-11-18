@@ -504,8 +504,8 @@
                                         <td th:text="*{list.quantity}"></td>
                                         <td th:text="*{list.sellPrice}"></td>
                                         <td>
-                                            <div>
-                                                <img th:src="@{${'/admin/chi-tiet-san-pham/display?id=' + list.id}}"
+                                            <div >
+                                                <img th:src="@{${'/admin/chi-tiet-san-pham/display?id=' + list.productId.id}}"
                                                      alt="Product Image"
                                                      style="width: 70px; height: 70px;border-radius: 10%;object-fit: cover"
                                                 />

@@ -146,17 +146,15 @@ https://templatemo.com/tm-559-zay-shop
                         <td class="" th:text="${sl.productDetails.sellPrice*sl.quantity}">200,000</td>
                         <td>
                             <a th:href="@{'/cart/remove/' +${sl.id}}"
-                               style="text-decoration: none">
-                                <button type="button" class="btn btn-danger remove" title="xóa sản phẩm">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
+                               style="text-decoration: none; padding-right: 20px">
+
+                                    <i style="color: black" class="fas fa-trash-alt" title="xóa sản phẩm"></i>
+
                             </a>
                             <a style="text-decoration: none; font-weight:bolder;color: black;"
                                th:href="@{'/product/detail/chi-tiet/' +${sl.productDetails.productId.id}}">
-                                <button id="myButton" type="button" class="btn btn-success remove"
-                                        title="thêm màu và size">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
+
+                                    <i class="fas fa-pencil-alt"   title="thêm màu và size"></i>
                             </a>
                             <!--                                <div id="note" class="hidden">thêm màu và size</div>-->
                         </td>

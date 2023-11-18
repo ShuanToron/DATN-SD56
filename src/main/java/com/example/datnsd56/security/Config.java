@@ -89,7 +89,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/cart/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .and().formLogin()// trả về page login nếu chưa authenticate
-           .defaultSuccessUrl("/admin/thuong-hieu/hien-thi")
+//           .defaultSuccessUrl("/admin/thuong-hieu/hien-thi")
 
             .loginPage("/login/custom-login").permitAll()//.successHandler(new SimpleUrlAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler())
             .and()

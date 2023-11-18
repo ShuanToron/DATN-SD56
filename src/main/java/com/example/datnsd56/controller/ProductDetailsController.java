@@ -93,10 +93,12 @@ public class ProductDetailsController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,Model model) throws SQLException {
         List<Image> imageList = imageService.getImagesForProducts(productId);
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+        model.addAttribute("image",imageList);
+
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
     }
 

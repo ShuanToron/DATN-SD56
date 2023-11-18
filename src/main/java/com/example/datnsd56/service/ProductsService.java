@@ -18,7 +18,7 @@ public interface ProductsService {
     Page<Products> getAll(Integer pageNo);
 
     List<Products> getAllPro();
-
+    List<Products> getAllPros();
     void addProduct(Products products, List<Color> colorList, List<Size> sizeList, MultipartFile[] files) throws IOException, SQLException;
 
     List<ProductDetails> getAllDetail(Integer id);
