@@ -33,6 +33,8 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController  {
     @Autowired
+    RolesService rolesService;
+    @Autowired
     private AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
@@ -84,12 +86,13 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
     account.setPassword(hashedPassword);
 
     // Set the role ID to 4 by default
-    Roles userRole = new Roles();
-    userRole.setId(3);
+    Roles userRole = rolesService.findbyname("user");
+//    userRole.setId(userRole);
     account.setRole_id(userRole);
 
     account.setStatuss(true);
     accountService.add(account);
+
 
     session.setAttribute("successMessage", "Thêm thành công");
     return "redirect:/login/custom-login";
