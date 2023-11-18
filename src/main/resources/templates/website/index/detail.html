@@ -1646,7 +1646,7 @@
                     // Cập nhật danh sách sản phẩm trong giỏ hàng
                     $("#cartItems").html(response);
 // console.log(cartItemCount);
-
+                    event.preventDefault();
                     var totalItems = calculateTotalItems(response);
 
                     // Cập nhật số sản phẩm trên biểu tượng giỏ hàng
