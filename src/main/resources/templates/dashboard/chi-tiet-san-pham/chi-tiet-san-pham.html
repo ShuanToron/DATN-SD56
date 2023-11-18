@@ -187,25 +187,26 @@
                         </div>
                     </div>
                 </li>
-                <li class="dropdown"><a href="#" data-toggle="dropdown"
+           <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         th:src="@{/../../../static/dashboard/img/user.png}"
+                                                                                                         th:src="@{/dashboard/img/user.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title">Hello Sarah Smith</div>
-                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-            										fa-user"></i> Profile
-                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                        Activities
-                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i
-                            class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
+                        <div class="dropdown-title" th:text="${#authentication.name}"></div>
+
+                        <!--                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far-->
+<!--            										fa-user"></i> Profile-->
+                            <!--                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>-->
+                            <!--                        Activities-->
+                            <!--                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>-->
+                            <!--                        Settings-->
+                            <!--                    </a>-->
+                            <div class="dropdown-divider"></div>
+                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
+                                    class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
                     </div>
                 </li>
             </ul>
@@ -213,10 +214,10 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html">
-                        <img alt="image" th:src="@{/dashboard/img/users/logo.png}"
+                    <a th:href="@{/admin/account/hien-thi}">
+                        <img alt="image" th:src="@{/website/img/logo1.png}"
                              class="header-logo"/> <span
-                        class="logo-name">Otika</span>
+                            class="logo-name">SneakerBeer</span>
                     </a>
                 </div>
                 <ul class="sidebar-menu">
@@ -225,14 +226,14 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
+                                data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" th:href="@{/admin/san-pham-test/create}">Sản phẩm</a></li>
                             <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chat-lieu/hien-thi}">Chất liệu</a></li>
-                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Kích cỡ</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/kich-co/hien-thi}">Kích Cỡ</a></li>
                             <li><a class="nav-link" th:href="@{/admin/loai-giay/hien-thi}">Loại giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/chi-tiet-san-pham/hien-thi}">Chi tiết sản phẩm</a>
                             </li>
@@ -240,7 +241,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="layout"></i><span>Hoá đơn</span></a>
+                                data-feather="layout"></i><span>Hoá đơn</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" th:href="@{/admin/ban-hang}">Bán hàng</a></li>
                             <li><a class="nav-link" th:href="@{/admin/hoa-don}">Hoá đơn</a></li>
@@ -248,18 +249,19 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="image"></i><span>Voucher</span></a>
+                                data-feather="image"></i><span>Account</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/voucher/hien-thi}">Voucher</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="map"></i><span>Tài khoản</span></a>
+                                data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
+                            <li><a th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                 </ul>

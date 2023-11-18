@@ -108,17 +108,38 @@
                         </button>
                     </div>
                 </form>
-                <a href="">
+                <a th:href="@{/cart/view-cart}">
                     <button type="button" class="btn btn-sm p-0">
                         <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
                     </button>
                 </a>
-                <a href="">
-                    <button type="button" class="btn btn-sm p-0">
-                        <!--                <i class="fa fa-l" style="margin-left: 20px"></i>-->
+                <div class="dropdown">
+                    <button
+                            type="button"
+                            class="btn btn-sm p-0"
+                            id="userDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                    >
                         <i class="bi bi-person-circle" style="margin-left: 20px"></i>
                     </button>
-                </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <!-- Thêm các lựa chọn vào dropdown -->
+                        <div class="dropdown-title" th:text="${#authentication.name}"></div>
+
+                        <div class="dropdown-divider"></div>
+                        </a>
+                        <a th:href="@{/login/custom-login}" class="dropdown-item has-icon text-danger"> <i
+                                class="fas fa-sign-in-alt"></i>
+                            Login
+                        </a>
+                        <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
+                                class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>
@@ -191,7 +212,8 @@
                 </div>
             </div>
         </div>
-
+</div>
+</div>
 
         <!-- Footer Start -->
         <div
@@ -302,5 +324,36 @@
 
         <!-- Template Javascript -->
         <script th:src="@{/website/js/main.js}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var userDropdown = document.getElementById("userDropdown");
+        var accountOption = document.getElementById("accountOption");
+        var loginOption = document.getElementById("loginOption");
+
+        userDropdown.addEventListener("click", function (event) {
+            event.stopPropagation();
+            var dropdownMenu = document.querySelector(".dropdown-menu");
+            dropdownMenu.classList.toggle("show");
+        });
+
+        accountOption.addEventListener("click", function () {
+            console.log("Your Account selected");
+            // Thực hiện các hành động khi "Your Account" được chọn
+        });
+
+        loginOption.addEventListener("click", function () {
+            console.log("Login selected");
+            // Thực hiện các hành động khi "Login" được chọn
+        });
+
+        document.addEventListener("click", function (event) {
+            var dropdownMenu = document.querySelector(".dropdown-menu");
+            if (dropdownMenu.classList.contains("show")) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+    });
+</script>
 </body>
 </html>
