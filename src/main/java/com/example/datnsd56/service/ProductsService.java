@@ -6,6 +6,7 @@ import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
 import com.example.datnsd56.entity.Size;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,4 +36,8 @@ public interface ProductsService {
 //    List<Products> getProductDetailsById(Integer id);
 
     void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException;
+    List<Integer> findSelectedSizeIds(@Param("id") Integer id);
+    List<Integer> findSelectedColorIds(@Param("id") Integer id);
+
+
 }
