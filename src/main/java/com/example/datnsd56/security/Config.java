@@ -26,11 +26,15 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity()
 @RequiredArgsConstructor
+
+
 public class Config {
     //sql
     @Autowired
@@ -75,10 +79,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/dashboard/css/**", "/dashboard/js/**", "/dashboard/img/**","/dashboard/bundles/**","/dashboard/fonts/**","/dashboard/lib/**","/dashboard/scss/**").permitAll()
-            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**").permitAll()
+            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**","templates/dashboard/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
-
+//        .requestMatchers("/display/**").permitAll()
 //            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
              .requestMatchers("/error/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .requestMatchers("/login/**").permitAll()// với endpoint /hello thì sẽ được cho qua

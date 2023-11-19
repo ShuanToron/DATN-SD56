@@ -5,6 +5,7 @@ import com.example.datnsd56.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,17 +25,23 @@ public class ImageController {
     private ImageService imageService;
 
     @GetMapping("getAll")
+    @PreAuthorize("hasAuthority('admin')")
+
     public List<Image> getAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
         List<Image> list = imageService.getAll(page).getContent();
         return list;
     }
 
     @PostMapping("add")
+    @PreAuthorize("hasAuthority('admin')")
+
     public void add(@RequestBody Image image) {
         imageService.add(image);
     }
 
     @GetMapping("detail/{id}")
+    @PreAuthorize("hasAuthority('admin')")
+
     public Image detail(@PathVariable("id") Integer id) {
         Image image = imageService.getById(id);
         return image;
@@ -53,11 +60,15 @@ public class ImageController {
 
 
     @PutMapping("update/{id}")
+    @PreAuthorize("hasAuthority('admin')")
+
     public void update(@RequestBody Image image) {
         imageService.update(image);
     }
 
     @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasAuthority('admin')")
+
     public void delete(@PathVariable("id") Integer id) {
         imageService.delete(id);
     }
