@@ -388,11 +388,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh sản phẩm</label>
-                                    <input type="file" name="image" accept="image/*" id="files"  multiple="multipart" ><br>
+                                    <input type="file" name="image" accept="image/*" id="files"  multiple ><br>
                                     <!--                                    <output id="list"></output>-->
                                 </div>
                                 <div id="image-preview">
-                                    <!-- Danh sách hình ảnh được hiển thị trước sẽ xuất hiện ở đây -->
+<!--                                    <img  th:src="@{${'/admin/san-pham-test/display?id=' + id}}"-->
+<!--                                          alt="Product Image"-->
+<!--                                          style="width: 200px; height: auto;border-radius: 10%;object-fit: cover"-->
+<!--                                    />-->
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
@@ -889,6 +892,28 @@
 
     }
 
+</script>
+<script th:inline="javascript">
+    document.getElementById('files').addEventListener('change', function (e) {
+        var previewContainer = document.getElementById('image-preview');
+        previewContainer.innerHTML = ''; // Xóa bất kỳ hình ảnh trước nào
+
+        var files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var image = document.createElement('img');
+                image.src = e.target.result;
+                image.classList.add('preview-image');
+
+                previewContainer.appendChild(image);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 </body>
 
