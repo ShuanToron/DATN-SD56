@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/thong-ke")
-public class thongkeController {
+public class ThongKeController {
 
     @GetMapping("hien-thi")
     public String viewhoadon(Model model){
