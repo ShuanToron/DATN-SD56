@@ -1,7 +1,6 @@
 package com.example.datnsd56.security;
 
 import com.example.datnsd56.entity.Account;
-//import com.example.springsecurity.entity.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,16 +13,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfoUserDetails implements UserDetails {
+    private Integer userId;  // Include user ID
     private String name;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public UserInfoUserDetails(Account userInfo) {
+        userId = userInfo.getId();  // Set user ID
         name = userInfo.getName();
         password = userInfo.getPassword();
         authorities = Arrays.stream(userInfo.getRole_id().getName().split(","))
