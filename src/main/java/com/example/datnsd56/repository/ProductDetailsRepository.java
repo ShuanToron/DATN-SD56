@@ -64,7 +64,8 @@ Double getDetail(Integer productId,Integer color, Integer size);
 //    @UniqueElements/
     @Query(value = "SELECT  * FROM Product_details     where id =?1 ;  ", nativeQuery = true)
     ProductDetails getByIds(Integer id);
-
+@Query(value = "select * from Product_details where product_id = ?1",nativeQuery = true)
+    List<ProductDetails> findBySanPhamId(Integer idSanPham);
 //}
 
 

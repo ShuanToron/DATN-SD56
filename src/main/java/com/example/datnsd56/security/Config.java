@@ -89,9 +89,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/customer/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
+            .requestMatchers("/customer/**").authenticated()
+            .requestMatchers("/cart/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
-            .requestMatchers("/cart/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
+            .requestMatchers("/rest/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .and().formLogin()// trả về page login nếu chưa authenticate
 
            .defaultSuccessUrl("/product/hien-thi")

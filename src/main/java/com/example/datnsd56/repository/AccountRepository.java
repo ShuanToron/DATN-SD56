@@ -21,8 +21,9 @@ public interface AccountRepository extends JpaRepository<Account,Integer> {
 Page<Account> findAccountByPhone(String phone, Pageable pageable);
 
 //    @Query("SELECT DISTINCT a FROM Account a LEFT JOIN FETCH a.role_id WHERE a.name = :username")
+    Optional<Account> findById(Integer id);
+@Query(value="select*from account where fullname = ?1",nativeQuery = true)
     Optional<Account> findByName(String username);
 
-//    Account findByName(String username);
 }
 
