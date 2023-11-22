@@ -27,6 +27,7 @@ import java.time.LocalDate;
 public class OrderItem {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "price")

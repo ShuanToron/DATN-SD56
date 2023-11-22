@@ -62,6 +62,22 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         return productDetailsRepository.getByIds(id);
 
     }
+
+    @Override
+    public Optional<ProductDetails> findBySanPhamId(Integer idSanPham) {
+        Optional<ProductDetails> chiTietSanPham = productDetailsRepository.findById(idSanPham);
+
+        if (chiTietSanPham.isPresent()){
+            return chiTietSanPham;
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public ProductDetails save(ProductDetails productDetails) {
+        return productDetailsRepository.save(productDetails);
+    }
 //    @Override
 //    public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
 //        productDetails.setCreateDate(LocalDate.now());
@@ -81,6 +97,16 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     @Override
     public ProductDetails getById(Integer id) {
         return productDetailsRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Optional<ProductDetails> findById(Integer id) {
+        Optional<ProductDetails> chiTietSanPham = productDetailsRepository.findById(id);
+
+        if (chiTietSanPham.isPresent()){
+            return chiTietSanPham;
+        }
+        return Optional.empty();
     }
 
     @Override
