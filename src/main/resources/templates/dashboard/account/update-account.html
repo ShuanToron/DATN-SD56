@@ -294,7 +294,7 @@
                                 <div class="form-group">
                                     <label>Ngày sinh</label>
                                     <input type="date" class="form-control" placeholder="Nhập ngày sinh"
-                                           th:field="*{birthdate}" th:value="${account.birthdate}">
+                                           th:value="${account.birthdate}">
                                     <span th:if="${#fields.hasErrors('birthdate')}" style="color: red; font-size: 13px"
                                           th:errors="*{birthdate}"></span>
                                 </div>
