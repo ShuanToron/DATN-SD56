@@ -113,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-const app =angular.module("shopping-cart-app", []);
+const app =angular.module('shopping-cart-app', []);
 
-app.controller("shopping-cart-ctrl", function ($scope, $http) {
+app.controller('shopping-cart-ctrl', function ($scope, $http) {
     $scope.dataId = null;
     $scope.totalQuantity = 0;
     $scope.kmMa = "";
@@ -154,18 +154,18 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
             });
     }
 
-    // function calculateTotals() {
-    //     $scope.totalQuantity = 0;
-    //     $scope.total = 0;
-    //
-    //     for (let i = 0; i < $scope.cartItems.length; i++) {
-    //         let sl = $scope.cartItems[i];
-    //         $scope.totalQuantity++; // Tăng totalQuantity sau mỗi vòng lặp
-    //         $scope.total += (sl.producDetail.sellPrice * sl.quantity);
-    //     }
-    //
-    //     $scope.totalPrice = $scope.total - ($scope.KM !== null ? $scope.KM.giaTri : 0);
-    // }
+    function calculateTotals() {
+        $scope.totalQuantity = 0;
+        $scope.total = 0;
+
+        for (let i = 0; i < $scope.cartItems.length; i++) {
+            let sl = $scope.cartItems[i];
+            $scope.totalQuantity++; // Tăng totalQuantity sau mỗi vòng lặp
+            $scope.total += (sl.producDetail.sellPrice * sl.quantity);
+        }
+
+        $scope.totalPrice = $scope.total - ($scope.KM !== null ? $scope.KM.giaTri : 0);
+    }
     //
     //
     // $scope.cart = {
@@ -254,11 +254,13 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
 
             // Cập nhật giá trị
             // order.tongTienTT = $scope.totalPrice;
+            order.shippingFee=$scope.shippingFee;
             order.total = $scope.total;
 
             console.log(order);
 
-            $http.post("/rest/order/add", order).then(resp => {
+            $http.post('http://localhost:8080/rest/order/add', order).then(resp => {
+
                 alert("Dat hang thanh cong");
                 console.log(resp.data);
                 location.href = "/product/hien-thi";
