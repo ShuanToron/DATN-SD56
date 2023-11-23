@@ -157,21 +157,73 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException {
+//        products.setUpdateDate(LocalDate.now());
+//        productRepository.save(products);
+        List<Image> existingImages = imageRepository.getImageByProductId(products.getId());
+
+        // Cập nhật thông tin sản phẩm
         products.setUpdateDate(LocalDate.now());
         productRepository.save(products);
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(products.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(products);
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
+
+        // Kiểm tra xem có ảnh mới được chọn không
+        if (files != null && files.length > 0) {
+            // Nếu có ảnh mới, xóa tất cả ảnh cũ của sản phẩm
+            imageRepository.deleteAll(existingImages);
+
+            // Lưu ảnh mới vào danh sách
+            for (MultipartFile file : files) {
+                byte[] bytes = file.getBytes();
+                Blob blob = new SerialBlob(bytes);
+                Image newImage = new Image();
+                newImage.setProductId(products);
+                newImage.setUrl(blob);
+                imageRepository.save(newImage);
+            }
+        } else {
+            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+            Products currentProducts = productRepository.findById(products.getId()).orElse(null);
+
+            if (currentProducts != null) {
+                products.setImages(currentProducts.getImages());
+            }
         }
+
     }
 
+    @Override
+    public List<Integer> findSelectedSizeIds(Integer id) {
+        return productDetailsRepository.findSelectedSizeIds(id);
+    }
 
+    public List<Integer> getSelectedSizeIds(Integer id) {
+        List<ProductDetails> detailsList = productDetailsRepository.getProductDetailsById(id);
+        List<Integer> selectedSizes = new ArrayList<>();
 
+        for (ProductDetails details : detailsList) {
+            if (details.getSizeId() != null) {
+                selectedSizes.add(details.getSizeId().getId());
+            }
+        }
 
+        return selectedSizes;
+    }
+    @Override
+    public List<Integer> findSelectedColorIds(Integer id) {
+        return productDetailsRepository.findSelectedColorIds(id);
+    }
+
+    public List<Integer> getSelectedColorIds(Integer id) {
+        List<ProductDetails> detailsList = productDetailsRepository.getProductDetailsById(id);
+        List<Integer> selectedColors = new ArrayList<>();
+
+        for (ProductDetails details : detailsList) {
+            if (details.getSizeId() != null) {
+                selectedColors.add(details.getSizeId().getId());
+            }
+        }
+
+        return selectedColors;
+    }
     public void ProductsService(ProductsRepository productRepository) {
         this.productRepository = productRepository;
     }

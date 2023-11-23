@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,11 +48,15 @@ public class ProductDetailsController {
     private ImageService imageService;
 
     @GetMapping("hien-thi")
+//    @PreAuthorize("hasAuthority('admin')")
+
     public String getAllBypage(Model model, @RequestParam(value = "page", defaultValue = "0") Integer pageNo) {
         Page<ProductDetails> page = productDetailsService.getAll(pageNo);
         List<Products> products = productsService.getAllPro();
         List<Color> colors = colorService.getAllColor();
         List<Size> sizes = sizeService.getAllSZ();
+        Products products1=new Products();
+//        model.addAttribute("images", products1.getImages());
 
         model.addAttribute("list", page);
         model.addAttribute("products", products);
@@ -64,7 +69,7 @@ public class ProductDetailsController {
         model.addAttribute("size", new Size());
 
 //        model.addAttribute("currentPage", pageNo);
-        return "/dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
+        return "dashboard/chi-tiet-san-pham/chi-tiet-san-pham";
 
     }
 
@@ -93,16 +98,25 @@ public class ProductDetailsController {
     }
 
     @GetMapping("/display")
+//    @PreAuthorize("hasAuthority('admin')")
+
     public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,Model model) throws SQLException {
         List<Image> imageList = imageService.getImagesForProducts(productId);
-        byte[] imageBytes = null;
-        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-        model.addAttribute("image",imageList);
 
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        if (imageList != null && !imageList.isEmpty()) {
+            byte[] imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+//            model.addAttribute("image", imageList);
+
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        } else {
+            // Trả về ResponseEntity 404 nếu không tìm thấy ảnh
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("view-update/{id}")
+//    @PreAuthorize("hasAuthority('admin')")
+
     public String detail(@PathVariable("id") Integer id, Model model) {
         ProductDetails productDetails = productDetailsService.getById(id);
         model.addAttribute("ctsp", productDetails);
@@ -112,7 +126,7 @@ public class ProductDetailsController {
         model.addAttribute("products", products);
         model.addAttribute("colors", colors);
         model.addAttribute("sizes", sizes);
-        return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
+        return "dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
     }
 
     @GetMapping("delete/{id}")
@@ -121,21 +135,23 @@ public class ProductDetailsController {
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
 
-    @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws SQLException, IOException {
+    @PostMapping("update/{id}")
+    public String update(@Valid @ModelAttribute("ctsp") ProductDetails productDetails, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) throws SQLException, IOException {
         if (result.hasErrors()) {
             Page<ProductDetails> productDetail = productDetailsService.getAll(0);
             List<Products> products = productsService.getAllPro();
             List<Color> colors = colorService.getAllColor();
             List<Size> sizes = sizeService.getAllSZ();
+//            model.addAttribute("images", productDetails.getProductId().getImages());
+
             model.addAttribute("productDetails", productDetail);
             model.addAttribute("products", products);
             model.addAttribute("colors", colors);
             model.addAttribute("sizes", sizes);
-            return "/dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
+            return "dashboard/chi-tiet-san-pham/update-chi-tiet-san-pham";
 
         }
-        productDetailsService.update(productDetails, files);
+        productDetailsService.update(productDetails);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }

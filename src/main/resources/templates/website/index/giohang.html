@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Zay Shop - Product Detail Page</title>
+    <title>SneakerBeer</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -377,12 +377,12 @@ https://templatemo.com/tm-559-zay-shop
     });
 
 
-    const app = angular.module("shopping-cart-app", []);
+    const app = angular.module('shopping-cart-app', []);
 
-    app.controller("shopping-cart-ctrl", function ($scope, $http) {
+    app.controller('shopping-cart-ctrl', function ($scope, $http) {
     $scope.dataId = null;
     $scope.totalQuantity = 0;
-    // $scope.kmMa = "";
+    $scope.kmMa = "";
     $scope.totalPrice = 0;
     // $scope.tongTienTT = 0;
     $scope.total = 0;
@@ -393,7 +393,7 @@ https://templatemo.com/tm-559-zay-shop
 
     // Hàm để kiểm tra vai trò và hiển thị link nếu là ADMIN hoặc STAFF
     function checkUserRole(roles) {
-    if (roles.includes('ADMIN') || roles.includes('ROLE')) {
+    if (roles.includes('admin') || roles.includes('role')) {
     $scope.showAdminLink = true;
     }
     }
@@ -502,7 +502,7 @@ https://templatemo.com/tm-559-zay-shop
             fullName:"",
             phone: "",
             address: "",
-            orderStatus: 2,
+            orderStatus: 1,
             // get orderItem() {
             //     return $scope.cartItems.map(sl => {
             //         return {
@@ -516,13 +516,12 @@ https://templatemo.com/tm-559-zay-shop
                 var order =angular.copy(this);
 
                 // Cập nhật giá trị
-                // order.tongTienTT = $scope.totalPrice;
+                order.shippingFee=$scope.shippingFee;
                 order.total = $scope.total;
 
                 console.log(order);
 
-                $http.post("/rest/order/add", order).then(resp => {
-                    method: 'POST',
+                $http.post('http://localhost:8080/rest/order/add', order).then(resp => {
                     alert("Dat hang thanh cong");
                     console.log(resp.data);
                     location.href = "/product/hien-thi";
@@ -536,33 +535,6 @@ https://templatemo.com/tm-559-zay-shop
 
 
     });</script>
-<script>function createOrder() {
-    fetch('/rest/order/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            // Provide necessary order data here if required by the backend
-            // For example, order details, product information, etc.
-        })
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Failed to create order');
-            }
-        })
-        .then(data => {
-            console.log('Order created successfully:', data);
-            // Handle success - show a success message or redirect to a success page
-        })
-        .catch(error => {
-            console.error('Error creating order:', error);
-            // Handle error - show an error message to the user
-        });
-}</script>
 <!--<script>-->
 
 <!--    const quantityInputs = document.querySelectorAll(".quantity");-->

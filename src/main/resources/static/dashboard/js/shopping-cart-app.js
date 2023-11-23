@@ -113,17 +113,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-const app =angular.module("shopping-cart-app", []);
+const app =angular.module('shopping-cart-app', []);
 
-app.controller("shopping-cart-ctrl", function ($scope, $http) {
+app.controller('shopping-cart-ctrl', function ($scope, $http) {
     $scope.dataId = null;
-    $scope.quantity = 0;
-    $scope.quantity = 0;
-    // $scope.kmMa = "";
+    $scope.totalQuantity = 0;
+    $scope.kmMa = "";
     $scope.totalPrice = 0;
     // $scope.tongTienTT = 0;
     $scope.total = 0;
-    // $scope.KM = null;
+    $scope.KM = null;
 
     // Khởi tạo biến để điều khiển hiển thị link Admin
     $scope.showAdminLink = false;
@@ -148,7 +147,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
     }
     getAuthor();
     function reloadCartItems() {
-        $http.get('/cart/view-cart')
+        $http.get('/rest/chitietgiohang')
             .then(function (response) {
                 $scope.cartItems = response.data;
                 calculateTotals();
@@ -167,68 +166,68 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
 
         $scope.totalPrice = $scope.total - ($scope.KM !== null ? $scope.KM.giaTri : 0);
     }
-
-
-    $scope.cart = {
-        addToCart(productId) {
-            $http.post('/rest/cart/add', {productId: productId})
-                .then(function (response) {
-                    console.log(productId)
-                    if (response.data) {
-                        reloadCartItems(); // Tải lại danh sách sau khi thêm thành công
-                    } else {
-                        alert("Thêm vào giỏ hàng không thành công!");
-                    }
-
-                })
-                .catch(function (error) {
-                    alert("Vui lòng đăng nhập");
-                    console.error(error);
-                });
-
-        },
-
-        remove(productId) {
-            $http.post('/rest/cart/remove', {productId: productId})
-                .then(function (response) {
-                    alert("Xóa sản phẩm khỏi giỏ hàng thành công!");
-                    reloadCartItems(); // Tải lại danh sách sau khi xóa thành công
-                })
-                .catch(function (error) {
-                    alert("Có lỗi xảy ra khi gọi API!");
-                    console.error(error);
-                });
-        },
-
-        update(productId, quantity) {
-            $http.post('/rest/cart/update', {productId: productId, quantity: quantity})
-                .then(function (response) {
-                    if (response.data) {
-                        alert("Cập nhật giỏ hàng thành công!");
-                        reloadCartItems(); // Tải lại danh sách sau khi cập nhật thành công
-                    } else {
-                        alert("Cập nhật giỏ hàng không thành công!");
-                    }
-                })
-                .catch(function (error) {
-                    alert("Có lỗi xảy ra khi gọi API!");
-                    console.error(error);
-                });
-        },
-        clear() {
-            $http.post('/rest/cart/clear')
-                .then(function (response) {
-                    alert("Xóa tất cả sản phẩm khỏi giỏ hàng thành công!");
-                    reloadCartItems(); // Tải lại danh sách sau khi xóa thành công
-                })
-                .catch(function (error) {
-                    alert("Có lỗi xảy ra khi gọi API!");
-                    console.error(error);
-                });
-        },
-
-    }
-    reloadCartItems();
+    //
+    //
+    // $scope.cart = {
+    //     addToCart(productId) {
+    //         $http.post('/rest/cart/add', {productId: productId})
+    //             .then(function (response) {
+    //                 console.log(productId)
+    //                 if (response.data) {
+    //                     reloadCartItems(); // Tải lại danh sách sau khi thêm thành công
+    //                 } else {
+    //                     alert("Thêm vào giỏ hàng không thành công!");
+    //                 }
+    //
+    //             })
+    //             .catch(function (error) {
+    //                 alert("Vui lòng đăng nhập");
+    //                 console.error(error);
+    //             });
+    //
+    //     },
+    //
+    //     remove(productId) {
+    //         $http.post('/rest/cart/remove', {productId: productId})
+    //             .then(function (response) {
+    //                 alert("Xóa sản phẩm khỏi giỏ hàng thành công!");
+    //                 reloadCartItems(); // Tải lại danh sách sau khi xóa thành công
+    //             })
+    //             .catch(function (error) {
+    //                 alert("Có lỗi xảy ra khi gọi API!");
+    //                 console.error(error);
+    //             });
+    //     },
+    //
+    //     update(productId, quantity) {
+    //         $http.post('/rest/cart/update', {productId: productId, quantity: quantity})
+    //             .then(function (response) {
+    //                 if (response.data) {
+    //                     alert("Cập nhật giỏ hàng thành công!");
+    //                     reloadCartItems(); // Tải lại danh sách sau khi cập nhật thành công
+    //                 } else {
+    //                     alert("Cập nhật giỏ hàng không thành công!");
+    //                 }
+    //             })
+    //             .catch(function (error) {
+    //                 alert("Có lỗi xảy ra khi gọi API!");
+    //                 console.error(error);
+    //             });
+    //     },
+    //     clear() {
+    //         $http.post('/rest/cart/clear')
+    //             .then(function (response) {
+    //                 alert("Xóa tất cả sản phẩm khỏi giỏ hàng thành công!");
+    //                 reloadCartItems(); // Tải lại danh sách sau khi xóa thành công
+    //             })
+    //             .catch(function (error) {
+    //                 alert("Có lỗi xảy ra khi gọi API!");
+    //                 console.error(error);
+    //             });
+    //     },
+    //
+    // }
+    // reloadCartItems();
 
     $scope.orders = {
         createDate: new Date(),
@@ -240,8 +239,8 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
         fullName:"",
         phone: "",
         address: "",
-        orderStatus: 1,
-        // get orderItems() {
+        orderStatus: 2,
+        // get orderItem() {
         //     return $scope.cartItems.map(sl => {
         //         return {
         //             sellPrice: sl.producDetail.sellPrice,
@@ -254,13 +253,14 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
             var order = angular.copy(this);
 
             // Cập nhật giá trị
-            order.shippingFee = $scope.shippingFee;
+            // order.tongTienTT = $scope.totalPrice;
+            order.shippingFee=$scope.shippingFee;
             order.total = $scope.total;
 
             console.log(order);
 
-            $http.post("/rest/order/add", order).then(resp => {
-                method: 'POST',
+            $http.post('http://localhost:8080/rest/order/add', order).then(resp => {
+
                 alert("Dat hang thanh cong");
                 console.log(resp.data);
                 location.href = "/product/hien-thi";

@@ -3,6 +3,7 @@ package com.example.datnsd56.service.impl;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.repository.ImageRepository;
 import com.example.datnsd56.repository.ProductDetailsRepository;
 import com.example.datnsd56.repository.ProductsRepository;
@@ -63,6 +64,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     }
 
+
     @Override
     public Optional<ProductDetails> findBySanPhamId(Integer idSanPham) {
         Optional<ProductDetails> chiTietSanPham = productDetailsRepository.findById(idSanPham);
@@ -78,6 +80,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     public ProductDetails save(ProductDetails productDetails) {
         return productDetailsRepository.save(productDetails);
     }
+
 //    @Override
 //    public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
 //        productDetails.setCreateDate(LocalDate.now());
@@ -152,19 +155,39 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+    public void update(ProductDetails productDetails) {
+
+//        List<Image> existingImages = imageRepository.getImageByProductId(productDetails.getId());
+
+        // Cập nhật thông tin sản phẩm
+
         productDetails.setCreateDate(LocalDate.now());
         productDetails.setUpdateDate(LocalDate.now());
         productDetailsRepository.save(productDetails);
 
-        for (MultipartFile file : files) {
-            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
-            byte[] bytes = file.getBytes();
-            Blob blob = new SerialBlob(bytes);
-            anhSanPham.setProductId(productDetails.getProductId());
-            anhSanPham.setUrl(blob);
-            imageRepository.save(anhSanPham);
-        }
+        // Kiểm tra xem có ảnh mới được chọn không
+//        if (files != null && files.length > 0) {
+//            // Nếu có ảnh mới, xóa tất cả ảnh cũ của sản phẩm
+//            imageRepository.deleteAll(existingImages);
+//
+//            // Lưu ảnh mới vào danh sách
+//            for (MultipartFile file : files) {
+//                byte[] bytes = file.getBytes();
+//                Blob blob = new SerialBlob(bytes);
+//                Image newImage = new Image();
+//                newImage.setProductId(productDetails.getProductId());
+//                newImage.setUrl(blob);
+//                imageRepository.save(newImage);
+//            }
+//        } else {
+//            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+//            Products currentProducts = productsRepository.findById(productDetails.getProductId().getId()).orElse(null);
+//
+//            if (currentProducts != null) {
+//                productDetails.getProductId().setImages(currentProducts.getImages());
+//            }
+//        }
+
     }
 
     @Override

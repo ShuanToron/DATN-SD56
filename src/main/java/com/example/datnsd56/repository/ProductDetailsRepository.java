@@ -2,6 +2,7 @@ package com.example.datnsd56.repository;
 
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.entity.Size;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Min;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -66,4 +67,12 @@ Double getDetail(Integer productId,Integer color, Integer size);
 @Query(value = "select * from Product_details where product_id = ?1",nativeQuery = true)
     List<ProductDetails> findBySanPhamId(Integer idSanPham);
 //}
+
+
+
+    @Query(value = "SELECT pd.size_id FROM Product_details pd WHERE pd.product_id = ?1 AND pd.size_id IS NOT NULL",nativeQuery = true)
+    List<Integer> findSelectedSizeIds(@Param("id") Integer id);
+    @Query(value = "SELECT pd.color_id FROM Product_details pd WHERE pd.product_id = ?1 AND pd.color_id IS NOT NULL",nativeQuery = true)
+    List<Integer> findSelectedColorIds(@Param("id") Integer id);
+
 }

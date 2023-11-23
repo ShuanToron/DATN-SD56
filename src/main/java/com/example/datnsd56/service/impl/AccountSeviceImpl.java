@@ -46,7 +46,7 @@ public class AccountSeviceImpl implements AccountService {
         Account account = detail(id);
         accountRepository.delete(account);
     }
-    public Page<Account> findByEmail(String phone) {
+    public Page<Account> findByPhone(String phone) {
         Pageable page=PageRequest.of(0,5);
     Page<Account> list=accountRepository.findAccountByPhone(phone,page);
       return list;
@@ -75,6 +75,11 @@ public class AccountSeviceImpl implements AccountService {
             return nguoiDung;
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email);
     }
 
 

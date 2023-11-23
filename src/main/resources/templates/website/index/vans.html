@@ -142,18 +142,19 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                         <!-- Thêm các lựa chọn vào dropdown -->
-                               <div class="dropdown-title" style="font-weight: bolder; margin-left: 15px" th:text="${#authentication.name}"></div>
-
+                        <div class="dropdown-title" style="font-weight: bolder; margin-left: 15px" th:text="${#authentication.name}"></div>
                         <div class="dropdown-divider"></div>
-                        </a>
-                        <a th:href="@{/login/custom-login}" class="dropdown-item has-icon text-danger"> <i
-                                class="fas fa-sign-in-alt"></i>
-                            Login
-                        </a>
-                        <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
-                                class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
+                        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                            <!-- Nếu đã đăng nhập, hiển thị đơn hàng và logout -->
+                            <a th:href="@{/cart/dsdonhang}" class="dropdown-item has-icon "> <i class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
+                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </th:block>
+                        <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
+                            <!-- Nếu chưa đăng nhập, hiển thị lựa chọn login -->
+                            <a th:href="@{/login/custom-login}" class="dropdown-item has-icon "> <i class="fas fa-sign-in-alt"></i> Login</a>
+                        </th:block>
+
+
                     </div>
                 </div>
             </div>

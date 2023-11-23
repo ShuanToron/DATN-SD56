@@ -2,12 +2,15 @@ package com.example.datnsd56.repository;
 
 import com.example.datnsd56.entity.Orders;
 import com.example.datnsd56.responsi.OrdersCustomer;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -21,5 +24,14 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
     public Page<OrdersCustomer> hienThiPageHD(Pageable pageable);
 
+    List<Orders> findAllByOrderStatus(Integer status);
 
+    Page<Orders> findAllByOrderStatusPT(Pageable pageable,Integer satus);
+
+    @Query(value = "select * from orders b where b.order_status = ?1 and b.account_id= ?1",nativeQuery = true)
+    List<Orders> getOrdes(@Param("status") Integer order_status,
+                          @Param("accountId") Integer accountId);
+
+
+    Page<Orders> findAllByOrderStatusPT(Pageable pageable);
 }
