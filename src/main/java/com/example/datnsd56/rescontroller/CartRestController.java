@@ -47,11 +47,17 @@ public class CartRestController {
     @Transactional
     @PostMapping("/rest/order/add")
     public ResponseEntity<?> create(@RequestBody JsonNode orderData){
-            Optional<Account> nguoiDung = accountService.findById(userInfoUserDetails.getUserId());
+            Optional<Account> nguoiDung = accountService.finByName(userInfoUserDetails.getName());
             if (nguoiDung.isPresent()) {
                 Cart gioHang = cartService.findByNguoiDungId(nguoiDung.get().getId());
-
+                if (gioHang == null) {
+                    gioHang = new Cart();
+                    gioHang.setAccountId(nguoiDung.get());
+                    gioHang.setStatus("0");
+                    cartService.add1(gioHang);
+                }
                 if (gioHang != null) {
+
                     cartService.remove(gioHang.getId());
                     return  ResponseEntity.ok(ordersService.create(orderData));
                 }

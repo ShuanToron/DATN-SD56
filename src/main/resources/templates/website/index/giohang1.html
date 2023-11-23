@@ -68,185 +68,97 @@ https://templatemo.com/tm-559-zay-shop
 </head>
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 <div class="container mt-5">
-    <h1 class="text-center">Giỏ hàng</h1>
-    <div>
-        <!--        <i class="bi bi-bag-plus-fill"></i>-->
-        <div>
-            <a th:href="@{/product/hien-thi}">
-                <button id="myButton" type="button" class="btn btn-success remove"
-                        title="thêm sản phẩm mới">
-                    <i class="fas fa-plus-circle"></i>
-                </button>
-
-            </a>
-        </div>
-        <!--        <div th:each="sl, status : ${cartItem}">-->
-        <!--            <a th:href="@{'/product/detail/chi-tiet/' +${sl.productDetails.productId.id}}"-->
-        <!--               th:if="${status.index == #lists.size(cartItem) - 1}">-->
-        <!--                <h6 style="color: blue"><- Chọn màu khác</h6>-->
-        <!--            </a>-->
-        <!--        </div>-->
-
-    </div>
-    <!-- Bảng hiển thị sản phẩm trong giỏ hàng -->
-    <!--    <form id ="doi2" action="" method="get">-->
-    <div class="card">
-        <div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Ảnh</th>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Màu sắc</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Thành tiền</th>
-                    <th scope="col">Hàng Động</th>
+                    <th>Tên</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="sl in cartItems" >
 
-                    <form id="doi" th:action="@{'/cart/update'}" method="post" formnovalidate>
-                        <input
-                                type="hidden"
-                                value="Activewear" th:value="${sl.id}" th:name="id"
-                                id="productId"
-                                name="id"
-                        />
-                        <td>
-                            <img
-                                    th:src="@{'/cart/display?id=' + ${sl.productDetails.productId.id}}"
-                                    alt="Sản phẩm 1"
-                                    style="max-width: 80px; max-height: 80px"
-                            />
-                        </td>
 
-                        <td th:text="${sl.productDetails.productId.name}"></td>
-                        <td th:text="${sl.productDetails.colorId.name}"></td>
-                        <td th:text="${sl.productDetails.sizeId.name}"></td>
-                        <td th:text="${sl.productDetails.productId.brandId.name}"></td>
-                        <!--        <td th:text="${sl.getColorId()}"></td>-->
-                        <!--        <td th:text="${sl.getSizeId()}"></td>-->
-                        <td>
-                            <input
-                                    type="number"
+                <tr ng-repeat="sl in cartItems">
+                    <td> {{sl.producDetail.productId.name}}</td>
+                    <td>
+<!--                        <img-->
+<!--                                th:src="@{'/cart/display?id=' + ${sl.productDetails.productId.id}}"-->
+<!--                                alt="Sản phẩm 1"-->
+<!--                                style="max-width: 80px; max-height: 80px"-->
+<!--                        />-->
+                    </td>
+                    <td> {{sl.sellPrice | number : 2}} VND</td>
+                    <td>
+                        <input ng-change="cart.update(sl.id, sl.quantity)" ng-model="sl.quantity" type="number" min="1" />
+                    </td>
 
-                                    th:value="${sl.quantity}"
-                                    min="0"
-                                    th:name="quantity"
-                                    name="quantity"
-                                    onchange="this.form.submit();"
-
-                            />
-                        </td>
-                        <td class="" th:text="${sl.productDetails.sellPrice}"></td>
-                        <td class="" th:text="${sl.productDetails.sellPrice*sl.quantity}"></td>
-                        <td>
-                            <a th:href="@{'/cart/remove/' +${sl.id}}"
-                               style="text-decoration: none; padding-right: 20px">
-
-                                <i style="color: black" class="fas fa-trash-alt" title="xóa sản phẩm"></i>
-
-                            </a>
-                            <a style="text-decoration: none; font-weight:bolder;color: black;"
-                               th:href="@{'/product/detail/chi-tiet/' +${sl.productDetails.productId.id}}">
-
-                                <i class="fas fa-pencil-alt"   title="thêm màu và size"></i>
-                            </a>
-                            <!--                                <div id="note" class="hidden">thêm màu và size</div>-->
-                        </td>
-                    </form>
-
+                    <td> {{sl.producDetail.sellPrice * sl.quantity | number : 3}} VND</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="cart.remove(sl.id)">Remove</button>
+                    </td>
                 </tr>
+
                 </tbody>
             </table>
-            <a th:href="@{/cart/clear}" style="text-decoration: none">
-                <button type="button" class="btn btn-danger ">
-                    <i class="fas fa-eraser"> Clear cart
-                    </i>
-                </button>
-            </a>
-            <div class="text-end">
+            <div class="row">
+                <div class="col-md-12">
+                    <p> Tổng tiền: {{totalPrice | number : 3}} VND</p>
+                </div>
+            </div>
+        </div>
 
-                Tổng số tiền
 
-                <label for="" style="color: red">
-                    : <span id="" th:text="${total} + '' +'Đ'"></span>
-                </label>
+        <div class="row">
+            <div class="panel panel-primary">
+                <br>
+                <div class="panel-heading" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 20px;font-weight: bold; padding-left: 8px; ">Thông tin của bạn</div>
+                <br>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
 
-            </div>
-            <!-- Thông tin khách hàng -->
-            <h4>Nhập Thông Tin</h4>
-            <div class="mb-3">
-                <label for="hoTen" class="form-label">Họ tên</label>
-                <div id="error-hoTen" class="text-danger"></div>
-                <input ng-model="orders.fullName" type="text" class="form-control" id="hoTen" name="hoTen"/>
-            </div>
-            <div class="mb-3">
-                <label for="diaChi" class="form-label">Địa chỉ</label>
-                <div id="error-diaChi" class="text-danger"></div>
-                <input ng-model="orders.address"
-                       type="text"
-                       class="form-control"
-                       id="diaChi"
-                       name="diaChi"
-                />
-            </div>
-            <div class="mb-3">
-                <label for="sdt" class="form-label">Số điện thoại</label>
-                <div id="error-sdt" class="text-danger"></div>
-                <input ng-model="orders.phone" type="tel" class="form-control" id="sdt" name="sdt"/>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Phiếu giảm giá</label>
-                <div id="error-phieuGiamGia" class="text-danger"></div>
-                <select
-                        id="phieuGiamGia"
-                        class="form-select"
-                        aria-label="Default select example"
-                >
-                    <option selected value="0">Không giảm giá</option>
-                    <option value="100000">Giảm 100,000 VND</option>
-                    <option value="200000">Giảm 200,000 VND</option>
-                </select>
-            </div>
-            <!-- Thêm một phần tử radio button để chọn phương thức thanh toán -->
-            <div class="mb-3">
-                <label class="form-label"
-                >Phương thức thanh toán</label
-                ><br/>
-                <input
-                        type="radio"
-                        id="thanhToanKhiNhanHang"
-                        name="phuongThucThanhToan"
-                        value="khiNhanHang"
-                        checked="checked"
-                />
-                <label for="thanhToanKhiNhanHang">Thanh toán khi nhận hàng</label
-                ><br/>
-                <input
-                        type="radio"
-                        id="thanhToanBangZaloPay"
-                        name="phuongThucThanhToan"
-                        value="zaloPay"
-                />
-                <label for="thanhToanBangZaloPay">Thanh toán bằng ZaloPay</label>
-            </div>
-            <!--            <div class="mb-3">-->
-            <!--                <label for="phiGiaoHangLabel" class="form-label"-->
-            <!--                >Phí Giao Hàng</label-->
-            <!--                >-->
-            <!--                <label id="phiGiaoHangLabel" style="color: red">0đ</label>-->
-            <!--            </div>-->
-            <!--            <div class="mb-3">-->
-            <!--                <label for="tongTienLabel" class="form-label">Tổng Tiền</label>-->
-            <!--                <label id="tongTienLabel" style="color: red">800,000 VND</label>-->
-            <!--            </div>-->
-            <div class="d-grid gap-2 col-2 mx-auto">
-                <button ng-click="orders.purchase()" class="btn btn-primary" type="submit">Đặt Hàng</button>
+                        </div>
+                        <!--                <div class="form-group col-sm-6">-->
+                        <!--                    <div>Order Date:</div>-->
+                        <!--                    <div class="form-control">{{oder.createDate | date :'dd-MM-yyyy'}}</div>-->
+                        <!--                </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label style="font-weight: bold;">Địa chỉ: </label>
+                            <input  ng-model="orders.address" class="form-control" style="width: 458px;">
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                            <div style="font-weight: bold;">SDT:</div>
+                            <input  ng-model="orders.phone" class="form-control" style="width: 458px;">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold; float: left;margin-top: 5px;">Khuyến mãi:</label>
+
+
+
+                            <input ng-model="kmMa" class="form-control" placeholder="Nhập mã khuyến mãi" style="width: 240px; margin-left: 10px; float: left;">
+                        </div>
+                        <div class="col-md-8">
+                            <button class="btn btn-success" ng-click="cart.addKM()">Áp dụng</button>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="panel-footer text-right">
+                    <button ng-click="orders.purchase()" class="btn btn-success">Purchase</button>
+                </div>
             </div>
         </div>
     </div>
@@ -258,7 +170,7 @@ https://templatemo.com/tm-559-zay-shop
 <!-- Liên kết với tệp bi-icons của Bootstrap (để sử dụng bi bi-trash) -->
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css}"></script>
 <!-- ... (các liên kết và mã HTML khác) ... -->
-<script th:src="@{/dashboard/js/shopping-cart-app.js}"></script>
+<script src="/dashboard/js/shopping-cart-app.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var colors = document.querySelectorAll('.color-label');

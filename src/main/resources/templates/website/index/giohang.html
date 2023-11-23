@@ -382,7 +382,7 @@ https://templatemo.com/tm-559-zay-shop
     app.controller("shopping-cart-ctrl", function ($scope, $http) {
     $scope.dataId = null;
     $scope.totalQuantity = 0;
-    $scope.kmMa = "";
+    // $scope.kmMa = "";
     $scope.totalPrice = 0;
     // $scope.tongTienTT = 0;
     $scope.total = 0;
@@ -522,6 +522,7 @@ https://templatemo.com/tm-559-zay-shop
                 console.log(order);
 
                 $http.post("/rest/order/add", order).then(resp => {
+                    method: 'POST',
                     alert("Dat hang thanh cong");
                     console.log(resp.data);
                     location.href = "/product/hien-thi";
@@ -535,6 +536,33 @@ https://templatemo.com/tm-559-zay-shop
 
 
     });</script>
+<script>function createOrder() {
+    fetch('/rest/order/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            // Provide necessary order data here if required by the backend
+            // For example, order details, product information, etc.
+        })
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to create order');
+            }
+        })
+        .then(data => {
+            console.log('Order created successfully:', data);
+            // Handle success - show a success message or redirect to a success page
+        })
+        .catch(error => {
+            console.error('Error creating order:', error);
+            // Handle error - show an error message to the user
+        });
+}</script>
 <!--<script>-->
 
 <!--    const quantityInputs = document.querySelectorAll(".quantity");-->
