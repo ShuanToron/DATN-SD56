@@ -1,16 +1,7 @@
 package com.example.datnsd56.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +25,13 @@ public class Image {
     @Lob
     @Column(name = "url")
     private Blob url;
+<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name = "productDetail_id",referencedColumnName = "id")
     private ProductDetails productDetails;
+=======
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    private Products productId;
+>>>>>>> 5bee6bb0a3605b2017ce2dbf69b83048f5a89b1b
 }

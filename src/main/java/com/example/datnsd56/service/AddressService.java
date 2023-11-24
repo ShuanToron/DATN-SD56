@@ -15,5 +15,6 @@ public interface AddressService {
     void delete(Integer id);
     Page<Address> findByEmail(String phone);
     List<Address> get();
+    Address findAccountDefaultAddress(Integer AccountId);
 
 }

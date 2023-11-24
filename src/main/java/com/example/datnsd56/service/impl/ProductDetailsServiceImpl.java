@@ -1,7 +1,9 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.repository.ImageRepository;
 import com.example.datnsd56.repository.ProductDetailsRepository;
 import com.example.datnsd56.repository.ProductsRepository;
@@ -14,9 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.math.BigDecimal;
+//import java.math.Double;
+//import java.math.Double;
+import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +48,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Page<ProductDetails> search( BigDecimal sellPrice) {
+    public Page<ProductDetails> search( Double sellPrice) {
         Pageable pageable = PageRequest.of(0, 5);
         return productDetailsRepository.findProductDetailsBySellPrice( sellPrice, pageable);
     }
@@ -50,6 +56,29 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     @Override
     public ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
         return null;
+    }
+
+    @Override
+    public ProductDetails getByIds(Integer id) {
+        return productDetailsRepository.getByIds(id);
+
+    }
+
+
+    @Override
+    public Optional<ProductDetails> findBySanPhamId(Integer idSanPham) {
+        Optional<ProductDetails> chiTietSanPham = productDetailsRepository.findById(idSanPham);
+
+        if (chiTietSanPham.isPresent()){
+            return chiTietSanPham;
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public ProductDetails save(ProductDetails productDetails) {
+        return productDetailsRepository.save(productDetails);
     }
 
 //    @Override
@@ -71,6 +100,16 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     @Override
     public ProductDetails getById(Integer id) {
         return productDetailsRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Optional<ProductDetails> findById(Integer id) {
+        Optional<ProductDetails> chiTietSanPham = productDetailsRepository.findById(id);
+
+        if (chiTietSanPham.isPresent()){
+            return chiTietSanPham;
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -104,13 +143,50 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public BigDecimal getPrice(Integer id, Integer colorId, Integer sizeId) {
-        BigDecimal price = productDetailsRepository.getDetail(id, colorId, sizeId);
+    public ProductDetails getCart(Integer productId, Integer color, Integer size) {
+        ProductDetails productDetails=productDetailsRepository.getCart(productId,color,size);
+        return productDetails;
+    }
+
+    @Override
+    public Double getPrice(Integer id, Integer colorId, Integer sizeId) {
+        Double price = productDetailsRepository.getDetail(id, colorId, sizeId);
         return price;
     }
 
     @Override
-    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
+    public void update(ProductDetails productDetails) {
+
+//        List<Image> existingImages = imageRepository.getImageByProductId(productDetails.getId());
+
+        // Cập nhật thông tin sản phẩm
+
+        productDetails.setCreateDate(LocalDate.now());
+        productDetails.setUpdateDate(LocalDate.now());
+        productDetailsRepository.save(productDetails);
+
+        // Kiểm tra xem có ảnh mới được chọn không
+//        if (files != null && files.length > 0) {
+//            // Nếu có ảnh mới, xóa tất cả ảnh cũ của sản phẩm
+//            imageRepository.deleteAll(existingImages);
+//
+//            // Lưu ảnh mới vào danh sách
+//            for (MultipartFile file : files) {
+//                byte[] bytes = file.getBytes();
+//                Blob blob = new SerialBlob(bytes);
+//                Image newImage = new Image();
+//                newImage.setProductId(productDetails.getProductId());
+//                newImage.setUrl(blob);
+//                imageRepository.save(newImage);
+//            }
+//        } else {
+//            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+//            Products currentProducts = productsRepository.findById(productDetails.getProductId().getId()).orElse(null);
+//
+//            if (currentProducts != null) {
+//                productDetails.getProductId().setImages(currentProducts.getImages());
+//            }
+//        }
 
     }
 
@@ -120,30 +196,21 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public @Min(value = 1, message = "lon hon 0") BigDecimal getprice(String color, String size) {
-        @Min(value = 1, message = "lon hon 0") BigDecimal productDetails=  productDetailsRepository.getPrice(color,size);
-
-        return productDetails;
+    public Double getprice(String color, String size) {
+        return null;
     }
+
+//    @Override
+//    public @Min(value = 1, message = "lon hon 0") Double getprice(String color, String size) {
+//        @Min(value = 1, message = "lon hon 0") Double productDetails=  productDetailsRepository.getPrice(color,size);
+//
+//        return productDetails;
+//    }
 
 //    @Override
 //    public List<ProductDetails> getProductsByProductId(Integer productId) {
 //        return productDetailsRepository.findByProductId(productId);
 //    }
 
-//    @Override
-//    public void update(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException {
-//        productDetails.setCreateDate(LocalDate.now());
-//        productDetails.setUpdateDate(LocalDate.now());
-//        productDetailsRepository.save(productDetails);
-//
-//        for (MultipartFile file : files) {
-//            Image anhSanPham = imageRepository.getImageByProductId(productDetails.getId()).get(0);
-//            byte[] bytes = file.getBytes();
-//            Blob blob = new SerialBlob(bytes);
-//            anhSanPham.setProductDetailId(productDetails);
-//            anhSanPham.setUrl(blob);
-//            imageRepository.save(anhSanPham);
-//        }
-//    }
+
 }

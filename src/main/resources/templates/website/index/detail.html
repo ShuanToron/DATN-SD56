@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sneaker_SneakerBeer</title>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="apple-touch-icon" th:href="@{img/apple-icon.png}"/>
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}"/>
+    <link rel="apple-touch-icon" th:href="@{img/apple-icon.png}" />
+    <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            th:href="@{img/favicon.ico}"
+    />
 
-    <link rel="stylesheet" th:href="@{/website/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/website/css/templatemo.css}"/>
-    <link rel="stylesheet" th:href="@{/website/css/custom.css}"/>
+    <link rel="stylesheet" th:href="@{/website/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/website/css/templatemo.css}" />
+    <link rel="stylesheet" th:href="@{/website/css/custom.css}" />
     <!-- Google Web Fonts -->
-    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}"/>
-    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin/>
+    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
     <!--    <link-->
     <!--        th:href="@{https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap}"-->
     <!--        rel="stylesheet"-->
@@ -23,180 +27,235 @@
     <!-- Icon Font Stylesheet -->
     <!-- Icon Font Stylesheet -->
     <link
-        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
-        rel="stylesheet"
+            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
+            rel="stylesheet"
     />
     <!--    <link-->
     <!--        th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}"-->
     <!--        rel="stylesheet"-->
     <!--    />-->
     <!-- Libraries Stylesheet -->
-    <link th:href="@{/website/lib/animate/animate.min.css}" rel="stylesheet"/>
-    <link th:href="@{/website/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet"/>
+    <link th:href="@{/website/lib/animate/animate.min.css}" rel="stylesheet" />
+    <link
+            th:href="@{/website/lib/owlcarousel/assets/owl.carousel.min.css}"
+            rel="stylesheet"
+    />
 
     <!-- Customized Bootstrap Stylesheet -->
     <!-- <link th:href="@{/website/css/bootstrap.min.css}" rel="stylesheet" /> -->
 
     <!-- Template Stylesheet -->
-    <link th:href="@{/website/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/website/css/style.css}" rel="stylesheet" />
 
     <!-- Load fonts style after rendering the layout styles -->
     <!--    <link-->
     <!--        rel="stylesheet"-->
     <!--        th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap}"-->
     <!--    />-->
-    <link rel="stylesheet" th:href="@{/website/css/fontawesome.css}"/>
+    <link rel="stylesheet" th:href="@{/website/css/fontawesome.css}" />
 
     <!-- Slick -->
-    <link rel="stylesheet" type="text/css" th:href="@{/website/css/slick.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/website/css/slick-theme.css}"/>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/website/css/slick.min.css}"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/website/css/slick-theme.css}"
+    />
 </head>
 
 <body>
-
 <!-- Start Top Nav -->
 <!-- <nav
-  class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
-  id="templatemo_nav_top"
+class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
+id="templatemo_nav_top"
 >
-  <div class="container text-light">
-    <div class="w-100 d-flex justify-content-between">
-      <div>
-        <i class="fa fa-envelope mx-2"></i>
-        <a
-          class="navbar-sm-brand text-light text-decoration-none"
-          href="mailto:info@company.com"
-          >info@company.com</a
-        >
-        <i class="fa fa-phone mx-2"></i>
-        <a
-          class="navbar-sm-brand text-light text-decoration-none"
-          href="tel:010-020-0340"
-          >010-020-0340</a
-        >
-      </div>
-      <div>
-        <a
-          class="text-light"
-          href="https://fb.com/templatemo"
-          target="_blank"
-          rel="sponsored"
-          ><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i
-        ></a>
-        <a
-          class="text-light"
-          href="https://www.instagram.com/"
-          target="_blank"
-          ><i class="fab fa-instagram fa-sm fa-fw me-2"></i
-        ></a>
-        <a class="text-light" href="https://twitter.com/" target="_blank"
-          ><i class="fab fa-twitter fa-sm fa-fw me-2"></i
-        ></a>
-        <a
-          class="text-light"
-          href="https://www.linkedin.com/"
-          target="_blank"
-          ><i class="fab fa-linkedin fa-sm fa-fw"></i
-        ></a>
-      </div>
-    </div>
+<div class="container text-light">
+<div class="w-100 d-flex justify-content-between">
+  <div>
+    <i class="fa fa-envelope mx-2"></i>
+    <a
+      class="navbar-sm-brand text-light text-decoration-none"
+      href="mailto:info@company.com"
+      >info@company.com</a
+    >
+    <i class="fa fa-phone mx-2"></i>
+    <a
+      class="navbar-sm-brand text-light text-decoration-none"
+      href="tel:010-020-0340"
+      >010-020-0340</a
+    >
   </div>
+  <div>
+    <a
+      class="text-light"
+      href="https://fb.com/templatemo"
+      target="_blank"
+      rel="sponsored"
+      ><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i
+    ></a>
+    <a
+      class="text-light"
+      href="https://www.instagram.com/"
+      target="_blank"
+      ><i class="fab fa-instagram fa-sm fa-fw me-2"></i
+    ></a>
+    <a class="text-light" href="https://twitter.com/" target="_blank"
+      ><i class="fab fa-twitter fa-sm fa-fw me-2"></i
+    ></a>
+    <a
+      class="text-light"
+      href="https://www.linkedin.com/"
+      target="_blank"
+      ><i class="fab fa-linkedin fa-sm fa-fw"></i
+    ></a>
+  </div>
+</div>
+</div>
 </nav> -->
 <!-- Close Top Nav -->
 
 <!-- Header -->
 
 <!-- Navbar Start -->
+<!-- Navbar Start -->
 <div class="container-fluid bg-white sticky-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-            <a href="index.html" class="navbar-brand">
-                <img class="img-fluid" th:src="@{/website/img/logo1.png}" alt="Logo"/>
+            <a th:href="@{index.html}" class="navbar-brand">
+                <img
+                        class="img-fluid"
+                        th:src="@{/website/img/logo1.png}"
+                        alt="Logo"
+                />
             </a>
             <button
-                type="button"
-                class="navbar-toggler ms-auto me-0"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse"
+                    type="button"
+                    class="navbar-toggler ms-auto me-0"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a th:href="@{/product/trang-chu}" class="nav-item nav-link ">Home</a>
-                    <a th:href="@{/product/hien-thi}" class="nav-item nav-link ">Products</a>
+                    <a th:href="@{/product/trang-chu}" class="nav-item nav-link"
+                    >Home</a
+                    >
+                    <a th:href="@{/product/hien-thi}" class="nav-item nav-link"
+                    >Products</a
+                    >
                     <div class="nav-item dropdown">
                         <a
-                            href="#"
-                            class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"
+                                href="#"
+                                class="nav-link dropdown-toggle"
+                                data-bs-toggle="dropdown"
                         >Brand</a
                         >
                         <div class="dropdown-menu bg-light rounded-0 m-0">
                             <a th:href="@{/product/nike}" class="dropdown-item">NIKE</a>
-                            <a th:href="@{/product/converse}" class="dropdown-item">CONVERSE</a>
+                            <a th:href="@{/product/converse}" class="dropdown-item"
+                            >CONVERSE</a
+                            >
                             <a th:href="@{/product/mlb}" class="dropdown-item">MLB</a>
-                            <a th:href="@{/product/adidas}" class="dropdown-item">ADIDAS</a>
+                            <a th:href="@{/product/adidas}" class="dropdown-item"
+                            >ADIDAS</a
+                            >
                             <a th:href="@{/product/vans}" class="dropdown-item">VANS</a>
-                            <a th:href="@{/product/lv}" class="dropdown-item">LOUIS VUITTON</a>
+                            <a th:href="@{/product/lv}" class="dropdown-item"
+                            >LOUIS VUITTON</a
+                            >
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a th:href="@{/product/contact}" class="nav-item nav-link"
+                    >Contact</a
+                    >
                 </div>
                 <form action="">
                     <div class="border-start ps-4 d-none d-lg-block">
-                        <input type="text"/>
+                        <input type="text" />
                         <button type="button" class="btn btn-sm p-0">
                             <i class="fa fa-search" style="margin-left: 5px"></i>
                         </button>
                     </div>
                 </form>
-                <a href="">
-                    <button type="submit" class="btn btn-sm p-0">
-                        <span id="cartItemCount">0</span>
+                <a th:href="@{/cart/view-cart}">
+                    <button type="button" class="btn btn-sm p-0">
                         <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
                     </button>
                 </a>
+                <div class="dropdown">
+                    <button
+                            type="button"
+                            class="btn btn-sm p-0"
+                            id="userDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                    >
+                        <i class="bi bi-person-circle" style="margin-left: 20px"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <!-- Thêm các lựa chọn vào dropdown -->
+                        <div class="dropdown-title" style="font-weight: bolder; margin-left: 15px" th:text="${#authentication.name}"></div>
+                        <div class="dropdown-divider"></div>
+                        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                            <!-- Nếu đã đăng nhập, hiển thị đơn hàng và logout -->
+                            <a th:href="@{/cart/dsdonhang}" class="dropdown-item has-icon "> <i class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
+                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </th:block>
+                        <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
+                            <!-- Nếu chưa đăng nhập, hiển thị lựa chọn login -->
+                            <a th:href="@{/login/custom-login}" class="dropdown-item has-icon "> <i class="fas fa-sign-in-alt"></i> Login</a>
+                        </th:block>
+
+
+                    </div>
+                </div>
             </div>
         </nav>
     </div>
 </div>
+<!-- Navbar End -->
 <!-- Close Header -->
 
 <!-- Modal -->
 <div
-    class="modal fade bg-white"
-    id="templatemo_search"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
+        class="modal fade bg-white"
+        id="templatemo_search"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
 >
     <div class="modal-dialog modal-lg" role="document">
         <div class="w-100 pt-1 mb-5 text-right">
             <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
             ></button>
         </div>
         <form
-            action=""
-            method="get"
-            class="modal-content modal-body border-0 p-0"
+                action=""
+                method="get"
+                class="modal-content modal-body border-0 p-0"
         >
             <div class="input-group mb-2">
                 <input
-                    type="text"
-                    class="form-control"
-                    id="inputModalSearch"
-                    name="q"
-                    placeholder="Search ..."
+                        type="text"
+                        class="form-control"
+                        id="inputModalSearch"
+                        name="q"
+                        placeholder="Search ..."
                 />
                 <button
-                    type="submit"
-                    class="input-group-text bg-success text-light"
+                        type="submit"
+                        class="input-group-text bg-success text-light"
                 >
                     <i class="fa fa-fw fa-search text-white"></i>
                 </button>
@@ -207,1183 +266,291 @@
 
 <!-- Open Content -->
 <section class="bg-light">
-    <div th:each="product:${views}" class="container pb-5">
-        <div class="row">
-            <div class="col-lg-5 mt-5">
-                <div class="card mb-3">
-                    <img
-                        class="card-img img-fluid"
-                        th:src="@{${'/product/detail/display?id=' + product.id}}"
-                        alt="Card image cap"
-                        id="product-detail"
-                    />
-                </div>
-                <div class="row">
-                    <!--Start Controls-->
-                    <div class="col-1 align-self-center">
-                        <a
-                            href="#multi-item-example"
-                            role="button"
-                            data-bs-slide="prev"
-                        >
-                            <i class="text-dark fas fa-chevron-left"></i>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </div>
-                    <!--End Controls-->
-                    <!--Start Carousel Wrapper-->
-                    <div
-                        id="multi-item-example"
-                        class="col-10 carousel slide carousel-multi-item"
-                        data-bs-ride="carousel"
-                    >
-                        <!--Start Slides-->
-                        <div class="carousel-inner product-links-wap" role="listbox">
-                            <!--First slide-->
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay1.2.webp}"
-                                                alt="Product Image 1"
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay3.2.jpg}"
-                                                alt="Product Image 2"
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay2.1.jpg}"
-                                                alt="Product Image 3"
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.First slide-->
-
-                            <!--Second slide-->
-                            <!-- <div class="carousel-item">
-                              <div class="row">
-                                <div class="col-4">
-                                  <a href="#">
-                                    <img
-                                      class="card-img img-fluid"
-                                      th:src="@{/website/img/product_single_04.jpg"
-                                      alt="Product Image 4"
-                                    />
-                                  </a>
-                                </div>
-                                <div class="col-4">
-                                  <a href="#">
-                                    <img
-                                      class="card-img img-fluid"
-                                      th:src="@{/website/img/product_single_05.jpg"
-                                      alt="Product Image 5"
-                                    />
-                                  </a>
-                                </div>
-                                <div class="col-4">
-                                  <a href="#">
-                                    <img
-                                      class="card-img img-fluid"
-                                      th:src="@{/website/img/product_single_06.jpg"
-                                      alt="Product Image 6"
-                                    />
-                                  </a>
-                                </div>
-                              </div>
-                            </div> -->
-                            <!--/.Second slide-->
-
-                            <!--Third slide-->
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay3.jpg}"
-                                                alt="Product Image 7"
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay2.jpg}"
-                                                alt="Product Image 8"
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img
-                                                class="card-img img-fluid"
-                                                th:src="@{/website/img/giay1.jpg}"
-                                                alt="Product Image 9"
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.Third slide-->
-                        </div>
-                        <!--End Slides-->
-                    </div>
-                    <!--End Carousel Wrapper-->
-                    <!--Start Controls-->
-                    <div class="col-1 align-self-center">
-                        <a
-                            href="#multi-item-example"
-                            role="button"
-                            data-bs-slide="next"
-                        >
-                            <i class="text-dark fas fa-chevron-right"></i>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <!--End Controls-->
-                </div>
-            </div>
-            <!-- col end -->
-            <div class="col-lg-7 mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="h2" th:text="${product.name}"></h1>
-                        <p class="h3 py-2">
-                            <span id="product-price">1000đ</span>
-                        </p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Brand:</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted" th:each="detail:${product.brandId}" th:text="${detail.name}">
-                                    <strong></strong></p>
-                            </li>
-                        </ul>
-                        <h6>Description:</h6>
-                        <p th:text="${product.description}"></p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Color :</h6>
-                            </li>
-                            <label class="check" th:each="kt:${listColor}"
-                                   style="margin-right: 15px;margin-top: 15px">
-                                <input style="border-radius: 0;" type="radio" name="color" id="color" th:value="${kt.id}"
-                                       th:text="${kt.name}">
-                            </label>
-                        </ul>
-                        <input
-                            type="hidden"
-                            name="product-title"
-                            value="Activewear" th:value="${product.id}" th:name="productId"
-                            id="product"
+    <form th:action="@{/cart/getadd}" method="get">
+        <div th:each="product:${views}" class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img
+                                class="card-img img-fluid"
+                                th:src="@{${'/product/detail/display?id=' + product.id}}"
+                                alt="Card image cap"
+                                id="product-detail"
                         />
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Size :</h6>
-                            </li>
-                            <label class="check" th:each="kt:${listSize}"
-                                   style="margin-right: 15px;margin-top: 15px">
-                                <input style="border-radius: 0;" type="radio" name="size" id="size" th:value="${kt.id}"
-                                       th:text="${kt.name}">
-                            </label>
-                        </ul>
                     </div>
-                    <div class="col-auto">
-                        <ul class="list-inline pb-3">
-                            <li class="list-inline-item text-right">
-                                Quantity
-                                <input
-                                    type="hidden"
-                                    name="product-quanity"
-                                    id="product-quanity"
-                                    value="1"
-                                />
-                            </li>
-                            <li class="list-inline-item">
-                                <span class="btn btn-success" id="btn-minus">-</span>
-                            </li>
-                            <li class="list-inline-item">
-                          <span class="badge bg-secondary" id="var-value"
-                          >1</span
-                          >
-                            </li>
-                            <li class="list-inline-item">
-                                <span class="btn btn-success" id="btn-plus">+</span>
-                            </li>
-                        </ul>
+                    <div class="row">
+                        <!--Start Controls-->
+                        <div class="col-1 align-self-center">
+                            <a
+                                    href="#multi-item-example"
+                                    role="button"
+                                    data-bs-slide="prev"
+                            >
+                                <i class="text-dark fas fa-chevron-left"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                        <!--Start Carousel Wrapper-->
+                        <div
+                                id="multi-item-example"
+                                class="col-10 carousel slide carousel-multi-item"
+                                data-bs-ride="carousel"
+                        >
+                            <!--Start Slides-->
+                            <div class="carousel-inner product-links-wap" role="listbox">
+                                <!--First slide-->
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay1.2.webp}"
+                                                        alt="Product Image 1"
+                                                />
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay3.2.jpg}"
+                                                        alt="Product Image 2"
+                                                />
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay2.1.jpg}"
+                                                        alt="Product Image 3"
+                                                />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.First slide-->
+
+                                <!--Second slide-->
+                                <!-- <div class="carousel-item">
+                                              <div class="row">
+                                                <div class="col-4">
+                                                  <a href="#">
+                                                    <img
+                                                      class="card-img img-fluid"
+                                                      th:src="@{/website/img/product_single_04.jpg"
+                                                      alt="Product Image 4"
+                                                    />
+                                                  </a>
+                                                </div>
+                                                <div class="col-4">
+                                                  <a href="#">
+                                                    <img
+                                                      class="card-img img-fluid"
+                                                      th:src="@{/website/img/product_single_05.jpg"
+                                                      alt="Product Image 5"
+                                                    />
+                                                  </a>
+                                                </div>
+                                                <div class="col-4">
+                                                  <a href="#">
+                                                    <img
+                                                      class="card-img img-fluid"
+                                                      th:src="@{/website/img/product_single_06.jpg"
+                                                      alt="Product Image 6"
+                                                    />
+                                                  </a>
+                                                </div>
+                                              </div>
+                                            </div> -->
+                                <!--/.Second slide-->
+
+                                <!--Third slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay3.jpg}"
+                                                        alt="Product Image 7"
+                                                />
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay2.jpg}"
+                                                        alt="Product Image 8"
+                                                />
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img
+                                                        class="card-img img-fluid"
+                                                        th:src="@{/website/img/giay1.jpg}"
+                                                        alt="Product Image 9"
+                                                />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.Third slide-->
+                            </div>
+                            <!--End Slides-->
+                        </div>
+                        <!--End Carousel Wrapper-->
+                        <!--Start Controls-->
+                        <div class="col-1 align-self-center">
+                            <a
+                                    href="#multi-item-example"
+                                    role="button"
+                                    data-bs-slide="next"
+                            >
+                                <i class="text-dark fas fa-chevron-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <!--End Controls-->
                     </div>
                 </div>
-                <div class="row pb-3">
-                    <div class="col d-grid">
-                        <button
-                            type="submit"
-                            class="btn btn-success btn-lg"
-                            name="submit"
-                            value="buy"
-                        >
-                            Buy
-                        </button>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2" th:text="${product.name}"></h1>
+                            <p class="h3 py-2">
+                                <span id="product-price">1000đ</span>
+                            </p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Brand:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p
+                                            class="text-muted"
+                                            th:each="detail:${product.brandId}"
+                                            th:text="${detail.name}"
+                                    >
+                                        <strong></strong>
+                                    </p>
+                                </li>
+                            </ul>
+                            <h6>Description:</h6>
+                            <p th:text="${product.description}"></p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Color :</h6>
+                                </li>
+                                <label
+                                        class="check"
+                                        th:each="ms:${listColor}"
+                                        style="margin-right: 15px; margin-top: 15px"
+                                >
+                                    <input
+                                            type="radio"
+                                            name="color"
+                                            id="color"
+                                            th:value="${ms.id}"
+                                            th:text="${ms.name}"
+                                    />
+                                </label>
+                            </ul>
+                            <input
+                                    type="hidden"
+                                    name="product-title"
+                                    value="Activewear"
+                                    th:value="${product.id}"
+                                    th:name="productId"
+                                    id="product"
+                            />
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Size :</h6>
+                                </li>
+                                <label
+                                        class="check"
+                                        th:each="kt:${listSize}"
+                                        style="margin-right: 15px; margin-top: 15px"
+                                >
+                                    <input
+                                            type="radio"
+                                            name="size"
+                                            id="size"
+                                            th:value="${kt.id}"
+                                            th:text="${kt.name}"
+                                    />
+                                </label>
+                            </ul>
+                        </div>
+                        <div class="col-auto">
+                            <ul class="list-inline pb-3">
+                                <li class="list-inline-item text-right">
+                                    Quantity
+                                    <input
+                                            type="hidden"
+                                            name="product-quanity"
+                                            id="quantity"
+                                    />
+                                </li>
+                                <li class="list-inline-item">
+                                    <span class="btn btn-success" id="btn-minus">-</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span class="badge bg-secondary" id="var-value">1</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span class="btn btn-success" id="btn-plus">+</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="row pb-3">
+                        <div class="col d-grid">
+                            <button
+                                    type="submit"
+                                    class="btn btn-success btn-lg"
+                                    name="submit"
+                                    value="buy"
+                                    id="addToCartBtn"
+                            >
+                                <a th:href="@{'/cart/add/' + ${product.id}}"> Buy</a>
+                            </button>
+                        </div>
 
-                    <div class="col d-grid">
-                        <button
-                            type="submit"
-                            class="btn btn-success btn-lg"
-                            name="submit"
-                            value="addtocard"
-                            id="addToCartButton"
-                        >
-                            Add To Cart
-                        </button>
+                        <div class="col d-grid">
+                            <input
+                                    type="hidden"
+                                    name="productId"
+                                    th:value="${product.id}"
+                            />
+
+                            <button
+                                    type="submit"
+                                    name="submit"
+                                    value="addtocard"
+                                    id="addToCartButton"
+                                    class="addToCartBtn"
+                            >
+                                <a> Add To Cart </a>
+                            </button>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </section>
 <!-- Close Content -->
 
-<!-- Start Article -->
-<!-- <section class="py-5">
-  <div class="container">
-    <div class="row text-left p-2 pb-3">
-      <h4>Related Products</h4>
-    </div> -->
-
-<!--Start Carousel Wrapper-->
-<!-- <div id="carousel-related-product">
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_08.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Red Clothing</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$20.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_09.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >White Shirt</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$25.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_10.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li><a href="">mời chọn sie</a></li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$45.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_11.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Black Fashion</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$60.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_08.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li class="">M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$80.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_09.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$110.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_10.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$125.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_11.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$160.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_08.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$180.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_09.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$220.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_10.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$250.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-2 pb-3">
-        <div class="product-wap card rounded-0">
-          <div class="card rounded-0">
-            <img
-              class="card-img rounded-0 img-fluid"
-              th:src="@{/website/img/shop_11.jpg"
-            />
-            <div
-              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-            >
-              <ul class="list-unstyled">
-                <li>
-                  <a
-                    class="btn btn-success text-white"
-                    href="shop-single.html"
-                    ><i class="far fa-heart"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="far fa-eye"></i
-                  ></a>
-                </li>
-                <li>
-                  <a
-                    class="btn btn-success text-white mt-2"
-                    href="shop-single.html"
-                    ><i class="fas fa-cart-plus"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-body">
-            <a href="shop-single.html" class="h3 text-decoration-none"
-              >Oupidatat non</a
-            >
-            <ul
-              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-            >
-              <li>M/L/X/XL</li>
-              <li class="pt-2">
-                <span
-                  class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                ></span>
-                <span
-                  class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                ></span>
-              </li>
-            </ul>
-            <ul class="list-unstyled d-flex justify-content-center mb-1">
-              <li>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-warning fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-                <i class="text-muted fa fa-star"></i>
-              </li>
-            </ul>
-            <p class="text-center mb-0">$300.00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End Article -->
-<div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-    <a
-        th:href="@{/product/hien-thi}"
-        class="btn btn-primary rounded-pill py-3 px-5"
-    >View More Products</a
-    >
-</div>
-
 <!-- Footer Start -->
 <div
-    class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn"
-    data-wow-delay="0.1s"
+        class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn"
+        data-wow-delay="0.1s"
 >
     <div class="container py-5">
         <div class="row g-5">
@@ -1436,13 +603,13 @@
                 <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                 <div class="position-relative w-100">
                     <input
-                        class="form-control bg-transparent w-100 py-3 ps-4 pe-5"
-                        type="text"
-                        placeholder="Your email"
+                            class="form-control bg-transparent w-100 py-3 ps-4 pe-5"
+                            type="text"
+                            placeholder="Your email"
                     />
                     <button
-                        type="button"
-                        class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
+                            type="button"
+                            class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
                     >
                         SignUp
                     </button>
@@ -1480,7 +647,6 @@
 <script th:src="@{/website/js/jquery-migrate-1.2.1.min.js}"></script>
 <script th:src="@{/website/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/website/js/templatemo.js}"></script>
-<script th:src="@{/website/js/custom.js}"></script>
 <!-- End Script -->
 
 <!-- Start Slider Script -->
@@ -1517,8 +683,12 @@
         ],
     });
 
-
     // Số lượng sản phẩm trong giỏ hàng
+
+    // Tạo biến để lưu giá sản phẩm
+</script>
+
+<script th:inline="javascript">
     var cartItemCount = 0;
 
     // Lấy tham chiếu đến nút "Thêm vào giỏ hàng"
@@ -1535,12 +705,6 @@
         // Đặt giá trị vào phần tử có id là cartItemCount
         document.getElementById("cartItemCount").innerText = cartItemCount;
     });
-
-
-    // Tạo biến để lưu giá sản phẩm
-
-</script>
-<script th:inline="javascript">
     function updateProductPrice() {
         var productId = $('input[name="productId"]').val();
         var color = $('input[name="color"]:checked').val();
@@ -1548,41 +712,134 @@
 
         // Kiểm tra xem cả color và size đã được chọn hay chưa
         if (color && size) {
-
-            console.log("ID sản phẩm:"+productId);
-            console.log("ID màu:"+color);
-            console.log("ID size:"+size);
+            console.log("ID sản phẩm:" + productId);
+            console.log("ID màu:" + color);
+            console.log("ID size:" + size);
             $.ajax({
-                type: 'GET',
-                url: '/product/detail/getProductPrice', // Điều hướng đến endpoint đã tạo trong DetailProductController
+                type: "GET",
+                url: "/product/detail/getProductPrice", // Điều hướng đến endpoint đã tạo trong DetailProductController
                 data: {
                     productId: productId,
                     color: color,
-                    size: size
+                    size: size,
                 },
-                success: function(response) {
+                success: function (response) {
                     // Xử lý dữ liệu giá sản phẩm từ response và cập nhật lên trang Thymeleaf
                     if (response != null) {
-                        $('#product-price').text(response + 'đ');
-                        console.log("Giá sản phẩm: "+response);
+                        // Giá sản phẩm không rỗng, cập nhật giá
+                        $("#product-price").text(response + "đ");
+                        console.log("Giá sản phẩm: " + response);
+                    } else {
+                        // Giá sản phẩm rỗng, hiển thị thông báo "Hết hàng"
+                        $("#product-price").nullValue("Hết hàng");
+                        console.log("Sản phẩm hết hàng");
                     }
                 },
-                error: function() {
-                    alert('Đã xảy ra lỗi khi lấy giá sản phẩm.');
-                }
+                error: function () {
+                    alert("Đã xảy ra lỗi khi lấy giá sản phẩm.");
+                },
             });
         }
     }
 
-    $('input[name="color"]').change(function() {
+    $('input[name="color"]').change(function () {
         updateProductPrice();
     });
 
-    $('input[name="size"]').change(function() {
+    $('input[name="size"]').change(function () {
         updateProductPrice();
     });
-    $(document).ready(function() {
+    $(document).ready(function () {
         updateProductPrice();
+    });
+
+    $(document).ready(function () {
+        $(".addToCartBtn").click(function () {
+            var productId = $(this).data("productId");
+            var color = $(this).data("color");
+            var size = $(this).data("size");
+            var quantity = $("#quantity").val();
+
+            // Gửi yêu cầu Ajax để thêm sản phẩm vào giỏ hàng
+            $.ajax({
+                type: "get",
+                url: "/cart/getadd",
+                data: {
+                    productId: productId,
+                    quantity: quantity,
+                    color: color,
+                    size: size,
+                },
+                success: function (response) {
+                    // Xử lý phản hồi từ server (nếu cần)
+                    // Cập nhật danh sách sản phẩm trong giỏ hàng
+                    $("#cartItems").html(response);
+                    // console.log(cartItemCount);
+                    event.preventDefault();
+                    var totalItems = calculateTotalItems(response);
+
+                    // Cập nhật số sản phẩm trên biểu tượng giỏ hàng
+                    updateCartIcon(totalItems);
+                },
+
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+
+            // cartItemCount++;
+            //
+            // // Cập nhật số lượng sản phẩm trên giao diện người dùng
+            // // Đặt giá trị vào phần tử có id là cartItemCount
+            // document.getElementById("cartItemCount").innerText = cartItemCount;
+        });
+    });
+
+    function calculateTotalItems(response) {
+        // Thực hiện tính tổng số sản phẩm trong giỏ hàng từ dữ liệu phản hồi
+        // Điều này phụ thuộc vào cách bạn trả về dữ liệu từ máy chủ
+        // Ví dụ, bạn có thể tính tổng số sản phẩm từ danh sách sản phẩm trong phản hồi.
+
+        // Trong ví dụ này, giả định rằng dữ liệu trả về là danh sách sản phẩm
+        // và chúng ta đếm số sản phẩm trong danh sách.
+        var cartItems = JSON.parse(response); // Chuyển dữ liệu thành đối tượng JavaScript
+        return cartItems.length;
+    }
+
+    function updateCartIcon(totalItems) {
+        // Cập nhật số sản phẩm trên biểu tượng giỏ hàng
+        $("#cartItemCount").text(totalItems);
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var userDropdown = document.getElementById("userDropdown");
+        var accountOption = document.getElementById("accountOption");
+        var loginOption = document.getElementById("loginOption");
+
+        userDropdown.addEventListener("click", function (event) {
+            event.stopPropagation();
+            var dropdownMenu = document.querySelector(".dropdown-menu");
+            dropdownMenu.classList.toggle("show");
+        });
+
+        accountOption.addEventListener("click", function () {
+            console.log("Your Account selected");
+            // Thực hiện các hành động khi "Your Account" được chọn
+        });
+
+        loginOption.addEventListener("click", function () {
+            console.log("Login selected");
+            // Thực hiện các hành động khi "Login" được chọn
+        });
+
+        document.addEventListener("click", function (event) {
+            var dropdownMenu = document.querySelector(".dropdown-menu");
+            if (dropdownMenu.classList.contains("show")) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
     });
 </script>
 <!-- End Slider Script -->

@@ -120,5 +120,9 @@ public class ViewBrandController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
 
     }
+    @GetMapping("/contact")
+    public String viewcontact(Model model) {
+        return "website/index/contact";
+    }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,4 +14,7 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
     @Query(value = "SELECT * FROM Address WHERE province = ?1 or zipcode = ?1",
         nativeQuery = true)
     Page<Address> findAddressesByPhone(String phone, Pageable pageable);
+
+    @Query(value = "SELECT * FROM Address  WHERE  account_id = ?1",nativeQuery = true)
+    Address findAccountDefaultAddress(@Param("accountId") Integer accountId);
 }

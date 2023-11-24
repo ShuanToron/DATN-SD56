@@ -13,5 +13,6 @@ public interface RolesService {
     Roles add(Roles roles);
     void update(Roles roles);
     void delete(Integer id);
+    Roles findbyname(String roles);
 
 }

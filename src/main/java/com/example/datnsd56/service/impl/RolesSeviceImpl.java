@@ -48,4 +48,10 @@ public class RolesSeviceImpl implements RolesService {
         Roles roles = detail(id);
         rolesRepository.delete(roles);
     }
+
+    @Override
+    public Roles findbyname(String roles) {
+      Roles r1 = rolesRepository.findRolesByName("user");
+        return r1;
+    }
 }

@@ -171,20 +171,21 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         th:src="@{/../../../static/dashboard/img/user.png}"
+                                                                                                         th:src="@{/website/img/logo1.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title">Hello Sarah Smith</div>
-                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-            										fa-user"></i> Profile
-                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                        Activities
-                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
+                        <div class="dropdown-title" th:text="${#authentication.name}"></div>
+
+                        <!--                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far-->
+                        <!--            										fa-user"></i> Profile-->
+                        <!--                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>-->
+                        <!--                        Activities-->
+                        <!--                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>-->
+                        <!--                        Settings-->
+                        <!--                    </a>-->
                         <div class="dropdown-divider"></div>
-                        <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i
+                        <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -195,21 +196,21 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html">
-                        <img alt="image" th:src="@{/dashboard/img/users/logo.png}"
+                    <a th:href="@{/admin/account/hien-thi}">
+                        <img alt="image" th:src="@{/website/img/logo1.png}"
                              class="header-logo"/> <span
-                            class="logo-name">Otika</span>
+                            class="logo-name">SneakerBeer</span>
                     </a>
                 </div>
                 <ul class="sidebar-menu">
                     <li class="dropdown active">
-                        <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
+                        <a th:href="@{/admin/thong-ke/hien-thi}" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/san-pham/hien-thi}">Sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/san-pham-test/create}">Sản phẩm</a></li>
                             <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
@@ -230,18 +231,19 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                                data-feather="image"></i><span>Voucher</span></a>
+                                data-feather="image"></i><span>Account</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/voucher/hien-thi}">Voucher</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/chuc-vu/hien-thi}">Chức vụ</a></li>
+                            <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
+                            <li><a th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -258,15 +260,15 @@
                         <form action="/admin/loai-giay/add" method="post" th:object="${category}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Mã loại giày</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập mã loại giày"
-                                               th:field="*{code}">
-                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
-                                              th:errors="*{code}"></span>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label>Mã loại giày</label>-->
+<!--                                    <div class="input-group colorpickerinput">-->
+<!--                                        <input type="text" class="form-control" placeholder="Nhập mã loại giày"-->
+<!--                                               th:field="*{code}">-->
+<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"-->
+<!--                                              th:errors="*{code}"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <label>Tên loại giày</label>
                                     <input type="text" class="form-control" placeholder="Nhập tên loại giày"
@@ -274,25 +276,25 @@
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 13px"
                                           th:errors="*{name}"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
 
-                                </div>
+<!--                                </div>-->
                                 <div class="form-group">
-                                    <a class="btn btn-primary" type="button" href="/admin/san-pham/hien-thi"><-
-                                    </a>
+<!--                                    <a class="btn btn-primary" type="button" href="/admin/san-pham/hien-thi"><- -->
+<!--                                    </a>-->
                                     <a th:href="@{/admin/loai-giay/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                     </a>
@@ -322,14 +324,14 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-center">
-                                            <div class="custom-checkbox custom-checkbox-table custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                       data-checkbox-role="dad"
-                                                       class="custom-control-input" id="checkbox-all">
-                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </th>
+<!--                                        <th class="text-center">-->
+<!--&lt;!&ndash;                                            <div class="custom-checkbox custom-checkbox-table custom-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <input type="checkbox" data-checkboxes="mygroup"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                       data-checkbox-role="dad"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                       class="custom-control-input" id="checkbox-all">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                        </th>-->
                                         <th>Mã Loại giày</th>
                                         <th>Tên Loại giày</th>
                                         <th>Trạng thái</th>

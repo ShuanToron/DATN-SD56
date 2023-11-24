@@ -61,7 +61,7 @@
             <ul class="navbar-nav navbar-right">
                 <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                                                              class="nav-link nav-link-lg message-toggle"><i
-                    data-feather="mail"></i>
+                        data-feather="mail"></i>
                     <span class="badge headerBadge1">
                             6 </span> </a>
                     <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
@@ -130,7 +130,7 @@
                 </li>
                 <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                                                              class="nav-link notification-toggle nav-link-lg"><i
-                    data-feather="bell" class="bell"></i>
+                        data-feather="bell" class="bell"></i>
                 </a>
                     <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
                         <div class="dropdown-header">
@@ -141,21 +141,21 @@
                         </div>
                         <div class="dropdown-list-content dropdown-list-icons">
                             <a href="#" class="dropdown-item dropdown-item-unread"> <span
-                                class="dropdown-item-icon bg-primary text-white"> <i class="fas
+                                    class="dropdown-item-icon bg-primary text-white"> <i class="fas
             												fa-code"></i>
                               </span> <span class="dropdown-item-desc"> Template update is
                                 available now! <span class="time">2 Min
                                   Ago</span>
                               </span>
                             </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i
-                            class="far
+                                class="far
             												fa-user"></i>
                               </span> <span class="dropdown-item-desc"> <b>You</b> and <b>Dedik
                                   Sugiharto</b> are now friends <span class="time">10 Hours
                                   Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-success text-white"> <i
-                            class="fas
+                                class="fas
             												fa-check"></i>
                               </span> <span class="dropdown-item-desc"> <b>Kusnaedi</b> has
                                 moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
@@ -163,13 +163,13 @@
                                   Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span
-                            class="dropdown-item-icon bg-danger text-white"> <i
-                            class="fas fa-exclamation-triangle"></i>
+                                class="dropdown-item-icon bg-danger text-white"> <i
+                                class="fas fa-exclamation-triangle"></i>
                               </span> <span class="dropdown-item-desc"> Low disk space. Let's
                                 clean it! <span class="time">17 Hours Ago</span>
                               </span>
                         </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i
-                            class="fas
+                                class="fas
             												fa-bell"></i>
                               </span> <span class="dropdown-item-desc"> Welcome to Otika
                                 template! <span class="time">Yesterday</span>
@@ -183,23 +183,24 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         th:src="@{/../../../static/dashboard/img/user.png}"
+                                                                                                        th:src="@{/website/img/logo1.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title">Hello Sarah Smith</div>
-                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-            										fa-user"></i> Profile
-                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                        Activities
-                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i
-                            class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
+                        <div class="dropdown-title" th:text=" ${#authentication.name}"></div>
+
+                        <!--                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far-->
+<!--            										fa-user"></i> Profile-->
+                            <!--                        </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>-->
+                            <!--                        Activities-->
+                            <!--                    </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>-->
+                            <!--                        Settings-->
+                            <!--                    </a>-->
+                            <div class="dropdown-divider"></div>
+                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
+                                    class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
                     </div>
                 </li>
             </ul>
@@ -207,21 +208,21 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html">
-                        <img alt="image" th:src="@{/dashboard/img/users/logo.png}"
+                    <a th:href="@{/admin/account/hien-thi}">
+                        <img alt="image" th:src="@{/website/img/logo1.png}"
                              class="header-logo"/> <span
-                        class="logo-name">Otika</span>
+                            class="logo-name">SneakerBeer</span>
                     </a>
                 </div>
                 <ul class="sidebar-menu">
                     <li class="dropdown active">
-                        <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
+                        <a th:href="@{/admin/thong-ke/hien-thi}" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
+                                data-feather="briefcase"></i><span>Quản lý sản phẩm</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/admin/san-pham/hien-thi}">Sản phẩm</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/san-pham-test/create}">Sản phẩm</a></li>
                             <li><a class="nav-link" th:href="@{/admin/mau-sac/hien-thi}">Màu sắc</a></li>
                             <li><a class="nav-link" th:href="@{/admin/de-giay/hien-thi}">Đế giày</a></li>
                             <li><a class="nav-link" th:href="@{/admin/thuong-hieu/hien-thi}">Thương hiệu</a></li>
@@ -234,7 +235,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="layout"></i><span>Hoá đơn</span></a>
+                                data-feather="layout"></i><span>Hoá đơn</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" th:href="@{/admin/ban-hang}">Bán hàng</a></li>
                             <li><a class="nav-link" th:href="@{/admin/hoa-don}">Hoá đơn</a></li>
@@ -242,14 +243,14 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="image"></i><span>Account</span></a>
+                                data-feather="image"></i><span>Account</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="map"></i><span>Tài khoản</span></a>
+                                data-feather="map"></i><span>Tài khoản</span></a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
@@ -274,10 +275,10 @@
                                     <label>Họ và tên</label>
                                     <div class="input-group colorpickerinput">
                                         <input type="text" class="form-control" placeholder="Nhập họ và tên"
-                                               th:field="*{fullname}">
-                                        <span th:if="${#fields.hasErrors('fullname')}"
+                                               th:field="*{name}">
+                                        <span th:if="${#fields.hasErrors('name')}"
                                               style="color: red; font-size: 13px"
-                                              th:errors="*{fullname}"></span>
+                                              th:errors="*{name}"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -311,7 +312,8 @@
                                 <div class="form-group">
                                     <label class="d-block">Giới tính</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1"  checked="checked">
+                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1"
+                                               checked="checked">
                                         <label class="form-check-label">
                                             Nữ
                                         </label>
@@ -330,7 +332,7 @@
                                             <option th:each="role:${rolelist}" th:value="${role.id}"
                                                     th:text="${role.name}"></option>
                                         </select>
-                                        <div  class="input-group-append">
+                                        <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="popupChucVu()">
                                                 +
                                             </button>
@@ -340,13 +342,14 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:field="*{statuss}" value="1" th:checked="${statuss == '1'}">
+                                        <input type="radio" name="statuss" th:field="*{statuss}" value="1"
+                                               th:checked="${statuss == '1'}">
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:field="*{statuss}" value="0"  >
+                                        <input type="radio" name="statuss" th:field="*{statuss}" value="0">
                                         <label class="form-check-label">
                                             Không hoạt động
                                         </label>
@@ -360,45 +363,47 @@
                                 </div>
                             </div>
                         </form>
-                                                <div id="formChucvu" class="popup">
-                                                    <div class="card-body">
-                                                        <div class="section-title mt-0">Thêm chức vụ</div>
-                                                        <form  th:action="@{/admin/roles/add1}" method="post" th:object="${roles}"
-                                                              onsubmit="return  confirm('Bạn có thêm không?')">
-                                                            <div class="card-body">
-                                                                <div class="form-group">
-                                                                    <label>Tên chức vụ</label>
-                                                                    <input type="text" class="form-control" placeholder="Nhập tên chuc vu"
-                                                                           th:field="*{name}">
-                                                                    <span th:if="${#fields.hasErrors('name')}"
-                                                                          style="color: red; font-size: 13px"
-                                                                          th:errors="*{name}"></span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="d-block">Trạng thái</label>
-                                                                    <div class="form-check">
-                                                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1" >
-                                                                        <label class="form-check-label">
-                                                                            Hoạt động
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                                                        <label class="form-check-label">
-                                                                            Không hoạt động
-                                                                        </label>
-                                                                    </div>
+                        <div id="formChucvu" class="popup">
+                            <div class="card-body">
+                                <div class="section-title mt-0">Thêm chức vụ</div>
+                                <form th:action="@{/admin/roles/add1}" method="post" th:object="${roles}"
+                                      onsubmit="return  confirm('Bạn có thêm không?')">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Tên chức vụ</label>
+                                            <input type="text" class="form-control" placeholder="Nhập tên chuc vu"
+                                                   th:field="*{name}">
+                                            <span th:if="${#fields.hasErrors('name')}"
+                                                  style="color: red; font-size: 13px"
+                                                  th:errors="*{name}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="d-block">Trạng thái</label>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="1">
+                                                <label class="form-check-label">
+                                                    Hoạt động
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
+                                                <label class="form-check-label">
+                                                    Không hoạt động
+                                                </label>
+                                            </div>
 
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <a th:href="@{/admin/roles/add1}">
-                                                                        <button id="closeButton" class="btn btn-primary mr-1" type="submit">Thêm</button>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <a th:href="@{/admin/roles/add1}">
+                                                <button id="closeButton" class="btn btn-primary mr-1" type="submit">
+                                                    Thêm
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -414,7 +419,7 @@
                                         <div lass="input-group-btn">
                                             <a href="/admin/account/search/{phone}">
                                                 <button type="submit" class="btn btn-primary"><i
-                                                    class="fas fa-search"></i></button>
+                                                        class="fas fa-search"></i></button>
                                             </a>
                                         </div>
                                     </div>
@@ -425,14 +430,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <!--                                        <th class="text-center">-->
-                                        <!--                                            <div class="custom-checkbox custom-checkbox-table custom-control">-->
-                                        <!--                                                <input type="checkbox" data-checkboxes="mygroup"-->
-                                        <!--                                                       data-checkbox-role="dad"-->
-                                        <!--                                                       class="custom-control-input" id="checkbox-all">-->
-                                        <!--                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </th>-->
+                                                                           </th>-->
                                         <th>Họ và Tên</th>
                                         <th>email</th>
                                         <th>passwword</th>
@@ -445,7 +443,7 @@
                                     </tr>
                                     <tr th:each="list:${list.content}">
                                         <!--                                        <td th:text="*{index.count}"></td>-->
-                                        <td th:text="*{list.fullname}"></td>
+                                        <td th:text="*{list.name}"></td>
                                         <td th:text="*{list.email}"></td>
                                         <td th:text="*{list.password}"></td>
                                         <td th:text="${list != null ? (list.role_id != null ? list.role_id.name : '') : ''}"></td>
@@ -480,7 +478,7 @@
                                 <li class="page-item">
                                     <a class="page-link" th:if="${list.hasPrevious()}"
                                        th:href="@{/admin/account/hien-thi(page=${list.number -1})}"> <span
-                                        aria-hidden="true">&laquo;</span> </a>
+                                            aria-hidden="true">&laquo;</span> </a>
                                 </li>
                                 <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">
                                     <a class="page-link" th:href="@{/admin/account/hien-thi(page=${pageNumber})}"
@@ -490,7 +488,7 @@
                                 <li class="page-item">
                                     <a class="page-link" th:if="${list.hasNext()}"
                                        th:href="@{/admin/account/hien-thi(page=${list.number + 1})}"> <span
-                                        aria-hidden="true">&raquo;</span></a>
+                                            aria-hidden="true">&raquo;</span></a>
                                 </li>
                             </ul>
                         </nav>
@@ -644,7 +642,7 @@
     var openButton = document.getElementById('openButton');
 
     // Khi nút mở popup được nhấp
-    openButton.onclick = function() {
+    openButton.onclick = function () {
         // Hiển thị popup
         popup.style.display = 'block';
     }
@@ -653,10 +651,10 @@
     var closeButton = document.getElementById('closeButton');
 
     // Khi nút đóng popup được nhấp
-    closeButton.onclick = function() {
+    closeButton.onclick = function () {
         // Ẩn popup
         popup.style.display = 'none';
-               }
+    }
 </script>
 </body>
 

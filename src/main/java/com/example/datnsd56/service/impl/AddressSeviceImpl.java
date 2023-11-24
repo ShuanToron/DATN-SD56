@@ -55,4 +55,9 @@ public class AddressSeviceImpl implements AddressService {
     public List<Address> get() {
         return addressRepository.findAll();
     }
+
+    @Override
+    public Address findAccountDefaultAddress(Integer AccountId) {
+        return addressRepository.findAccountDefaultAddress(AccountId);
+    }
 }

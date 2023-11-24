@@ -106,4 +106,22 @@ public class ColorController {
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
+    @PostMapping("/add2")
+    public String add2(@Valid @ModelAttribute("color") Color color, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Color> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/mau-sac/mau-sac";
+        }
+        String code = "MS" + new Random().nextInt(100000);
+        color.setCode(code);
+        color.setStatus(true);
+        model.addAttribute("color", color);
+        service.add(color);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham-test/create";
+
+    }
 }

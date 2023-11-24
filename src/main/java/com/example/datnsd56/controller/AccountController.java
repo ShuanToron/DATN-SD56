@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +41,7 @@ public class AccountController {
 //        return "/dashboard/account/account";
 //    }
     @GetMapping("/hien-thi")
+    @PreAuthorize("hasAuthority('admin')")
     public String getAllBypage( Model model,@RequestParam(defaultValue = "0") Integer page){
         model.addAttribute("account",new Account());
         Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
@@ -48,10 +51,11 @@ public class AccountController {
         model.addAttribute("rolelist",listr);
         model.addAttribute("roles",new Roles());
 //        model.addAttribute("currentPage", pageNo);
-        return "/dashboard/account/account";
+        return "dashboard/account/account";
 
     }
     @GetMapping("/view-update/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public String detail(@PathVariable("id") Integer id,Model model){
 //        model.addAttribute("account",new Account());
         Account account= accountService.detail(id);
@@ -61,25 +65,57 @@ public class AccountController {
         model.addAttribute("roles",new Roles());
         return "dashboard/account/update-account";
     }
-    @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,@RequestParam(defaultValue = "0") Integer page){
-        if(result.hasErrors()){
-            model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
-            Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
-//        model.addAttribute("totalPages", page1.getTotalPages());
-            model.addAttribute("list", page1);
-            List<Roles> listr=rolesService.getAll();
-            model.addAttribute("rolelist",listr);
-            model.addAttribute("roles",new Roles());
-            return "/dashboard/account/account";
-
-        }
-        accountService.add(account);
-        session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/account/hien-thi";
-
+//
+//    @PostMapping("/add")
+//
+//    public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,@RequestParam(defaultValue = "0") Integer page){
+//        if(result.hasErrors()){
+//            model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
+//            Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
+////        model.addAttribute("totalPages", page1.getTotalPages());
+//            model.addAttribute("list", page1);
+//            List<Roles> listr=rolesService.getAll();
+//            model.addAttribute("rolelist",listr);
+//            model.addAttribute("roles",new Roles());
+//            return "/dashboard/account/account";
+//
+//        }
+////        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+////        Account account1 = new Account();
+////        account1.setPassword(encoder.encode(account.getPassword()));
+//        accountService.add(account);
+//
+//        session.setAttribute("successMessage", "Thêm thành công");
+//        return "redirect:/admin/account/hien-thi";
+//
+//    }
+@PostMapping("/add")
+@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
+public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+    if (result.hasErrors()) {
+        // Handle validation errors
+        model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
+        Page<Account> page1 = accountService.getAll(PageRequest.of(page, 5));
+        model.addAttribute("list", page1);
+        List<Roles> listr = rolesService.getAll();
+        model.addAttribute("rolelist", listr);
+        model.addAttribute("roles", new Roles());
+        return "/dashboard/account/account";
     }
+
+    // Hash the password using BCryptPasswordEncoder
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    String hashedPassword = encoder.encode(account.getPassword());
+    account.setPassword(hashedPassword);
+
+    accountService.add(account);
+
+    session.setAttribute("successMessage", "Thêm thành công");
+    return "redirect:/admin/account/hien-thi";
+}
+
     @PostMapping("/add1")
+    @PreAuthorize("hasAuthority('admin')")
     public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
@@ -96,6 +132,7 @@ public class AccountController {
 
     }
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public String update( @Valid @ModelAttribute("account") Account account, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("account",account);
@@ -105,18 +142,24 @@ public class AccountController {
             return "dashboard/account/update-account";
 
         }
+        // Hash the password using BCryptPasswordEncoder
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashedPassword = encoder.encode(account.getPassword());
+        account.setPassword(hashedPassword);
         accountService.update(account);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/account/hien-thi";
     }
     @GetMapping("delete/{id}")
+//    @PreAuthorize("hasAuthority('admin')")
     public String delete(@PathVariable("id") Integer id){
         accountService.delete(id);
         return "redirect:/admin/account/hien-thi";
     }
     @GetMapping("search")
+//    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("phone") String phone, Model model, RedirectAttributes redirectAttributes) {
-        Page<Account> accounts = accountService.findByEmail(phone);
+        Page<Account> accounts = accountService.findByPhone(phone);
         model.addAttribute("list", accounts);
 //        model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
         model.addAttribute("account",new Account() );

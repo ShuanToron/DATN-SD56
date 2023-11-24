@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Random;
+
 @Controller
 @RequestMapping("/admin/thuong-hieu")
 public class BrandController {
@@ -25,6 +28,7 @@ public class BrandController {
     private BrandService service;
 
     @GetMapping("/hien-thi")
+    @PreAuthorize("hasAuthority('admin')")
     public String viewChatLieu(@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("brand", new Brand());
         Page<Brand> page = service.getAll(pageNo);
@@ -75,17 +79,36 @@ public class BrandController {
 
     }
     @PostMapping("/add1")
+    public String add1(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Brand> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/thuong-hieu/thuong-hieu";        }
+        String code = "DG" + new Random().nextInt(100000);
+        brand.setCode(code);
+        brand.setStatus(true);
+        service.add(brand);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/san-pham-test/create";
+
+    }
+    @PostMapping("/add")
     public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             Page<Brand> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
-            return "/dashboard/thuong-hieu/update-thuong-hieu";
+            return "/dashboard/thuong-hieu/thuong-hieu";
         }
+        String code = "TH" + new Random().nextInt(100000);
+        brand.setCode(code);
+        brand.setStatus(true);
         service.add(brand);
         session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/san-pham/hien-thi";
+        return "redirect:/admin/thuong-hieu/hien-thi";
 
     }
 }
