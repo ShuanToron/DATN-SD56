@@ -134,7 +134,7 @@ public class ProductsController {
         model.addAttribute("listDetail", productService.getAllDetail(products.getId()));
         model.addAttribute("listColor", colorService.getAllColor());
         model.addAttribute("listSize", sizeService.getAllSZ());
-        return "dashboard/san-pham/view-update-san-pham";
+        return "dashboard/san-pham/update-san-pham";
     }
 
     @PostMapping("/update-san-pham/{id}")

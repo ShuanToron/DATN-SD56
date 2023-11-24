@@ -57,4 +57,16 @@ BigDecimal getDetail(Integer productId,Integer color, Integer size);
 @Query(value = "select p.sell_price from Product_details AS p where color_id=?1 and size_id=?1 and id=?1 ",nativeQuery = true)
     List<ProductDetails> findProductDetailsByColorIdAndSizeIdAndAndProductId(Integer colorId,Integer sizeId);
 //}
+@Transactional
+@Modifying
+@Query(value = "update Products c set c.status = 0 where c.id = :idll")
+void delete(Integer id);
+
+    @Query(value = "select sp from ProductDetails sp where sp.productId.id = :id")
+    List<ProductDetails> detailByIdSP(Integer id);
+
+    @Query(value = "SELECT sp from ProductDetails sp where sp.productId.id = :id")
+    List<ProductDetails> getAllByIdSP(Integer id);
+
+
 }

@@ -60,6 +60,20 @@ public class BrandController {
     }
 
 
+    @PostMapping("/add")
+    public String add1(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
+            Page<Brand> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/thuong-hieu/update-thuong-hieu";
+        }
+        service.add(brand);
+        session.setAttribute("successMessage", "Thêm thành công");
+        return "redirect:/admin/thuong-hieu/hien-thi";
+
+    }
     @PostMapping("/add1")
     public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
