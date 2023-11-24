@@ -312,14 +312,14 @@
                                 <div class="form-group">
                                     <label class="d-block">Giới tính</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="1"
+                                        <input type="radio" name="exampleRadios" th:value="${account.gender}" value="1"
                                                checked="checked">
                                         <label class="form-check-label">
                                             Nữ
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{gender}" value="0">
+                                        <input type="radio" name="exampleRadios" th:value="${account.gender}" value="0">
                                         <label class="form-check-label">
                                             Nam
                                         </label>
@@ -342,14 +342,14 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:field="*{statuss}" value="1"
-                                               th:checked="${statuss == '1'}">
+                                        <input type="radio" name="statuss" th:value="${account.statuss}" value="1"
+                                               checked>
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:field="*{statuss}" value="0">
+                                        <input type="radio" name="statuss" th:value="${account.statuss}" value="0">
                                         <label class="form-check-label">
                                             Không hoạt động
                                         </label>
