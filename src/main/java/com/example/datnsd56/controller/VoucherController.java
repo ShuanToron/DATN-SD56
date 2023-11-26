@@ -1,21 +1,30 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Customers;
+import com.example.datnsd56.entity.DiscountType;
 import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.service.VoucherService;
 import com.example.datnsd56.service.impl.VoucherSeviceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -100,4 +109,6 @@ public class VoucherController {
         redirectAttributes.addFlashAttribute("successMessage", "Voucher deleted successfully!");
         return "redirect:/admin/voucher";
     }
+
+
 }
