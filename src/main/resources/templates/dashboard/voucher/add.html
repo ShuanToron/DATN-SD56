@@ -16,7 +16,6 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css}" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -260,128 +259,121 @@
             </aside>
         </div>
         <!-- Main Content -->
-
-                <!--                                        <input type="text" class="form-control" placeholder="Search">-->
-
         <div class="main-content">
-            <div class="input-group-btn">
-                <a th:href="@{/admin/voucher/view-add}">    <button class="btn btn-primary"><i class="fa-solid fa-plus"></i></button><a/>
-            </div>
-<!--            <div class="row">-->
-<!--                <div class="col-12 col-md-12 col-lg-12">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-header">-->
-<!--                            <h4>Voucher</h4>-->
-<!--                        </div>-->
-<!--                        <form th:action="@{/admin/voucher/new}" method="post" th:object="${voucher}"-->
-<!--                              onsubmit="return  confirm('Bạn có thêm không?')">-->
-<!--                            <div class="card-body">-->
-<!--                                <div class="form-group">-->
-<!--                                    <label>Mã Voucher</label>-->
-<!--                                    <div class="input-group colorpickerinput">-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập mã voucher"-->
-<!--                                               th:field="*{code}">-->
-<!--                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"-->
-<!--                                              th:errors="*{code}"></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="form-group">-->
-<!--                                    <label>Mô tả</label>-->
-<!--                                    <input type="text" class="form-control" placeholder="Nhập giá trị giảm"-->
-<!--                                           th:field="*{description}" required>-->
-<!--                                    <span th:if="${#fields.hasErrors('description')}" style="color: red; font-size: 13px"-->
-<!--                                          th:errors="*{description}"></span>-->
-<!--                                </div>-->
-<!--                                <div class="form-group">-->
-<!--                                    <label for="expiryDateTime">Expiry Date:</label>-->
-<!--                                    <input type="datetime-local" id="expiryDateTime" name="expiryDateTime" th:field="*{expiryDateTime}" required> <br>-->
-<!--                                    <span th:if="${#fields.hasErrors('expiryDateTime')}" style="color: red; font-size: 13px"-->
-<!--                                          th:errors="*{expiryDateTime}"></span>-->
-<!--                                </div>-->
-<!--                                <div class="form-group">-->
-<!--                                    <label for="discount">Discount:</label>-->
-<!--                                    <input type="number" id="discount" name="discount" th:field="*{discount}" required>-->
-<!--                                    <select id="discountType" name="discountType" th:field="*{discountType}">-->
-<!--                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">Percentage</option>-->
-<!--                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).AMOUNT}">Amount</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-
-<!--                                <div class="form-group">-->
-<!--                                    <a th:href="@{/admin/voucher/new}">-->
-<!--                                        <button class="btn btn-primary mr-1" type="submit">Thêm</button>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Danh sách Voucher</h4>
-                            <div class="card-header-form">
-                                <form>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                        </div>
+                            <h4>Voucher</h4>
+                        </div>
+                        <form th:action="@{/admin/voucher/new}" method="post" th:object="${voucher}"
+                              onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Mã Voucher</label>
+                                    <div class="input-group colorpickerinput">
+                                        <input type="text" class="form-control" placeholder="Nhập mã voucher"
+                                               th:field="*{code}">
+                                        <span th:if="${#fields.hasErrors('code')}" style="color: red; font-size: 13px"
+                                              th:errors="*{code}"></span>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mô tả</label>
+                                    <input type="text" class="form-control" placeholder="Nhập giá trị giảm"
+                                           th:field="*{description}" required>
+                                    <span th:if="${#fields.hasErrors('description')}" style="color: red; font-size: 13px"
+                                          th:errors="*{description}"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiryDateTime">Expiry Date:</label>
+                                    <input type="datetime-local" id="expiryDateTime" name="expiryDateTime" th:field="*{expiryDateTime}" required> <br>
+                                    <span th:if="${#fields.hasErrors('expiryDateTime')}" style="color: red; font-size: 13px"
+                                          th:errors="*{expiryDateTime}"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="discount">Discount:</label>
+                                    <input type="number" id="discount" name="discount" th:field="*{discount}" required>
+                                    <select id="discountType" name="discountType" th:field="*{discountType}">
+                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">Percentage</option>
+                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).AMOUNT}">Amount</option>
+                                    </select>
+                                </div>
 
+                                <div class="form-group">
+                                    <a th:href="@{/admin/voucher/new}">
+                                        <button class="btn btn-primary mr-1" type="submit">Thêm</button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tr>
-<!--                                        <th class="text-center">-->
-<!--&lt;!&ndash;                                            <div class="custom-checkbox custom-checkbox-table custom-control">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <input type="checkbox" data-checkboxes="mygroup"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                       data-checkbox-role="dad"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                       class="custom-control-input" id="checkbox-all">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-<!--                                        </th>-->
-                                        <th>Mã voucher</th>
-                                        <th>Mô Tả</th>
-                                        <th>Ngày Bắt Đầu</th>
-                                        <th>Ngày Hết Han</th>
-                                        <th>Giá Trị Giảm</th>
-                                        <th>Hình thức giảm</th>
-                                        <th>Trạng thái</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                    <tr th:each="voucher : ${vouchers}">
-<!--                                        <td th:text="${voucher.id}"></td>-->
-                                        <td th:text="${voucher.code}"></td>
-                                        <td th:text="${voucher.description}"></td>
-                                        <td th:text="${voucher.startDate}"></td>
-                                        <td th:text="${voucher.expiryDateTime}"></td>
-                                        <td th:text="${voucher.discount}"></td>
-                                        <td th:text="${voucher.discountType}"></td>
-                                        <td  style="color: red" th:text="${voucher.active} ? 'New' : 'Hết hạn'"></td>
-<!--                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>-->
-                                        <td>
-                                            <a th:href="@{'/admin/voucher/delete/'+${voucher.id}}">
-                                                <button type="submit" class="btn btn-danger"
-                                                        onchange="return  confirm('Bạn có xoá không?')">
-                                                    Xoá
-                                                </button>
-                                            </a>
-                                            <a th:href="@{'/admin/voucher/'+${voucher.id}} ">
-                                                <button type="submit" class="btn btn-success">
-                                                    Cập nhật
-                                                </button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-header">-->
+<!--                            <h4>Danh sách thương hiệu</h4>-->
+<!--                            <div class="card-header-form">-->
+<!--                                <form>-->
+<!--                                    <div class="input-group">-->
+<!--                                        <input type="text" class="form-control" placeholder="Search">-->
+<!--                                        <div class="input-group-btn">-->
+<!--                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="card-body p-0">-->
+<!--                            <div class="table-responsive">-->
+<!--                                <table class="table table-striped">-->
+<!--                                    <tr>-->
+<!--&lt;!&ndash;                                        <th class="text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                            <div class="custom-checkbox custom-checkbox-table custom-control">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                                <input type="checkbox" data-checkboxes="mygroup"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                                       data-checkbox-role="dad"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                                       class="custom-control-input" id="checkbox-all">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </th>&ndash;&gt;-->
+<!--                                        <th>Mã voucher</th>-->
+<!--                                        <th>Mô Tả</th>-->
+<!--                                        <th>Ngày Bắt Đầu</th>-->
+<!--                                        <th>Ngày Hết Han</th>-->
+<!--                                        <th>Giá Trị Giảm</th>-->
+<!--                                        <th>Hình thức giảm</th>-->
+<!--                                        <th>Trạng thái</th>-->
+<!--                                        <th>Hành động</th>-->
+<!--                                    </tr>-->
+<!--                                    <tr th:each="voucher : ${vouchers}">-->
+<!--&lt;!&ndash;                                        <td th:text="${voucher.id}"></td>&ndash;&gt;-->
+<!--                                        <td th:text="${voucher.code}"></td>-->
+<!--                                        <td th:text="${voucher.description}"></td>-->
+<!--                                        <td th:text="${voucher.startDate}"></td>-->
+<!--                                        <td th:text="${voucher.expiryDateTime}"></td>-->
+<!--                                        <td th:text="${voucher.discount}"></td>-->
+<!--                                        <td th:text="${voucher.discountType}"></td>-->
+<!--                                        <td  style="color: red" th:text="${voucher.active} ? 'New' : 'Hết hạn'"></td>-->
+<!--&lt;!&ndash;                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>&ndash;&gt;-->
+<!--                                        <td>-->
+<!--                                            <a th:href="@{'/admin/voucher/delete/'+${voucher.id}}">-->
+<!--                                                <button type="submit" class="btn btn-danger"-->
+<!--                                                        onchange="return  confirm('Bạn có xoá không?')">-->
+<!--                                                    Xoá-->
+<!--                                                </button>-->
+<!--                                            </a>-->
+<!--                                            <a th:href="@{'/admin/voucher/'+${voucher.id}} ">-->
+<!--                                                <button type="submit" class="btn btn-success">-->
+<!--                                                    Cập nhật-->
+<!--                                                </button>-->
+<!--                                            </a>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <!--                        <div class="card-footer text-right">-->
                         <!--                            <nav class="d-inline-block">-->
                         <!--                                <ul class="pagination mb-0">-->

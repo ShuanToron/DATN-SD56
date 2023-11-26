@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -26,14 +27,19 @@ public class VoucherController {
 
     @GetMapping
     public String getAllVouchers(Model model) {
+
         voucherService.checkAndDeactivateExpiredVouchers();
-        model.addAttribute("voucher",new Voucher());
-// Kiểm tra và cập nhật trạng thái trước khi hiển thị danh sách
+        model.addAttribute("voucher", new Voucher());
+
+        // Kiểm tra và cập nhật trạng thái trước khi hiển thị danh sách
         List<Voucher> vouchers = voucherService.getAllVouchers();
         model.addAttribute("vouchers", vouchers);
 
+
         return "dashboard/voucher/voucher";
+
     }
+
     @PostMapping("/new")
     public String newVoucherSubmit(@Valid @ModelAttribute("voucher") Voucher voucher, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
@@ -42,7 +48,7 @@ public class VoucherController {
             model.addAttribute("vouchers", vouchers);
             return "/dashboard/voucher/voucher";
         }
-
+        voucher.setStartDate(LocalDateTime.now());
         voucher.setActive(true);
         voucherService.saveVoucher(voucher);
         redirectAttributes.addFlashAttribute("successMessage", "Voucher created successfully!");
@@ -50,6 +56,23 @@ public class VoucherController {
 
         return "redirect:/admin/voucher";
     }
+
+    @PostMapping("/update/{id}")
+    public String update(@Valid @ModelAttribute("voucher") Voucher voucher, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model,@PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
+            // Nếu có lỗi validation, điều hướng trở lại form với thông báo lỗi
+
+            return "/dashboard/voucher/update-voucher";
+        }
+
+        voucher.setActive(true);
+        voucherService.updateVoucher(voucher);
+        redirectAttributes.addFlashAttribute("successMessage", "Voucher created successfully!");
+
+
+        return "redirect:/admin/voucher";
+    }
+
     @GetMapping("/{id}")
     public String getVoucherById(@PathVariable Integer id, Model model) {
         Voucher voucher = voucherService.getVoucherById(id);
@@ -57,11 +80,11 @@ public class VoucherController {
         return "dashboard/voucher/update-voucher";
     }
 
-//    @GetMapping("/new")
-//    public String newVoucherForm(Model model) {
-//        model.addAttribute("voucher", new Voucher());
-//        return "dashboard/voucher/new";
-//    }
+    @GetMapping("/view-add")
+    public String newVoucherForm(Model model) {
+        model.addAttribute("voucher", new Voucher());
+        return "dashboard/voucher/add";
+    }
 
 //    @PostMapping("/new")
 //    public String newVoucherSubmit(@ModelAttribute Voucher voucher, RedirectAttributes redirectAttributes) {
