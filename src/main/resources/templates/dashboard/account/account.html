@@ -17,6 +17,13 @@
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
     <style>
+        /* Màu khi chọn (checked) */
+        input[type="radio"]:checked {
+            border-color: red; /* Màu xanh */
+            background-color: red; /* Màu nền xanh */
+            color: #fff; /* Màu chữ trắng */
+        }
+
         .popup {
             display: none;
             position: fixed;
@@ -321,14 +328,13 @@
                                 <div class="form-group">
                                     <label class="d-block">Giới tính</label>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:value="${account.gender}" value="1"
-                                               checked="checked">
+                                        <input type="radio" name="gender"  value="0"  th:field="*{gender}">
                                         <label class="form-check-label">
                                             Nữ
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:value="${account.gender}" value="0">
+                                        <input type="radio" name="gender"  value="1"  th:field="*{gender}">
                                         <label class="form-check-label">
                                             Nam
                                         </label>
@@ -351,19 +357,17 @@
                                 <div class="form-group">
                                     <label class="d-block">Trạng thái</label>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:value="${account.statuss}" value="1"
-                                               checked>
+                                        <input type="radio" name="statuss" value="1"  th:value="${account.statuss == '1'}" checked="checked">
                                         <label class="form-check-label">
                                             Hoạt động
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" name="statuss" th:value="${account.statuss}" value="0">
+                                        <input type="radio" name="statuss" value="0" th:value="${account.statuss == '0'}">
                                         <label class="form-check-label">
                                             Không hoạt động
                                         </label>
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <a th:href="@{/admin/account/add}">
