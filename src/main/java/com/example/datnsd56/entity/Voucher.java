@@ -29,14 +29,12 @@ public class Voucher {
     @NotBlank(message = "no de trong")
     @Column(name = "Description")
     private String description;
-
+    @Column(name = "StartDate")
+    private LocalDateTime startDate;
     @Column(name = "ExpiryDate")
-    @FutureOrPresent(message = "Ngày hết hạn phải là hiện tại hoặc tương lai.")
     private LocalDateTime expiryDateTime;
-
     @Column(name = "Discount")
     private double discount;
-
     @Column(name = "Active")
     private boolean active;
     @Column(name = "DiscountType")

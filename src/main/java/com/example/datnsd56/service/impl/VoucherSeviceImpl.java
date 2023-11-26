@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VoucherSeviceImpl  {
@@ -33,6 +34,23 @@ public class VoucherSeviceImpl  {
     public void saveVoucher(Voucher voucher) {
         voucherRepository.save(voucher);
     }
+    public void updateVoucher(Voucher voucher) {
+        Optional<Voucher> existingVoucherOptional = voucherRepository.findById(voucher.getId());
+
+        if (existingVoucherOptional.isPresent()) {
+            Voucher existingVoucher = existingVoucherOptional.get();
+
+            // Cập nhật chỉ những trường mong muốn
+            existingVoucher.setCode(voucher.getCode());
+            existingVoucher.setActive(true);
+            existingVoucher.setDescription(voucher.getDescription());
+            existingVoucher.setExpiryDateTime(voucher.getExpiryDateTime());
+            existingVoucher.setDiscount(voucher.getDiscount());
+            existingVoucher.setDiscountType(voucher.getDiscountType());
+
+            voucherRepository.save(existingVoucher);
+        }
+    }
 
     public void deleteVoucher(Integer id) {
         voucherRepository.deleteById(id);
@@ -40,12 +58,17 @@ public class VoucherSeviceImpl  {
 
     @Transactional
     public void checkAndDeactivateExpiredVouchers() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        List<Voucher> expiredVouchers = voucherRepository.findByExpiryDateTimeBeforeAndActiveIsTrue(currentDateTime);
-        for (Voucher voucher : expiredVouchers) {
-            voucher.setActive(false);
-        }
+        try {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            List<Voucher> expiredVouchers = voucherRepository.findByExpiryDateTimeBeforeAndActiveIsTrue(currentDateTime);
 
-        voucherRepository.saveAll(expiredVouchers);
-    }
+            for (Voucher voucher : expiredVouchers) {
+                voucher.setActive(false);
+            }
+            voucherRepository.saveAll(expiredVouchers);
+        } catch (Exception e) {
+            // Log exception
+            e.printStackTrace();
+        }
+        }
 }
