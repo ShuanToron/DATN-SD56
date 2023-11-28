@@ -41,7 +41,7 @@ public class AccountController {
 //        return "/dashboard/account/account";
 //    }
     @GetMapping("/hien-thi")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String getAllBypage( Model model,@RequestParam(defaultValue = "0") Integer page){
         model.addAttribute("account",new Account());
         Page<Account> page1 = accountService.getAll(PageRequest.of(page,5));
@@ -55,7 +55,7 @@ public class AccountController {
 
     }
     @GetMapping("/view-update/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String detail(@PathVariable("id") Integer id,Model model){
 //        model.addAttribute("account",new Account());
         Account account= accountService.detail(id);
@@ -90,7 +90,7 @@ public class AccountController {
 //
 //    }
 @PostMapping("/add")
-@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
+//@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
 public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
     if (result.hasErrors()) {
         // Handle validation errors
@@ -115,7 +115,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
 }
 
     @PostMapping("/add1")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
@@ -132,7 +132,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
 
     }
     @PostMapping("/update/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public String update( @Valid @ModelAttribute("account") Account account, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("account",account);
