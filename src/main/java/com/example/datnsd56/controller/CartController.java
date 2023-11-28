@@ -113,7 +113,12 @@ public class CartController {
         }
         return "redirect:/cart/view-cart";
     }
+@GetMapping("/dsdonhang")
+@PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+public String viewdsdonhang(){
 
+         return "website/index/danhsachdonhang";
+}
     @GetMapping("/display")
     @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
 

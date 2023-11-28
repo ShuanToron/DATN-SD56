@@ -8,7 +8,8 @@
     <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link th:href="@{/website/img/favicon.ico}" rel="icon" />
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
     <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
@@ -28,28 +29,87 @@
     />
 
     <!-- Libraries Stylesheet -->
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/website/lib/animate/animate.min.css}" rel="stylesheet" />
 
+    <!--    <link th:href="@{/../resources/static/website/lib/animate/animate.min.css}" rel="stylesheet" />-->
     <link
-            th:href="@{/dashboard/lib/animate/animate.min.css}"
+            th:href="@{/website/lib/owlcarousel/assets/owl.carousel.min.css}"
             rel="stylesheet"
     />
 
-    <!--    <link th:href="@{/../resources/dashboard/lib/animate/animate.min.css}" rel="stylesheet" />-->
-    <link
-            th:href="@{/dashboard/lib/owlcarousel/assets/owl.carousel.min.css}"
-            rel="stylesheet"
-    />
-
-    <!--    <link th:href="@{/../resources/dashboard/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet" />-->
+    <!--    <link th:href="@{/../resources/static/website/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet" />-->
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link th:href="@{/dashboard/css/boostrap.min.css}" rel="stylesheet" />
-    <!--    <link th:href="@{/../resources/dashboard/css/boostrap.min.css}" rel="stylesheet" />-->
+    <link th:href="@{/website/css/bootstrap.min.css}" rel="stylesheet" />
+    <!--    <link th:href="@{/../resources/static/website/css/boostrap.min.css}" rel="stylesheet" />-->
 
     <!-- Template Stylesheet -->
-    <!--    <link th:href="@{/../resources/dashboard/css/style.css}" rel="stylesheet" />-->
-    <link th:href="@{/dashboard/css/style1.css}" rel="stylesheet" />
+    <!--    <link th:href="@{/../resources/static/website/css/style.css}" rel="stylesheet" />-->
+    <link th:href="@{/website/css/style.css}" rel="stylesheet" />
+    <style>
+        /* Style for the table */
+        #orderTable {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #orderTable caption {
+            text-align: left;
+            font-size: 1.5em;
+            color: #4caf50;
+            padding: 10px 20px;
+        }
+
+        #orderTable th,
+        #orderTable td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #orderTable th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        #orderTable img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        /* Style for the footer */
+        .footer {
+            color: #fff;
+        }
+
+        /* Style for the back-to-top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .back-to-top:hover {
+            background-color: #45a049;
+        }
+        #orderTable caption {
+            caption-side: top;
+        }
+    </style>
 </head>
+
 <body>
 <!-- Spinner Start -->
 <div
@@ -127,9 +187,7 @@
                 </form>
                 <a th:href="@{/cart/view-cart}">
                     <button type="button" class="btn btn-sm p-0">
-                        <i class="fa fa-cart-plus" style="margin-left: 20px">
-                  <span style="color: red" id="cartItemCount"></span
-                  ></i>
+                        <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
                     </button>
                 </a>
                 <div class="dropdown">
@@ -168,89 +226,53 @@
 
 <!-- Page Header Start -->
 <div
-        class="container-fluid page-header py-5 wow fadeIn"
+        class="container-fluid page-header py-5 mb-5 wow fadeIn"
         data-wow-delay="0.1s"
 >
     <div class="container text-center py-5">
-        <h1 class="display-2 text-dark mb-4 animated slideInDown">Products</h1>
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">SneakerBeer</h1>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
-                <li class="breadcrumb-item text-dark" aria-current="page">
-                    Products
+                <li class="breadcrumb-item">
+                    <a th:href="@{/product/trang-chu}">Home</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a th:href="@{/product/hien-thi}">Products</a>
+                </li>
+
             </ol>
         </nav>
     </div>
 </div>
 <!-- Page Header End -->
+<table id="orderTable">
+    <caption style="text-align: left; padding: 10px 20px; text-align: center">
+        <h3 style="color: #45a049">Danh sách đơn hàng</h3>
+    </caption>
 
-<!-- Products Start -->
-<div class="container-fluid product py-5">
-    <div class="container py-5">
-        <div
-                class="section-title text-center mx-auto wow fadeInUp"
-                data-wow-delay="0.1s"
-                style="max-width: 500px"
-        >
-            <!-- <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p> -->
-            <h1 class="display-6">Our Products</h1>
-        </div>
-
-        <!--        &lt;!&ndash; &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;LV &ndash;&gt;-->
-        <div
-                th:each="entry : ${productsByBrand.entrySet()}"
-                class="brand-container"
-        >
-            <p
-                    class="fs-5 fw-medium fst-italic text-primary"
-                    th:text="${entry.key}"
-            ></p>
-            <div
-                    class="owl-carousel product-carousel wow fadeInUp"
-                    data-wow-delay="0.4s"
-            >
-                <!-- <a href="" class="d-block product-item rounded"> -->
-                <div
-                        th:each="product:${entry.value}"
-                        class="store-item position-relative text-center"
-                >
-                    <img
-                        class="img-fluid"
-                        th:if="${not #lists.isEmpty(product.images)}"
-                        th:src="@{'/product/display?id=' + ${product.id} + '&imageId=' + ${product.images[0].id}}"
-                        alt=""
-                        style="width: 450px; height: 450px"
-                    />
-                    <div
-                            class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4"
-                    >
-                        <h4 class="text-primary" th:text="${product.name}"></h4>
-
-<!--                        <span class="text-body">10000</span>-->
-
-                    </div>
-                    <div class="store-overlay">
-                        <a
-                                th:href="@{'/product/detail/chi-tiet/' + ${product.id}}"
-                                class="btn btn-primary rounded-pill py-2 px-4 m-2"
-                        >More Detail <i class="fa fa-arrow-right ms-2"></i
-                        ></a>
-                        <a
-                                th:href="@{'/cart/add/' + ${product.id}}"
-                                class="btn btn-dark rounded-pill py-2 px-4 m-2"
-                                id="addToCartButton"
-                        >Add to Cart <i class="fa fa-cart-plus ms-2"></i
-                        ></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
+    <thead>
+    <tr>
+        <th>Mã Hóa Đơn</th>
+        <th>Ảnh</th>
+        <th>Tên Sản Phẩm</th>
+        <th>Số Lượng</th>
+        <th>Tổng Tiền</th>
+        <th>Trạng Thái</th>
+    </tr>
+    <tr>
+        <td>HD1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Đang giao</td>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Các dòng dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+    </tbody>
+</table>
+<!-- Store End -->
 
 <!-- Footer Start -->
 <div
@@ -353,56 +375,19 @@
 ></a>
 
 <!-- JavaScript Libraries -->
-
 <script
         th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js}"
 ></script>
-"
 <script
         th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js}"
 ></script>
-"
-<script th:src="@{/dashboard/lib/wow/wow.min.js}"></script>
-"
-<script th:src="@{/dashboard/lib/easing/easing.min.js}"></script>
-"
-<script th:src="@{/dashboard/lib/waypoints/waypoints.min.js}"></script>
-"
-<script th:src="@{/dashboard/lib/owlcarousel/owl.carousel.min.js}"></script>
-"
+<script th:src="@{/website/lib/wow/wow.min.js}"></script>
+<script th:src="@{/website/lib/easing/easing.min.js}"></script>
+<script th:src="@{/website/lib/waypoints/waypoints.min.js}"></script>
+<script th:src="@{/website/lib/owlcarousel/owl.carousel.min.js}"></script>
 
 <!-- Template Javascript -->
-<script th:src="@{/dashboard/js/main.js}"></script>
-"
-
-<!-- JavaScript Libraries -->
-<!--        <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js}"></script>-->
-<!--        <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js}"></script>-->
-<!--        <script th:src="@{/website/lib/wow/wow.min.js}"></script>-->
-<!--        <script th:src="@{/website/lib/easing/easing.min.js}"></script>-->
-<!--        <script th:src="@{/website/lib/waypoints/waypoints.min.js}"></script>-->
-<!--        <script th:src="@{/website/lib/owlcarousel/owl.carousel.min.js}"></script>-->
-
-<!--        &lt;!&ndash; Template Javascript &ndash;&gt;-->
-<!--        <script th:src="@{/website/js/main.js}"></script>-->
-<script>
-    var cartItemCount = 0;
-
-    // Lấy tham chiếu đến nút "Thêm vào giỏ hàng"
-    var addToCartButton = document.getElementById("addToCartButton");
-
-    // Gắn sự kiện click cho nút "Thêm vào giỏ hàng"
-    addToCartButton.addEventListener("click", function () {
-        // Thực hiện logic thêm sản phẩm vào giỏ hàng ở đây
-
-        // Tăng số lượng sản phẩm trong giỏ hàng lên 1 (hoặc số lượng sản phẩm được thêm vào giỏ hàng)
-        cartItemCount++;
-
-        // Cập nhật số lượng sản phẩm trên giao diện người dùng
-        // Đặt giá trị vào phần tử có id là cartItemCount
-        document.getElementById("cartItemCount").innerText = cartItemCount;
-    });
-</script>
+<script th:src="@{/website/js/main.js}"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
