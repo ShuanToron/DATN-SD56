@@ -47,10 +47,15 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> getImagesForProducts(Integer id) {
-        List<Image> list = imageRepository.getImageByProductId(id);
-        return list;
+    public List<Image> getImagesForProducts(Integer id, Integer imageId) {
+        return imageRepository.getImageByProductId(id,imageId);
     }
+
+//    @Override
+//    public List<Image> getImagesForProducts(Integer id) {
+//        List<Image> list = imageRepository.getImageByProductId(id);
+//        return list;
+//    }
 
 //    @Override
 //    public List<Image> getall() {

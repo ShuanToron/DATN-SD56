@@ -36,128 +36,106 @@
 //    private ImageService imageService;
 //    @Autowired
 //    private ColorService colorService;
-//    @Autowired
-//    private ProductDetailsService productDetailsService;
-//    @Autowired
-//    private SizeService sizeService;
-//    @Autowired
-//    private OrdersService ordersService;
-//    @Autowired
-//    private OrderItemService orderItemService;
-//
-////    private ColorService colorService;
-//
-//    @GetMapping("/view-cart")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//    public String viewCart(Model model) {
-//
-//        model.addAttribute("cartItems", cartService.getAllItem());
-//        model.addAttribute("total", cartService.getAmount());
-//        // Xử lý yêu cầu và thêm sản phẩm vào giỏ hàng
-////        model.addAttribute("sell",productDetailsService.getOneProdcut(id));
-//        return "website/index/giohang";
-//
-//
-//    }
-//
-//    @GetMapping("/getadd")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//
-//    public String getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color, RedirectAttributes redirectAttributes,  HttpSession session) {
-//        ProductDetails productDetails = productDetailsService.getCart(id, color, size);
-//        if (productDetails != null) {
-//            CartItem item = new CartItem();
-//            item.setId(productDetails.getId());
-//            item.setProductDetails(productDetails);
-//            item.setQuantity(1);
-//            cartService.add(item);
-//        }
-////        redirectAttributes.addAttribute("productId", id);
-//        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cart");
-//
-//        // Tính tổng số sản phẩm trong giỏ hàng
-//        int totalItems = (cartItems != null) ? cartItems.size() : 0;
-//
-//        // Cập nhật số sản phẩm trong giỏ hàng vào session
-//        session.setAttribute("cartItemCount", totalItems);
-//        return "redirect:/product/detail/chi-tiet/" + id;
-//
-//    }
-//
-//    @GetMapping("/clear")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//
-//    public String clear() {
-//        cartService.clear();
-//        return "redirect:/cart/view-cart";
-//    }
-//
-//    @GetMapping("/remove/{id}")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//
-//    public String removeclear(@PathVariable("id") Integer id) {
-//        cartService.remove(id);
-//        return "redirect:/cart/view-cart";
-//    }
-//
-//    @PostMapping ("/update")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//    public String update(@RequestParam("id") Integer id,@RequestParam("quantity") Integer quantity) {
-//        System.out.println(id + " " + quantity);
-//        cartService.update(id,quantity);
-//        return "redirect:/cart/view-cart";
-//
-//    }
-//
-//    @GetMapping("add/{id}")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//    public String addCart(@PathVariable("id") Integer id, Model model) {
-//        ProductDetails productDetails = productDetailsService.getByIds(id);
-//        model.addAttribute("listSize", sizeService.getColorId(id));
-//        model.addAttribute("listColor", colorService.getColorId(id));
-////    ProductDetails productDetails1=new ProductDetails();
-//        if (productDetails != null) {
-//            CartItem item = new CartItem();
-//            item.setId(productDetails.getId());
-//            item.setProductDetails(productDetails);
-//            item.setQuantity(1);
-//            cartService.add(item);
-//        }
-//        return "redirect:/cart/view-cart";
-//    }
-//@GetMapping("/dsdonhang")
-//@PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//public String viewdsdonhang(){
-//
-//         return "website/index/danhsachdonhang";
-//}
-//    @GetMapping("/display")
-//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//
-//    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-//        List<Image> imageList = imageService.getImagesForProducts(productId);
-//        byte[] imageBytes = null;
-//        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-//        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-//
-//    }
-//    @PostMapping("tao-hoa-don")
-//    public String themHoaDonChiTiet(@RequestParam String nguoiTao, @RequestBody List<OrderItem> hoaDonChiTietList) {
-//        String code = "HD" + new Random().nextInt(100000);
-//        Orders hoaDon = new Orders().builder()
-//                .code(code)
-//                .createDate(new Date())
-//                .orderStatus(1)
-//                .build();
-//        hoaDon = ordersService.add(hoaDon);
-//        for (OrderItem hd : hoaDonChiTietList) {
-//            hd.setOrderId(hoaDon.getId());
-//        }
-//        orderItemService.taoHoaDon(hoaDonChiTietList);
-//        return "redirect:/cart/view-cart";
-//    }
-//
-//
-//
-//
-//}
+
+
+    @GetMapping("/view-cart")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+    public String viewCart(Model model) {
+
+        model.addAttribute("cartItem", cartService.getAllItem());
+        model.addAttribute("total", cartService.getAmount());
+        // Xử lý yêu cầu và thêm sản phẩm vào giỏ hàng
+//        model.addAttribute("sell",productDetailsService.getOneProdcut(id));
+        return "website/index/giohang";
+
+
+    }
+
+    @GetMapping("/getadd")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
+    public String getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color, RedirectAttributes redirectAttributes,  HttpSession session) {
+        ProductDetails productDetails = productDetailsService.getCart(id, color, size);
+        if (productDetails != null) {
+            CartItem item = new CartItem();
+            item.setId(productDetails.getId());
+            item.setProductDetails(productDetails);
+            item.setQuantity(1);
+            cartService.add(item);
+        }
+//        redirectAttributes.addAttribute("productId", id);
+        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cart");
+
+        // Tính tổng số sản phẩm trong giỏ hàng
+        int totalItems = (cartItems != null) ? cartItems.size() : 0;
+
+        // Cập nhật số sản phẩm trong giỏ hàng vào session
+        session.setAttribute("cartItemCount", totalItems);
+        return "redirect:/product/detail/chi-tiet/" + id;
+
+    }
+
+    @GetMapping("/clear")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
+    public String clear() {
+        cartService.clear();
+        return "redirect:/cart/view-cart";
+    }
+
+    @GetMapping("/remove/{id}")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
+    public String removeclear(@PathVariable("id") Integer id) {
+        cartService.remove(id);
+        return "redirect:/cart/view-cart";
+    }
+
+    @PostMapping ("/update")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+    public String update(@RequestParam("id") Integer id,@RequestParam("quantity") Integer quantity) {
+        System.out.println(id + " " + quantity);
+        cartService.update(id,quantity);
+        return "redirect:/cart/view-cart";
+
+    }
+
+    @GetMapping("add/{id}")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+    public String addCart(@PathVariable("id") Integer id, Model model) {
+        ProductDetails productDetails = productDetailsService.getByIds(id);
+        model.addAttribute("listSize", sizeService.getColorId(id));
+        model.addAttribute("listColor", colorService.getColorId(id));
+//    ProductDetails productDetails1=new ProductDetails();
+        if (productDetails != null) {
+            CartItem item = new CartItem();
+            item.setId(productDetails.getId());
+            item.setProductDetails(productDetails);
+            item.setQuantity(1);
+            cartService.add(item);
+        }
+        return "redirect:/cart/view-cart";
+    }
+@GetMapping("/dsdonhang")
+@PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+public String viewdsdonhang(){
+
+         return "website/index/danhsachdonhang";
+}
+    @GetMapping("/display")
+    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId,Model model) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId,imageId);
+
+        if (imageList != null && !imageList.isEmpty()) {
+            byte[] imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+            model.addAttribute("images", imageList);
+
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        } else {
+            // Trả về ResponseEntity 404 nếu không tìm thấy ảnh
+            return ResponseEntity.notFound().build();
+        }
+    }
+

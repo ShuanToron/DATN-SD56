@@ -13,6 +13,8 @@
     <!-- Template CSS -->
     <link th:href="@{/dashboard/css/style.css}" rel="stylesheet">
     <link th:href="@{/dashboard/css/components.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
@@ -397,20 +399,20 @@
 <!--                                          style="width: 200px; height: auto;border-radius: 10%;object-fit: cover"-->
 <!--                                    />-->
                                 </div>
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"
-                                               checked="checked">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"-->
+<!--                                               checked="checked">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                 </div>

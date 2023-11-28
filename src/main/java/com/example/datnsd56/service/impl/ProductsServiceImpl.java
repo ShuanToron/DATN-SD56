@@ -159,7 +159,7 @@ public class ProductsServiceImpl implements ProductsService {
     public void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException {
 //        products.setUpdateDate(LocalDate.now());
 //        productRepository.save(products);
-        List<Image> existingImages = imageRepository.getImageByProductId(products.getId());
+        List<Image> existingImages = imageRepository.getImageByProductIds(products.getId());
 
         // Cập nhật thông tin sản phẩm
         products.setUpdateDate(LocalDate.now());
