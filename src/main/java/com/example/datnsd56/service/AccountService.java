@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountService {
     Page<Account> getAll(Pageable pageable);
@@ -12,7 +13,10 @@ public interface AccountService {
     Account add(Account account);
     void update(Account account);
     void delete(Integer id);
-    Page<Account> findByEmail(String phone);
+    Page<Account> findByPhone(String phone);
     List<Account> get();
+    Optional<Account> findById(Integer id);
+    Optional<Account> finByName(String username);
+    Account findByEmail(String email);
 
 }

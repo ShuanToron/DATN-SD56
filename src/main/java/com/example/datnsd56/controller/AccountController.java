@@ -159,7 +159,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
     @GetMapping("search")
 //    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("phone") String phone, Model model, RedirectAttributes redirectAttributes) {
-        Page<Account> accounts = accountService.findByEmail(phone);
+        Page<Account> accounts = accountService.findByPhone(phone);
         model.addAttribute("list", accounts);
 //        model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
         model.addAttribute("account",new Account() );

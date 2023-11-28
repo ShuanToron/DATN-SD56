@@ -310,11 +310,14 @@
                         <div class="card-header">
                             <h4>Danh sách kích thước</h4>
                             <div class="card-header-form">
-                                <form>
+                                <form action="/admin/kich-co/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <input name="name" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/kich-co/search/{name}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>

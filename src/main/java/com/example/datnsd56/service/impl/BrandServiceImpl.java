@@ -1,6 +1,7 @@
 package com.example.datnsd56.service.impl;
 
 import com.example.datnsd56.entity.Brand;
+import com.example.datnsd56.entity.Category;
 import com.example.datnsd56.repository.BrandRepository;
 import com.example.datnsd56.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,12 @@ public class BrandServiceImpl implements BrandService {
 
 
         repository.save(brand);
+    }
+
+    @Override
+    public Page<Brand> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Brand> list=repository.findByName(name,page);
+        return list;
     }
 }

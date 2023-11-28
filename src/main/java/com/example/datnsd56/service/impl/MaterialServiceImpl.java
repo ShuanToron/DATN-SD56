@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Material;
 import com.example.datnsd56.repository.MaterialRepository;
 import com.example.datnsd56.service.MaterialService;
@@ -46,6 +47,13 @@ public class MaterialServiceImpl implements MaterialService {
     public Material getById(Integer id) {
         Material material = repository.findById(id).orElse(null);
         return material;
+    }
+
+    @Override
+    public Page<Material> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Material> list=repository.findByName(name,page);
+        return list;
     }
 
     @Override

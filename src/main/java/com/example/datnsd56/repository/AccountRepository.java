@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Integer> {
+    Account findByEmail(String email);
 //    @Query("SELECT a FROM Account a WHERE like :a.phone")
 //    List<Account> findAccountByPhone(String phone);
 @Query(value = "SELECT * FROM Account WHERE phone = ?1 or email = ?1",
@@ -21,8 +22,9 @@ public interface AccountRepository extends JpaRepository<Account,Integer> {
 Page<Account> findAccountByPhone(String phone, Pageable pageable);
 
 //    @Query("SELECT DISTINCT a FROM Account a LEFT JOIN FETCH a.role_id WHERE a.name = :username")
+    Optional<Account> findById(Integer id);
+@Query(value="select*from account where fullname = ?1",nativeQuery = true)
     Optional<Account> findByName(String username);
 
-//    Account findByName(String username);
 }
 

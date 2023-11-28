@@ -11,6 +11,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -76,4 +77,7 @@ public class Account {
     @NotNull (message = "Không đuộc để trống!")
 @Column(name = "birthdate")
     private LocalDate birthdate;
+    @OneToMany(mappedBy = "accountId",cascade = CascadeType.ALL)
+    private List<Cart> carts;
+
 }

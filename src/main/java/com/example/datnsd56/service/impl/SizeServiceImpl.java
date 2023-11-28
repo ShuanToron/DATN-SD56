@@ -59,4 +59,11 @@ public class SizeServiceImpl implements SizeService {
         size.setUpdateDate(LocalDate.now());
         sizeRepository.save(size);
     }
+
+    @Override
+    public Page<Size> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Size> list=sizeRepository.findByName(name,page);
+        return list;
+    }
 }

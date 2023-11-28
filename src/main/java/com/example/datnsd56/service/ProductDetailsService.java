@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ProductDetailsService {
     Page<ProductDetails> getAll(Integer pageNo);
@@ -23,9 +24,10 @@ public interface ProductDetailsService {
 
     ProductDetails add(ProductDetails productDetails, MultipartFile[] files) throws IOException, SQLException;
     ProductDetails getByIds(Integer id);
-
-
+    Optional<ProductDetails> findBySanPhamId(Integer idSanPham);
+    ProductDetails save(ProductDetails productDetails);
     ProductDetails getById(Integer id);
+    Optional<ProductDetails> findById(Integer id);
     Products getOneProdcut(Integer id);
     List<ProductDetails> findProductDetailsBySellPrice(Integer sellprine);
     List<ProductDetails> getProductDetailsById(Integer id);

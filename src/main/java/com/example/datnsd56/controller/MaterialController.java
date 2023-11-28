@@ -1,7 +1,9 @@
 package com.example.datnsd56.controller;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.Material;
+import com.example.datnsd56.entity.Roles;
 import com.example.datnsd56.service.MaterialService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -94,5 +98,15 @@ public class MaterialController {
         service.update(material);
         session.setAttribute("successMessage", "sửa thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
+    }
+    @GetMapping("search")
+//    @PreAuthorize("hasAuthority('admin')")
+    public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("chatlieu", new Material());
+        Page<Material> page = service.findByName(name);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage",pageNo );
+        return "/dashboard/chat-lieu/chat-lieu";
     }
 }

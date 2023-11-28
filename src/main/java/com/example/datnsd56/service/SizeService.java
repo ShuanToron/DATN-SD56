@@ -1,6 +1,7 @@
 package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.entity.Size;
 import org.springframework.data.domain.Page;
 
@@ -19,4 +20,6 @@ public interface SizeService {
     void delete(Integer id);
 
     void update(Size size);
+    Page<Size> findByName(String name);
+
 }

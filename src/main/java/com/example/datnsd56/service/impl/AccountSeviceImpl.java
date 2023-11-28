@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +46,7 @@ public class AccountSeviceImpl implements AccountService {
         Account account = detail(id);
         accountRepository.delete(account);
     }
-    public Page<Account> findByEmail(String phone) {
+    public Page<Account> findByPhone(String phone) {
         Pageable page=PageRequest.of(0,5);
     Page<Account> list=accountRepository.findAccountByPhone(phone,page);
       return list;
@@ -55,4 +56,31 @@ public class AccountSeviceImpl implements AccountService {
     public List<Account> get() {
         return accountRepository.findAll();
     }
+
+    @Override
+    public Optional<Account> findById(Integer id) {
+        Optional<Account> nguoiDung = accountRepository.findById(id);
+
+        if (nguoiDung.isPresent()){
+            return nguoiDung;
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Account> finByName(String username) {
+        Optional<Account> nguoiDung = accountRepository.findByName(username);
+
+        if (nguoiDung.isPresent()){
+            return nguoiDung;
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
+
+
 }
