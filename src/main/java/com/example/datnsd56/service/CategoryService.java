@@ -17,4 +17,5 @@ public interface CategoryService {
     void delete(Integer id);
 
     void update(Category category);
+    Page<Category> findByName(String name);
 }

@@ -1,6 +1,7 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.Material;
 import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.service.ColorService;
 import com.example.datnsd56.service.ShoeSoleService;
@@ -96,5 +97,15 @@ public class ShoeSoleController {
         session.setAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
+    }
+    @GetMapping("search")
+//    @PreAuthorize("hasAuthority('admin')")
+    public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("shoeSole", new ShoeSole());
+        Page<ShoeSole> page = service.findByName(name);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/de-giay/de-giay";
     }
 }

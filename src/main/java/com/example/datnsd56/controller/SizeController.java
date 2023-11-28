@@ -119,6 +119,15 @@ public class SizeController {
 
     }
 
-
+    @GetMapping("search")
+//    @PreAuthorize("hasAuthority('admin')")
+    public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("size", new Size());
+        Page<Size> page = service.findByName(name);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("list", page);
+        model.addAttribute("currentPage", pageNo);
+        return "/dashboard/kich-co/kich-co";
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.datnsd56.service;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Material;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,6 @@ public interface MaterialService {
     List<Material> getAllMater();
 
     Material getById(Integer id);
-
+    Page<Material> findByName(String name);
     void update(Material material);
 }

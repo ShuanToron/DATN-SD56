@@ -1,6 +1,7 @@
 package com.example.datnsd56.service.impl;
 
 import com.example.datnsd56.entity.Color;
+import com.example.datnsd56.entity.Material;
 import com.example.datnsd56.entity.ShoeSole;
 import com.example.datnsd56.repository.ShoeSoleRepository;
 import com.example.datnsd56.service.ShoeSoleService;
@@ -57,5 +58,12 @@ public class ShoeSoleServiceImpl implements ShoeSoleService {
 
 
         repository.save(shoeSole);
+    }
+
+    @Override
+    public Page<ShoeSole> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<ShoeSole> list=repository.findByName(name,page);
+        return list;
     }
 }

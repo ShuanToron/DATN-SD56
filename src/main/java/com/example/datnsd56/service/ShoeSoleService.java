@@ -16,4 +16,5 @@ public interface ShoeSoleService {
     void delete(Integer id);
 
     void update(ShoeSole shoeSole);
+    Page<ShoeSole> findByName(String name);
 }

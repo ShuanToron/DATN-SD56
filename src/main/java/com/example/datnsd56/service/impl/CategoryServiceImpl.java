@@ -57,4 +57,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         repository.save(category);
     }
+
+    @Override
+    public Page<Category> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Category> list=repository.findByName(name,page);
+        return list;
+    }
 }
