@@ -216,10 +216,11 @@
                         class="store-item position-relative text-center"
                 >
                     <img
-                            class="img-fluid"
-                            th:src="@{${'/product/display?id=' + product.id}}"
-                            alt=""
-                            style="width: 450px ; height: 340px"
+                        class="img-fluid"
+                        th:if="${not #lists.isEmpty(product.images)}"
+                        th:src="@{'/product/display?id=' + ${product.id} + '&imageId=' + ${product.images[0].id}}"
+                        alt=""
+                        style="width: 450px; height: 450px"
                     />
                     <div
                             class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4"

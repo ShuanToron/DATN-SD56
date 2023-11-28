@@ -117,11 +117,17 @@ public class CartController {
     @GetMapping("/display")
     @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
 
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId);
-        byte[] imageBytes = null;
-        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId,Model model) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId,imageId);
 
+        if (imageList != null && !imageList.isEmpty()) {
+            byte[] imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+            model.addAttribute("images", imageList);
+
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        } else {
+            // Trả về ResponseEntity 404 nếu không tìm thấy ảnh
+            return ResponseEntity.notFound().build();
+        }
     }
 }

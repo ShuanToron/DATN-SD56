@@ -35,6 +35,9 @@ public class DetailProductController {
         model.addAttribute("listSize",sizeService.getColorId(id));
         model.addAttribute("listColor",colorService.getColorId(id));
         model.addAttribute("sell",productDetailsService.getProductDetailsById(id));
+        Products products=new Products();
+        model.addAttribute("images",products.getImages());
+        model.addAttribute("productIds",productDetailsService.getOneProdcut(id));
 //        model.addAttribute("sells",productDetailsService.findProductDetailsByColorIdAndSizeIdAndAndProductId(colorid,sizeId,id));
 //        model.addAttribute("sell",productDetailsService.findProductDetailsBySellPrice(id));
         model.addAttribute("views",list);
@@ -49,8 +52,8 @@ public class DetailProductController {
         return ResponseEntity.ok().body(productDetailPrice);
     }
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-        List<Image> imageList= imageService.getImagesForProducts(productId);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId) throws SQLException {
+        List<Image> imageList= imageService.getImagesForProducts(productId,imageId);
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);

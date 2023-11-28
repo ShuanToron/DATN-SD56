@@ -16,6 +16,6 @@ public interface ImageService {
 
     void update(Image image);
 
-    List<Image> getImagesForProducts(Integer id);
+    List<Image> getImagesForProducts(Integer id,Integer imageId);
 
 }

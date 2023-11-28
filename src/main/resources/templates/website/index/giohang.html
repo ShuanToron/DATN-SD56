@@ -118,7 +118,8 @@ https://templatemo.com/tm-559-zay-shop
                         />
                         <td>
                             <img
-                                th:src="@{'/cart/display?id=' + ${sl.productDetails.productId.id}}"
+                                th:if="${sl.productDetails.productId.images != null and not #lists.isEmpty(sl.productDetails.productId.images)}"
+                                th:src="@{'/cart/display?id=' + ${sl.productDetails.productId.id} + '&imageId=' + ${sl.productDetails.productId.images[0].id}}"
                                 alt="Sản phẩm 1"
                                 style="max-width: 80px; max-height: 80px"
                             />
