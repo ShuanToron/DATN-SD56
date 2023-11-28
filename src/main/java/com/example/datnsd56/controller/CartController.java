@@ -1,42 +1,39 @@
-//package com.example.datnsd56.controller;
-//
-//import com.example.datnsd56.entity.Account;
-//import com.example.datnsd56.entity.CartItem;
-//import com.example.datnsd56.entity.Image;
-//import com.example.datnsd56.entity.OrderItem;
-//import com.example.datnsd56.entity.Orders;
-//import com.example.datnsd56.entity.ProductDetails;
-//import com.example.datnsd56.entity.Products;
-//import com.example.datnsd56.service.*;
-//import com.fasterxml.jackson.databind.JsonNode;
-//import jakarta.servlet.http.HttpSession;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.MediaType;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-//
-//import java.math.BigDecimal;
-//import java.sql.SQLException;
-//import java.time.LocalDate;
-//import java.util.Date;
-//import java.util.List;
-//import java.util.Optional;
-//import java.util.Random;
-//
-//@Controller
-//@RequestMapping("/cart")
-//public class CartController {
-//    @Autowired
-//    private CartService cartService;
-//    @Autowired
-//    private ImageService imageService;
-//    @Autowired
-//    private ColorService colorService;
+package com.example.datnsd56.controller;
 
+import com.example.datnsd56.entity.CartItem;
+import com.example.datnsd56.entity.Image;
+import com.example.datnsd56.entity.ProductDetails;
+import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.service.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+
+@Controller
+@RequestMapping("/cart")
+public class CartController {
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private ColorService colorService;
+    @Autowired
+    private ProductDetailsService productDetailsService;
+    @Autowired
+    private SizeService sizeService;
+
+//    private ColorService colorService;
 
     @GetMapping("/view-cart")
     @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
@@ -116,12 +113,7 @@
         }
         return "redirect:/cart/view-cart";
     }
-@GetMapping("/dsdonhang")
-@PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-public String viewdsdonhang(){
 
-         return "website/index/danhsachdonhang";
-}
     @GetMapping("/display")
     @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
 
@@ -138,4 +130,4 @@ public String viewdsdonhang(){
             return ResponseEntity.notFound().build();
         }
     }
-
+}
