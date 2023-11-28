@@ -341,7 +341,7 @@
                                         <!--                                        <td th:text="*{index.count}"></td>-->
                                         <td th:text="*{list.code}"></td>
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/loai-giay/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"
