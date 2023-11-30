@@ -1,5 +1,6 @@
 package com.example.datnsd56.controller;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Customers;
 import com.example.datnsd56.entity.DiscountType;
 import com.example.datnsd56.entity.Voucher;
@@ -34,6 +35,16 @@ public class VoucherController {
     @Autowired
     private VoucherSeviceImpl voucherService;
 
+
+    @GetMapping("/hien-thi")
+    public String getAllByPage(Model model,@RequestParam(defaultValue = "0") Integer page){
+        voucherService.checkAndDeactivateExpiredVouchers();
+        model.addAttribute("voucher", new Voucher());
+        Page<Voucher> page1 = voucherService.getAll(PageRequest.of(page,5));
+        model.addAttribute("vouchers", page1);
+        return "dashboard/voucher/voucher";
+
+    }
     @GetMapping
     public String getAllVouchers(Model model) {
 
