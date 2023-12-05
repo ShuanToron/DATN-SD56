@@ -1,27 +1,19 @@
 package com.example.datnsd56.entity;
 
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Getter
 @Setter
@@ -34,6 +26,12 @@ public class Cart {
     @Column(name = "Id")
     private Integer id;
 
+    @Column(name = "totalPrice")
+    private BigDecimal totalPrice;
+
+    @Column(name = "totalItems")
+    private Integer totalItems;
+
 
 
     @Column(name = "status")
@@ -42,17 +40,30 @@ public class Cart {
 
 
     @Column(name = "create_date")
-    private Date createDate;
+    private LocalDate createDate;
 
 
     @Column(name = "update_date")
-    private Date updateDate;
+    private LocalDate updateDate;
 
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "cart")
     private Set<CartItem> cartItems;
-    @ManyToOne
+//    @ManyToOne
+//    @JoinColumn(name = "account_id", referencedColumnName = "id")
+//    private Account accountId;
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account accountId;
+
+    public Cart(){
+        this.cartItems = new HashSet<>();
+        this.totalItems = 0;
+        this.totalPrice = BigDecimal.valueOf(0);
+        this.createDate = LocalDate.now();
+        this.updateDate = LocalDate.now();
+        this.status = "0";
+    }
+
 
 
 }

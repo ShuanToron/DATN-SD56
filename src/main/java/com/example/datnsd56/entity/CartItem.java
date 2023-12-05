@@ -1,8 +1,10 @@
 package com.example.datnsd56.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -19,7 +21,9 @@ public class CartItem {
     @Column(name = "status")
     private String status;
     @Column(name = "quantity")
-    private Integer quantity=1;
+    private Integer quantity ;
+    @Column(name = "price")
+    private BigDecimal price;
     @Column(name = "create_date")
     private LocalDate createDate;
     @Column(name = "update_date")
@@ -27,8 +31,11 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = " product_detail_id")
     private ProductDetails productDetails;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = " cart_id ")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinColumn(name = " cart_id ", referencedColumnName = "Id")
     private Cart cart;
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+//    private Cart cart;
 
 }

@@ -30,7 +30,7 @@ public class Roles {
 
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status;
 
 
 }

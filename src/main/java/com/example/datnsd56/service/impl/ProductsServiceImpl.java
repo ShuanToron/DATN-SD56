@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 //import java.math.Double;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -79,7 +80,7 @@ public class ProductsServiceImpl implements ProductsService {
                 details.setQuantity(1);
                 details.setColorId(color);
                 details.setSizeId(size);
-                details.setSellPrice(Double.parseDouble("1"));
+                details.setSellPrice(BigDecimal.valueOf(1));
                 details.setCreateDate(LocalDate.now());
                 listDetail.add(details);
             }
@@ -98,8 +99,9 @@ public class ProductsServiceImpl implements ProductsService {
         return products;
     }
 
+
     @Override
-    public void addProductDetail(List<Integer> id, List<Integer> soLuong, List<Double> donGia) {
+    public void addProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia) {
         if (id.size() != soLuong.size() || id.size() != donGia.size()) {
             // Handle the error, for example, log an error message or throw an exception.
             System.err.println("Input lists have different sizes");
@@ -108,7 +110,7 @@ public class ProductsServiceImpl implements ProductsService {
             for (int i = 0; i < id.size(); i++) {
                 Integer ids = id.get(i);
                 Integer soLuongs = soLuong.get(i);
-                Double donGias = donGia.get(i);
+                BigDecimal donGias = donGia.get(i);
                 Optional<ProductDetails> productDetails = getOne(ids);
                 if (productDetails.isPresent()) {
                     ProductDetails details = productDetails.get();
@@ -123,11 +125,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<Double> donGia) {
+    public void updateProductDetail(List<Integer> id, List<Integer> soLuong, List<BigDecimal> donGia) {
         for (int i = 0; i < id.size(); i++) {
             Integer ids = id.get(i);
             Integer soLuongs = soLuong.get(i);
-            Double donGias = donGia.get(i);
+            BigDecimal donGias = donGia.get(i);
             Optional<ProductDetails> productDetails = getOne(ids);
             if (productDetails.isPresent()) {
                 ProductDetails details = productDetails.get();
@@ -234,7 +236,7 @@ public class ProductsServiceImpl implements ProductsService {
 
 
 
-    public ProductDetails updatePrice(Integer id, Double price) {
+    public ProductDetails updatePrice(Integer id, BigDecimal price) {
         ProductDetails product = (ProductDetails) productDetailsRepository.getAllDetail(id);
         product.setSellPrice(price);
         return productDetailsRepository.save(product);

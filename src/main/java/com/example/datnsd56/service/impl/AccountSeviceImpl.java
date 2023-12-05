@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,11 +33,15 @@ public class AccountSeviceImpl implements AccountService {
 //
     @Override
     public Account add(Account account) {
+        account.setCreateDate(new Date());
+        account.setUpdateDate(new Date());
         return  accountRepository.save(account);
     }
 
     @Override
     public void update(Account account) {
+        account.setCreateDate(new Date());
+        account.setUpdateDate(new Date());
         accountRepository.save(account);
 
     }

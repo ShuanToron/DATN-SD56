@@ -28,7 +28,7 @@ public class DetailProductController {
     private ProductsService productsService;
     @Autowired
     private ImageService imageService;
-    @GetMapping("chi-tiet/{id}")
+    @GetMapping("/chi-tiet/{id}")
     public String detail(@PathVariable("id") Integer id, Model model){
       Products list=  productDetailsService.getOneProdcut(id);
 //         Tính toán giá sản phẩm dựa trên màu sắc và kích cỡ được chọn

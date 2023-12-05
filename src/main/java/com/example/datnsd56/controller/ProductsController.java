@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 //import java.math.Double;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class ProductsController {
     }
 
     @PostMapping("/update-pending")
-    public String addProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<Double> donGia) {
+    public String addProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<BigDecimal> donGia) {
         productService.addProductDetail(id, soLuong, donGia);
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
@@ -197,7 +198,7 @@ public class ProductsController {
     @PostMapping("/update-chi-tiet-san-pham")
     @PreAuthorize("hasAuthority('admin')")
 
-    public String updateProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<Double> donGia) {
+    public String updateProductDetail(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong, @RequestParam("donGias") List<BigDecimal> donGia) {
         productService.updateProductDetail(id, soLuong, donGia);
         return "redirect:/admin/san-pham-test/create";
     }
