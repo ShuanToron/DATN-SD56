@@ -13,6 +13,8 @@
     <!-- Template CSS -->
     <link th:href="@{/dashboard/css/style.css}" rel="stylesheet">
     <link th:href="@{/dashboard/css/components.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
@@ -308,11 +310,14 @@
                         <div class="card-header">
                             <h4>Danh sách màu sắc</h4>
                             <div class="card-header-form">
-                                <form>
+                                <form action="/admin/mau-sac/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <input name="name" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/mau-sac/search/{name}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -322,14 +327,6 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-center">
-<!--                                            <div class="custom-checkbox custom-checkbox-table custom-control">-->
-<!--                                                <input type="checkbox" data-checkboxes="mygroup"-->
-<!--                                                       data-checkbox-role="dad"-->
-<!--                                                       class="custom-control-input" id="checkbox-all">-->
-<!--                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>-->
-<!--                                            </div>-->
-                                        </th>
                                         <th>Mã màu</th>
                                         <th>Màu Sắc</th>
                                         <th>Trạng thái</th>

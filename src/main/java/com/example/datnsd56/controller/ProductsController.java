@@ -84,12 +84,12 @@ public class ProductsController {
     @GetMapping("/display")
     @PreAuthorize("hasAuthority('admin')")
 
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId, Model model) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId, Model model) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId,imageId);
 
         if (imageList != null && !imageList.isEmpty()) {
             byte[] imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-//            model.addAttribute("image", imageList);
+            model.addAttribute("images", imageList);
 
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
         } else {
@@ -122,6 +122,7 @@ public class ProductsController {
             model.addAttribute("listColor", colorService.getAllColor());
             model.addAttribute("listSize", sizeService.getAllSZ());
         }
+        products.setStatus(1);
         productService.addProduct(products, colorList, kichThuocList, files);
         return "redirect:/admin/san-pham-test/create";
     }
@@ -135,14 +136,14 @@ public class ProductsController {
     @GetMapping("/view-update/{id}")
     @PreAuthorize("hasAuthority('admin')")
 
-    public String viewUpdateProduct(@PathVariable("id") Integer id, Model model) {
+    public String viewUpdateProduct(@PathVariable("id") Integer id,@RequestParam("imageId") Integer imageId, Model model) {
         Products products = productService.getById(id);
         model.addAttribute("product", products);
         List<Integer> selectedSizes = productService.findSelectedSizeIds(id);
         model.addAttribute("selectedSizes", selectedSizes);
         List<Integer> selectedColors = productService.findSelectedColorIds(id);
         model.addAttribute("selectedColors", selectedColors);
-        List<Image> productImages = imageService.getImagesForProducts(id);
+        List<Image> productImages = imageService.getImagesForProducts(id,imageId);
         model.addAttribute("productImages", productImages);
         List<Brand> brands = brand.getAllBrand();
         model.addAttribute("brand", brands);

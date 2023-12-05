@@ -56,7 +56,7 @@ public class ProductDetailsController {
         List<Color> colors = colorService.getAllColor();
         List<Size> sizes = sizeService.getAllSZ();
         Products products1=new Products();
-//        model.addAttribute("images", products1.getImages());
+        model.addAttribute("images", products1.getImages());
 
         model.addAttribute("list", page);
         model.addAttribute("products", products);
@@ -100,8 +100,8 @@ public class ProductDetailsController {
     @GetMapping("/display")
 //    @PreAuthorize("hasAuthority('admin')")
 
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,Model model) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId,Model model) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId,imageId);
 
         if (imageList != null && !imageList.isEmpty()) {
             byte[] imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());

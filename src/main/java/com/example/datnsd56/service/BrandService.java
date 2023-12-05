@@ -1,6 +1,7 @@
 package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.Brand;
+import com.example.datnsd56.entity.Category;
 import com.example.datnsd56.entity.Material;
 import org.springframework.data.domain.Page;
 
@@ -16,4 +17,5 @@ public interface BrandService {
     void delete(Integer id);
 
     void update(Brand brand);
+    Page<Brand> findByName(String name);
 }

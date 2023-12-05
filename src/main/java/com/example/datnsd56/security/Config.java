@@ -82,13 +82,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/dashboard/css/**", "/dashboard/js/**", "/dashboard/img/**","/dashboard/bundles/**","/dashboard/fonts/**","/dashboard/lib/**","/dashboard/scss/**").permitAll()
-            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**","templates/dashboard/**").permitAll()
+            .requestMatchers("/website/css/**", "/website/js/**", "/website/img/**", "/website/lib/**", "/website/scss/**","templates/website/index/**","templates/dashboard/**","/website/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/product/**").permitAll()// với endpoint /hello thì sẽ được cho qua
 //        .requestMatchers("/display/**").permitAll()
 //            .requestMatchers("/cart/**").permitAll()// với endpoint /hello thì sẽ được cho qua
              .requestMatchers("/error/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .requestMatchers("/login/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+            .requestMatchers("/admin/**").permitAll()// với endpoint /hello thì sẽ được cho qua
 
             .and()
             .authorizeHttpRequests()
@@ -97,6 +98,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/user/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/rest/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
+
             .and().formLogin()// trả về page login nếu chưa authenticate
 
            .defaultSuccessUrl("/product/hien-thi")

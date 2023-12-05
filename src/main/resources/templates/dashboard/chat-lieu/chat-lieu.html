@@ -15,6 +15,8 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <!-- Toaste JS -->
     <script type="text/javascript"
@@ -302,11 +304,14 @@
                         <div class="card-header">
                             <h4>Danh sách chất liệu</h4>
                             <div class="card-header-form">
-                                <form>
+                                <form action="/admin/chat-lieu/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <input name="name" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/chat-lieu/search/{name}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>

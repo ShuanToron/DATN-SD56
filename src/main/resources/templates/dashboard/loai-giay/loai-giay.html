@@ -310,11 +310,14 @@
                         <div class="card-header">
                             <h4>Danh sách loại giày</h4>
                             <div class="card-header-form">
-                                <form action="/admin/loai-giay/search">
+                                <form action="/admin/loai-giay/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <input name="name" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/loai-giay/search/{name}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -341,7 +344,7 @@
                                         <!--                                        <td th:text="*{index.count}"></td>-->
                                         <td th:text="*{list.code}"></td>
                                         <td th:text="*{list.name}"></td>
-                                        <td th:text="${list.status == 1 ? 'Hoạt động' : 'Không hoạt động'}"></td>
+                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>
                                         <td>
                                             <a th:href="@{'/admin/loai-giay/delete/'+${list.id}}">
                                                 <button type="button" class="btn btn-danger"

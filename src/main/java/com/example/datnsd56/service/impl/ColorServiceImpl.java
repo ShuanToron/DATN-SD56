@@ -62,4 +62,11 @@ public class ColorServiceImpl implements ColorService {
 
         repository.save(color);
     }
+
+    @Override
+    public Page<Color> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Color> list=repository.findByName(name,page);
+        return list;
+    }
 }

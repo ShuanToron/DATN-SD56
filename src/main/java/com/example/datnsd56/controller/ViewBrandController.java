@@ -113,8 +113,8 @@ public class ViewBrandController {
     }
 
     @GetMapping("nike/display")
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-        List<Image> imageList= imageService.getImagesForProducts(productId);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId) throws SQLException {
+        List<Image> imageList= imageService.getImagesForProducts(productId,imageId);
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
