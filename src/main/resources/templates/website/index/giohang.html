@@ -66,7 +66,7 @@ https://templatemo.com/tm-559-zay-shop
     </style>
     <!-- ... (Các khai báo khác như trong mã HTML trước) ... -->
 </head>
-<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+<body>
 <div class="container mt-5">
     <h1 class="text-center">Giỏ hàng</h1>
     <div>
@@ -88,11 +88,30 @@ https://templatemo.com/tm-559-zay-shop
         <!--        </div>-->
 
     </div>
+    <div th:if="${check}">
+        <h4 class="text-center" style="color: darkslategray" th:text="${check}"><i class="text-info font-weight-bold text-center"></i></h4>
+    </div>
     <!-- Bảng hiển thị sản phẩm trong giỏ hàng -->
-    <!--    <form id ="doi2" action="" method="get">-->
+<!--        <form th:action="@{/user/add-order}" method="post">-->
     <div class="card">
         <div class="card-body">
-            <table class="table">
+<!--            <h4 class="font-weight-semi-bold mb-4">Địa chỉ nhận hàng mặc định</h4>-->
+<!--            <div class="custom-control custom-radio custom-control-inline">-->
+<!--                <input type="radio" class="custom-control-input"-->
+<!--                       th:id="${'address-' + defaultAddress.id}"-->
+<!--                       th:value="${defaultAddress.id}"-->
+<!--                       checked-->
+<!--                       name="address">-->
+<!--                <label class="custom-control-label" th:for="${'address-' + defaultAddress.id}">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title" th:text="${defaultAddress.district + ' ' + defaultAddress.province}"></h5>-->
+<!--                            <p class="card-text" th:text="${defaultAddress.streetName}"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </label>-->
+<!--            </div>-->
+            <table class="table" th:if="${grandTotal}">
                 <thead>
                 <tr>
                     <th scope="col">Ảnh</th>
@@ -107,18 +126,18 @@ https://templatemo.com/tm-559-zay-shop
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="sl :${cartItems}">
+                <tr th:each="sl :${cart.cartItems}">
 
-                    <form id="doi" th:action="@{'/cart/update'}" method="post" formnovalidate>
+                    <form th:action="@{/user/update-cart}" method="post" name="form1">
                         <input
                             type="hidden"
-                            value="Activewear" th:value="${sl.id}" th:name="id"
+                            value="Activewear" th:value="${sl.productDetails.id}" th:name="id"
                             id="productId"
                             name="id"
                         />
                         <td>
                             <img
-                                th:src="@{'/cart/display?id=' + ${sl.productDetails.productId.id}}"
+                                th:src="@{'user/display?id=' + ${sl.productDetails.productId.id}}"
                                 alt="Sản phẩm 1"
                                 style="max-width: 80px; max-height: 80px"
                             />
@@ -142,10 +161,10 @@ https://templatemo.com/tm-559-zay-shop
 
                             />
                         </td>
-                        <td class="" th:text="${sl.productDetails.sellPrice}"></td>
-                        <td class="" th:text="${sl.productDetails.sellPrice*sl.quantity}"></td>
+                        <td class="" th:text="${sl.price}"></td>
+                        <td class="" th:text="${sl.price * sl.quantity}"></td>
                         <td>
-                            <a th:href="@{'/cart/remove/' +${sl.id}}"
+                            <a th:href="@{/user/delete}" method="post"
                                style="text-decoration: none; padding-right: 20px">
 
                                     <i style="color: black" class="fas fa-trash-alt" title="xóa sản phẩm"></i>
@@ -174,67 +193,73 @@ https://templatemo.com/tm-559-zay-shop
                 Tổng số tiền
 
                 <label for="" style="color: red">
-                    : <span id="" th:text="${total} + '' +'Đ'"></span>
+                    : <span id="" th:text="${grandTotal} + '' +'Đ'"></span>
                 </label>
 
             </div>
             <!-- Thông tin khách hàng -->
-            <h4>Nhập Thông Tin</h4>
-            <div class="mb-3">
-                <label for="hoTen" class="form-label">Họ tên</label>
-                <div id="error-hoTen" class="text-danger"></div>
-                <input ng-model="orders.fullName" type="text" class="form-control" id="hoTen" name="hoTen"/>
-            </div>
-            <div class="mb-3">
-                <label for="diaChi" class="form-label">Địa chỉ</label>
-                <div id="error-diaChi" class="text-danger"></div>
-                <input ng-model="orders.address"
-                    type="text"
-                    class="form-control"
-                    id="diaChi"
-                    name="diaChi"
-                />
-            </div>
-            <div class="mb-3">
-                <label for="sdt" class="form-label">Số điện thoại</label>
-                <div id="error-sdt" class="text-danger"></div>
-                <input ng-model="orders.phone" type="tel" class="form-control" id="sdt" name="sdt"/>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Phiếu giảm giá</label>
-                <div id="error-phieuGiamGia" class="text-danger"></div>
-                <select
-                    id="phieuGiamGia"
-                    class="form-select"
-                    aria-label="Default select example"
-                >
-                    <option selected value="0">Không giảm giá</option>
-                    <option value="100000">Giảm 100,000 VND</option>
-                    <option value="200000">Giảm 200,000 VND</option>
-                </select>
-            </div>
-            <!-- Thêm một phần tử radio button để chọn phương thức thanh toán -->
-            <div class="mb-3">
-                <label class="form-label"
-                >Phương thức thanh toán</label
-                ><br/>
-                <input
-                    type="radio"
-                    id="thanhToanKhiNhanHang"
-                    name="phuongThucThanhToan"
-                    value="khiNhanHang"
-                    checked="checked"
-                />
-                <label for="thanhToanKhiNhanHang">Thanh toán khi nhận hàng</label
-                ><br/>
-                <input
-                    type="radio"
-                    id="thanhToanBangZaloPay"
-                    name="phuongThucThanhToan"
-                    value="zaloPay"
-                />
-                <label for="thanhToanBangZaloPay">Thanh toán bằng ZaloPay</label>
-            </div>
+<!--            <h4>Nhập Thông Tin</h4>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="hoTen" class="form-label">Họ tên</label>-->
+<!--                <div id="error-hoTen" class="text-danger"></div>-->
+<!--                <input ng-model="orders.fullName" type="text" class="form-control" id="hoTen" name="hoTen"/>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="diaChi" class="form-label">Địa chỉ</label>-->
+<!--                <div id="error-diaChi" class="text-danger"></div>-->
+<!--                <input ng-model="orders.address"-->
+<!--                    type="text"-->
+<!--                    class="form-control"-->
+<!--                    id="diaChi"-->
+<!--                    name="diaChi"-->
+<!--                />-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="sdt" class="form-label">Số điện thoại</label>-->
+<!--                <div id="error-sdt" class="text-danger"></div>-->
+<!--                <input ng-model="orders.phone" type="tel" class="form-control" id="sdt" name="sdt"/>-->
+<!--            </div>-->
+
+                        <div class="d-grid gap-2 col-2 mx-auto">
+                            <a th:href="@{/user/checkout}">
+                            <button class="btn btn-block btn-primary my-3 py-3">Thanh toán</button>
+                            </a>
+                        </div>
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">Phiếu giảm giá</label>-->
+<!--                <div id="error-phieuGiamGia" class="text-danger"></div>-->
+<!--                <select-->
+<!--                    id="phieuGiamGia"-->
+<!--                    class="form-select"-->
+<!--                    aria-label="Default select example"-->
+<!--                >-->
+<!--                    <option selected value="0">Không giảm giá</option>-->
+<!--                    <option value="100000">Giảm 100,000 VND</option>-->
+<!--                    <option value="200000">Giảm 200,000 VND</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Thêm một phần tử radio button để chọn phương thức thanh toán &ndash;&gt;-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label"-->
+<!--                >Phương thức thanh toán</label-->
+<!--                ><br/>-->
+<!--                <input-->
+<!--                    type="radio"-->
+<!--                    id="thanhToanKhiNhanHang"-->
+<!--                    name="phuongThucThanhToan"-->
+<!--                    value="khiNhanHang"-->
+<!--                    checked="checked"-->
+<!--                />-->
+<!--                <label for="thanhToanKhiNhanHang">Thanh toán khi nhận hàng</label-->
+<!--                ><br/>-->
+<!--                <input-->
+<!--                    type="radio"-->
+<!--                    id="thanhToanBangZaloPay"-->
+<!--                    name="phuongThucThanhToan"-->
+<!--                    value="zaloPay"-->
+<!--                />-->
+<!--                <label for="thanhToanBangZaloPay">Thanh toán bằng ZaloPay</label>-->
+<!--            </div>-->
 <!--            <div class="mb-3">-->
 <!--                <label for="phiGiaoHangLabel" class="form-label"-->
 <!--                >Phí Giao Hàng</label-->
@@ -245,12 +270,10 @@ https://templatemo.com/tm-559-zay-shop
 <!--                <label for="tongTienLabel" class="form-label">Tổng Tiền</label>-->
 <!--                <label id="tongTienLabel" style="color: red">800,000 VND</label>-->
 <!--            </div>-->
-            <div class="d-grid gap-2 col-2 mx-auto">
-                <button ng-click="orders.purchase()" class="btn btn-primary" type="submit">Đặt Hàng</button>
-            </div>
+
         </div>
     </div>
-    <!--    </form>-->
+<!--        </form>-->
 </div>
 <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js}"></script>
 

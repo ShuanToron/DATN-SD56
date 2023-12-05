@@ -182,9 +182,10 @@ id="templatemo_nav_top"
                         </button>
                     </div>
                 </form>
-                <a th:href="@{/cart/view-cart}">
+                <a th:href="@{/user/cart}">
                     <button type="button" class="btn btn-sm p-0">
                         <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
+                        <span class="badge" th:text="${totalItems == null} ? '0' : ${totalItems}"></span>
                     </button>
                 </a>
                 <div class="dropdown">
@@ -263,10 +264,15 @@ id="templatemo_nav_top"
         </form>
     </div>
 </div>
-
+<div th:if="${mess}" class="alert alert-success alert-dismissible fade show" role="alert"
+     style="margin: 5px">
+    <span th:text="${mess}"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <!-- Open Content -->
 <section class="bg-light">
-    <form th:action="@{/cart/getadd}" method="get">
         <div th:each="product:${views}" class="container pb-5">
             <div class="row">
                 <div class="col-lg-5 mt-5">
@@ -426,6 +432,7 @@ id="templatemo_nav_top"
                             <p class="h3 py-2">
                                 <span id="product-price">1000đ</span>
                             </p>
+                            <form th:action="@{/user/add-to-cart}" method="post">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Brand:</h6>
@@ -488,25 +495,38 @@ id="templatemo_nav_top"
                             </ul>
                         </div>
                         <div class="col-auto">
-                            <ul class="list-inline pb-3">
-                                <li class="list-inline-item text-right">
-                                    Quantity
-                                    <input
-                                            type="hidden"
-                                            name="product-quanity"
-                                            id="quantity"
-                                    />
-                                </li>
-                                <li class="list-inline-item">
-                                    <span class="btn btn-success" id="btn-minus">-</span>
-                                </li>
-                                <li class="list-inline-item">
-                                    <span class="badge bg-secondary" id="var-value">1</span>
-                                </li>
-                                <li class="list-inline-item">
-                                    <span class="btn btn-success" id="btn-plus">+</span>
-                                </li>
-                            </ul>
+<!--                            <ul class="list-inline pb-3">-->
+<!--                                <li class="list-inline-item text-right">-->
+<!--                                    Quantity-->
+<!--                                    <input-->
+<!--                                            type="hidden"-->
+<!--                                            name="product-quanity"-->
+<!--                                            id="quantity"-->
+<!--                                    />-->
+<!--                                </li>-->
+                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary btn-minus" type="button">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control bg-secondary text-center" value="1" name="quantity" readonly>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary btn-plus" type="button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+<!--                                <li class="list-inline-item">-->
+<!--                                    <span class="btn btn-success" id="btn-minus">-</span>-->
+<!--                                </li>-->
+<!--                                <li class="list-inline-item">-->
+<!--                                    <span class="badge bg-secondary" id="var-value">1</span>-->
+<!--                                </li>-->
+<!--                                <li class="list-inline-item">-->
+<!--                                    <span class="btn btn-success" id="btn-plus">+</span>-->
+<!--                                </li>-->
+<!--                            </ul>-->
                         </div>
                     </div>
                     <div class="row pb-3">
@@ -518,7 +538,7 @@ id="templatemo_nav_top"
                                     value="buy"
                                     id="addToCartBtn"
                             >
-                                <a th:href="@{'/cart/add/' + ${product.id}}"> Buy</a>
+                                <a th:href="@{'/product/detail/chi-tiet/' + ${product.id}}"> Buy</a>
                             </button>
                         </div>
 
@@ -539,11 +559,12 @@ id="templatemo_nav_top"
                                 <a> Add To Cart </a>
                             </button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+
 </section>
 <!-- Close Content -->
 

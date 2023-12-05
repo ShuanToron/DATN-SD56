@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>sneaker_sneakerBeer</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="keywords"/>
+    <meta content="" name="description"/>
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link href="img/favicon.ico" rel="icon"/>
     <!-- Google Web Fonts -->
-    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
-    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
+    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}"/>
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin/>
     <link
             th:href="@{https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap}"
             rel="stylesheet"
@@ -43,12 +43,12 @@
     <!--    <link th:href="@{/../resources/dashboard/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet" />-->
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link th:href="@{/dashboard/css/boostrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/dashboard/css/boostrap.min.css}" rel="stylesheet"/>
     <!--    <link th:href="@{/../resources/dashboard/css/boostrap.min.css}" rel="stylesheet" />-->
 
     <!-- Template Stylesheet -->
     <!--    <link th:href="@{/../resources/dashboard/css/style.css}" rel="stylesheet" />-->
-    <link th:href="@{/dashboard/css/style1.css}" rel="stylesheet" />
+    <link th:href="@{/dashboard/css/style1.css}" rel="stylesheet"/>
 </head>
 <body>
 <!-- Spinner Start -->
@@ -119,17 +119,19 @@
                 </div>
                 <form action="">
                     <div class="border-start ps-4 d-none d-lg-block">
-                        <input type="text" />
+                        <input type="text"/>
                         <button type="button" class="btn btn-sm p-0">
                             <i class="fa fa-search" style="margin-left: 5px"></i>
                         </button>
                     </div>
                 </form>
-                <a th:href="@{/cart/view-cart}">
+                <a th:href="@{/user/cart}">
                     <button type="button" class="btn btn-sm p-0">
                         <i class="fa fa-cart-plus" style="margin-left: 20px">
-                  <span style="color: red" id="cartItemCount"></span
-                  ></i>
+                            <span class="badge"
+                                  th:text="${session.totalItems == null} ? '0' : ${session.totalItems}"></span>
+                            <span style="color: red" id="cartItemCount"></span
+                            ></i>
                     </button>
                 </a>
                 <div class="dropdown">
@@ -145,16 +147,20 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                         <!-- Thêm các lựa chọn vào dropdown -->
-                        <div class="dropdown-title" style="font-weight: bolder; margin-left: 15px" th:text="${#authentication.name}"></div>
+                        <div class="dropdown-title" style="font-weight: bolder; margin-left: 15px"
+                             th:text="${#authentication.name}"></div>
                         <div class="dropdown-divider"></div>
                         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
                             <!-- Nếu đã đăng nhập, hiển thị đơn hàng và logout -->
-                            <a th:href="@{/cart/dsdonhang}" class="dropdown-item has-icon "> <i class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
-                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a th:href="@{/user/orders}" class="dropdown-item has-icon "> <i
+                                    class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
+                            <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i
+                                    class="fas fa-sign-out-alt"></i> Logout</a>
                         </th:block>
                         <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
                             <!-- Nếu chưa đăng nhập, hiển thị lựa chọn login -->
-                            <a th:href="@{/login/custom-login}" class="dropdown-item has-icon "> <i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a th:href="@{/login/custom-login}" class="dropdown-item has-icon "> <i
+                                    class="fas fa-sign-in-alt"></i> Login</a>
                         </th:block>
 
 
@@ -227,7 +233,7 @@
                     >
                         <h4 class="text-primary" th:text="${product.name}"></h4>
 
-<!--                        <span class="text-body">10000</span>-->
+                        <!--                        <span class="text-body">10000</span>-->
 
                     </div>
                     <div class="store-overlay">

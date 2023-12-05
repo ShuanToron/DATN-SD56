@@ -1,8 +1,6 @@
 package com.example.datnsd56.entity;
 
 
-
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Builder
 @Entity
@@ -30,11 +27,10 @@ public class Account {
     private Integer id;
 
 
-
 //    @Column(name = "username")
 //    private String username;
 
-@NotBlank(message = "Không đuộc để trống!")
+    @NotBlank(message = "Không đuộc để trống!")
     @Column(name = "passwords")
     private String password;
 
@@ -68,16 +64,22 @@ public class Account {
     @Column(name = "email")
     private String email;
     @NotBlank(message = "Không đuộc để trống!")
-    @Pattern(regexp="\\d{10}", message="Số điện thoại phải có 10 chữ số")
+    @Pattern(regexp = "\\d{10}", message = "Số điện thoại phải có 10 chữ số")
 
     @Column(name = "phone")
     private String phone;
-@Column(name = "gender")
+    @Column(name = "gender")
     private Boolean gender;
-    @NotNull (message = "Không đuộc để trống!")
-@Column(name = "birthdate")
+    @NotNull(message = "Không đuộc để trống!")
+    @Column(name = "birthdate")
     private LocalDate birthdate;
-    @OneToMany(mappedBy = "accountId",cascade = CascadeType.ALL)
-    private List<Cart> carts;
+
+    @OneToOne(mappedBy = "accountId", cascade = CascadeType.ALL)
+    private Cart cart;
+    public Account(){
+        this.cart = new Cart();
+    }
+
+
 
 }

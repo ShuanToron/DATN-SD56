@@ -19,7 +19,7 @@ public interface OrdersService {
     Orders update(Orders orders,Integer id);
 
     Orders planceOrder(Cart cart,String address);
-
+   List<Orders> getAllOrders1(Integer accountId);
 
 
     Orders add(Orders hoaDon);

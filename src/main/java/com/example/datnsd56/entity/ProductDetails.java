@@ -41,8 +41,7 @@ public class ProductDetails {
     private Boolean status;
 
     @Column(name = "sell_price")
-    @Min(value = 1, message = "lon hon 0")
-    private Double sellPrice;
+    private BigDecimal sellPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

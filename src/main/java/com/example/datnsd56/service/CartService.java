@@ -2,6 +2,8 @@ package com.example.datnsd56.service;
 
 import com.example.datnsd56.entity.Cart;
 import com.example.datnsd56.entity.CartItem;
+import com.example.datnsd56.entity.ProductDetails;
+import com.example.datnsd56.entity.SessionCart;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,5 +28,23 @@ public interface CartService {
     double getAmount();
 //   void addToCart(CartItem cartItem);
  Cart findByNguoiDungId(Integer id);
+
+    Cart addToCart(ProductDetails productDetail, Integer quantity, String name);
+
+    Cart updateCart(ProductDetails productDetail, Integer quantity, String name);
+
+    Cart removeFromCart(ProductDetails productDetail, String name);
+
+    SessionCart addToCartSession(SessionCart sessionCart, ProductDetails productDetail, Integer quantity);
+
+    SessionCart updateCartSession(SessionCart sessionCart, ProductDetails productDetail, Integer quantity);
+
+    SessionCart removeFromCartSession(SessionCart sessionCart, ProductDetails productDetail);
+
+    Cart combineCart(SessionCart sessionCart, String name);
+
+    Cart getCart(String email);
+
+    void deleteCartById(Integer id);
 
 }

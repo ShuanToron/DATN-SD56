@@ -15,6 +15,6 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
         nativeQuery = true)
     Page<Address> findAddressesByPhone(String phone, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Address  WHERE  account_id = ?1",nativeQuery = true)
+    @Query(value = "SELECT * FROM address WHERE  account_id = ?1",nativeQuery = true)
     Address findAccountDefaultAddress(@Param("accountId") Integer accountId);
 }

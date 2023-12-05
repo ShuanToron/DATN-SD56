@@ -41,7 +41,8 @@ public class Address {
     @Column(name = "zipcode")
     private String zipcode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account_id;
+    private Account account;
+
 }

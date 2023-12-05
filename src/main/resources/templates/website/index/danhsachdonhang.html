@@ -207,7 +207,7 @@
                         <div class="dropdown-divider"></div>
                         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
                             <!-- Nếu đã đăng nhập, hiển thị đơn hàng và logout -->
-                            <a th:href="@{/cart/dsdonhang}" class="dropdown-item has-icon "> <i class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
+                            <a th:href="@{/user/dsdonhang}" class="dropdown-item has-icon "> <i class="bi bi-file-earmark-text"></i> Đơn Hàng</a>
                             <a th:href="@{/logout}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i> Logout</a>
                         </th:block>
                         <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
@@ -252,21 +252,30 @@
 
     <thead>
     <tr>
-        <th>Mã Hóa Đơn</th>
-        <th>Ảnh</th>
-        <th>Tên Sản Phẩm</th>
-        <th>Số Lượng</th>
-        <th>Tổng Tiền</th>
-        <th>Trạng Thái</th>
+        <th>Đơn hàng</th>
+        <th>Ngày đặt hàng</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái đơn hàng</th>
+        <th>Thao tác</th>
     </tr>
-    <tr>
-        <td>HD1</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Đang giao</td>
+    </thead>
+    <tbody class="align-middle">
+    <tr th:each="order : ${orders}">
+        <td class="align-middle" th:text="${order.id}"></td>
+        <td class="align-middle"
+            th:text="${(order.fullname)}"></td>
+        <td class="align-middle"
+            th:text="'₫' + ${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
+        <td class="align-middle"
+            th:text="${order.orderStatus}">
+        </td>
+        <td class="align-middle">
+            <a class="btn btn-sm btn-primary"
+               th:href="@{'/order-detail/' + ${order.id}}">Xem chi tiết</a>
+            <a class="btn btn-sm btn-danger" th:href="@{'/cancel-order/' + ${order.id}}" th:if="${order.orderStatus == 10}">Huỷ</a>
+        </td>
     </tr>
+    </tbody>
     </thead>
     <tbody>
     <!-- Các dòng dữ liệu sẽ được thêm vào đây bằng JavaScript -->

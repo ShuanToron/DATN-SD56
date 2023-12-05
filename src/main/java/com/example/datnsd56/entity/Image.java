@@ -25,13 +25,9 @@ public class Image {
     @Lob
     @Column(name = "url")
     private Blob url;
-<<<<<<< HEAD
-    @ManyToOne
-    @JoinColumn(name = "productDetail_id",referencedColumnName = "id")
-    private ProductDetails productDetails;
-=======
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Products productId;
->>>>>>> 5bee6bb0a3605b2017ce2dbf69b83048f5a89b1b
+
 }
