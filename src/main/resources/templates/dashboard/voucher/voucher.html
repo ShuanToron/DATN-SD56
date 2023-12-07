@@ -357,24 +357,24 @@
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
-                                    <tr th:each="voucher : ${vouchers}">
+                                    <tr th:each="vouchers : ${vouchers.content}">
 <!--                                        <td th:text="${voucher.id}"></td>-->
-                                        <td th:text="${voucher.code}"></td>
-                                        <td th:text="${voucher.description}"></td>
-                                        <td th:text="${voucher.startDate}"></td>
-                                        <td th:text="${voucher.expiryDateTime}"></td>
-                                        <td th:text="${voucher.discount}"></td>
-                                        <td th:text="${voucher.discountType}"></td>
-                                        <td  style="color: red" th:text="${voucher.active} ? 'New' : 'Hết hạn'"></td>
+                                        <td th:text="${vouchers.code}"></td>
+                                        <td th:text="${vouchers.description}"></td>
+                                        <td th:text="${vouchers.startDate}"></td>
+                                        <td th:text="${vouchers.expiryDateTime}"></td>
+                                        <td th:text="${vouchers.discount}"></td>
+                                        <td th:text="${vouchers.discountType}"></td>
+                                        <td  style="color: red" th:text="${vouchers.active} ? 'New' : 'Hết hạn'"></td>
 <!--                                        <td th:text="${list.status  ? 'Hoạt động' : 'Không hoạt động'}"></td>-->
                                         <td>
-                                            <a th:href="@{'/admin/voucher/delete/'+${voucher.id}}">
+                                            <a th:href="@{'/admin/voucher/delete/'+${vouchers.id}}">
                                                 <button type="submit" class="btn btn-danger"
                                                         onchange="return  confirm('Bạn có xoá không?')">
                                                     Xoá
                                                 </button>
                                             </a>
-                                            <a th:href="@{'/admin/voucher/'+${voucher.id}} ">
+                                            <a th:href="@{'/admin/voucher/'+${vouchers.id}} ">
                                                 <button type="submit" class="btn btn-success">
                                                     Cập nhật
                                                 </button>
@@ -428,26 +428,26 @@
                         <!--                        </div>-->
 
 
-<!--                        <nav aria-label="Page navigation example">-->
+                        <nav aria-label="Page navigation example">
 
-<!--                            <ul class="pagination">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" th:if="${list.hasPrevious()}"-->
-<!--                                       th:href="@{/admin/voucher/hien-thi(page=${list.number -1})}"> <span-->
-<!--                                            aria-hidden="true">&laquo;</span> </a>-->
-<!--                                </li>-->
-<!--                                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, list.totalPages-1)}">-->
-<!--                                    <a class="page-link" th:href="@{/admin/voucher/hien-thi(page=${pageNumber})}"-->
-<!--                                       th:text="${pageNumber+1}"></a>-->
-<!--                                </li>-->
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${vouchers.hasPrevious()}"
+                                       th:href="@{/admin/voucher/hien-thi(page=${vouchers.number -1})}"> <span
+                                        aria-hidden="true">&laquo;</span> </a>
+                                </li>
+                                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, vouchers.totalPages-1)}">
+                                    <a class="page-link" th:href="@{/admin/voucher/hien-thi(page=${pageNumber})}"
+                                       th:text="${pageNumber+1}"></a>
+                                </li>
 
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" th:if="${list.hasNext()}"-->
-<!--                                       th:href="@{/admin/voucher/hien-thi(page=${list.number + 1})}"> <span-->
-<!--                                            aria-hidden="true">&raquo;</span></a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </nav>-->
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${vouchers.hasNext()}"
+                                       th:href="@{/admin/voucher/hien-thi(page=${vouchers.number + 1})}"> <span
+                                        aria-hidden="true">&raquo;</span></a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <div class="settingSidebar">

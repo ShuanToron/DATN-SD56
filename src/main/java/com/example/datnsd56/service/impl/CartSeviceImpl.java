@@ -151,10 +151,12 @@ public class CartSeviceImpl implements CartService {
         cart.setCreateDate(LocalDate.now());
         cart.setUpdateDate(LocalDate.now());
         cart.setStatus("0");
-        cart.setAccountId(account.get());
+        cart.setAccountId(cartItem.getCart().getAccountId());
 
         return cartRepository.save(cart);
     }
+
+
 
     @Override
     @Transactional
