@@ -17,7 +17,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-@Table(name = "vouchers")
+@Table(name = "voucher")
 public class Voucher {
 
     @Id

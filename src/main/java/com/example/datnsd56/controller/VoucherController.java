@@ -39,7 +39,7 @@ public class VoucherController {
     @GetMapping("/hien-thi")
     public String getAllByPage(Model model,@RequestParam(defaultValue = "0") Integer page){
         voucherService.checkAndDeactivateExpiredVouchers();
-        model.addAttribute("voucher", new Voucher());
+//        model.addAttribute("voucher", new Voucher());
         Page<Voucher> page1 = voucherService.getAll(PageRequest.of(page,5));
         model.addAttribute("vouchers", page1);
         return "dashboard/voucher/voucher";
@@ -74,7 +74,7 @@ public class VoucherController {
         redirectAttributes.addFlashAttribute("successMessage", "Voucher created successfully!");
 
 
-        return "redirect:/admin/voucher";
+        return "redirect:/admin/voucher/hien-thi";
     }
 
     @PostMapping("/update/{id}")
