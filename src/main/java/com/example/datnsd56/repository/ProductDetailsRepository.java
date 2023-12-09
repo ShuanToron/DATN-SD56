@@ -15,6 +15,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 //import java.math.Double;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,10 +53,10 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
 ////    List<ProductDetails> getAllDetail(Integer id);
 //   List< Products> findProductDetailsByProductId(Integer id);
     @Query(value = "select sell_price from Product_details where product_id=?1 and color_id=?2 and size_id=?3  ", nativeQuery = true)
-    Double getDetail(Integer productId, Integer color, Integer size);
+    BigDecimal getDetail(Integer productId, Integer color, Integer size);
 
     @Query(value = "select * from Product_details where product_id=?1 and color_id=?2 and size_id=?3  ", nativeQuery = true)
-    ProductDetails getCart(Integer productId, Integer color, Integer size);
+    ProductDetails getCart(Integer productId,Integer color, Integer size);
 //    @Query(value = "select * from Product_details where   color_id=?1 and size_id=?1  ", nativeQuery = true)
 //    @Min(value = 1, message = "lon hon 0") Double getPrice(String color, String size);
 

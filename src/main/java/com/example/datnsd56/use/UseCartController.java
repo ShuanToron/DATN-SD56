@@ -32,47 +32,51 @@ public class UseCartController {
     private ImageService imageService;
 
     @GetMapping("/cart")
-    public String cart(Model model, Principal principal, HttpSession session){
-        if (principal == null){
+    public String cart(Model model, Principal principal, HttpSession session) {
+        if (principal == null) {
             SessionCart sessionCart = (SessionCart) session.getAttribute("sessionCart");
-            if (sessionCart == null){
+            if (sessionCart == null) {
                 model.addAttribute("check", "Giỏ hàng của bạn đang trống");
             }
-            if (sessionCart != null){
+            if (sessionCart != null) {
                 model.addAttribute("grandTotal", sessionCart.getTotalPrice());
                 model.addAttribute("cart", sessionCart);
                 session.setAttribute("totalItems", sessionCart.getTotalItems());
-                if (sessionCart.getCartItems().isEmpty()){
+                if (sessionCart.getCartItems().isEmpty()) {
                     model.addAttribute("check", "Giỏ hàng của bạn đang trống");
                 }
             }
         } else {
             Optional<Account> account = accountService.finByName(principal.getName());
             Cart cart = account.get().getCart();
-            if (cart == null){
+            if (cart == null) {
                 model.addAttribute("check", "Giỏ hàng của bạn đang trống");
             }
-            if (cart != null){
+            if (cart != null) {
                 model.addAttribute("grandTotal", cart.getTotalPrice());
                 model.addAttribute("cart", cart);
                 session.setAttribute("totalItems", cart.getTotalItems());
-                if (cart.getCartItems().isEmpty()){
+                if (cart.getCartItems().isEmpty()) {
                     model.addAttribute("check", "Giỏ hàng của bạn đang trống");
                 }
             }
         }
         return "website/index/giohang";
     }
+
     @PostMapping("/add-to-cart")
-    public String addToCart(@RequestParam("color") Integer colorId,
-                            @RequestParam("size") Integer sizeId,
-                            @RequestParam("quantity") Integer quantity,
-                            @RequestParam("productId") Integer productId,
-                            Principal principal,
-                            RedirectAttributes redirectAttributes,
-                            HttpSession session){
-        ProductDetails productDetail = productDetailsService.getCart(productId, sizeId, colorId);
-        if (principal == null){
+    public String addToCart(
+        @RequestParam("productId") Integer productId,
+        @RequestParam("size") Integer sizeId,
+        @RequestParam("color") Integer colorId,
+        @RequestParam("quantity") Integer quantity,
+        Principal principal,
+        RedirectAttributes redirectAttributes,
+        HttpSession session) {
+        ProductDetails productDetail = productDetailsService.getCart(productId ,colorId,sizeId);
+        System.out.println(productDetail);
+
+        if (principal == null) {
             SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
             SessionCart sessionCart = cartService.addToCartSession(oldSessionCart, productDetail, quantity);
             session.setAttribute("sessionCart", sessionCart);
@@ -84,15 +88,17 @@ public class UseCartController {
             session.setAttribute("totalItems", cart.getTotalItems());
             redirectAttributes.addFlashAttribute("mess", "Thêm giỏ hàng thành công!");
         }
-        String redirectUrl = String.format("redirect:/product/detail/chi-tiet/%d", productId);
+
+        String redirectUrl = String.format("redirect:/product/detail/chi-tiet/"+  productId);
         return redirectUrl;
     }
+
 
     @GetMapping("/display")
 //    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
 
-    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId) throws SQLException {
-        List<Image> imageList = imageService.getImagesForProducts(productId,imageId);
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId, @RequestParam("imageId") Integer imageId) throws SQLException {
+        List<Image> imageList = imageService.getImagesForProducts(productId, imageId);
         byte[] imageBytes = null;
         imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
@@ -104,9 +110,9 @@ public class UseCartController {
     public String updateCart(@RequestParam("id") Integer id,
                              @RequestParam("quantity") Integer quantity,
                              Principal principal,
-                             HttpSession session){
+                             HttpSession session) {
         ProductDetails productDetail = productDetailsService.getById(id);
-        if (principal == null){
+        if (principal == null) {
             SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
             SessionCart sessionCart = cartService.updateCartSession(oldSessionCart, productDetail, quantity);
             session.setAttribute("sessionCart", sessionCart);
@@ -123,9 +129,9 @@ public class UseCartController {
 //    @PostMapping("/delete")
     public String deleteItem(@RequestParam("id") Integer id,
                              Principal principal,
-                             HttpSession session){
+                             HttpSession session) {
         ProductDetails productDetail = productDetailsService.getById(id);
-        if (principal == null){
+        if (principal == null) {
             SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
             SessionCart sessionCart = cartService.removeFromCartSession(oldSessionCart, productDetail);
             session.setAttribute("sessionCart", sessionCart);

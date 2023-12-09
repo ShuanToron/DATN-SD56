@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.controller.AccountNotFoundException;
 import com.example.datnsd56.entity.*;
 import com.example.datnsd56.repository.CartItemRepository;
 import com.example.datnsd56.repository.CartRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SessionScope
 @Service
@@ -94,19 +96,20 @@ public class CartSeviceImpl implements CartService {
     @Override
     @Transactional
     public Cart addToCart(ProductDetails productDetail, Integer quantity, String name) {
-        Optional<Account> account = accountService.finByName(name);
-        Cart cart = account.get().getCart();
+        Optional<Account> accountOptional = accountService.finByName(name);
 
-        if (cart == null) {
-            cart = new Cart();
-        }
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            Cart cart = account.getCart();
 
-        Set<CartItem> cartDetailList = cart.getCartItems();
-        CartItem cartItem = find(cartDetailList, productDetail.getId());
-        BigDecimal unitPrice = productDetail.getSellPrice();
-        int itemQuantity = 0;
-        if (cartDetailList == null) {
-            cartDetailList = new HashSet<>();
+            if (cart == null) {
+                cart = new Cart();
+                cart.setAccountId(account);
+            }
+
+            Set<CartItem> cartItems = cart.getCartItems();
+            CartItem cartItem = find(cartItems, productDetail.getId());
+
             if (cartItem == null) {
                 cartItem = new CartItem();
                 cartItem.setProductDetails(productDetail);
@@ -114,46 +117,30 @@ public class CartSeviceImpl implements CartService {
                 cartItem.setQuantity(quantity);
                 cartItem.setCreateDate(LocalDate.now());
                 cartItem.setUpdateDate(LocalDate.now());
-                cartItem.setPrice(unitPrice);
+                cartItem.setPrice(productDetail.getSellPrice());
                 cartItem.setStatus("0");
-                cartDetailList.add(cartItem);
+                cartItems.add(cartItem);
+
+                // Lưu cartItem ngay sau khi thêm vào cartItems
                 cartItemRepository.save(cartItem);
             } else {
-                itemQuantity = cartItem.getQuantity() + quantity;
-                cartItem.setQuantity(itemQuantity);
-                cartItemRepository.save(cartItem);
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
             }
+
+            BigDecimal totalPrice = totalPrice(cartItems);
+            int totalItems = totalItem(cartItems);
+
+            cart.setCartItems(cartItems);
+            cart.setTotalPrice(totalPrice);
+            cart.setTotalItems(totalItems);
+            cart.setCreateDate(LocalDate.now());
+            cart.setUpdateDate(LocalDate.now());
+            cart.setStatus("0");
+
+            return cartRepository.save(cart);
         } else {
-            if (cartItem == null) {
-                cartItem = new CartItem();
-                cartItem.setProductDetails(productDetail);
-                cartItem.setCart(cart);
-                cartItem.setQuantity(quantity);
-                cartItem.setCreateDate(LocalDate.now());
-                cartItem.setUpdateDate(LocalDate.now());
-                cartItem.setPrice(unitPrice);
-                cartDetailList.add(cartItem);
-                cartItem.setStatus("0");
-                cartItemRepository.save(cartItem);
-            } else {
-                itemQuantity = cartItem.getQuantity() + quantity;
-                cartItem.setQuantity(itemQuantity);
-                cartItemRepository.save(cartItem);
-            }
+            throw new RuntimeException("Account not found for name: " + name);
         }
-        cart.setCartItems(cartDetailList);
-
-        BigDecimal totalPrice = totalPrice(cart.getCartItems());
-        int totalItems = totalItem(cart.getCartItems());
-
-        cart.setTotalPrice(totalPrice);
-        cart.setTotalItems(totalItems);
-        cart.setCreateDate(LocalDate.now());
-        cart.setUpdateDate(LocalDate.now());
-        cart.setStatus("0");
-        cart.setAccountId(cartItem.getCart().getAccountId());
-
-        return cartRepository.save(cart);
     }
 
 

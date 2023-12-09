@@ -38,7 +38,7 @@ public class ViewProductController {
     @GetMapping("/hien-thi")
     public String productView(Model model) {
 //List<Products>lists=productsService.getAllPro();
-        List<ProductDetails> list = productDetailsService.getAllCTSP();
+//        List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPros();
         // Sắp xếp sản phẩm theo brand
         Collections.sort(lists, Comparator.comparing(product -> product.getBrandId().getName()));
@@ -63,7 +63,7 @@ public class ViewProductController {
 //        List<Image> listIm=  imageService.getall();
 //        model.addAttribute("view",list);
 //        model.addAttribute("viewss",listIm);
-        model.addAttribute("views", list);
+//        model.addAttribute("views", list);
         return "website/index/product";
     }
     @GetMapping("/display")
