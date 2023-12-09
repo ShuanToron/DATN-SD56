@@ -43,10 +43,10 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         return productDetailsRepository.findAll(pageable);
     }
 
-//    @Override
-//    public List<ProductDetails> getAllCTSP() {
-//        return productDetailsRepository.findAll();
-//    }
+    @Override
+    public List<ProductDetails> getAllCTSP() {
+        return productDetailsRepository.findAll();
+    }
 
     @Override
     public Page<ProductDetails> search( Double sellPrice) {

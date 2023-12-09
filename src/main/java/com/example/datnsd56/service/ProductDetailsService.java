@@ -19,7 +19,7 @@ import java.util.UUID;
 public interface ProductDetailsService {
     Page<ProductDetails> getAll(Integer pageNo);
 
-//    List<ProductDetails> getAllCTSP();
+    List<ProductDetails> getAllCTSP();
 
     Page<ProductDetails> search(  Double sellPrice);
 

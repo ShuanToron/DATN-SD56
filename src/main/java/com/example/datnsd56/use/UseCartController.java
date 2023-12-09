@@ -125,9 +125,9 @@ public class UseCartController {
         return "redirect:/user/cart";
     }
 
-    @RequestMapping(value = "/user/update-cart", method = RequestMethod.POST, params = "action=delete")
-//    @PostMapping("/delete")
-    public String deleteItem(@RequestParam("id") Integer id,
+//    @RequestMapping(value = "/user/delete", method = RequestMethod.GET, params = "action=delete")
+    @GetMapping("/delete/{id}")
+    public String deleteItem(@PathVariable("id") Integer id,
                              Principal principal,
                              HttpSession session) {
         ProductDetails productDetail = productDetailsService.getById(id);
