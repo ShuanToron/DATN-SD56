@@ -20,6 +20,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 //import java.math.Double;
 //import java.math.Double;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -149,8 +150,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
-    public Double getPrice(Integer id, Integer colorId, Integer sizeId) {
-        Double price = productDetailsRepository.getDetail(id, colorId, sizeId);
+    public BigDecimal getPrice(Integer id, Integer colorId, Integer sizeId) {
+        BigDecimal price = productDetailsRepository.getDetail(id, colorId, sizeId);
         return price;
     }
 

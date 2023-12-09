@@ -127,7 +127,7 @@ https://templatemo.com/tm-559-zay-shop
                 </thead>
                 <tbody>
                 <tr th:each="sl :${cart.cartItems}">
-
+                    <form th:action="@{/user/update-cart}" method="post">
                         <input
                                 type="hidden"
                                 value="Activewear" th:value="${sl.productDetails.id}" th:name="id"
@@ -164,7 +164,7 @@ https://templatemo.com/tm-559-zay-shop
                         <td class="" th:text="${sl.price}"></td>
                         <td class="" th:text="${sl.price * sl.quantity}"></td>
                         <td>
-                            <a th:href="@{/user/delete}" method="post"
+                            <a th:href="@{'/user/delete/'+ ${sl.productDetails.id}}"
                                style="text-decoration: none; padding-right: 20px">
 
                                 <i style="color: black" class="fas fa-trash-alt" title="xóa sản phẩm"></i>
