@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 //import java.math.Double;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -46,8 +47,8 @@ public class DetailProductController {
 
     }
     @GetMapping("/getProductPrice")
-    public ResponseEntity<Double> getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color) {
-        Double productDetailPrice = productDetailsService.getPrice(id, color, size);
+    public ResponseEntity<BigDecimal> getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color) {
+        BigDecimal productDetailPrice = productDetailsService.getPrice(id, color, size);
         System.out.println(productDetailPrice);
         return ResponseEntity.ok().body(productDetailPrice);
     }

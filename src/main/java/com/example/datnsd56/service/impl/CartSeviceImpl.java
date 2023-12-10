@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.controller.AccountNotFoundException;
 import com.example.datnsd56.entity.*;
 import com.example.datnsd56.repository.CartItemRepository;
 import com.example.datnsd56.repository.CartRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SessionScope
 @Service
@@ -94,81 +96,58 @@ public class CartSeviceImpl implements CartService {
     @Override
     @Transactional
     public Cart addToCart(ProductDetails productDetail, Integer quantity, String name) {
-        Optional<Account> account = accountService.finByName(name);
-        if (account.isPresent()) {
-            Cart cart = account.get().getCart();
+        Optional<Account> accountOptional = accountService.finByName(name);
+
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            Cart cart = account.getCart();
 
             if (cart == null) {
                 cart = new Cart();
-                cart.setAccountId(account.get());
+                cart.setAccountId(account);
+                // Lưu cart ngay sau khi tạo mới
+                cartRepository.save(cart);
             }
 
-//        Cart cart = account.get().getCart();
-//
-//
-//        if (cart == null) {
-//            cart = new Cart();
-//        }
+            Set<CartItem> cartItems = cart.getCartItems();
+            CartItem cartItem = find(cartItems, productDetail.getId());
 
-            Set<CartItem> cartDetailList = cart.getCartItems();
-            CartItem cartItem = find(cartDetailList, productDetail.getId());
-            BigDecimal unitPrice = productDetail.getSellPrice();
-             int itemQuantity = 0;
-            if (cartDetailList == null) {
-                cartDetailList = new HashSet<>();
-                if (cartItem == null) {
-                    cartItem = new CartItem();
-                    cartItem.setProductDetails(productDetail);
-                    cartItem.setCart(cart);
-                    cartItem.setQuantity(quantity);
-                    cartItem.setCreateDate(LocalDate.now());
-                    cartItem.setUpdateDate(LocalDate.now());
-                    cartItem.setPrice(unitPrice);
-                    cartItem.setStatus("0");
-                    cartDetailList.add(cartItem);
-                    cartItemRepository.save(cartItem);
-                } else {
-                    itemQuantity = cartItem.getQuantity() + quantity;
-                    cartItem.setQuantity(itemQuantity);
-                    cartItemRepository.save(cartItem);
+            if (cartItem == null) {
+                cartItem = new CartItem();
+                cartItem.setProductDetails(productDetail);
+                cartItem.setCart(cart);
+                cartItem.setQuantity(quantity);
+                cartItem.setCreateDate(LocalDate.now());
+                cartItem.setUpdateDate(LocalDate.now());
+                cartItem.setPrice(productDetail.getSellPrice());
+                cartItem.setStatus("0");
+                cartItems.add(cartItem);
 
-                }
+                // Lưu cartItem ngay sau khi thêm vào cartItems
+                cartItemRepository.save(cartItem);
             } else {
-                if (cartItem == null) {
-                    cartItem = new CartItem();
-                    cartItem.setProductDetails(productDetail);
-                    cartItem.setCart(cart);
-                    cartItem.setQuantity(quantity);
-                    cartItem.setCreateDate(LocalDate.now());
-                    cartItem.setUpdateDate(LocalDate.now());
-                    cartItem.setPrice(unitPrice);
-                    cartItem.setStatus("0");
-                    cartDetailList.add(cartItem);
-                    cartItemRepository.save(cartItem);
-                } else {
-                    itemQuantity = cartItem.getQuantity() + quantity;
-                    cartItem.setQuantity(itemQuantity);
-                    cartItemRepository.save(cartItem);
-                }
+                // Nếu cartItem đã tồn tại, cập nhật quantity
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
             }
 
-            cart.setCartItems(cartDetailList);
+            BigDecimal totalPrice = totalPrice(cartItems);
+            int totalItems = totalItem(cartItems);
 
-            BigDecimal totalPrice = totalPrice(cart.getCartItems());
-            int totalItems = totalItem(cart.getCartItems());
-
+            cart.setCartItems(cartItems);
             cart.setTotalPrice(totalPrice);
             cart.setTotalItems(totalItems);
             cart.setCreateDate(LocalDate.now());
             cart.setUpdateDate(LocalDate.now());
             cart.setStatus("0");
-//            cart.setAccountId(account.get());
 
-
+            // Lưu cart sau khi cập nhật
             return cartRepository.save(cart);
+        } else {
+            throw new RuntimeException("Account not found for name: " + name);
         }
-        return null;
     }
+
+
 
     @Override
     @Transactional
@@ -209,7 +188,6 @@ public class CartSeviceImpl implements CartService {
     @Override
     public SessionCart addToCartSession(SessionCart sessionCart, ProductDetails productDetail, Integer quantity) {
         SessionCartItem cartItem = findInSession(sessionCart, productDetail.getId());
-
         if (sessionCart == null) {
             sessionCart = new SessionCart();
         }
@@ -295,19 +273,19 @@ public class CartSeviceImpl implements CartService {
         if (cart == null) {
             cart = new Cart();
         }
-        Set<CartItem> cartItems= cart.getCartItems();
-        if (cartItems == null) {
-            cartItems = new HashSet<>();
+        Set<CartItem> cartDetails = cart.getCartItems();
+        if (cartDetails == null) {
+            cartDetails = new HashSet<>();
         }
         Set<CartItem> sessionCartDetails = convertCartItem(sessionCart.getCartItems(), cart);
         for (CartItem cartDetail : sessionCartDetails) {
-            cartItems.add(cartDetail);
+            cartDetails.add(cartDetail);
             cartItemRepository.save(cartDetail);
         }
-        BigDecimal totalPrice = totalPrice(cartItems);
-        int totalItems = totalItem(cartItems);
+        BigDecimal totalPrice = totalPrice(cartDetails);
+        int totalItems = totalItem(cartDetails);
         cart.setTotalItems(totalItems);
-        cart.setCartItems(cartItems);
+        cart.setCartItems(cartDetails);
         cart.setTotalPrice(totalPrice);
         cart.setAccountId(account.get());
         return cartRepository.save(cart);
@@ -409,8 +387,6 @@ public class CartSeviceImpl implements CartService {
                 cartItem.setPrice(sessionCartItem.getPrice());
                 cartItem.setProductDetails(sessionCartItem.getProductDetail());
                 cartItem.setCart(cart);
-                cartItem.setCreateDate(LocalDate.now());
-                cartItem.setUpdateDate(LocalDate.now());
                 cartDetails.add(cartItem);
             }
         }

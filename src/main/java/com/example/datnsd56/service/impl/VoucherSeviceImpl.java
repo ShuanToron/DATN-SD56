@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.repository.VoucherRepository;
 import com.example.datnsd56.service.VoucherService;
@@ -71,4 +72,9 @@ public class VoucherSeviceImpl  {
             e.printStackTrace();
         }
         }
+//    @Override
+    public Page<Voucher> getAll(Pageable pageable) {
+//        Pageable pageable = PageRequest.of(page, 5);
+        return voucherRepository.findAll(pageable);
+    }
 }
