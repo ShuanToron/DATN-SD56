@@ -105,6 +105,8 @@ public class CartSeviceImpl implements CartService {
             if (cart == null) {
                 cart = new Cart();
                 cart.setAccountId(account);
+                // Lưu cart ngay sau khi tạo mới
+                cartRepository.save(cart);
             }
 
             Set<CartItem> cartItems = cart.getCartItems();
@@ -124,6 +126,7 @@ public class CartSeviceImpl implements CartService {
                 // Lưu cartItem ngay sau khi thêm vào cartItems
                 cartItemRepository.save(cartItem);
             } else {
+                // Nếu cartItem đã tồn tại, cập nhật quantity
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
             }
 
@@ -137,6 +140,7 @@ public class CartSeviceImpl implements CartService {
             cart.setUpdateDate(LocalDate.now());
             cart.setStatus("0");
 
+            // Lưu cart sau khi cập nhật
             return cartRepository.save(cart);
         } else {
             throw new RuntimeException("Account not found for name: " + name);
