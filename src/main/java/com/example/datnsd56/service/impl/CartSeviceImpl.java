@@ -95,65 +95,79 @@ public class CartSeviceImpl implements CartService {
     @Transactional
     public Cart addToCart(ProductDetails productDetail, Integer quantity, String name) {
         Optional<Account> account = accountService.finByName(name);
-        Cart cart = account.get().getCart();
+        if (account.isPresent()) {
+            Cart cart = account.get().getCart();
 
-        if (cart == null) {
-            cart = new Cart();
-        }
-
-        Set<CartItem> cartDetailList = cart.getCartItems();
-        CartItem cartItem = find(cartDetailList, productDetail.getId());
-        BigDecimal unitPrice = productDetail.getSellPrice();
-        int itemQuantity = 0;
-        if (cartDetailList == null) {
-            cartDetailList = new HashSet<>();
-            if (cartItem == null) {
-                cartItem = new CartItem();
-                cartItem.setProductDetails(productDetail);
-                cartItem.setCart(cart);
-                cartItem.setQuantity(quantity);
-                cartItem.setCreateDate(LocalDate.now());
-                cartItem.setUpdateDate(LocalDate.now());
-                cartItem.setPrice(unitPrice);
-                cartItem.setStatus("0");
-                cartDetailList.add(cartItem);
-                cartItemRepository.save(cartItem);
-            } else {
-                itemQuantity = cartItem.getQuantity() + quantity;
-                cartItem.setQuantity(itemQuantity);
-                cartItemRepository.save(cartItem);
+            if (cart == null) {
+                cart = new Cart();
+                cart.setAccountId(account.get());
             }
-        } else {
-            if (cartItem == null) {
-                cartItem = new CartItem();
-                cartItem.setProductDetails(productDetail);
-                cartItem.setCart(cart);
-                cartItem.setQuantity(quantity);
-                cartItem.setCreateDate(LocalDate.now());
-                cartItem.setUpdateDate(LocalDate.now());
-                cartItem.setPrice(unitPrice);
-                cartDetailList.add(cartItem);
-                cartItem.setStatus("0");
-                cartItemRepository.save(cartItem);
+
+//        Cart cart = account.get().getCart();
+//
+//
+//        if (cart == null) {
+//            cart = new Cart();
+//        }
+
+            Set<CartItem> cartDetailList = cart.getCartItems();
+            CartItem cartItem = find(cartDetailList, productDetail.getId());
+            BigDecimal unitPrice = productDetail.getSellPrice();
+             int itemQuantity = 0;
+            if (cartDetailList == null) {
+                cartDetailList = new HashSet<>();
+                if (cartItem == null) {
+                    cartItem = new CartItem();
+                    cartItem.setProductDetails(productDetail);
+                    cartItem.setCart(cart);
+                    cartItem.setQuantity(quantity);
+                    cartItem.setCreateDate(LocalDate.now());
+                    cartItem.setUpdateDate(LocalDate.now());
+                    cartItem.setPrice(unitPrice);
+                    cartItem.setStatus("0");
+                    cartDetailList.add(cartItem);
+                    cartItemRepository.save(cartItem);
+                } else {
+                    itemQuantity = cartItem.getQuantity() + quantity;
+                    cartItem.setQuantity(itemQuantity);
+                    cartItemRepository.save(cartItem);
+
+                }
             } else {
-                itemQuantity = cartItem.getQuantity() + quantity;
-                cartItem.setQuantity(itemQuantity);
-                cartItemRepository.save(cartItem);
+                if (cartItem == null) {
+                    cartItem = new CartItem();
+                    cartItem.setProductDetails(productDetail);
+                    cartItem.setCart(cart);
+                    cartItem.setQuantity(quantity);
+                    cartItem.setCreateDate(LocalDate.now());
+                    cartItem.setUpdateDate(LocalDate.now());
+                    cartItem.setPrice(unitPrice);
+                    cartItem.setStatus("0");
+                    cartDetailList.add(cartItem);
+                    cartItemRepository.save(cartItem);
+                } else {
+                    itemQuantity = cartItem.getQuantity() + quantity;
+                    cartItem.setQuantity(itemQuantity);
+                    cartItemRepository.save(cartItem);
+                }
             }
+
+            cart.setCartItems(cartDetailList);
+
+            BigDecimal totalPrice = totalPrice(cart.getCartItems());
+            int totalItems = totalItem(cart.getCartItems());
+
+            cart.setTotalPrice(totalPrice);
+            cart.setTotalItems(totalItems);
+            cart.setCreateDate(LocalDate.now());
+            cart.setUpdateDate(LocalDate.now());
+            cart.setStatus("0");
+//            cart.setAccountId(account.get());
+
+
+            return cartRepository.save(cart);
         }
-        cart.setCartItems(cartDetailList);
-
-        BigDecimal totalPrice = totalPrice(cart.getCartItems());
-        int totalItems = totalItem(cart.getCartItems());
-
-        cart.setTotalPrice(totalPrice);
-        cart.setTotalItems(totalItems);
-        cart.setCreateDate(LocalDate.now());
-        cart.setUpdateDate(LocalDate.now());
-        cart.setStatus("0");
-        cart.setAccountId(account.get());
-
-        return cartRepository.save(cart);
+        return null;
     }
 
     @Override
@@ -195,6 +209,7 @@ public class CartSeviceImpl implements CartService {
     @Override
     public SessionCart addToCartSession(SessionCart sessionCart, ProductDetails productDetail, Integer quantity) {
         SessionCartItem cartItem = findInSession(sessionCart, productDetail.getId());
+
         if (sessionCart == null) {
             sessionCart = new SessionCart();
         }
@@ -280,19 +295,19 @@ public class CartSeviceImpl implements CartService {
         if (cart == null) {
             cart = new Cart();
         }
-        Set<CartItem> cartDetails = cart.getCartItems();
-        if (cartDetails == null) {
-            cartDetails = new HashSet<>();
+        Set<CartItem> cartItems= cart.getCartItems();
+        if (cartItems == null) {
+            cartItems = new HashSet<>();
         }
         Set<CartItem> sessionCartDetails = convertCartItem(sessionCart.getCartItems(), cart);
         for (CartItem cartDetail : sessionCartDetails) {
-            cartDetails.add(cartDetail);
+            cartItems.add(cartDetail);
             cartItemRepository.save(cartDetail);
         }
-        BigDecimal totalPrice = totalPrice(cartDetails);
-        int totalItems = totalItem(cartDetails);
+        BigDecimal totalPrice = totalPrice(cartItems);
+        int totalItems = totalItem(cartItems);
         cart.setTotalItems(totalItems);
-        cart.setCartItems(cartDetails);
+        cart.setCartItems(cartItems);
         cart.setTotalPrice(totalPrice);
         cart.setAccountId(account.get());
         return cartRepository.save(cart);
@@ -394,6 +409,8 @@ public class CartSeviceImpl implements CartService {
                 cartItem.setPrice(sessionCartItem.getPrice());
                 cartItem.setProductDetails(sessionCartItem.getProductDetail());
                 cartItem.setCart(cart);
+                cartItem.setCreateDate(LocalDate.now());
+                cartItem.setUpdateDate(LocalDate.now());
                 cartDetails.add(cartItem);
             }
         }

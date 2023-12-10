@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,9 @@ public class UseCartController {
         }
         return "website/index/giohang";
     }
+
     @PostMapping("/add-to-cart")
+    @PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
     public String addToCart(@RequestParam("color") Integer colorId,
                             @RequestParam("size") Integer sizeId,
                             @RequestParam("quantity") Integer quantity,
@@ -71,7 +74,7 @@ public class UseCartController {
                             Principal principal,
                             RedirectAttributes redirectAttributes,
                             HttpSession session){
-        ProductDetails productDetail = productDetailsService.getCart(productId, sizeId, colorId);
+        ProductDetails productDetail = productDetailsService.getCart(productId, colorId, sizeId);
         if (principal == null){
             SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
             SessionCart sessionCart = cartService.addToCartSession(oldSessionCart, productDetail, quantity);
@@ -88,16 +91,23 @@ public class UseCartController {
         return redirectUrl;
     }
 
-//    @GetMapping("/display")
-////    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
-//
-//    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId) throws SQLException {
-//        List<Image> imageList = imageService.getImagesForProducts(productId);
-//        byte[] imageBytes = null;
-//        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
-//        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-//
-//    }
+    @GetMapping("/display")
+//    @PreAuthorize("hasAuthority('user') || hasAuthority('admin')")
+
+    public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId) throws SQLException {
+        List<Image> imageList= imageService.getImagesForProducts(productId,imageId);
+        byte[] imageBytes = null;
+        imageBytes = imageList.get(0).getUrl().getBytes(1, (int) imageList.get(0).getUrl().length());
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+//        if (image != null && image.get(0) != null) {
+//            return ResponseEntity.ok()
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .body(image.get(0).getUrl());
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+
+    }
 
     @RequestMapping(value = "/user/update-cart", method = RequestMethod.POST, params = "action=update")
 //    @PostMapping("/update-cart")
