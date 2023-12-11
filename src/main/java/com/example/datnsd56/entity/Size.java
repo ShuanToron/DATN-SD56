@@ -28,7 +28,7 @@ public class Size {
     private String code;
 
     @Column(name = "name")
-    @NotNull(message = "không được để trống")
+    @NotBlank(message = "không được để trống")
     private String name;
 
     @Column(name = "status")

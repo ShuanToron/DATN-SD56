@@ -275,25 +275,25 @@
 <!--                                </div>-->
                                 <div class="form-group">
                                     <label>Tên chức vụ</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên chất liệu"
+                                    <input type="text" class="form-control" placeholder="Nhập tên chức vự"
                                            th:field="*{name}">
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 10px"
                                           th:errors="*{name}"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"
-                                               checked="checked">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"-->
+<!--                                               checked="checked">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                        <input type="radio" checked="checked" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>    -->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <a th:href="@{/admin/roles/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
