@@ -55,11 +55,11 @@ public class SizeController {
 
         }   // Check if color with the same name already exists
         if (service.existsByName(size.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
             return "redirect:/admin/kich-co/hien-thi";
         }
         service.update(size);
-        redirectAttributes.addFlashAttribute("successMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("Message", "sửa thành công");
         return "redirect:/admin/kich-co/hien-thi";
     }
 
@@ -79,7 +79,7 @@ public class SizeController {
             return "/dashboard/kich-co/kich-co";
         }   // Check if color with the same name already exists
         if (service.existsByName(size.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
             return "redirect:/admin/kich-co/hien-thi";
 
         }
@@ -88,7 +88,7 @@ public class SizeController {
         size.setStatus(true);
         model.addAttribute("size", size);
         service.add(size);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/kich-co/hien-thi";
 
     }
@@ -102,7 +102,7 @@ public class SizeController {
             return "/dashboard/kich-co/kich-co";
         }
         if (service.existsByName(size.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
             return "redirect:/admin/kich-co/hien-thi";
 
         }
@@ -111,7 +111,7 @@ public class SizeController {
         size.setStatus(true);
         model.addAttribute("size", size);
         service.add(size);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/kich-co/hien-thi";
 
     }
@@ -125,7 +125,7 @@ public class SizeController {
             return "/dashboard/kich-co/kich-co";
         }
         if (service.existsByName(size.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
             return "redirect:/admin/kich-co/hien-thi";
 
         }
@@ -134,7 +134,7 @@ public class SizeController {
         size.setStatus(true);
         model.addAttribute("size", size);
         service.add(size);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/kich-co/hien-thi";
 
     }

@@ -52,12 +52,12 @@ public class CategoryController {
             return "/dashboard/loai-giay/update-loai-giay";
 
         }  if (service.existsByName(category.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
             return "redirect:/admin/loai-giay/hien-thi";
 
         }
         service.update(category);
-        redirectAttributes.addFlashAttribute("errorMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("Message", "sửa thành công");
         return "redirect:/admin/loai-giay/hien-thi";
     }
 
@@ -78,7 +78,7 @@ public class CategoryController {
         }
         // Check if color with the same name already exists
         if (service.existsByName(category.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
             return "redirect:/admin/loai-giay/hien-thi";
 
         }
@@ -86,7 +86,7 @@ public class CategoryController {
         category.setCode(code);
         category.setStatus(true);
         service.add(category);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/loai-giay/hien-thi";
 
     }
@@ -99,14 +99,14 @@ public class CategoryController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/loai-giay/loai-giay";
         }  if (service.existsByName(category.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
             return "redirect:/admin/san-pham-test/create";
         }
         String code = "CL" + new Random().nextInt(100000);
         category.setCode(code);
         category.setStatus(true);
         service.add(category);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
     }

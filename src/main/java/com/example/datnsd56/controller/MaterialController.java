@@ -66,14 +66,14 @@ public class MaterialController {
         }
         // Check if color with the same name already exists
         if (service.existsByName(material.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Material with the same name already exists");
             return "redirect:/admin/chat-lieu/hien-thi";
         }
         String code = "CL" + new Random().nextInt(100000);
         material.setCode(code);
         material.setStatus(true);
         service.add(material);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
     }
     @PostMapping("/add1")
@@ -86,14 +86,14 @@ public class MaterialController {
             return "/dashboard/chat-lieu/chat-lieu";
         }  // Check if color with the same name already exists
         if (service.existsByName(material.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Material with the same name already exists");
             return "redirect:/admin/chat-lieu/hien-thi";
         }
         String code = "CL" + new Random().nextInt(100000);
         material.setCode(code);
         material.setStatus(true);
         service.add(material);
-        session.setAttribute("errorMessage", "Thêm thành công");
+        session.setAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
     }
 
@@ -105,11 +105,11 @@ public class MaterialController {
 
         }   // Check if color with the same name already exists
         if (service.existsByName(material.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Material with the same name already exists");
             return "redirect:/admin/chat-lieu/hien-thi";
         }
         service.update(material);
-        redirectAttributes.addFlashAttribute("errorMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("Message", "sửa thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
     }
     @GetMapping("search")

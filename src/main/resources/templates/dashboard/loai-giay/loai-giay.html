@@ -261,7 +261,10 @@
                               onsubmit="return  confirm('Bạn có thêm không?')">
                             <div th:if="${errorMessage}" class="alert alert-danger">
                                 <p th:text="${errorMessage}"></p>
-                            </div>
+                                <div th:if="${Message}" class="alert alert-success">
+                                    <p th:text="${Message}"></p>
+
+                                </div>
                             <div class="card-body">
 <!--                                <div class="form-group">-->
 <!--                                    <label>Mã loại giày</label>-->

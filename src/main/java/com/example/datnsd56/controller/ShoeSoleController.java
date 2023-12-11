@@ -56,11 +56,11 @@ public class ShoeSoleController {
         }
         // Check if color with the same name already exists
         if (service.existsByName(shoeSole.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
             return "redirect:/admin/de-giay/hien-thi";
         }
         service.update(shoeSole);
-        session.setAttribute("errorMessage", "sửa thành công");
+        session.setAttribute("Message", "sửa thành công");
         return "redirect:/admin/de-giay/hien-thi";
     }
 
@@ -79,14 +79,14 @@ public class ShoeSoleController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/de-giay/de-giay";
         } if (service.existsByName(shoeSole.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
             return "redirect:/admin/de-giay/hien-thi";
         }
         String code = "DG" + new Random().nextInt(100000);
         shoeSole.setCode(code);
         shoeSole.setStatus(true);
         service.add(shoeSole);
-        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/de-giay/hien-thi";
 
     }
@@ -101,14 +101,14 @@ public class ShoeSoleController {
         }
         // Check if color with the same name already exists
         if (service.existsByName(shoeSole.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
             return "redirect:/admin/de-giay/hien-thi";
         }
         String code = "DG" + new Random().nextInt(100000);
         shoeSole.setCode(code);
         shoeSole.setStatus(true);
         service.add(shoeSole);
-        session.setAttribute("errorMessage", "Thêm thành công");
+        session.setAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
     }
