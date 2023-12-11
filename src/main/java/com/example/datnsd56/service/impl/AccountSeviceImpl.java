@@ -83,7 +83,8 @@ public class AccountSeviceImpl implements AccountService {
     }
 
     @Override
-    public Account findByEmail(String email) {
+    public  List<Account> findByEmail(String email){
+
         return accountRepository.findByEmail(email);
     }
 

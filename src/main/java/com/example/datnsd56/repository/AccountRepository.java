@@ -13,7 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Integer> {
-    Account findByEmail(String email);
+    @Query(value = "SELECT * FROM Account WHERE  email = ?1",
+        nativeQuery = true)
+    List<Account> findByEmail(String email);
 //    @Query("SELECT a FROM Account a WHERE like :a.phone")
 //    List<Account> findAccountByPhone(String phone);
 @Query(value = "SELECT * FROM Account WHERE phone = ?1 or email = ?2",

@@ -17,6 +17,7 @@ public interface AccountService {
     List<Account> get();
     Optional<Account> findById(Integer id);
     Optional<Account> finByName(String username);
-    Account findByEmail(String email);
+    List<Account> findByEmail(String email);
+
 
 }
