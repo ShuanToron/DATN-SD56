@@ -53,7 +53,11 @@ public class UserBillController {
 
             if (addressList.isEmpty()) {
                 // Nếu không có địa chỉ, chuyển hướng đến trang thêm địa chỉ mới
+                model.addAttribute("cart", cart);
+                model.addAttribute("addressList", addressList);
+                model.addAttribute("newAddress", new Address()); // Thêm đối tượng mới cho modal
                 return "website/index/giohang1";
+
 
             } else {
                 model.addAttribute("cart", cart);
