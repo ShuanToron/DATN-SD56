@@ -70,7 +70,7 @@ public class SizeController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("size") Size size,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("size") Size size, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Size> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -93,7 +93,7 @@ public class SizeController {
 
     }
     @PostMapping("/add1")
-    public String add1(@Valid @ModelAttribute("size") Size size ,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add1(@Valid @ModelAttribute("size") Size size , BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Size> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -116,7 +116,7 @@ public class SizeController {
 
     }
     @PostMapping("/add2")
-    public String add2(@Valid @ModelAttribute("size") Size size,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add2(@Valid @ModelAttribute("size") Size size, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Size> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());

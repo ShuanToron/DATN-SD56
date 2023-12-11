@@ -68,7 +68,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("category") Category category,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Category> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -91,7 +91,7 @@ public class CategoryController {
 
     }
     @PostMapping("/add1")
-    public String addd(@Valid @ModelAttribute("category") Category category,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String addd(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Category> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());

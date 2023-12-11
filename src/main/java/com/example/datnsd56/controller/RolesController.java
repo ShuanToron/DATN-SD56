@@ -52,7 +52,7 @@ public class RolesController {
         return "dashboard/roles/update-roles";
     }
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("roles") Roles roles, RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session){
+    public String add(@Valid @ModelAttribute("roles") Roles roles,  BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("list",rolesService.getAllbypage(Pageable.unpaged()));
             return "/dashboard/roles/roles";
@@ -69,7 +69,7 @@ public class RolesController {
 
     }
     @PostMapping("/add1")
-    public String add1(@Valid @ModelAttribute("roles") Roles roles,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session){
+    public String add1(@Valid @ModelAttribute("roles") Roles roles, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("list",rolesService.getAllbypage(Pageable.unpaged()));
             return "/dashboard/roles/roles";
@@ -85,7 +85,7 @@ public class RolesController {
 
     }
     @PostMapping("/update/{id}")
-    public String update( @Valid @ModelAttribute("roles") Roles roles,RedirectAttributes redirectAttributes, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {
+    public String update( @Valid @ModelAttribute("roles") Roles roles, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("roles",roles);
             return "dashboard/roles/update-roles";
