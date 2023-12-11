@@ -168,7 +168,7 @@ https://templatemo.com/tm-559-zay-shop
                         </tbody>
                     </table>
 
-                    <!-- Tổng số tiền -->
+                     Tổng số tiền
                     <div class="text-end">
                         Tổng số tiền: <span id="totalPrice" th:text="${cart.totalPrice} + 'Đ'" style="color: red;"></span>
                     </div>
@@ -213,8 +213,8 @@ https://templatemo.com/tm-559-zay-shop
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="zipcode" class="form-label">Mã Bưu Chính</label>
-                                    <input type="number" class="form-control" id="zipcode" placeholder="Nhập Mã Bưu Chính" th:field="*{zipcode}">
+                                    <label for="zipcode" class="form-label">Số Điện Thoại</label>
+                                    <input type="number" class="form-control" id="zipcode" placeholder="Nhập Số Điện Thoại" th:field="*{zipcode}">
                                     <span th:if="${#fields.hasErrors('zipcode')}" style="color: red; font-size: 13px" th:errors="*{zipcode}"></span>
                                 </div>
 
