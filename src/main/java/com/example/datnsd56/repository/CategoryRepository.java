@@ -10,4 +10,5 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
     @Query(value = "select * from Category  where name = ?1 ",
             nativeQuery = true)
     Page<Category> findByName(String name, Pageable pageable);
+    boolean existsByName(String name);
 }

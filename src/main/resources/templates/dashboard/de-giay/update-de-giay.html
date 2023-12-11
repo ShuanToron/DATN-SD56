@@ -262,6 +262,9 @@
                         <form th:action="@{'/admin/de-giay/update/'+${id}}" method="post"
                               th:object="${shoeSole}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã đế giày</label>

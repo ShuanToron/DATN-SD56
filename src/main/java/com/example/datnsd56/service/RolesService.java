@@ -14,5 +14,5 @@ public interface RolesService {
     void update(Roles roles);
     void delete(Integer id);
     Roles findbyname(String roles);
-
+    boolean existsByName(String Name);
 }

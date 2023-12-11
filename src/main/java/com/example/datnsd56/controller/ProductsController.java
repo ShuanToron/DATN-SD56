@@ -122,6 +122,7 @@ public class ProductsController {
             model.addAttribute("listColor", colorService.getAllColor());
             model.addAttribute("listSize", sizeService.getAllSZ());
         }
+
         products.setStatus(1);
         productService.addProduct(products, colorList, kichThuocList, files);
         return "redirect:/admin/san-pham-test/create";
@@ -191,6 +192,7 @@ public class ProductsController {
             model.addAttribute("listColor", colorService.getAllColor());
             model.addAttribute("listSize", sizeService.getAllSZ());
         }
+
         productService.updateProduct(products, files);
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }

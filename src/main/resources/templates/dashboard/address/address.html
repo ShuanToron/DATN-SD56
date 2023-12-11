@@ -274,6 +274,9 @@ width: 500px;
                         </div>
                         <form th:action="@{/admin/address/add}" method="post" th:object="${address}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Tên Đường </label>

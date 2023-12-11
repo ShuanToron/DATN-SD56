@@ -54,4 +54,9 @@ public class RolesSeviceImpl implements RolesService {
       Roles r1 = rolesRepository.findRolesByName("user");
         return r1;
     }
+
+    @Override
+    public boolean existsByName(String Name) {
+        return rolesRepository.existsByName(Name);
+    }
 }

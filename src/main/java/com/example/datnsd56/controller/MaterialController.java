@@ -42,10 +42,10 @@ public class MaterialController {
     }
 
     @GetMapping("/view-update/{id}")
-    public String detail(@PathVariable("id") Integer id,Model model) {
+    public String detail(@PathVariable("id") Integer id,Model model,RedirectAttributes redirectAttributes) {
 
         Material material= service.getById(id);
-        model.addAttribute("material",material);
+        redirectAttributes.addFlashAttribute("material",material);
         return "/dashboard/chat-lieu/update-chat-lieu";
     }
 
@@ -56,7 +56,7 @@ public class MaterialController {
     }
 
     @PostMapping("/add")
-    public String addChatLieu(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session) {
+    public String addChatLieu(@Valid @ModelAttribute("chatlieu") Material material,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             Page<Material> page = service.pageMaterial(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -64,39 +64,52 @@ public class MaterialController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/chat-lieu/chat-lieu";
         }
+        // Check if color with the same name already exists
+        if (service.existsByName(material.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            return "redirect:/admin/chat-lieu/hien-thi";
+        }
         String code = "CL" + new Random().nextInt(100000);
         material.setCode(code);
         material.setStatus(true);
         service.add(material);
-        session.setAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
     }
     @PostMapping("/add1")
-    public String add(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("chatlieu") Material material,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             Page<Material> page = service.pageMaterial(0);
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
             return "/dashboard/chat-lieu/chat-lieu";
+        }  // Check if color with the same name already exists
+        if (service.existsByName(material.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            return "redirect:/admin/chat-lieu/hien-thi";
         }
         String code = "CL" + new Random().nextInt(100000);
         material.setCode(code);
         material.setStatus(true);
         service.add(material);
-        session.setAttribute("successMessage", "Thêm thành công");
+        session.setAttribute("errorMessage", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("color") Material material, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("color") Material material,RedirectAttributes redirectAttributes, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("material", material);
             return "/dashboard/chat-lieu/update-chat-lieu";
 
+        }   // Check if color with the same name already exists
+        if (service.existsByName(material.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            return "redirect:/admin/chat-lieu/hien-thi";
         }
         service.update(material);
-        session.setAttribute("successMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("errorMessage", "sửa thành công");
         return "redirect:/admin/chat-lieu/hien-thi";
     }
     @GetMapping("search")

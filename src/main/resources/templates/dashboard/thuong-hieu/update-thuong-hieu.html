@@ -261,6 +261,9 @@
                         </div>
                         <form th:action="@{'/admin/thuong-hieu/update/'+${id}}" method="post" th:object="${brand}"
                               onsubmit="return  confirm('Bạn có muốn câp nhật không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã thương hiệu</label>

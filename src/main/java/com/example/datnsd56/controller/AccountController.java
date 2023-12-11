@@ -89,9 +89,33 @@ public class AccountController {
 //        return "redirect:/admin/account/hien-thi";
 //
 //    }
+//@PostMapping("/add")
+////@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
+//public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+//    if (result.hasErrors()) {
+//        // Handle validation errors
+//        model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
+//        Page<Account> page1 = accountService.getAll(PageRequest.of(page, 5));
+//        model.addAttribute("list", page1);
+//        List<Roles> listr = rolesService.getAll();
+//        model.addAttribute("rolelist", listr);
+//        model.addAttribute("roles", new Roles());
+//        return "/dashboard/account/account";
+//    }
+//
+//    // Hash the password using BCryptPasswordEncoder
+//    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    String hashedPassword = encoder.encode(account.getPassword());
+//    account.setPassword(hashedPassword);
+//
+//    accountService.add(account);
+//
+//    session.setAttribute("successMessage", "Thêm thành công");
+//    return "redirect:/admin/account/hien-thi";
+//}
 @PostMapping("/add")
-//@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
 public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+    // Kiểm tra lỗi validation
     if (result.hasErrors()) {
         // Handle validation errors
         model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
@@ -103,11 +127,19 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
         return "/dashboard/account/account";
     }
 
-    // Hash the password using BCryptPasswordEncoder
+    // Kiểm tra xem email đã tồn tại hay chưa
+    if (accountService.findByEmail(account.getEmail()) != null) {
+        // Email đã tồn tại, xử lý lỗi và trả về trang tạo tài khoản
+        model.addAttribute("emailError", "Email đã tồn tại");
+        return "redirect:/admin/account/hien-thi";
+    }
+
+    // Hash mật khẩu bằng BCryptPasswordEncoder
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String hashedPassword = encoder.encode(account.getPassword());
     account.setPassword(hashedPassword);
 
+    // Thêm tài khoản vào cơ sở dữ liệu
     accountService.add(account);
 
     session.setAttribute("successMessage", "Thêm thành công");

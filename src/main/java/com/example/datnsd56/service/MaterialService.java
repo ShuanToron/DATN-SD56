@@ -20,4 +20,6 @@ public interface MaterialService {
     Material getById(Integer id);
     Page<Material> findByName(String name);
     void update(Material material);
+    boolean existsByName(String name);
+
 }

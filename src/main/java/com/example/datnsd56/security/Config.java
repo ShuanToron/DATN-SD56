@@ -90,13 +90,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
              .requestMatchers("/error/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .requestMatchers("/login/**").permitAll()// với endpoint /hello thì sẽ được cho qua
             .requestMatchers("/admin/**").permitAll()// với endpoint /hello thì sẽ được cho qua
+           // .requestMatchers("/admin/san-pham-test/**").permitAll()// với endpoint /hello thì sẽ được cho qua
 
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/customer/**").authenticated()
             .requestMatchers("/cart/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/user/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
-            .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
+          //  .requestMatchers("/admin/**").authenticated() // với endpoint /customer/** sẽ yêu cầu authenticate
             .requestMatchers("/rest/**").authenticated()// với endpoint /customer/** sẽ yêu cầu authenticate
 
             .and().formLogin()// trả về page login nếu chưa authenticate

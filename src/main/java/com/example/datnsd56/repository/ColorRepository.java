@@ -29,4 +29,5 @@ public interface ColorRepository extends JpaRepository<Color, Integer> {
     @Query(value = "select * from Color where name = ?1 ",
             nativeQuery = true)
     Page<Color> findByName(String name, Pageable pageable);
+    boolean existsByName(String Name);
 }
