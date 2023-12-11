@@ -4,6 +4,7 @@ package com.example.datnsd56.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -70,6 +71,7 @@ public class Account {
     private String phone;
     @Column(name = "gender")
     private Boolean gender;
+    @Past(message ="ngày sinh không hợp lệ! ")
     @NotNull(message = "Không đuộc để trống!")
     @Column(name = "birthdate")
     private LocalDate birthdate;

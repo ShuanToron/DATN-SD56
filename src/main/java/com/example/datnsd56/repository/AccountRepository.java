@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account,Integer> {
     @Query(value = "SELECT * FROM Account WHERE  email = ?1",
         nativeQuery = true)
-    List<Account> findByEmail(String email);
+    List<Account> findByEmail1(String email);
 //    @Query("SELECT a FROM Account a WHERE like :a.phone")
 //    List<Account> findAccountByPhone(String phone);
 @Query(value = "SELECT * FROM Account WHERE phone = ?1 or email = ?2",
@@ -27,6 +27,6 @@ Page<Account> findAccountByPhone(String phone, Pageable pageable);
     Optional<Account> findById(Integer id);
 @Query(value="select*from account where fullname = ?1",nativeQuery = true)
     Optional<Account> findByName(String username);
-
+Account findByEmail (String email);
 }
 

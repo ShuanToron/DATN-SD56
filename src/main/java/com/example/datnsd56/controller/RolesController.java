@@ -62,6 +62,7 @@ public class RolesController {
             redirectAttributes.addFlashAttribute("errorMessage", "Role with the same name already exists");
             return "redirect:/admin/roles/hien-thi";
         }
+        roles.setStatus(true);
         rolesService.add(roles);
         redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/roles/hien-thi";
@@ -77,6 +78,7 @@ public class RolesController {
             redirectAttributes.addFlashAttribute("errorMessage", "Role with the same name already exists");
             return "redirect:/admin/roles/hien-thi";
         }
+        roles.setStatus(true);
         rolesService.add(roles);
         redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/account/hien-thi";
