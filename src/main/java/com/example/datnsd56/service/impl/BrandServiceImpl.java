@@ -65,4 +65,10 @@ public class BrandServiceImpl implements BrandService {
         Page<Brand> list=repository.findByName(name,page);
         return list;
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+
+    }
 }

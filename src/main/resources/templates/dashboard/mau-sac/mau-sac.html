@@ -23,6 +23,7 @@
 <body>
 <div class="loader"></div>
 
+<!-- Add this code to display the error message -->
 
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
@@ -261,6 +262,9 @@
                         </div>
                         <form action="/admin/mau-sac/add" method="post" th:object="${color}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
 <!--                                <div class="form-group">-->
 <!--                                    <label>Mã màu sắc</label>-->

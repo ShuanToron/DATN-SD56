@@ -12,4 +12,5 @@ public interface BrandRepository extends JpaRepository<Brand,Integer> {
     @Query(value = "select * from Brand  where name = ?1 ",
             nativeQuery = true)
     Page<Brand> findByName(String name, Pageable pageable);
+    boolean existsByName(String Name);
 }

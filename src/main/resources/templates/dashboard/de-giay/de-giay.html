@@ -260,6 +260,9 @@
                         </div>
                         <form action="/admin/de-giay/add" method="post" th:object="${shoeSole}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
 <!--                                <div class="form-group">-->
 <!--                                    <label>Mã đế giày</label>-->

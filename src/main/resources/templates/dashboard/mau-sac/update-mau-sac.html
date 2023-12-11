@@ -260,6 +260,9 @@
                         <form th:action="@{'/admin/mau-sac/update/'+${id}}" method="post"
                               th:object="${color}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã màu sắc</label>

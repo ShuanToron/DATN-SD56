@@ -261,6 +261,9 @@
                         </div>
                         <form th:action="@{'/admin/account/update/'+${id}}" method="post" th:object="${account}"
                               onsubmit="return  confirm('Bạn có cập nhật không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Họ và tên</label>

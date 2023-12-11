@@ -261,6 +261,9 @@
                         </div>
                         <form th:action="@{'/admin/voucher/update/' +${id}}" method="post" th:object="${voucher}"
                               onsubmit="return  confirm('Bạn có sửa không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã Voucher</label>

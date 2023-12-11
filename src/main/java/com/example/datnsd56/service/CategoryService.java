@@ -18,4 +18,6 @@ public interface CategoryService {
 
     void update(Category category);
     Page<Category> findByName(String name);
+    boolean existsByName(String name);
+
 }

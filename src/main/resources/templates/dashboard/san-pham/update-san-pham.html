@@ -262,6 +262,9 @@
                         <form th:action="@{'/admin/san-pham-test/update-san-pham/'+${id}}" method="post"
                               th:object="${product}"
                               onsubmit="return  confirm('Bạn có muốn cập nhật không?')" enctype="multipart/form-data">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <!--                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 
                             <div class="card-body">

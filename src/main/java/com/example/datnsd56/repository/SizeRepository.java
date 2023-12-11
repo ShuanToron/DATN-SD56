@@ -31,4 +31,5 @@ public interface SizeRepository extends JpaRepository<Size, Integer> {
     @Query(value = "select * from Size  where name = ?1 ",
             nativeQuery = true)
     Page<Size> findByName(String name, Pageable pageable);
+    boolean existsByName(String name);
 }

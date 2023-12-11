@@ -214,6 +214,12 @@ public class ProductsServiceImpl implements ProductsService {
         return productDetailsRepository.findSelectedColorIds(id);
     }
 
+    @Override
+    public boolean existsByName(String name) {
+        return productRepository.existsByName(name);
+
+    }
+
     public List<Integer> getSelectedColorIds(Integer id) {
         List<ProductDetails> detailsList = productDetailsRepository.getProductDetailsById(id);
         List<Integer> selectedColors = new ArrayList<>();

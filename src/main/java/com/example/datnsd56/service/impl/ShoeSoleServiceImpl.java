@@ -66,4 +66,10 @@ public class ShoeSoleServiceImpl implements ShoeSoleService {
         Page<ShoeSole> list=repository.findByName(name,page);
         return list;
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+
+    }
 }

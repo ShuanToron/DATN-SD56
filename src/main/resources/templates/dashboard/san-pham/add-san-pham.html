@@ -279,6 +279,9 @@
                         <form th:action="@{/admin/san-pham-test/add-product}" method="post" th:object="${product}"
                               enctype="multipart/form-data"
                               onsubmit="return  confirm('Bạn có muốn thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Mã sản phẩm</label>

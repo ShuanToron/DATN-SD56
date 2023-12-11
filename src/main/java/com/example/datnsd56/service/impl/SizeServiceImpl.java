@@ -66,4 +66,9 @@ public class SizeServiceImpl implements SizeService {
         Page<Size> list=sizeRepository.findByName(name,page);
         return list;
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return sizeRepository.existsByName(name);
+    }
 }

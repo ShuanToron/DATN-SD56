@@ -64,4 +64,10 @@ public class MaterialServiceImpl implements MaterialService {
 
         repository.save(material);
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+
+    }
 }

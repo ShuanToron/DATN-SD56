@@ -259,6 +259,9 @@
                         </div>
                         <form action="/admin/loai-giay/add" method="post" th:object="${category}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
                             <div class="card-body">
 <!--                                <div class="form-group">-->
 <!--                                    <label>Mã loại giày</label>-->
