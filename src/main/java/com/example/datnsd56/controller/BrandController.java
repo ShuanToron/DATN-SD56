@@ -54,11 +54,11 @@ public class BrandController {
 
         } // Check if color with the same name already exists
         if (service.existsByName(brand.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
             return "redirect:/admin/loai-giay/hien-thi";
         }
         service.update(brand);
-        session.setAttribute("errorMessage", "sửa thành công");
+        session.setAttribute("Message", "sửa thành công");
         return "redirect:/admin/thuong-hieu/hien-thi";
     }
 
@@ -80,14 +80,14 @@ public class BrandController {
         }
         // Check if color with the same name already exists
         if (service.existsByName(brand.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
             return "redirect:/admin/thuong-hieu/hien-thi";
         }
         String code = "Brand" + new Random().nextInt(100000);
         brand.setCode(code);
         brand.setStatus(true);
         service.add(brand);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/thuong-hieu/hien-thi";
 
     }
@@ -101,14 +101,14 @@ public class BrandController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/thuong-hieu/thuong-hieu";
         }   if (service.existsByName(brand.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
             return "redirect:/admin/thuong-hieu/hien-thi";
         }
         String code = "TH" + new Random().nextInt(100000);
         brand.setCode(code);
         brand.setStatus(true);
         service.add(brand);
-        redirectAttributes.addFlashAttribute("errorMessage",  "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message",  "Thêm thành công");
         return "redirect:/admin/thuong-hieu/hien-thi";
 
     }

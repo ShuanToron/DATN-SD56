@@ -65,7 +65,7 @@ public class ColorController {
             return "redirect:/admin/mau-sac/hien-thi";
         }
         service.update(color);
-        session.setAttribute("errorMessage", "sửa thành công");
+        session.setAttribute("Message", "sửa thành công");
         return "redirect:/admin/mau-sac/hien-thi";
     }
 
@@ -114,7 +114,7 @@ public String add(@Valid @ModelAttribute("color") Color color, BindingResult res
     color.setStatus(true);
     model.addAttribute("color", color);
     service.add(color);
-    redirectAttributes.addFlashAttribute("errorMessage", "Thêm thành công");
+    redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
     return "redirect:/admin/mau-sac/hien-thi";
 }
 
@@ -135,7 +135,7 @@ public String add(@Valid @ModelAttribute("color") Color color, BindingResult res
         color.setStatus(true);
         model.addAttribute("color", color);
         service.add(color);
-        session.setAttribute("errorMessage", "Thêm thành công");
+        session.setAttribute("Message", "Thêm thành công");
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
 
     }
@@ -156,7 +156,7 @@ public String add(@Valid @ModelAttribute("color") Color color, BindingResult res
         color.setStatus(true);
         model.addAttribute("color", color);
         service.add(color);
-        session.setAttribute("errorMessage", "Thêm thành công");
+        session.setAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
     }

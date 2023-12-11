@@ -59,11 +59,11 @@ public class RolesController {
 
         }  // Check if color with the same name already exists
         if (rolesService.existsByName(roles.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Role with the same name already exists");
             return "redirect:/admin/roles/hien-thi";
         }
         rolesService.add(roles);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/roles/hien-thi";
 
     }
@@ -74,11 +74,11 @@ public class RolesController {
             return "/dashboard/roles/roles";
 
         } if (rolesService.existsByName(roles.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Role with the same name already exists");
             return "redirect:/admin/roles/hien-thi";
         }
         rolesService.add(roles);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/account/hien-thi";
 
     }
@@ -89,11 +89,11 @@ public class RolesController {
             return "dashboard/roles/update-roles";
 
         }   if (rolesService.existsByName(roles.getName())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Color with the same name already exists");
+            redirectAttributes.addFlashAttribute("errorMessage", "Role with the same name already exists");
             return "redirect:/admin/roles/hien-thi";
         }
         rolesService.update(roles);
-        redirectAttributes.addFlashAttribute("successMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("Message", "sửa thành công");
         return "redirect:/admin/roles/hien-thi";
     }
     @GetMapping("delete/{id}")
