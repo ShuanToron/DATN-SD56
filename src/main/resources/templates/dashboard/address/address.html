@@ -320,9 +320,9 @@ width: 500px;
                                         <div class="form-group">
                                             <label>Tài Khoản </label>
                                             <div class="input-group">
-                                                <select class="form-control" th:field="*{account_id}">
+                                                <select class="form-control" th:field="*{account}">
                                                     <option th:each="account:${accountlist}" th:value="${account.id}"
-                                                            th:text="${account.fullname}"></option>
+                                                            th:text="${account.name}"></option>
                                                 </select>
                                                 <div  class="input-group-append">
                                                     <button class="btn btn-primary" type="button"
@@ -352,10 +352,10 @@ width: 500px;
                                             <label>Họ và tên</label>
                                             <div class="input-group colorpickerinput">
                                                 <input type="text" class="form-control" placeholder="Nhập họ và tên"
-                                                       th:field="*{fullname}">
-                                                <span th:if="${#fields.hasErrors('fullname')}"
+                                                       th:field="*{name}">
+                                                <span th:if="${#fields.hasErrors('name')}"
                                                       style="color: red; font-size: 13px"
-                                                      th:errors="*{fullname}"></span>
+                                                      th:errors="*{name}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -487,7 +487,7 @@ width: 500px;
                                         <td th:text="*{list.streetName}"></td>
                                         <td th:text="*{list.district}"></td>
                                         <td th:text="*{list.province}"></td>
-                                        <td th:text="${list != null ? (list.account_id != null ? list.account_id.fullname : '') : ''}"></td>
+                                        <td th:text="${list != null ? (list.account!= null ? list.account.name : '') : ''}"></td>
                                         <td>
                                             <a th:href="@{'/admin/address/delete/'+${list.id}}">
                                                 <button type="submit" class="btn btn-danger"
