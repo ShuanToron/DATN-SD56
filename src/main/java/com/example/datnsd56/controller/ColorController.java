@@ -54,7 +54,7 @@ public class ColorController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("color") Color color,RedirectAttributes redirectAttributes, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("color") Color color, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("color", color);
             return "/dashboard/mau-sac/update-mau-sac";
@@ -119,7 +119,7 @@ public String add(@Valid @ModelAttribute("color") Color color, BindingResult res
 }
 
     @PostMapping("/add1")
-    public String add1(@Valid @ModelAttribute("color") Color color,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add1(@Valid @ModelAttribute("color") Color color,BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Color> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -140,7 +140,7 @@ public String add(@Valid @ModelAttribute("color") Color color, BindingResult res
 
     }
     @PostMapping("/add2")
-    public String add2(@Valid @ModelAttribute("color") Color color,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add2(@Valid @ModelAttribute("color") Color color, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Color> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());

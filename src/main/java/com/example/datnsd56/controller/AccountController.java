@@ -91,7 +91,7 @@ public class AccountController {
 //    }
 @PostMapping("/add")
 //@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
-public String add(@Valid @ModelAttribute("account") Account account, RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page,RedirectAttributes redirectAttributes) {
     if (result.hasErrors()) {
         // Handle validation errors
         model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
@@ -154,7 +154,7 @@ public String add(@Valid @ModelAttribute("account") Account account, RedirectAtt
 
     @PostMapping("/add1")
 //    @PreAuthorize("hasAuthority('admin')")
-    public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
+    public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
             List<Roles> listr=rolesService.getAll();
@@ -164,7 +164,7 @@ public String add(@Valid @ModelAttribute("account") Account account, RedirectAtt
 
         }
         accountService.add(account);
-        session.setAttribute("successMessage", "Thêm thành công");
+       redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/address/hien-thi";
 
 

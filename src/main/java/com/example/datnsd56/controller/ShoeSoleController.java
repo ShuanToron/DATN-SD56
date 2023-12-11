@@ -48,7 +48,7 @@ public class ShoeSoleController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, RedirectAttributes redirectAttributes, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("shoeSole", shoeSole);
             return "/dashboard/de-giay/update-de-giay";
@@ -71,7 +71,7 @@ public class ShoeSoleController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<ShoeSole> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -91,7 +91,7 @@ public class ShoeSoleController {
 
     }
     @PostMapping("/add1")
-    public String addd(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String addd(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<ShoeSole> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());

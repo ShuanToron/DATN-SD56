@@ -56,7 +56,7 @@ public class MaterialController {
     }
 
     @PostMapping("/add")
-    public String addChatLieu(@Valid @ModelAttribute("chatlieu") Material material,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String addChatLieu(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Material> page = service.pageMaterial(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -77,7 +77,7 @@ public class MaterialController {
         return "redirect:/admin/chat-lieu/hien-thi";
     }
     @PostMapping("/add1")
-    public String add(@Valid @ModelAttribute("chatlieu") Material material,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("chatlieu") Material material, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Material> page = service.pageMaterial(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -98,7 +98,7 @@ public class MaterialController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("color") Material material,RedirectAttributes redirectAttributes, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("color") Material material, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("material", material);
             return "/dashboard/chat-lieu/update-chat-lieu";
