@@ -1,5 +1,6 @@
 package com.example.datnsd56.service.impl;
 
+import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Address;
 import com.example.datnsd56.repository.AddressRepository;
 import com.example.datnsd56.service.AddressService;
@@ -28,9 +29,33 @@ public class AddressSeviceImpl implements AddressService {
         Address address = addressRepository.findById(id).orElse(null);
         return address;
     }
+    public Address addNewAddress(Account account, Address newAddress) {
+        newAddress.setAccount(account);
+        // Lưu newAddress vào cơ sở dữ liệu
+        // ...
+        return addressRepository.save(newAddress);
+    }
+
+    @Override
+    public List<Address> findAccountAddresses(Integer accountId) {
+        return addressRepository.findAccountAddresses(accountId);
+    }
 
     @Override
     public Address add(Address address) {
+
+            // Lấy thông tin Account từ đối tượng Address
+            Account account = address.getAccount();
+            // Gán Acount cho đối tượng Address nếu chưa có
+            if (account != null) {
+                address.setAccount(account);
+            }
+
+            // Thực hiện thêm địa chỉ vào cơ sở dữ liệu
+            // ...
+
+
+
         return  addressRepository.save(address);
     }
 

@@ -1,6 +1,7 @@
 
 package com.example.datnsd56.service.impl;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.example.datnsd56.entity.*;
 import com.example.datnsd56.repository.*;
 import com.example.datnsd56.security.CustomerController;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,54 +82,32 @@ public class OrdersServiceImpl implements OrdersService {
         return null;
     }
 
-//    public Orders planceOrder(Cart cart, String address) {
-//        Orders orders = new Orders();
-//        orders.setAccountId(cart.getAccountId());
-////        Address customerAddress = addressRepository.findById(Integer.valueOf(address)).orElse(null);
-//        orders.setAddress(address);
-//        orders.setPhone(cart.getAccountId().getPhone());
-//        orders.setShippingFee(BigDecimal.ZERO);
-//        orders.setTotal(BigDecimal.ZERO);
-//        orders.setCreateDate(LocalDate.now());
-//        orders.setUpdateDate(LocalDate.now());
-//        List<OrderItem> orderItemList = new ArrayList<>();
-//        for (CartItem item : cart.getCartItems()) {
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setOrders(orders);
-//            orderItem.setProductDetails(item.getProductDetails());
-//            orderItem.setQuantity(item.getQuantity());
-//            orderItem.setStatus("1");
-//            orderItemRepository.save(orderItem);
-//            orderItemList.add(orderItem);
-//            ProductDetails productDetails = productDetailsRepository.findById(item.getProductDetails().getId()).orElse(null);
-//            productDetails.setQuantity(productDetails.getQuantity() - item.getQuantity());
-//            if (productDetails.getQuantity() == 0) {
-//                productDetails.setStatus(true);
-//            }
-//            productDetailsRepository.save(productDetails);
-//
-//        }
-//        orders.setOrderItems(orderItemList);
-//        cartService.remove(cart.getId());
-//        return ordersRepository.save(orders);
-//    }
+
+
+    @Autowired
+    public OrdersServiceImpl(OrdersRepository ordersRepository, OrderItemRepository orderItemRepository,
+                             ProductDetailsRepository productDetailsRepository, CartService cartService) {
+        this.ordersRepository = ordersRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.productDetailsRepository = productDetailsRepository;
+        this.cartService = cartService;
+    }
 
     @Override
     public Orders planceOrder(Cart cart, String address) {
         Orders bill = new Orders();
-//        Address customerAddress = addressRepository.findById(Integer.valueOf(address)).orElse(null);
-////        bill.setAccountId(customerAddress.getAccount());
-//        bill.setAddress(customerAddress.getStreetName() + ", "
-//                + customerAddress.getProvince() + ", "
-//                + customerAddress.getDistrict() + ", "
-//                + customerAddress.getZipcode());
+
         bill.setAddress(address);
         bill.setPhone(cart.getAccountId().getPhone());
         bill.setEmail(cart.getAccountId().getEmail());
         bill.setFullname(cart.getAccountId().getName());
         bill.setShippingFee(BigDecimal.ZERO);
-        bill.setTotal(cart.getTotalPrice());
-        bill.setOrderStatus("1");
+        bill.setTotal(cart.getTotalPrice().setScale(2, RoundingMode.HALF_UP));
+
+        // Log to check the value of 'total'
+        System.out.println("Total Value: " + bill.getTotal());
+
+        bill.setOrderStatus("Chờ xác nhận");
         bill.setCreateDate(LocalDate.now());
         bill.setUpdateDate(LocalDate.now());
         bill.setAccountId(cart.getAccountId());
@@ -135,31 +115,58 @@ public class OrdersServiceImpl implements OrdersService {
         try {
             bill = ordersRepository.save(bill);
         } catch (Exception e) {
-            // Xử lý lỗi nếu không thể lưu Orders
+            // Log the error
+            e.printStackTrace();
             return null;
         }
+
         List<OrderItem> billDetailList = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
             OrderItem billDetail = new OrderItem();
             billDetail.setOrders(bill);
             billDetail.setProductDetails(item.getProductDetails());
-            billDetail.setPrice(item.getPrice());
+            billDetail.setPrice(item.getPrice().setScale(2, RoundingMode.HALF_UP));
             billDetail.setQuantity(item.getQuantity());
             billDetail.setStatus("1");
+
+            // Log to check the value of 'price'
+            System.out.println("Price Value: " + billDetail.getPrice());
+
             orderItemRepository.save(billDetail);
             billDetailList.add(billDetail);
+
             ProductDetails productDetail = productDetailsRepository.findById(item.getProductDetails().getId()).orElse(null);
-            productDetail.setQuantity(productDetail.getQuantity() - item.getQuantity());
-            if (productDetail.getQuantity() == 0) {
-                productDetail.setStatus(true);
+            if (productDetail != null) {
+                int remainingQuantity = productDetail.getQuantity() - item.getQuantity();
+                productDetail.setQuantity(remainingQuantity > 0 ? remainingQuantity : 0);
+                productDetail.setStatus(remainingQuantity > 0);
+                productDetailsRepository.save(productDetail);
             }
-            productDetailsRepository.save(productDetail);
         }
 
         bill.setOrderItems(billDetailList);
         cartService.deleteCartById(cart.getId());
+
+        // Log to check if order is saved successfully
+        System.out.println("Order Saved Successfully!");
+
         return ordersRepository.save(bill);
     }
+    @Override
+    public Orders add(Orders hoaDon) {
+        hoaDon.setOrderStatus("1");
+        hoaDon.setCreateDate(LocalDate.now());
+        hoaDon.setUpdateDate(LocalDate.now());
+        return ordersRepository.save(hoaDon);
+    }
+
+    @Override
+    public List<Orders> getAllOrders1(Integer accountId) {
+        return ordersRepository.getAllOrders(accountId);
+    }
+}
+
+
 //    public Orders planceOrder(Cart cart, String address) {
 //        // Khởi tạo và thiết lập giá trị cho Orders
 //        Orders bill = new Orders();
@@ -254,19 +261,6 @@ public class OrdersServiceImpl implements OrdersService {
 //        return ordersRepository.save(bill);
 //    }
 
-    @Override
-    public Orders add(Orders hoaDon) {
-        hoaDon.setOrderStatus("1");
-        hoaDon.setCreateDate(LocalDate.now());
-        hoaDon.setUpdateDate(LocalDate.now());
-        return ordersRepository.save(hoaDon);
-    }
-
-    @Override
-    public List<Orders> getAllOrders1(Integer accountId) {
-        return ordersRepository.getAllOrders(accountId);
-    }
-}
 
 
 //package com.example.datnsd56.service.impl;

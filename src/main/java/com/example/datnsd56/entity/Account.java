@@ -76,6 +76,8 @@ public class Account {
 
     @OneToOne(mappedBy = "accountId", cascade = CascadeType.ALL)
     private Cart cart;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  private List<Address> address;
     public Account(){
         this.cart = new Cart();
     }
