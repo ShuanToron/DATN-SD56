@@ -99,8 +99,9 @@ public class LoginController  {
 //    return "redirect:/login/custom-login";
 //}
 @PostMapping("/add")
-public String add(@Valid @ModelAttribute("account") Account account, RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
     if (result.hasErrors()) {
+        model.addAttribute("account",account);
         return "auth_login/auth-register";
     }
 
