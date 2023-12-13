@@ -3,11 +3,7 @@ package com.example.datnsd56.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
@@ -17,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-
+@ToString
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +36,8 @@ public class Address {
 
     @Column(name = "zipcode")
     private String zipcode;
-
+@Column(name = "default_address")
+private Boolean defaultAddress;
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;

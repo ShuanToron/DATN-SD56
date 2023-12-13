@@ -92,29 +92,82 @@ https://templatemo.com/tm-559-zay-shop
             </div>
 
             <!-- Form nhập địa chỉ mới -->
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h4 class="font-weight-semi-bold mb-4">Địa chỉ nhận hàng</h4>
+            <!-- Trong file giohang1.html hoặc trang thanh toán tương ứng -->
+            <div class="form-group">
+                <label for="selectedAddress">Địa Chỉ Nhận Hàng</label>
+                <input type="text" class="form-control" id="selectedAddress" name="selectedAddress" readonly
+                       th:value="${defaultAddress.streetName + ' ' + defaultAddress.district + ' ' + defaultAddress.province+ ' '+ (defaultAddress.defaultAddress ? 'Mặc Định':'')}"
+                       th:if="${defaultAddress != null}" />
 
-                    <div class="form-group">
-                        <label for="addressSelect">Chọn địa chỉ</label>
-                        <select class="form-control" id="addressSelect" name="selectedAddress">
-                            <option th:each="address : ${addressList}"
-                                    th:value="${address.id}"
-                                    th:text="${address.streetName + ' ' + address.district + ' ' + address.province}">
-                            </option>
-                        </select>
+<!--                <span th:if="${defaultAddress != null and defaultAddress.defaultAddress}">(Mặc định)</span>-->
+            </div>
+
+
+
+
+
+
+            <button id="changeAddressBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeAddressModal">
+                Thay Đổi Địa Chỉ Nhận Hàng
+            </button>
+
+            <!-- Modal chọn địa chỉ -->
+            <div class="modal fade" id="changeAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Chọn Địa Chỉ Nhận Hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Bảng chọn địa chỉ -->
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Chọn</th>
+                                    <th>Địa Chỉ</th>
+                                    <!-- Thêm các cột thông tin khác nếu cần -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Duyệt qua danh sách địa chỉ và hiển thị tương ứng -->
+                                <tr th:each="address : ${addressList}">
+                                    <td>
+                                        <!-- Sử dụng radio button với biểu thức Thymeleaf -->
+                                        <input type="radio" name="selectedAddressRadio"
+                                               th:value="${address.id}"
+                                               th:attr="data-streetName=${address.streetName}, data-district=${address.district}, data-province=${address.province}, data-defaultAddress=${address.defaultAddress }"
+                                               onclick="updateSelectedAddress(this)">
+                                    </td>
+                                    <td>
+                                        <span th:text="${address.streetName + ' ' + address.district + ' ' + address.province}"></span>
+                                        <span th:if="${address.defaultAddress}">(Mặc định)</span>
+                                    </td>
+                                    <!-- Thêm các ô thông tin khác nếu cần -->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addAddressBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                Thêm Địa Chỉ Mới
+                            </button>
+                            <!-- Nút xác nhận thay đổi địa chỉ -->
+                            <button id="confirmChangeBtn" type="button" class="btn btn-success" data-bs-dismiss="modal" >
+                                Xác Nhận Thay Đổi
+                            </button>
+                        </div>
                     </div>
-
-                    <!-- Nút thêm địa chỉ mới -->
-                    <!-- Nút thêm địa chỉ mới -->
-                    <button id="addAddressBtn" type="button" class="btn btn-primary">
-                        Thêm Địa Chỉ Mới
-                    </button>
-
-
                 </div>
             </div>
+            <!-- Nút thêm địa chỉ mới -->
+
+
+
+            <!-- Form để đặt làm địa chỉ mặc định -->
+            <!-- Form để đặt làm địa chỉ mặc định -->
+
+
 
             <!-- Giỏ hàng -->
             <div class="card mt-4">
@@ -218,8 +271,15 @@ https://templatemo.com/tm-559-zay-shop
                                     <span th:if="${#fields.hasErrors('zipcode')}" style="color: red; font-size: 13px" th:errors="*{zipcode}"></span>
                                 </div>
 
+                                <!-- Checkbox để chọn làm địa chỉ mặc định -->
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="setDefaultAddress" name="setDefaultAddress" th:field="*{defaultAddress}" />
+                                    <label class="form-check-label" for="setDefaultAddress">Đặt làm Địa Chỉ Mặc Định</label>
+                                </div>
+
                                 <div class="mb-3">
-                                    <button id="addAddressBtn1" class="btn btn-primary" type="submit">Thêm</button>
+                                    <button id="addAddressBtn1" class="btn btn-primary" type="submit" data-href='/user/checkout'>Thêm</button>
+
                                 </div>
                             </div>
                         </form>
@@ -244,7 +304,76 @@ https://templatemo.com/tm-559-zay-shop
 
 <!-- Bootstrap Bundle with Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // Xử lý sự kiện khi chọn địa chỉ từ danh sách
+        $('#selectedAddress').change(function() {
+            var selectedAddressId = $(this).val();
+            var defaultAddressCheckbox = $('#setDefaultAddress');
 
+            // Kiểm tra nếu địa chỉ được chọn là mặc định
+            if (selectedAddressId && selectedAddressId !== '') {
+                // Ẩn checkbox chọn địa chỉ mặc định
+                defaultAddressCheckbox.hide();
+            } else {
+                // Hiển thị checkbox chọn địa chỉ mặc định
+                defaultAddressCheckbox.show();
+            }
+        });
+    });
+</script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#confirmChangeBtn').click(function () {
+            var selectedAddressId = $('input[name="selectedAddressRadio"]:checked').val();
+            var selectedRadio = $('input[name="selectedAddressRadio"]:checked');
+
+            if (selectedRadio.length > 0) {
+                // Lấy thông tin địa chỉ từ thuộc tính data-*
+                var streetName = selectedRadio.attr('data-streetName');
+                var district = selectedRadio.attr('data-district');
+                var province = selectedRadio.attr('data-province');
+                var isDefaultAddress = selectedRadio.attr('data-defaultAddress') === 'true';
+
+                // Cập nhật giá trị của input text
+                $('#selectedAddress').val(isDefaultAddress ? 'mặc định' : streetName + ' ' + district + ' ' + province);
+
+                // Hiển thị hoặc ẩn mặc định tùy thuộc vào giá trị của isDefaultAddress
+                if (isDefaultAddress) {
+                    // Hiển thị mặc định
+                    $('#defaultAddressMessage').show();
+                } else {
+                    // Ẩn mặc định
+                    $('#defaultAddressMessage').hide();
+                }
+
+                // Đóng modal
+                // ...
+
+            } else {
+                alert('Vui lòng chọn một địa chỉ.');
+            }
+        });
+    });
+
+
+</script>
+
+
+
+<script>
+    document.getElementById('changeAddressBtn').addEventListener('click', function() {
+        // Ẩn thông tin địa chỉ hiện tại
+        document.getElementById('currentAddressInfo').style.display = 'none';
+        // Hiển thị bảng chọn địa chỉ
+        document.getElementById('addressSelectionTable').style.display = 'block';
+    });
+
+    document.getElementById('confirmChangeBtn').addEventListener('click', function() {
+        // Xử lý khi người dùng xác nhận thay đổi địa chỉ
+        // (Có thể sử dụng JavaScript để lấy giá trị địa chỉ được chọn và thực hiện các hành động cần thiết)
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var addAddressBtn = document.getElementById("addAddressBtn");
@@ -274,6 +403,7 @@ https://templatemo.com/tm-559-zay-shop
                 data: $("#addAddressForm").serialize(),
                 success: function (data) {
                     // Sau khi thêm thành công, chuyển hướng đến trang checkout
+                    location.reload();
                     window.location.href = "/user/checkout";
                 },
                 error: function (error) {
@@ -283,7 +413,12 @@ https://templatemo.com/tm-559-zay-shop
         });
     });
 </script>
-
+<script>
+    function submitForm() {
+        // Gửi yêu cầu khi người dùng chọn địa chỉ
+        document.getElementById("setDefaultAddressForm").submit();
+    }
+</script>
 <script>
     function submitForm() {
         // Lấy dữ liệu từ biểu mẫu
