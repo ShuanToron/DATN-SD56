@@ -4,6 +4,7 @@ import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Address;
 import com.example.datnsd56.entity.Cart;
 import com.example.datnsd56.entity.Orders;
+import com.example.datnsd56.repository.AddressRepository;
 import com.example.datnsd56.service.AccountService;
 import com.example.datnsd56.service.AddressService;
 import com.example.datnsd56.service.OrdersService;
@@ -36,7 +37,8 @@ public class UserBillController {
     private AddressService service;
     @Autowired
     private AddressService addressService;
-
+    @Autowired
+    private AddressRepository addressRepository;
     @GetMapping("/checkout")
     public String checkout(Principal principal, Model model) {
         if (principal == null) {
@@ -52,29 +54,47 @@ public class UserBillController {
             List<Address> addressList = addressService.findAccountAddresses(account.getId());
 
             if (addressList.isEmpty()) {
-                // Nếu không có địa chỉ, chuyển hướng đến trang thêm địa chỉ mới
+                // Nếu không có địa chỉ, hiển thị trang giỏ hàng
                 model.addAttribute("cart", cart);
                 model.addAttribute("addressList", addressList);
                 model.addAttribute("newAddress", new Address()); // Thêm đối tượng mới cho modal
+                model.addAttribute("defaultAddress", null); // Không có địa chỉ mặc định
                 return "website/index/giohang1";
-
-
             } else {
+                Address defaultAddress = addressList.stream()
+                    .filter(address -> Boolean.TRUE.equals(address.getDefaultAddress()))
+                    .findFirst()
+                    .orElse(null);
+
                 model.addAttribute("cart", cart);
                 model.addAttribute("addressList", addressList);
                 model.addAttribute("newAddress", new Address()); // Thêm đối tượng mới cho modal
+                model.addAttribute("defaultAddress", defaultAddress); // Địa chỉ mặc định
                 return "website/index/giohang1";
             }
         }
         return "redirect:/login";
+    }
 
+    @PostMapping("/setDefaultAddress")
+    public String setDefaultAddress(@RequestParam("addressId") Integer addressId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
 
-    // ... (Các phương thức và mã code khác)
-}
+        Optional<Account> accountOptional = accountService.finByName(principal.getName());
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            // Đặt địa chỉ có addressId làm địa chỉ mặc định cho tài khoản
+            addressService.setDefaultAddress(account, addressId);
+        }
+
+        return "redirect:/user/checkout";
+    }
 
     @PostMapping("/add1")
     public ModelAndView add1(@Valid @ModelAttribute("newAddress") Address newAddress,
-                             BindingResult result, Model model, HttpSession session, Principal principal) {
+                             BindingResult result, HttpSession session, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -83,10 +103,10 @@ public class UserBillController {
             if (accountOptional.isPresent()) {
                 Account account = accountOptional.get();
                 Cart cart = account.getCart();
-                model.addAttribute("cart", cart);
+                modelAndView.addObject("cart", cart);
 
-                List<Address> accountAddresses = service.findAccountAddresses(account.getId());
-                model.addAttribute("accountAddresses", accountAddresses);
+                List<Address> accountAddresses = addressService.findAccountAddresses(account.getId());
+                modelAndView.addObject("accountAddresses", accountAddresses);
 
                 modelAndView.setViewName("website/index/giohang1");
             } else {
@@ -105,16 +125,14 @@ public class UserBillController {
 
                 } else {
                     // Nếu không có địa chỉ được chọn, sử dụng địa chỉ mới từ form
-                    Address savedAddress = addressService.addNewAddress(account, newAddress);
+                    Address savedAddress = addressService.addNewAddress(account, newAddress, newAddress.getDefaultAddress());
+
                     // Thực hiện đặt hàng với địa chỉ mới
                     // ...
-//                    model.addAttribute("newAddress", new Address());
 
-
+                    session.setAttribute("successMessage", "Thêm thành công");
+                    modelAndView.setViewName("redirect:/user/checkout");
                 }
-
-                session.setAttribute("successMessage", "Thêm thành công");
-                modelAndView.setViewName("redirect:/user/checkout");
             } else {
                 modelAndView.setViewName("redirect:/login");
             }
@@ -122,27 +140,24 @@ public class UserBillController {
 
         return modelAndView;
     }
-
-
-    @GetMapping("/orders")
-    public String getOrders(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-
-        Optional<Account> account = accountService.finByName(principal.getName());
-        List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
-        model.addAttribute("orders", listOrder);
-
-        return "website/index/danhsachdonhang";
+// Các phương thức khác...
+@GetMapping("/orders")
+public String getOrders(Model model, Principal principal) {
+    if (principal == null) {
+        return "redirect:/login";
     }
 
+    Optional<Account> account = accountService.finByName(principal.getName());
+    List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
+    model.addAttribute("orders", listOrder);
+
+    return "website/index/danhsachdonhang";
+}
     @PostMapping("/add-order")
     public String addOrder(Principal principal,
                            RedirectAttributes attributes,
                            HttpSession session,
-                           @ModelAttribute("newAddress") Address newAddress,
-                           @RequestParam(name = "selectedAddress", required = false) Integer selectedAddress) {
+                           @RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId) {
         if (principal == null) {
             return "redirect:/login";
         }
@@ -152,19 +167,19 @@ public class UserBillController {
             Account account = accountOptional.get();
             Cart cart = account.getCart();
 
-            // Kiểm tra xem người dùng đã chọn địa chỉ từ danh sách hay nhập địa chỉ mới
+            // Kiểm tra xem người dùng đã chọn địa chỉ từ danh sách hay không
             Address address;
-            if (selectedAddress != null) {
+            if (selectedAddressId != null) {
                 // Sử dụng địa chỉ từ danh sách
                 Optional<Address> selectedAddressOptional = addressService.findAccountAddresses(account.getId())
                     .stream()
-                    .filter(addr -> addr.getId().equals(selectedAddress))
+                    .filter(addr -> addr.getId().equals(selectedAddressId))
                     .findFirst();
 
                 address = selectedAddressOptional.orElse(null);
             } else {
-                // Sử dụng địa chỉ mới từ form
-                address = addressService.addNewAddress(account, newAddress);
+                // Lấy địa chỉ mặc định
+                address = addressService.findDefaultAddress(account.getId());
             }
 
             if (address != null) {
@@ -175,17 +190,14 @@ public class UserBillController {
                     session.removeAttribute("totalItems");
                     attributes.addFlashAttribute("success", "Đặt hàng thành công!");
                 } else {
-                    // Xử lý trường hợp đặt hàng thất bại
                     attributes.addFlashAttribute("error", "Đặt hàng không thành công. Vui lòng thử lại sau!");
                 }
             } else {
-                // Xử lý trường hợp không tìm thấy địa chỉ
                 attributes.addFlashAttribute("error", "Không tìm thấy địa chỉ. Vui lòng thử lại sau!");
             }
 
             return "redirect:/user/orders";
         } else {
-            // Xử lý trường hợp không tìm thấy tài khoản
             return "redirect:/login";
         }
     }

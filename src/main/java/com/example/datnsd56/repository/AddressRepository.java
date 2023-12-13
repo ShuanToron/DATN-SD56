@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address,Integer> {
@@ -20,7 +21,8 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
     Address findAccountDefaultAddress(@Param("accountId") Integer accountId);
 
 
-    @Query(value = "SELECT * FROM address WHERE account_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT * FROM address WHERE account_id = ?1", nativeQuery = true)
     List<Address> findAccountAddresses(@Param("accountId") Integer accountId);
-
+    @Query(value = "SELECT * FROM address  WHERE account_id =?1 AND default_address = 1",nativeQuery = true)
+    Address findDefaultAddress(@Param("accountId") Integer accountId);
 }

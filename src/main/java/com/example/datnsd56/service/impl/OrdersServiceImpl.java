@@ -82,17 +82,6 @@ public class OrdersServiceImpl implements OrdersService {
         return null;
     }
 
-
-
-    @Autowired
-    public OrdersServiceImpl(OrdersRepository ordersRepository, OrderItemRepository orderItemRepository,
-                             ProductDetailsRepository productDetailsRepository, CartService cartService) {
-        this.ordersRepository = ordersRepository;
-        this.orderItemRepository = orderItemRepository;
-        this.productDetailsRepository = productDetailsRepository;
-        this.cartService = cartService;
-    }
-
     @Override
     public Orders planceOrder(Cart cart, String address) {
         Orders bill = new Orders();
@@ -103,10 +92,6 @@ public class OrdersServiceImpl implements OrdersService {
         bill.setFullname(cart.getAccountId().getName());
         bill.setShippingFee(BigDecimal.ZERO);
         bill.setTotal(cart.getTotalPrice().setScale(2, RoundingMode.HALF_UP));
-
-        // Log to check the value of 'total'
-        System.out.println("Total Value: " + bill.getTotal());
-
         bill.setOrderStatus("Chờ xác nhận");
         bill.setCreateDate(LocalDate.now());
         bill.setUpdateDate(LocalDate.now());
@@ -129,9 +114,6 @@ public class OrdersServiceImpl implements OrdersService {
             billDetail.setQuantity(item.getQuantity());
             billDetail.setStatus("1");
 
-            // Log to check the value of 'price'
-            System.out.println("Price Value: " + billDetail.getPrice());
-
             orderItemRepository.save(billDetail);
             billDetailList.add(billDetail);
 
@@ -152,6 +134,18 @@ public class OrdersServiceImpl implements OrdersService {
 
         return ordersRepository.save(bill);
     }
+
+
+    @Autowired
+    public OrdersServiceImpl(OrdersRepository ordersRepository, OrderItemRepository orderItemRepository,
+                             ProductDetailsRepository productDetailsRepository, CartService cartService) {
+        this.ordersRepository = ordersRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.productDetailsRepository = productDetailsRepository;
+        this.cartService = cartService;
+    }
+
+
     @Override
     public Orders add(Orders hoaDon) {
         hoaDon.setOrderStatus("1");
