@@ -76,7 +76,7 @@ public class BrandController {
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
-            return "/dashboard/thuong-hieu/update-thuong-hieu";
+            return "/dashboard/thuong-hieu/thuong-hieu";
         }
         // Check if color with the same name already exists
         if (service.existsByName(brand.getName())) {
@@ -93,7 +93,7 @@ public class BrandController {
     }
 
     @PostMapping("/add1")
-    public String add1(@Valid @ModelAttribute("brand") Brand brand,RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpSession session) {
+    public String add1(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Brand> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
