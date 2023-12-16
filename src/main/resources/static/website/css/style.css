@@ -208,7 +208,13 @@
     center center no-repeat;
   background-size: cover;
 }
+.pay{
+  background:
+    /* linear-gradient(rgba(136, 180, 78, 0.7), rgba(136, 180, 78, 0.7)), */ url(../img/gbaner.png)
+  center center no-repeat;
+  background-size: cover;
 
+}
 .page-header .breadcrumb-item + .breadcrumb-item::before {
   color: var(--light);
 }
