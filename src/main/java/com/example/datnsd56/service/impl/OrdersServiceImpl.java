@@ -84,10 +84,6 @@ private TransactionsServiceIpml transactionsService;
         return null;
     }
 
-
-
-
-    // Phương thức để đặt hàng và tạo giao dịch
     @Override
     public Orders planceOrder(Cart cart, String address) {
         Orders bill = new Orders();
@@ -97,7 +93,9 @@ private TransactionsServiceIpml transactionsService;
         bill.setEmail(cart.getAccountId().getEmail());
         bill.setFullname(cart.getAccountId().getName());
         bill.setShippingFee(BigDecimal.ZERO);
-        bill.setTotal(cart.getTotalPrice());
+
+        bill.setTotal(cart.getTotalPrice().setScale(2, RoundingMode.HALF_UP));
+
         bill.setOrderStatus("Chờ xác nhận");
         bill.setCreateDate(LocalDate.now());
         bill.setUpdateDate(LocalDate.now());

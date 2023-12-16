@@ -1,15 +1,15 @@
 package com.example.datnsd56.use;
 
-import com.example.datnsd56.config.Config;
-//import com.example.datnsd56.controller.VnpayUtils;
-import com.example.datnsd56.dto.TransactionInfo;
-import com.example.datnsd56.dto.TransactionInfoDTO;
-import com.example.datnsd56.entity.*;
+
+import com.example.datnsd56.entity.Account;
+import com.example.datnsd56.entity.Address;
+import com.example.datnsd56.entity.Cart;
+import com.example.datnsd56.entity.Orders;
 import com.example.datnsd56.repository.AddressRepository;
-import com.example.datnsd56.service.*;
-import com.example.datnsd56.service.impl.PaymentServiceImpl;
-import com.example.datnsd56.service.impl.TransactionsServiceIpml;
-import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate;
+import com.example.datnsd56.service.AccountService;
+import com.example.datnsd56.service.AddressService;
+import com.example.datnsd56.service.OrdersService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -45,6 +45,7 @@ public class UserBillController {
     private AddressService addressService;
     @Autowired
     private AddressRepository addressRepository;
+
     @Autowired
     private CartService cartServicel;
     @Autowired
@@ -54,6 +55,7 @@ public class UserBillController {
 
     //    @Autowired
 //    private VnpayUtils vnpayUtils;
+
     @GetMapping("/checkout")
     public String checkout(Principal principal, Model model) {
         if (principal == null) {
@@ -103,33 +105,85 @@ public class UserBillController {
             Account account = accountOptional.get();
             // Đặt địa chỉ có addressId làm địa chỉ mặc định cho tài khoản
             addressService.setDefaultAddress(account, addressId);
+
         }
 
         return "redirect:/user/checkout";
     }
 
+    @PostMapping("/add1")
+    public ModelAndView add1(@Valid @ModelAttribute("newAddress") Address newAddress,
+                             BindingResult result, HttpSession session, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
 
-    // Các phương thức khác...
-    @GetMapping("/orders")
-    public String getOrders(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
+        if (result.hasErrors()) {
+            // Nếu có lỗi, chuyển về trang thanh toán với model chứa thông tin giỏ hàng và danh sách địa chỉ
+            Optional<Account> accountOptional = accountService.finByName(principal.getName());
+            if (accountOptional.isPresent()) {
+                Account account = accountOptional.get();
+                Cart cart = account.getCart();
+                modelAndView.addObject("cart", cart);
+
+                List<Address> accountAddresses = addressService.findAccountAddresses(account.getId());
+                modelAndView.addObject("accountAddresses", accountAddresses);
+
+                modelAndView.setViewName("website/index/giohang1");
+            } else {
+                modelAndView.setViewName("redirect:/login");
+            }
+        } else {
+            Optional<Account> accountOptional = accountService.finByName(principal.getName());
+            if (accountOptional.isPresent()) {
+                Account account = accountOptional.get();
+
+                // Kiểm tra xem có địa chỉ được chọn từ danh sách không
+                if (newAddress.getId() != null) {
+                    Address selectedAddress = service.findAccountDefaultAddress(newAddress.getId());
+                    // Thực hiện đặt hàng với địa chỉ đã chọn
+                    // ...
+
+                } else {
+                    // Nếu không có địa chỉ được chọn, sử dụng địa chỉ mới từ form
+                    Address savedAddress = addressService.addNewAddress(account, newAddress, newAddress.getDefaultAddress());
+
+                    // Thực hiện đặt hàng với địa chỉ mới
+                    // ...
+
+                    session.setAttribute("successMessage", "Thêm thành công");
+                    modelAndView.setViewName("redirect:/user/checkout");
+                }
+            } else {
+                modelAndView.setViewName("redirect:/login");
+            }
+
         }
 
-        Optional<Account> account = accountService.finByName(principal.getName());
-        List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
-        model.addAttribute("orders", listOrder);
-
-        return "website/index/danhsachdonhang";
+        return "redirect:/user/checkout";
     }
 
+// Các phương thức khác...
+@GetMapping("/orders")
+public String getOrders(Model model, Principal principal) {
+    if (principal == null) {
+        return "redirect:/login";
+
+    }
+
+    Optional<Account> account = accountService.finByName(principal.getName());
+    List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
+    model.addAttribute("orders", listOrder);
+
+    return "website/index/danhsachdonhang";
+}
     @PostMapping("/add-order")
     public String addOrder(@RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId,
                            @RequestParam(name = "paymentMethod") String paymentMethod,
                            Principal principal,
                            RedirectAttributes attributes,
                            HttpSession session,
+
                            Model model) {
+
         if (principal == null) {
             return "redirect:/login";
         }
@@ -142,6 +196,9 @@ public class UserBillController {
             // Kiểm tra xem người dùng đã chọn địa chỉ từ danh sách hay không
             Address address;
             if (selectedAddressId != null) {
+
+                // Sử dụng địa chỉ từ danh sách
+
                 Optional<Address> selectedAddressOptional = addressService.findAccountAddresses(account.getId())
                     .stream()
                     .filter(addr -> addr.getId().equals(selectedAddressId))
@@ -149,6 +206,9 @@ public class UserBillController {
 
                 address = selectedAddressOptional.orElse(null);
             } else {
+
+                // Lấy địa chỉ mặc định
+
                 address = addressService.findDefaultAddress(account.getId());
             }
 

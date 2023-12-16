@@ -216,17 +216,13 @@ https://templatemo.com/tm-559-zay-shop
             <div class="form-group">
                 <label for="selectedAddress">Địa Chỉ Nhận Hàng</label>
                 <input type="text" class="form-control" id="selectedAddress" name="selectedAddress" readonly
+
                        th:value="${defaultAddress.streetName + ' ' + defaultAddress.district + ' ' + defaultAddress.province+ ' '+  ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+  (defaultAddress.defaultAddress ? 'Mặc Định':'')}"
+
                        th:if="${defaultAddress != null}" />
 
 <!--                <span th:if="${defaultAddress != null and defaultAddress.defaultAddress}">(Mặc định)</span>-->
             </div>
-
-
-
-
-
-
             <button id="changeAddressBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeAddressModal">
                 Thay Đổi Địa Chỉ Nhận Hàng
             </button>
@@ -234,11 +230,14 @@ https://templatemo.com/tm-559-zay-shop
             <!-- Modal chọn địa chỉ -->
             <div class="modal fade" id="changeAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
+
                     <div class="modal-content" style="width: 400%">
+
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Chọn Địa Chỉ Nhận Hàng</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+
                         <div class="container">
                             <div class="row" th:each="address : ${addressList}">
                                 <div class="col-md-6">
@@ -310,6 +309,7 @@ https://templatemo.com/tm-559-zay-shop
                             <!--                            <button id="confirmChangeBtn" type="button" class="btn btn-success" data-bs-dismiss="modal" >-->
                             <!--                                Xác Nhận Thay Đổi-->
                             <!--                            </button>-->
+
                         </div>
                     </div>
                 </div>
@@ -476,6 +476,7 @@ https://templatemo.com/tm-559-zay-shop
         });
     });
 </script>
+
 <script>
     function submitForm111() {
         var selectedPaymentMethod = document.getElementById("paymentMethod").value;
@@ -492,6 +493,7 @@ https://templatemo.com/tm-559-zay-shop
         }
     }
 </script>
+
 <script th:inline="javascript">
     $(document).ready(function () {
         $('#confirmChangeBtn').click(function () {
@@ -531,6 +533,19 @@ https://templatemo.com/tm-559-zay-shop
 
 
 
+<script>
+    document.getElementById('changeAddressBtn').addEventListener('click', function() {
+        // Ẩn thông tin địa chỉ hiện tại
+        document.getElementById('currentAddressInfo').style.display = 'none';
+        // Hiển thị bảng chọn địa chỉ
+        document.getElementById('addressSelectionTable').style.display = 'block';
+    });
+
+    document.getElementById('confirmChangeBtn').addEventListener('click', function() {
+        // Xử lý khi người dùng xác nhận thay đổi địa chỉ
+        // (Có thể sử dụng JavaScript để lấy giá trị địa chỉ được chọn và thực hiện các hành động cần thiết)
+    });
+</script>
 <script>
     document.getElementById('changeAddressBtn').addEventListener('click', function() {
         // Ẩn thông tin địa chỉ hiện tại
