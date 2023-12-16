@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface TransactionsRepository extends JpaRepository<Transactions,Integer> {
     Optional<Transactions> getTransactionsById(Integer id);
-    Transactions findByOrderInfo(String orderInfo);
+//    Transactions findByOrderInfo(String orderInfo);
 }

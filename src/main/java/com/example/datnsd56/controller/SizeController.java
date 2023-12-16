@@ -103,7 +103,7 @@ public class SizeController {
         }
         if (service.existsByName(size.getName())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
-            return "redirect:/admin/kich-co/hien-thi";
+            return "redirect:/admin/san-pham-test/create";
 
         }
         String code = "KC" + new Random().nextInt(100000);
@@ -112,7 +112,8 @@ public class SizeController {
         model.addAttribute("size", size);
         service.add(size);
         redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
-        return "redirect:/admin/kich-co/hien-thi";
+//        return "redirect:/admin/kich-co/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
 
     }
     @PostMapping("/add2")
@@ -126,7 +127,7 @@ public class SizeController {
         }
         if (service.existsByName(size.getName())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Size with the same name already exists");
-            return "redirect:/admin/kich-co/hien-thi";
+            return "redirect:/admin/san-pham-test/create";
 
         }
         String code = "KC" + new Random().nextInt(100000);
@@ -135,7 +136,7 @@ public class SizeController {
         model.addAttribute("size", size);
         service.add(size);
         redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
-        return "redirect:/admin/kich-co/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
 
     }
 
