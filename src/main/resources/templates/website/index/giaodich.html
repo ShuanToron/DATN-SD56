@@ -1,0 +1,23 @@
+<!-- src/main/resources/templates/website/index/thongtingiaodichthanhcong.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Giao Dịch Thành Công</title>
+</head>
+<body>
+<div>
+    <h2>Thông Tin Giao Dịch Thành Công</h2>
+    <p>Cảm ơn <span style="color: red;font-weight: bold" th:text="${order.accountId.name}"></span> đã đặt hàng!</p>
+    <p>Thông tin đơn hàng:</p>
+    <p>Mã đơn hàng: <span th:text="${order.id}"></span></p>
+    <p>Tổng số tiền: <span th:text="${order.total} + 'Đ' "></span></p>
+    <p>Hình thức thanh toán: <span th:text="${order.transactions.iterator().next().paymentMethod}"></span></p>
+    <p>Ngày đặt hàng: <span th:text="${order.createDate}"></span></p>
+    <!-- Thêm các thông tin khác nếu cần -->
+</div>
+</body>
+</html>
