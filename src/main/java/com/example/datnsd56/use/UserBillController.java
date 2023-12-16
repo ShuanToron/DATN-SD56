@@ -1,20 +1,15 @@
 package com.example.datnsd56.use;
 
 
-import com.example.datnsd56.entity.Account;
-import com.example.datnsd56.entity.Address;
-import com.example.datnsd56.entity.Cart;
-import com.example.datnsd56.entity.Orders;
+import com.example.datnsd56.entity.*;
 import com.example.datnsd56.repository.AddressRepository;
-import com.example.datnsd56.service.AccountService;
-import com.example.datnsd56.service.AddressService;
-import com.example.datnsd56.service.OrdersService;
+import com.example.datnsd56.service.*;
 
+import com.example.datnsd56.service.impl.PaymentServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -111,55 +101,55 @@ public class UserBillController {
         return "redirect:/user/checkout";
     }
 
-    @PostMapping("/add1")
-    public ModelAndView add1(@Valid @ModelAttribute("newAddress") Address newAddress,
-                             BindingResult result, HttpSession session, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if (result.hasErrors()) {
-            // Nếu có lỗi, chuyển về trang thanh toán với model chứa thông tin giỏ hàng và danh sách địa chỉ
-            Optional<Account> accountOptional = accountService.finByName(principal.getName());
-            if (accountOptional.isPresent()) {
-                Account account = accountOptional.get();
-                Cart cart = account.getCart();
-                modelAndView.addObject("cart", cart);
-
-                List<Address> accountAddresses = addressService.findAccountAddresses(account.getId());
-                modelAndView.addObject("accountAddresses", accountAddresses);
-
-                modelAndView.setViewName("website/index/giohang1");
-            } else {
-                modelAndView.setViewName("redirect:/login");
-            }
-        } else {
-            Optional<Account> accountOptional = accountService.finByName(principal.getName());
-            if (accountOptional.isPresent()) {
-                Account account = accountOptional.get();
-
-                // Kiểm tra xem có địa chỉ được chọn từ danh sách không
-                if (newAddress.getId() != null) {
-                    Address selectedAddress = service.findAccountDefaultAddress(newAddress.getId());
-                    // Thực hiện đặt hàng với địa chỉ đã chọn
-                    // ...
-
-                } else {
-                    // Nếu không có địa chỉ được chọn, sử dụng địa chỉ mới từ form
-                    Address savedAddress = addressService.addNewAddress(account, newAddress, newAddress.getDefaultAddress());
-
-                    // Thực hiện đặt hàng với địa chỉ mới
-                    // ...
-
-                    session.setAttribute("successMessage", "Thêm thành công");
-                    modelAndView.setViewName("redirect:/user/checkout");
-                }
-            } else {
-                modelAndView.setViewName("redirect:/login");
-            }
-
-        }
-
-        return "redirect:/user/checkout";
-    }
+//    @PostMapping("/add1")
+//    public String add1(@Valid @ModelAttribute("newAddress") Address newAddress,
+//                       BindingResult result, HttpSession session, Principal principal) {
+//        ModelAndView modelAndView = new ModelAndView();
+//
+//        if (result.hasErrors()) {
+//            // Nếu có lỗi, chuyển về trang thanh toán với model chứa thông tin giỏ hàng và danh sách địa chỉ
+//            Optional<Account> accountOptional = accountService.finByName(principal.getName());
+//            if (accountOptional.isPresent()) {
+//                Account account = accountOptional.get();
+//                Cart cart = account.getCart();
+//                modelAndView.addObject("cart", cart);
+//
+//                List<Address> accountAddresses = addressService.findAccountAddresses(account.getId());
+//                modelAndView.addObject("accountAddresses", accountAddresses);
+//
+//                modelAndView.setViewName("website/index/giohang1");
+//            } else {
+//                modelAndView.setViewName("redirect:/login");
+//            }
+//        } else {
+//            Optional<Account> accountOptional = accountService.finByName(principal.getName());
+//            if (accountOptional.isPresent()) {
+//                Account account = accountOptional.get();
+//
+//                // Kiểm tra xem có địa chỉ được chọn từ danh sách không
+//                if (newAddress.getId() != null) {
+//                    Address selectedAddress = service.findAccountDefaultAddress(newAddress.getId());
+//                    // Thực hiện đặt hàng với địa chỉ đã chọn
+//                    // ...
+//
+//                } else {
+//                    // Nếu không có địa chỉ được chọn, sử dụng địa chỉ mới từ form
+//                    Address savedAddress = addressService.addNewAddress(account, newAddress, newAddress.getDefaultAddress());
+//
+//                    // Thực hiện đặt hàng với địa chỉ mới
+//                    // ...
+//
+//                    session.setAttribute("successMessage", "Thêm thành công");
+//                    modelAndView.setViewName("redirect:/user/checkout");
+//                }
+//            } else {
+//                modelAndView.setViewName("redirect:/login");
+//            }
+//
+//        }
+//
+//        return "redirect:/user/checkout";
+//    }
 
 // Các phương thức khác...
 @GetMapping("/orders")
@@ -232,13 +222,12 @@ public String getOrders(Model model, Principal principal) {
 
 
                         // Xóa giỏ hàng
-                        if(transaction.getStatus().equals("pending")){
-                        return "redirect:/user/cart";
-                        }else {
+
+
                             transactionService.saveTransaction(transaction);
                             cartServicel.deleteCartById(cart.getId());
 
-                        }
+
 
                         // Tạo URL thanh toán VNPAY và chuyển hướng đến trang thanh toán
                         String vnpPaymentUrl = paymentService.createVnpPaymentUrl(order.getTotal(), order.getId(), transaction.getId());
