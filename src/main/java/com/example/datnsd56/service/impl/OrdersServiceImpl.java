@@ -1,16 +1,10 @@
 
 package com.example.datnsd56.service.impl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.example.datnsd56.entity.*;
 import com.example.datnsd56.repository.*;
-import com.example.datnsd56.security.CustomerController;
 import com.example.datnsd56.security.UserInfoUserDetails;
 import com.example.datnsd56.service.CartService;
 import com.example.datnsd56.service.OrdersService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -33,7 +23,8 @@ public class OrdersServiceImpl implements OrdersService {
     private OrdersRepository ordersRepository;
     @Autowired
     private OrderItemRepository orderItemRepository;
-
+@Autowired
+private TransactionsRepository transactionsRepository;
     @Autowired
     private UserInfoUserDetails userInfoUserDetails;
 
@@ -46,7 +37,13 @@ public class OrdersServiceImpl implements OrdersService {
     private CartService cartService;
     @Autowired
     private AccountRepository accountRepository;
-
+@Autowired
+private TransactionsServiceIpml transactionsService;
+    @Autowired
+    public void OrdersService(OrdersRepository ordersRepository, TransactionsRepository transactionsRepository) {
+        this.ordersRepository = ordersRepository;
+        this.transactionsRepository = transactionsRepository;
+    }
     @Override
     public Orders detailHD(Integer id) {
         return ordersRepository.findById(id).orElse(null);
@@ -61,6 +58,11 @@ public class OrdersServiceImpl implements OrdersService {
     public Page<Orders> getAllOrders(Integer page) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "OrderDate"));
         return ordersRepository.findAllByOrderStatus(pageable, "0");
+    }
+
+    @Override
+    public Transactions placeOrder(Cart cart, String address, String paymentMethod) {
+        return null;
     }
 
     @Override
@@ -82,6 +84,10 @@ public class OrdersServiceImpl implements OrdersService {
         return null;
     }
 
+
+
+
+    // Phương thức để đặt hàng và tạo giao dịch
     @Override
     public Orders planceOrder(Cart cart, String address) {
         Orders bill = new Orders();
@@ -91,7 +97,7 @@ public class OrdersServiceImpl implements OrdersService {
         bill.setEmail(cart.getAccountId().getEmail());
         bill.setFullname(cart.getAccountId().getName());
         bill.setShippingFee(BigDecimal.ZERO);
-        bill.setTotal(cart.getTotalPrice().setScale(2, RoundingMode.HALF_UP));
+        bill.setTotal(cart.getTotalPrice());
         bill.setOrderStatus("Chờ xác nhận");
         bill.setCreateDate(LocalDate.now());
         bill.setUpdateDate(LocalDate.now());
@@ -157,6 +163,11 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<Orders> getAllOrders1(Integer accountId) {
         return ordersRepository.getAllOrders(accountId);
+    }
+
+    @Override
+    public Optional<Orders> getOrderId(Integer id) {
+        return ordersRepository.findById(id);
     }
 }
 

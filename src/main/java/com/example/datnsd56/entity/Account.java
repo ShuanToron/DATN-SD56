@@ -81,9 +81,13 @@ public class Account {
     private Cart cart;
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   private List<Address> address;
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL)
+    private List<Transactions> transactions;
+
     public Account(){
         this.cart = new Cart();
     }
+
 
 
 

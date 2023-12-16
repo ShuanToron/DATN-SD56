@@ -65,10 +65,131 @@ https://templatemo.com/tm-559-zay-shop
 
 -->
     <style>
-        .hidden {
-            display: none;
+        .GLQcyH {
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            padding: 16px;
         }
 
+        .cW1Zd4 {
+            margin-top: 8px;
+        }
+
+        .waBqqB {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .odP50+ {
+            font-weight: bold;
+        }
+
+        .J3cnC0 {
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        ._30cEVT {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .xDA4sT {
+            background-color: #ee4d2d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .ETpXw8 {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .o9Vr4R {
+            margin-right: 8px;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .col-md-6 {
+            flex: 0 0 50%;
+        }
+
+        input.form-control {
+            width: 100%;
+        }
+
+        .GLQcyH {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+             width: 210%; /* Điều chỉnh chiều rộng của ô địa chỉ */
+
+        }
+
+        .waBqqB {
+            flex: 1;
+        }
+
+        input[type="text"] {
+            margin-right: 10px;
+        }
+
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+
+        /* Thêm style mới để điều chỉnh ô input và địa chỉ */
+        .waBqqB .EXsnBg {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ô input radio và địa chỉ cùng một dòng */
+        .waBqqB .EXsnBg .J3cnC0 {
+            margin-bottom: 4px;
+        }
+
+        /* Chuyển nút Cập nhật sang bên phải */
+        .waBqqB .lDkkQU {
+            margin-left: auto;
+        }
+
+        /* Chỉnh layout của nút Xác nhận và Huỷ */
+        .ETpXw8 button {
+            flex-grow: 0; /* Tắt tính năng mở rộng */
+            width: 48%; /* Đặt chiều rộng của nút */
+        }
+
+        /* Chỉnh layout modal */
+        .modal-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .waBqqB {
+            width: 100%; /* Điều chỉnh chiều rộng của ô địa chỉ */
+            margin-right: 30px; /* Tạo khoảng cách với nút cập nhật */
+        }
+
+        .waBqqB .YzoGWD {
+            display: flex;
+            flex-direction: row; /* Hiển thị theo chiều ngang */
+            align-items: center; /* Canh chỉnh các phần tử theo chiều dọc */
+            justify-content: space-between; /* Canh chỉnh các phần tử theo chiều ngang */
+        }
+
+        .waBqqB .lDkkQU {
+            margin-top: 8px; /* Khoảng cách giữa ô địa chỉ và nút cập nhật */
+        }
     </style>
     <!-- ... (Các khai báo khác như trong mã HTML trước) ... -->
 </head>
@@ -80,8 +201,7 @@ https://templatemo.com/tm-559-zay-shop
             <span th:text="${mess}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <form th:action="@{/user/add-order}" method="post">
-
+        <form  id="orderForm" th:action="@{/user/add-order}" method="post">
             <!-- Nút thêm sản phẩm mới -->
             <div>
                 <a th:href="@{/product/hien-thi}">
@@ -96,7 +216,7 @@ https://templatemo.com/tm-559-zay-shop
             <div class="form-group">
                 <label for="selectedAddress">Địa Chỉ Nhận Hàng</label>
                 <input type="text" class="form-control" id="selectedAddress" name="selectedAddress" readonly
-                       th:value="${defaultAddress.streetName + ' ' + defaultAddress.district + ' ' + defaultAddress.province+ ' '+ (defaultAddress.defaultAddress ? 'Mặc Định':'')}"
+                       th:value="${defaultAddress.streetName + ' ' + defaultAddress.district + ' ' + defaultAddress.province+ ' '+  ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+ ' '+  (defaultAddress.defaultAddress ? 'Mặc Định':'')}"
                        th:if="${defaultAddress != null}" />
 
 <!--                <span th:if="${defaultAddress != null and defaultAddress.defaultAddress}">(Mặc định)</span>-->
@@ -114,48 +234,82 @@ https://templatemo.com/tm-559-zay-shop
             <!-- Modal chọn địa chỉ -->
             <div class="modal fade" id="changeAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content" style="width: 400%">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Chọn Địa Chỉ Nhận Hàng</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <!-- Bảng chọn địa chỉ -->
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Chọn</th>
-                                    <th>Địa Chỉ</th>
-                                    <!-- Thêm các cột thông tin khác nếu cần -->
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!-- Duyệt qua danh sách địa chỉ và hiển thị tương ứng -->
-                                <tr th:each="address : ${addressList}">
-                                    <td>
-                                        <!-- Sử dụng radio button với biểu thức Thymeleaf -->
-                                        <input type="radio" name="selectedAddressRadio"
-                                               th:value="${address.id}"
-                                               th:attr="data-streetName=${address.streetName}, data-district=${address.district}, data-province=${address.province}, data-defaultAddress=${address.defaultAddress }"
-                                               onclick="updateSelectedAddress(this)">
-                                    </td>
-                                    <td>
-                                        <span th:text="${address.streetName + ' ' + address.district + ' ' + address.province}"></span>
-                                        <span th:if="${address.defaultAddress}">(Mặc định)</span>
-                                    </td>
-                                    <!-- Thêm các ô thông tin khác nếu cần -->
-                                </tr>
-                                </tbody>
-                            </table>
+                        <div class="container">
+                            <div class="row" th:each="address : ${addressList}">
+                                <div class="col-md-6">
+                                    <div class="GLQcyH Z+faEd">
+                                        <div class="waBqqB YzoGWD">
+                                            <input type="radio" name="selectedAddressRadio"
+                                                   th:value="${address.id}"
+                                                   th:attr="data-streetName=${address.streetName}, data-district=${address.district}, data-province=${address.province}, data-defaultAddress=${address.defaultAddress }"
+                                                   onclick="updateSelectedAddress(this)">
+                                            <!-- Địa chỉ hiện tại -->
+                                            <div role="heading" class="waBqqB YzoGWD">
+                                                <div id="address-card_6390e80e-6c9e-4c54-9d54-6d09ed6f6ba8_header"
+                                                     class="odP50+ On6XjY">
+                                            <span class="zPR3Hm xrc+fE">
+                                                <div class="Xml7Ip" style="" th:text="${address.streetName}">
+                                                    Nguyễn Đức An
+                                                </div>
+                                            </span>
+                                                    <div class="Q-T2Hu"></div>
+                                                    <div role="row" class="jx3Tnl _6a1yZV J3cnC0" th:text="${address.district}">
+                                                        (+84) 795389855
+                                                    </div>
+                                                    <!-- Địa chỉ chi tiết -->
+                                                    <div id="address-card_6390e80e-6c9e-4c54-9d54-6d09ed6f6ba8_content" role="heading"
+                                                         class="waBqqB YzoGWD">
+                                                        <div class="odP50+ On6XjY">
+                                                            <div class="EXsnBg">
+                                                                <div role="row" class="J3cnC0" style="">
+                                                                    Bếp Mẹ Bống, Số 21, Ngách 45 Ngõ 58 Trần Bình
+                                                                </div>
+                                                                <div role="row" class="J3cnC0" style="">
+                                                                    Phường Mai Dịch, Quận Cầu Giấy, Hà Nội
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ZEgvpu -mNtyE"></div>
+                                                    </div>
+
+                                                    <!-- Chữ mặc định -->
+                                                    <div id="address-card_6390e80e-6c9e-4c54-9d54-6d09ed6f6ba8_badge"
+                                                         role="row" class="_30cEVT J3cnC0" style="color: #ee4d2d;">
+                                                <span th:if="${address.defaultAddress}" role="mark"
+                                                      class="pk1xg8 KSMOtB Gc2Ohe">Mặc định</span>
+                                                    </div>
+                                                </div>
+                                                <div class="-mNtyE">
+                                                    <button class="lDkkQU">Cập nhật</button>
+                                                </div>
+                                            </div>
+                                            <!-- Ô input radio -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Danh sách địa chỉ và nút thêm địa chỉ mới ở đây -->
+
+                            <div class="ETpXw8 mt-3">
+                                <button id="addAddressBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                    Thêm Địa Chỉ Mới
+                                </button>
+                                <button class="fmOXa8 _2NE9-S sTwDJM" id="confirmChangeBtn" type="button"
+                                        data-bs-dismiss="modal">Xác nhận</button>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="addAddressBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
-                                Thêm Địa Chỉ Mới
-                            </button>
+
                             <!-- Nút xác nhận thay đổi địa chỉ -->
-                            <button id="confirmChangeBtn" type="button" class="btn btn-success" data-bs-dismiss="modal" >
-                                Xác Nhận Thay Đổi
-                            </button>
+                            <!--                            <button id="confirmChangeBtn" type="button" class="btn btn-success" data-bs-dismiss="modal" >-->
+                            <!--                                Xác Nhận Thay Đổi-->
+                            <!--                            </button>-->
                         </div>
                     </div>
                 </div>
@@ -181,8 +335,8 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="form-group">
                         <label for="paymentMethod">Phương thức thanh toán</label>
                         <select class="form-control" id="paymentMethod" name="paymentMethod">
-                            <option value="creditCard">Thẻ tín dụng</option>
-                            <option value="paypal">PayPal</option>
+                            <option value="cashOnDelivery">Thanh toán khi nhận hàng</option>
+                            <option value="vnpay">VNPAY</option>
                             <!-- ... (Thêm các phương thức thanh toán khác) ... -->
                         </select>
                     </div>
@@ -221,14 +375,14 @@ https://templatemo.com/tm-559-zay-shop
                         </tbody>
                     </table>
 
-                     Tổng số tiền
+                    <!-- Tổng số tiền -->
                     <div class="text-end">
                         Tổng số tiền: <span id="totalPrice" th:text="${cart.totalPrice} + 'Đ'" style="color: red;"></span>
                     </div>
 
                     <!-- Nút đặt hàng -->
                     <div class="d-grid gap-2 col-2 mx-auto mt-3">
-                        <button id="placeOrderBtn" class="btn btn-primary" type="submit">Đặt Hàng</button>
+                        <button id="placeOrderBtn" class="btn btn-primary" type="submit" onclick="submitForm111()">Đặt Hàng</button>
                     </div>
                 </div>
             </div>
@@ -321,6 +475,22 @@ https://templatemo.com/tm-559-zay-shop
             }
         });
     });
+</script>
+<script>
+    function submitForm111() {
+        var selectedPaymentMethod = document.getElementById("paymentMethod").value;
+
+        if (selectedPaymentMethod === "vnpay") {
+            // Nếu là VNPAY, chuyển đến trang thanh toán của VNP
+            // let orderId = document.querySelector('input[name="orderId"]').value;
+
+            window.location.href = "/pay" ;
+
+        } else {
+            // Nếu không phải VNPAY, submit form bình thường
+            document.getElementById("orderForm").submit();
+        }
+    }
 </script>
 <script th:inline="javascript">
     $(document).ready(function () {
