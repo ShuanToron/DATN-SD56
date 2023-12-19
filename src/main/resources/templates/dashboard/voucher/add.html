@@ -198,7 +198,7 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a th:href="@{/admin/account/hien-thi}">
+                    <a th:href="@{/product/hien-thi}">
                         <img alt="image" th:src="@{/website/img/logo1.png}"
                              class="header-logo"/> <span
                             class="logo-name">SneakerBeer</span>
@@ -206,7 +206,7 @@
                 </div>
                 <ul class="sidebar-menu">
                     <li class="dropdown active">
-                        <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
+                        <a th:href="@{/admin/thong-ke/hien-thi}" class="nav-link"><i data-feather="monitor"></i><span>Tổng quan</span></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
@@ -245,16 +245,23 @@
                             <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
-                            <li><a th:href="@{/admin/account/hien-thi}">Account</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                            data-feather="map"></i><span>Voucher</span></a>
+                                data-feather="map"></i><span>Voucher</span></a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/admin/voucher}">danh sách</a></li>
-                            <li><a th:href="@{/admin/voucher/new}">Thêm mới</a></li>
+                            <li><a th:href="@{/admin/voucher/hien-thi}">Danh sách</a></li>
+                            <li><a th:href="@{/admin/voucher/lich-su-dung-voucher}">Lịch Sử Dùng Voucher</a></li>
+                            <li><a th:href="@{/admin/voucher/view-add}">Thêm mới</a></li>
                             <!--                            <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>-->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                data-feather="map"></i><span>Thống Kê</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/thong-ke/hien-thi}">Thống Kê</a></li>
                         </ul>
                     </li>
                 </ul>
