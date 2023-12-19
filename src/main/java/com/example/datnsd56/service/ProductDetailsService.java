@@ -37,6 +37,8 @@ public interface ProductDetailsService {
     void delete(Integer id);
     List<ProductDetails> getProductsByProductId(Integer productId);
     BigDecimal getPrice(Integer id, Integer colorId, Integer sizeId);
+    Integer getQuantity(Integer id, Integer colorId, Integer sizeId);
+
     ProductDetails getCart(Integer productId, Integer color, Integer size);
     void update(ProductDetails productDetails);
 

@@ -156,6 +156,11 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
+    public Integer getQuantity(Integer id, Integer colorId, Integer sizeId) {
+        return productDetailsRepository.getQuantity(id,colorId,sizeId);
+    }
+
+    @Override
     public void update(ProductDetails productDetails) {
 
 //        List<Image> existingImages = imageRepository.getImageByProductId(productDetails.getId());

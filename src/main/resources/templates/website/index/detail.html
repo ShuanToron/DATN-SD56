@@ -349,6 +349,9 @@ id="templatemo_nav_top"
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                        </div>
                             <h1 class="h2" th:text="${product.name}"></h1>
                             <p class="h3 py-2">
                                 <span id="product-price">1000đ</span>
@@ -424,6 +427,7 @@ id="templatemo_nav_top"
                             <!--                                            id="quantity"-->
                             <!--                                    />-->
                             <!--                                </li>-->
+
                             <div class="input-group quantity mr-3" style="width: 130px;">
                                 <div class="input-group-btn">
                                     <button class="btn btn-primary btn-minus" type="button">
@@ -439,6 +443,9 @@ id="templatemo_nav_top"
                                     </button>
                                 </div>
                             </div>
+                            <p >
+                                <span style="color: red"  id="product-quantity11"  > </span>
+                            </p>
                             <!--                                <li class="list-inline-item">-->
                             <!--                                    <span class="btn btn-success" id="btn-minus">-</span>-->
                             <!--                                </li>-->
@@ -649,95 +656,104 @@ id="templatemo_nav_top"
         document.getElementById("cartItemCount").innerText = cartItemCount;
     });
 
-    function updateProductPrice() {
+    function updateProductPriceAndQuantity() {
         var productId = $('input[name="productId"]').val();
         var color = $('input[name="color"]:checked').val();
         var size = $('input[name="size"]:checked').val();
 
-        // Kiểm tra xem cả color và size đã được chọn hay chưa
+        // Kiểm tra xem cả màu và kích thước đã được chọn hay chưa
         if (color && size) {
-            console.log("ID sản phẩm:" + productId);
-            console.log("ID màu:" + color);
-            console.log("ID size:" + size);
             $.ajax({
                 type: "GET",
-                url: "/product/detail/getProductPrice", // Điều hướng đến endpoint đã tạo trong DetailProductController
+                url: "/product/detail/getProductPrice",
                 data: {
                     productId: productId,
                     color: color,
                     size: size,
                 },
                 success: function (response) {
-                    // Xử lý dữ liệu giá sản phẩm từ response và cập nhật lên trang Thymeleaf
-                    if (response != null) {
-                        // Giá sản phẩm không rỗng, cập nhật giá
-                        $("#product-price").text(response + "đ");
-                        console.log("Giá sản phẩm: " + response);
+                    // Cập nhật giá sản phẩm
+                    if (response.quantity === 0 && response.quantity == null) {
+                        $("#product-price").text("Hết hàng");
+                        $("#product-quantity11").text("Hết hàng"); // Bạn có thể ẩn số lượng hoặc hiển thị một thông báo khác
                     } else {
-                        // Giá sản phẩm rỗng, hiển thị thông báo "Hết hàng"
-                        $("#product-price").nullValue("Hết hàng");
-                        console.log("Sản phẩm hết hàng");
+                        // Cập nhật giá sản phẩm
+                        $("#product-price").text(response.sellPrice + "đ");
+
+                        // Cập nhật số lượng sản phẩm
+                        $("#product-quantity11").text(response.quantity + " sản phẩm có sẵn");
                     }
+                    console.log("Giá sản phẩm: " + response.sellPrice);
+                    console.log("Số lượng sản phẩm: " + response.quantity);
                 },
                 error: function () {
-                    alert("Đã xảy ra lỗi khi lấy giá sản phẩm.");
+                    alert("Đã xảy ra lỗi khi lấy giá sản phẩm và số lượng sản phẩm.");
                 },
             });
         }
     }
 
+    // Bổ sung sự kiện change cho input[name="color"] và input[name="size"]
     $('input[name="color"]').change(function () {
-        updateProductPrice();
+        updateProductPriceAndQuantity();
     });
 
     $('input[name="size"]').change(function () {
-        updateProductPrice();
+        updateProductPriceAndQuantity();
     });
+
+    // Gọi hàm updateProductPriceAndQuantity khi trang được tải và chọn mặc định size và color
     $(document).ready(function () {
-        updateProductPrice();
+        updateProductPriceAndQuantity();
     });
 
-    $(document).ready(function () {
-        $(".addToCartBtn").click(function () {
-            var productId = $(this).data("productId");
-            var color = $(this).data("color");
-            var size = $(this).data("size");
-            var quantity = $("#quantity").val();
 
-            // Gửi yêu cầu Ajax để thêm sản phẩm vào giỏ hàng
-            $.ajax({
-                type: "post",
-                url: "/user/add-to-cart",
-                data: {
-                    productId: productId,
-                    quantity: quantity,
-                    color: color,
-                    size: size,
-                },
-                success: function (response) {
-                    // Xử lý phản hồi từ server (nếu cần)
-                    // Cập nhật danh sách sản phẩm trong giỏ hàng
-                    $("#cartItems").html(response);
-                    // console.log(cartItemCount);
-                    event.preventDefault();
-                    var totalItems = calculateTotalItems(response);
 
-                    // Cập nhật số sản phẩm trên biểu tượng giỏ hàng
-                    updateCartIcon(totalItems);
-                },
-
-                error: function (error) {
-                    console.log(error);
-                },
-            });
-
-            // cartItemCount++;
-            //
-            // // Cập nhật số lượng sản phẩm trên giao diện người dùng
-            // // Đặt giá trị vào phần tử có id là cartItemCount
-            // document.getElementById("cartItemCount").innerText = cartItemCount;
-        });
-    });
+    // $(document).ready(function () {
+    //     $(".addToCartBtn").click(function () {
+    //         var productId = $(this).data("productId");
+    //         var color = $(this).data("color");
+    //         var size = $(this).data("size");
+    //         var quantity = $("#quantity").val();
+    //
+    //         // Gửi yêu cầu Ajax để thêm sản phẩm vào giỏ hàng
+    //         $.ajax({
+    //             type: "post",
+    //             url: "/user/add-to-cart",
+    //             data: {
+    //                 productId: productId,
+    //                 quantity: quantity,
+    //                 color: color,
+    //                 size: size,
+    //             },
+    //             success: function (response) {
+    //                 if(response.quantity <=0 ){
+    //                     alert("hết hàng vui lòng chọn sản phẩm khác")
+    //                 }else {
+    //                     // Xử lý phản hồi từ server (nếu cần)
+    //                     // Cập nhật danh sách sản phẩm trong giỏ hàng
+    //                     $("#cartItems").html(response);
+    //                     // console.log(cartItemCount);
+    //                     event.preventDefault();
+    //                     var totalItems = calculateTotalItems(response);
+    //
+    //                     // Cập nhật số sản phẩm trên biểu tượng giỏ hàng
+    //                     updateCartIcon(totalItems);
+    //                 }
+    //             },
+    //
+    //             error: function (error) {
+    //                 console.log(error);
+    //             },
+    //         });
+    //
+    //         // cartItemCount++;
+    //         //
+    //         // // Cập nhật số lượng sản phẩm trên giao diện người dùng
+    //         // // Đặt giá trị vào phần tử có id là cartItemCount
+    //         // document.getElementById("cartItemCount").innerText = cartItemCount;
+    //     });
+    // });
 
     function calculateTotalItems(response) {
         // Thực hiện tính tổng số sản phẩm trong giỏ hàng từ dữ liệu phản hồi

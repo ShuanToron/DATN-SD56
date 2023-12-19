@@ -65,6 +65,7 @@ public class UseCartController {
     }
 
     @PostMapping("/add-to-cart")
+//    @ResponseBody
     public String addToCart(
         @RequestParam("productId") Integer productId,
         @RequestParam("size") Integer sizeId,
@@ -73,25 +74,27 @@ public class UseCartController {
         Principal principal,
         RedirectAttributes redirectAttributes,
         HttpSession session) {
-        ProductDetails productDetail = productDetailsService.getCart(productId ,colorId,sizeId);
+        ProductDetails productDetail = productDetailsService.getCart(productId, colorId, sizeId);
         System.out.println(productDetail);
 
         if (principal == null) {
-            SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
-            SessionCart sessionCart = cartService.addToCartSession(oldSessionCart, productDetail, quantity);
-            session.setAttribute("sessionCart", sessionCart);
-            session.setAttribute("totalItems", sessionCart.getTotalItems());
-            redirectAttributes.addFlashAttribute("mess", "Thêm giỏ hàng thành công!");
-        } else {
-            String name = principal.getName();
-            Cart cart = cartService.addToCart(productDetail, quantity, name);
-            session.setAttribute("totalItems", cart.getTotalItems());
-            redirectAttributes.addFlashAttribute("mess", "Thêm giỏ hàng thành công!");
-        }
 
-        String redirectUrl = String.format("redirect:/product/detail/chi-tiet/"+  productId);
-        return redirectUrl;
-    }
+
+                SessionCart oldSessionCart = (SessionCart) session.getAttribute("sessionCart");
+                SessionCart sessionCart = cartService.addToCartSession(oldSessionCart, productDetail, quantity);
+                session.setAttribute("sessionCart", sessionCart);
+                session.setAttribute("totalItems", sessionCart.getTotalItems());
+                redirectAttributes.addFlashAttribute("mess", "Thêm giỏ hàng thành công!");
+            } else {
+                String name = principal.getName();
+                Cart cart = cartService.addToCart(productDetail, quantity, name);
+                session.setAttribute("totalItems", cart.getTotalItems());
+                redirectAttributes.addFlashAttribute("mess", "Thêm giỏ hàng thành công!");
+            }
+
+            String redirectUrl = String.format("redirect:/product/detail/chi-tiet/" + productId);
+            return redirectUrl;
+        }
 
 
     @GetMapping("/display")

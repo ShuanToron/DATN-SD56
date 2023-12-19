@@ -42,7 +42,8 @@ public class Transactions {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customers customerId;
-
+@Column(name = "order_info")
+private String orderInfo;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders orderId;
