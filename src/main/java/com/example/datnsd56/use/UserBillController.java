@@ -6,7 +6,9 @@ import com.example.datnsd56.repository.AddressRepository;
 import com.example.datnsd56.repository.VoucherUsageRepository;
 import com.example.datnsd56.service.*;
 
+import com.example.datnsd56.service.impl.OrderServiceImplV2;
 import com.example.datnsd56.service.impl.PaymentServiceImpl;
+import com.example.datnsd56.service.impl.VoucherSeviceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -50,6 +52,8 @@ private VoucherUsageRepository voucherUsageRepository;
     private PaymentServiceImpl paymentService;
 @Autowired
 private VoucherService voucherService;
+@Autowired
+private OrderSeriveV2 orderServiceImplV2;
     //    @Autowired
 //    private VnpayUtils vnpayUtils;
 
@@ -160,14 +164,14 @@ public String applyVoucher(
 }
 
     @PostMapping("/add-order")
-    public String addOrder(@RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId,
-                           @RequestParam(name = "paymentMethod") String paymentMethod,
-                           @RequestParam(name = "promoCode", required = false) String voucherCode,
-                           Principal principal,
-                           RedirectAttributes attributes,
-                           HttpSession session,
-                           HttpServletRequest request,
-                           Model model) {
+    public String placeOrder(@RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId,
+                             @RequestParam(name = "paymentMethod") String paymentMethod,
+                             @RequestParam(name = "promoCode", required = false) String voucherCode,
+                             Principal principal,
+                             RedirectAttributes attributes,
+                             HttpSession session,
+                             HttpServletRequest request,
+                             Model model) {
 
         if (principal == null) {
             return "redirect:/login";
@@ -194,7 +198,7 @@ public String applyVoucher(
 
             if (address != null) {
                 // Thực hiện đặt hàng
-                Orders order = ordersService.placeOrders(cart, String.valueOf(address), voucherCode);
+                Orders order = orderServiceImplV2.placeOrder(cart, String.valueOf(address), voucherCode);
                 if (order != null) {
                     // Kiểm tra xem phương thức thanh toán là VNPAY hay không
                     if ("vnpay".equals(paymentMethod)) {
@@ -256,7 +260,6 @@ public String applyVoucher(
 
         return "redirect:/user/checkout";
     }
-
 
 
 
