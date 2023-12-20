@@ -102,14 +102,14 @@ public class BrandController {
             return "/dashboard/thuong-hieu/thuong-hieu";
         }   if (service.existsByName(brand.getName())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
-            return "redirect:/admin/thuong-hieu/hien-thi";
+            return "redirect:/admin/san-pham-test/create";
         }
         String code = "TH" + new Random().nextInt(100000);
         brand.setCode(code);
         brand.setStatus(true);
         service.add(brand);
         redirectAttributes.addFlashAttribute("Message",  "Thêm thành công");
-        return "redirect:/admin/thuong-hieu/hien-thi";
+        return "redirect:/admin/san-pham-test/create";
 
     }
     @GetMapping("search")

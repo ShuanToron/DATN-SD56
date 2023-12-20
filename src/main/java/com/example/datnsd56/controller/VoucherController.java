@@ -120,6 +120,11 @@ public class VoucherController {
         redirectAttributes.addFlashAttribute("successMessage", "Voucher deleted successfully!");
         return "redirect:/admin/voucher";
     }
+    @GetMapping("/lich-su-dung-voucher")
+    public String lSvoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
 
+        return "dashboard/voucher/lich-su-dung-voucher";
+
+    }
 
 }

@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public interface TransactionsRepository extends JpaRepository<Transactions,Integer> {
     Optional<Transactions> getTransactionsById(Integer id);
+
     @Query(value = "select * from Transactions where order_info=?1",nativeQuery = true)
     Transactions findByOrderInfo(String orderInfo);
 //    Optional<Transactions> findByOrderId(Integer id);
+
 }
