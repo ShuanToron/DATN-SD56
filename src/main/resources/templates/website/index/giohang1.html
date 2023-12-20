@@ -21,7 +21,7 @@
     />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
+<!--    https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css-->
 
     <!-- Icon Font Stylesheet -->
     <link
@@ -29,7 +29,7 @@
         rel="stylesheet"
     />
     <link
-        th:href="@{://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}"
+        th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css}"
         rel="stylesheet"
     />
 
@@ -201,7 +201,7 @@ https://templatemo.com/tm-559-zay-shop
             <span th:text="${mess}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <form  id="orderForm" th:action="@{/user/add-order}" method="post">
+        <form  id="orderForm" th:action="@{/user/add-order}" method="post" >
             <!-- Nút thêm sản phẩm mới -->
             <div>
                 <a th:href="@{/product/hien-thi}">
@@ -238,7 +238,12 @@ https://templatemo.com/tm-559-zay-shop
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
+
                         <div class="container">
+                            <div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span th:text="${error}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                             <div class="row" th:each="address : ${addressList}">
                                 <div class="col-md-6">
                                     <div class="GLQcyH Z+faEd">
@@ -342,10 +347,25 @@ https://templatemo.com/tm-559-zay-shop
                     </div>
 
                     <!-- Nhập mã giảm giá -->
+                    <!-- Thêm các thẻ HTML tương ứng vào trang của bạn -->
+                    <!-- Thông báo áp dụng mã thành công -->
+                    <div th:if="${ss}" class="alert alert-danger" role="alert">
+                        <span th:text="${ss}"></span>
+                    </div>
+                    <!-- Form để đặt mã giảm giá -->
                     <div class="form-group">
                         <label for="promoCode">Mã giảm giá</label>
                         <input type="text" class="form-control" id="promoCode" name="promoCode" placeholder="Nhập mã giảm giá">
                     </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="applyVoucherBtn" type="button" data-href='/user/checkout'>Áp dụng mã giảm giá</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="newTotal">Tổng số tiền mới sau giảm giá</label>
+                        <input type="text" class="form-control" id="newTotal" name="newTotal" readonly>
+                    </div>
+
+
 
                     <!-- Thông tin sản phẩm -->
                     <h4 class="font-weight-semi-bold mt-4">Thông tin sản phẩm</h4>
@@ -379,10 +399,9 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="text-end">
                         Tổng số tiền: <span id="totalPrice" th:text="${cart.totalPrice} + 'Đ'" style="color: red;"></span>
                     </div>
-
                     <!-- Nút đặt hàng -->
                     <div class="d-grid gap-2 col-2 mx-auto mt-3">
-                        <button id="placeOrderBtn" class="btn btn-primary" type="submit" onclick="submitForm111()">Đặt Hàng</button>
+                        <button id="placeOrderBtn" class="btn btn-primary" type="submit"  >Đặt Hàng</button>
                     </div>
                 </div>
             </div>
@@ -458,6 +477,47 @@ https://templatemo.com/tm-559-zay-shop
 
 <!-- Bootstrap Bundle with Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Thêm đoạn mã script vào trang HTML của bạn -->
+<script>
+    document.getElementById("applyVoucherBtn").addEventListener("click", function () {
+        var voucherCode = document.getElementById("promoCode").value;
+
+        fetch('/user/apply-voucher?promoCode=' + voucherCode, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                voucherCode: voucherCode,
+            }),
+        })
+            .then(response => response.text())
+            .then(data => {
+                // Kiểm tra nếu có thông báo thành công
+                if (data.includes("Áp dụng mã giảm giá thành công")) {
+                    // Hiển thị thông báo thành công
+                    document.getElementById("voucherAppliedMessage").innerText = data;
+                    document.getElementById("voucherAppliedMessage").style.display = "block";
+
+                    // Cập nhật giá mới
+                    document.getElementById("totalPrice").value = data.totalPrice; // Cần kiểm tra giá trị được trả về từ server
+                } else {
+                    // Hiển thị thông báo lỗi
+                    document.getElementById("voucherErrorMessage").innerText = data;
+                    document.getElementById("voucherErrorMessage").style.display = "block";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+
+
+
+
+
 <script th:inline="javascript">
     $(document).ready(function() {
         // Xử lý sự kiện khi chọn địa chỉ từ danh sách
@@ -477,22 +537,20 @@ https://templatemo.com/tm-559-zay-shop
     });
 </script>
 
-<script>
-    function submitForm111() {
-        var selectedPaymentMethod = document.getElementById("paymentMethod").value;
+<!--<script>-->
+<!--    function submitForm111() {-->
+<!--        var selectedPaymentMethod = document.getElementById("applyVoucherBtn").value;-->
 
-        if (selectedPaymentMethod === "vnpay") {
-            // Nếu là VNPAY, chuyển đến trang thanh toán của VNP
-            // let orderId = document.querySelector('input[name="orderId"]').value;
+<!-- -->
 
-            window.location.href = "/pay" ;
+<!--          -->
 
-        } else {
-            // Nếu không phải VNPAY, submit form bình thường
-            document.getElementById("orderForm").submit();
-        }
-    }
-</script>
+<!--        } else {-->
+<!--            // Nếu không phải VNPAY, submit form bình thường-->
+<!--            document.getElementById("orderForm").submit();-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 
 <script th:inline="javascript">
     $(document).ready(function () {
@@ -598,6 +656,32 @@ https://templatemo.com/tm-559-zay-shop
         });
     });
 </script>
+<!--<script th:inline="javascript">-->
+<!--    /* Xử lý sự kiện khi nhấn nút áp dụng voucher */-->
+<!--    $(document).ready(function () {-->
+<!--        $('#applyVoucherBtn').on('click', function () {-->
+<!--            var promoCode = $('#promoCode').val();-->
+<!--            // Gửi mã giảm giá lên server để kiểm tra và lấy tổng số tiền mới-->
+<!--            $.ajax({-->
+<!--                type: 'GET',-->
+<!--                url: '/user/apply-promo-code?promoCode=' + promoCode,-->
+<!--                success: function (data) {-->
+<!--                    if (data.success) {-->
+<!--                        // Cập nhật tổng số tiền trên giao diện-->
+<!--                        $('#totalPrice1').text(data.newTotal);-->
+<!--                        alert('Đã áp dụng mã giảm giá thành công!');-->
+<!--                    } else {-->
+<!--                        alert(data.error);-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    console.error('Lỗi khi áp dụng mã giảm giá');-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
 <script>
     function submitForm() {
         // Gửi yêu cầu khi người dùng chọn địa chỉ
@@ -630,31 +714,70 @@ https://templatemo.com/tm-559-zay-shop
         });
     }
 </script>
+<!--<script>-->
+<!--    document.getElementById("applyVoucherBtn").addEventListener("click", function() {-->
+<!--        // Xử lý sự kiện khi nút "Áp dụng" được click-->
+<!--        var promoCode = document.getElementById("promoCode").value;-->
+<!--        // Thực hiện gửi yêu cầu AJAX để kiểm tra và áp dụng mã giảm giá-->
+<!--        // Có thể sử dụng fetch hoặc XMLHttpRequest ở đây-->
+<!--        // Sau khi nhận được phản hồi từ server, cập nhật giá tiền nếu mã giảm giá hợp lệ-->
+<!--        // Hiển thị thông báo nếu có lỗi-->
+<!--    });-->
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Lấy nút "Thêm Địa Chỉ Mới"
-        var addAddressBtn = document.getElementById('addAddressBtn');
+<!--    document.getElementById("placeOrderBtn").addEventListener("click", function() {-->
+<!--        // Xử lý sự kiện khi nút "Đặt Hàng" được click-->
+<!--        // Thực hiện các thao tác liên quan đến việc đặt hàng, chuyển hướng, vv.-->
+<!--    });-->
+<!--</script>-->
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', function () {-->
+<!--        // Lấy nút "Thêm Địa Chỉ Mới"-->
+<!--        var addAddressBtn = document.getElementById('addAddressBtn');-->
+<!--        var applyVoucherBtn = document.getElementById('applyVoucherBtn');-->
 
-        // Lấy nút "Đặt Hàng"
-        var placeOrderBtn = document.getElementById('placeOrderBtn');
+<!--        // Lấy nút "Đặt Hàng"-->
+<!--        var placeOrderBtn = document.getElementById('placeOrderBtn');-->
 
-        // Thêm sự kiện click cho nút "Thêm Địa Chỉ Mới"
-        addAddressBtn.addEventListener('click', function () {
-            // Thực hiện các hành động tương ứng với việc nhấn nút "Thêm Địa Chỉ Mới"
-            console.log('Click Thêm Địa Chỉ Mới');
-        });
+<!--        // Thêm sự kiện click cho nút "Thêm Địa Chỉ Mới"-->
+<!--        addAddressBtn.addEventListener('click', function () {-->
+<!--            // Thực hiện các hành động tương ứng với việc nhấn nút "Thêm Địa Chỉ Mới"-->
+<!--            console.log('Click Thêm Địa Chỉ Mới');-->
+<!--        });-->
+<!--        applyVoucherBtn.addEventListener('click', function () {-->
+<!--            // Thực hiện các hành động tương ứng với việc nhấn nút "Thêm Địa Chỉ Mới"-->
+<!--            console.log('Click c');-->
+<!--        });-->
 
-        // Thêm sự kiện click cho nút "Đặt Hàng"
-        placeOrderBtn.addEventListener('click', function () {
-            // Thực hiện các hành động tương ứng với việc nhấn nút "Đặt Hàng"
-            console.log('Click Đặt Hàng');
+<!--        // Thêm sự kiện click cho nút "Đặt Hàng"-->
+<!--        placeOrderBtn.addEventListener('click', function () {-->
+<!--            // Thực hiện các hành động tương ứng với việc nhấn nút "Đặt Hàng"-->
+<!--            console.log('Click Đặt Hàng');-->
 
-            // Nếu bạn muốn submit form, bạn có thể sử dụng:
-            // document.getElementById('yourFormId').submit();
-        });
-    });
-</script>
+<!--            // Nếu bạn muốn submit form, bạn có thể sử dụng:-->
+<!--            // document.getElementById('yourFormId').submit();-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<!--<script th:inline="javascript">-->
+<!--    /* Xử lý sự kiện khi nhập mã giảm giá */-->
+<!--    $(document).ready(function () {-->
+<!--        $('#promoCode').on('input', function () {-->
+<!--            var promoCode = $(this).val();-->
+<!--            // Gửi mã giảm giá lên server để kiểm tra và lấy tổng số tiền mới-->
+<!--            $.ajax({-->
+<!--                type: 'GET',-->
+<!--                url: '/user/check-promo-code?promoCode=' + promoCode,-->
+<!--                success: function (data) {-->
+<!--                    // Cập nhật tổng số tiền trên giao diện-->
+<!--                    $('#totalPrice1').text(data.newTotal);-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    console.error('Lỗi khi kiểm tra mã giảm giá');-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 </body>
 </html>

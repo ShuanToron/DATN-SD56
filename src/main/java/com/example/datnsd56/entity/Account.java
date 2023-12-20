@@ -10,7 +10,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,9 +30,6 @@ public class Account {
     @Column(name = "id")
     private Integer id;
 
-
-//    @Column(name = "username")
-//    private String username;
 
     @NotBlank(message = "Không đuộc để trống!")
     @Column(name = "passwords")
@@ -52,9 +51,6 @@ public class Account {
     @Column(name = "update_date")
     private Date updateDate;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "role_id ",referencedColumnName = "id")
-//    private Roles role_id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
@@ -83,7 +79,8 @@ public class Account {
   private List<Address> address;
     @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL)
     private List<Transactions> transactions;
-
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private Set<VoucherUsage> voucherUsages;
     public Account(){
         this.cart = new Cart();
     }

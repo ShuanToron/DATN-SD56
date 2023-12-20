@@ -89,8 +89,8 @@ public class VoucherController {
         voucherService.updateVoucher(voucher);
         redirectAttributes.addFlashAttribute("successMessage", "Voucher created successfully!");
 
+        return "redirect:/admin/voucher/hien-thi";
 
-        return "redirect:/admin/voucher";
     }
 
     @GetMapping("/{id}")

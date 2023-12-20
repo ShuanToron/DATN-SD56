@@ -15,13 +15,20 @@ public class TransactionsServiceIpml implements TransactionService {
     @Autowired
     private TransactionsRepository transactionsRepository;
 
-    public void saveTransaction(Transactions transaction) {
+    public Transactions saveTransaction(Transactions transaction) {
+
         transactionsRepository.save(transaction);
+        return transaction;
     }
 
     public List<Transactions> get() {
         return  transactionsRepository.findAll();
     }
+//
+//    @Override
+//    public Optional<Transactions> findByOrderId(Integer id) {
+//        return transactionsRepository.findByOrderId(id);
+//    }
 
 //    @Override
 //    public Transactions findByOrderInfo(String orderInfo) {

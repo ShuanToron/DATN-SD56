@@ -64,11 +64,11 @@ public class Orders {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
     private List<OrderItem> orderItems;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucherId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customers customerId;
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.DETACH)

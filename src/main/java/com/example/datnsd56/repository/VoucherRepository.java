@@ -12,8 +12,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher,Integer> {
     List<Voucher> findByExpiryDateTimeBeforeAndActiveIsTrue(LocalDateTime dateTime);
+    Optional<Voucher> findByCode(String code);
+
 }
