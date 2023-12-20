@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 
 
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> SneakBeer - Chi tiết sản phẩm </title>
+    <title> SneakBeer - Account </title>
     <!-- General CSS Files -->
     <link th:href="@{/dashboard/css/app.min.css}" rel="stylesheet">
     <!-- Template CSS -->
@@ -16,23 +16,6 @@
     <!-- Custom style CSS -->
     <link th:href="@{/dashboard/css/custom.css}">
     <link rel='shortcut icon' type='image/x-icon' th:href="@{/dashboard/img/favicon.ico}"/>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-        }
-
-        .preview-image {
-            max-width: 150px;
-            max-height: 150px;
-        }
-    </style>
 </head>
 
 <body>
@@ -188,11 +171,11 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                                                                                         th:src="@{/dashboard/img/user.png}"
+                                                                                                         th:src="@{/website/img/logo1.png}"
                                                                                                          class="user-img-radious-style">
                     <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title" th:text="${#authentication.name}"></div>
+                        <div class="dropdown-title" th:text=" ${#authentication.name}"></div>
 
                         <!--                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far-->
                         <!--            										fa-user"></i> Profile-->
@@ -284,227 +267,209 @@
         </div>
         <!-- Main Content -->
         <div class="main-content">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Chi tiết sản phẩm</h4>
-                        </div>
-                        <form th:action="@{'/admin/chi-tiet-san-pham/update/'+${id}}" method="post" th:object="${ctsp}"
-                              onsubmit="return  confirm('Bạn có muốn cập nhật không?')" >
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label>Sản phẩm</label>
-                                    <input type="hidden" th:field="*{productId}" th:each="product:${products}" th:value="${product.id}" />
-                                    <select disabled="disabled" class="form-control" th:field="*{productId}"  >
-                                        <option th:each="product:${products}" th:value="${product.id}" th:text="${product.name}"></option>
-                                    </select>
+            <section class="section">
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- --ô thong ke end -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Lịch sử dùng Voucher</h4>
+                                </div>
+                                <!-- -----o thong ke start -->
 
-                                    <!--                                    <input disabled="disabled" type="text" class="form-control" placeholder="Nhập số lượng"-->
-<!--                                           th:field="*{productId}">-->
-                                </div>
-                                <div class="form-group">
-                                    <label>Màu sắc</label>
-                                    <select class="form-control" th:field="*{colorId}">
-                                        <option th:each="color:${colors}" th:value="${color.id}"
-                                                th:text="${color.name}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Size</label>
-                                    <select class="form-control" th:field="*{sizeId}">
-                                        <option th:each="size:${sizes}" th:value="${size.id}"
-                                                th:text="${size.name}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Số lượng</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
-                                               th:field="*{quantity}">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table
+                                                class="table table-striped table-hover"
+                                                id="tableExport"
+                                                style="width: 100%"
+                                        >
+                                            <thead>
+                                            <tr>
+                                                <th>MaVoucher</th>
+                                                <th>Khách Hàng</th>
+                                                <th>Thời sử dụng</th>
+                                                <th>Kiểu giảm</th>
+                                                <th>Tiền giảm</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Đơn giá</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
-                                               th:field="*{sellPrice}">
-                                    </div>
-                                </div>
-<!--                                <div class="form-group">-->
-<!--                                    <label>Ảnh sản phẩm</label>-->
-<!--                                    <input type="file" name="images" accept="image/*" id="files"  multiple/><br>-->
-<!--                                    &lt;!&ndash;                                    <output id="list"></output>&ndash;&gt;-->
-<!--                                </div>-->
-<!--                                <div id="image-preview">-->
-<!--                                    <img th:src="@{${'/admin/chi-tiet-san-pham/display?id=' + id}}"-->
-<!--                                         alt="Product Image"-->
-<!--                                         style="width: 70px; height: 70px;border-radius: 10%;object-fit: cover"-->
-<!--                                    />-->
-<!--                                </div>-->
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="true"
-                                               checked="checked">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="false">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <a th:href="@{'/admin/chi-tiet-san-pham/update/'+${id}}">
-                                        <button class="btn btn-primary mr-1" type="submit">Cập nhật</button> </a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="settingSidebar">
+                <a href="javascript:void(0)" class="settingPanelToggle">
+                    <i class="fa fa-spin fa-cog"></i>
+                </a>
+                <div class="settingSidebar-body ps-container ps-theme-default">
+                    <div class="fade show active">
+                        <div class="setting-panel-header">Setting Panel</div>
+                        <div class="p-15 border-bottom">
+                            <h6 class="font-medium m-b-10">Select Layout</h6>
+                            <div class="selectgroup layout-color w-50">
+                                <label class="selectgroup-item">
+                                    <input
+                                            type="radio"
+                                            name="value"
+                                            value="1"
+                                            class="selectgroup-input-radio select-layout"
+                                            checked
+                                    />
+                                    <span class="selectgroup-button">Light</span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input
+                                            type="radio"
+                                            name="value"
+                                            value="2"
+                                            class="selectgroup-input-radio select-layout"
+                                    />
+                                    <span class="selectgroup-button">Dark</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="p-15 border-bottom">
+                            <h6 class="font-medium m-b-10">Sidebar Color</h6>
+                            <div class="selectgroup selectgroup-pills sidebar-color">
+                                <label class="selectgroup-item">
+                                    <input
+                                            type="radio"
+                                            name="icon-input"
+                                            value="1"
+                                            class="selectgroup-input select-sidebar"
+                                    />
+                                    <span
+                                            class="selectgroup-button selectgroup-button-icon"
+                                            data-toggle="tooltip"
+                                            data-original-title="Light Sidebar"
+                                    ><i class="fas fa-sun"></i
+                                    ></span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input
+                                            type="radio"
+                                            name="icon-input"
+                                            value="2"
+                                            class="selectgroup-input select-sidebar"
+                                            checked
+                                    />
+                                    <span
+                                            class="selectgroup-button selectgroup-button-icon"
+                                            data-toggle="tooltip"
+                                            data-original-title="Dark Sidebar"
+                                    ><i class="fas fa-moon"></i
+                                    ></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="p-15 border-bottom">
+                            <h6 class="font-medium m-b-10">Color Theme</h6>
+                            <div class="theme-setting-options">
+                                <ul class="choose-theme list-unstyled mb-0">
+                                    <li title="white" class="active">
+                                        <div class="white"></div>
+                                    </li>
+                                    <li title="cyan">
+                                        <div class="cyan"></div>
+                                    </li>
+                                    <li title="black">
+                                        <div class="black"></div>
+                                    </li>
+                                    <li title="purple">
+                                        <div class="purple"></div>
+                                    </li>
+                                    <li title="orange">
+                                        <div class="orange"></div>
+                                    </li>
+                                    <li title="green">
+                                        <div class="green"></div>
+                                    </li>
+                                    <li title="red">
+                                        <div class="red"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="p-15 border-bottom">
+                            <div class="theme-setting-options">
+                                <label class="m-b-0">
+                                    <input
+                                            type="checkbox"
+                                            name="custom-switch-checkbox"
+                                            class="custom-switch-input"
+                                            id="mini_sidebar_setting"
+                                    />
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="control-label p-l-10">Mini Sidebar</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="p-15 border-bottom">
+                            <div class="theme-setting-options">
+                                <label class="m-b-0">
+                                    <input
+                                            type="checkbox"
+                                            name="custom-switch-checkbox"
+                                            class="custom-switch-input"
+                                            id="sticky_header_setting"
+                                    />
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="control-label p-l-10">Sticky Header</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
+                            <a
+                                    href=""
+                                    class="btn btn-icon icon-left btn-primary btn-restore-theme"
+                            >
+                                <i class="fas fa-undo"></i> Restore Default
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="settingSidebar">
-            <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
-            </a>
-            <div class="settingSidebar-body ps-container ps-theme-default">
-                <div class=" fade show active">
-                    <div class="setting-panel-header">Setting Panel
-                    </div>
-                    <div class="p-15 border-bottom">
-                        <h6 class="font-medium m-b-10">Select Layout</h6>
-                        <div class="selectgroup layout-color w-50">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="value" value="1"
-                                       class="selectgroup-input-radio select-layout" checked>
-                                <span class="selectgroup-button">Light</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="value" value="2"
-                                       class="selectgroup-input-radio select-layout">
-                                <span class="selectgroup-button">Dark</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="p-15 border-bottom">
-                        <h6 class="font-medium m-b-10">Sidebar Color</h6>
-                        <div class="selectgroup selectgroup-pills sidebar-color">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="icon-input" value="1"
-                                       class="selectgroup-input select-sidebar">
-                                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                                      data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="icon-input" value="2"
-                                       class="selectgroup-input select-sidebar" checked>
-                                <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                                      data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="p-15 border-bottom">
-                        <h6 class="font-medium m-b-10">Color Theme</h6>
-                        <div class="theme-setting-options">
-                            <ul class="choose-theme list-unstyled mb-0">
-                                <li title="white" class="active">
-                                    <div class="white"></div>
-                                </li>
-                                <li title="cyan">
-                                    <div class="cyan"></div>
-                                </li>
-                                <li title="black">
-                                    <div class="black"></div>
-                                </li>
-                                <li title="purple">
-                                    <div class="purple"></div>
-                                </li>
-                                <li title="orange">
-                                    <div class="orange"></div>
-                                </li>
-                                <li title="green">
-                                    <div class="green"></div>
-                                </li>
-                                <li title="red">
-                                    <div class="red"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="p-15 border-bottom">
-                        <div class="theme-setting-options">
-                            <label class="m-b-0">
-                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                                       id="mini_sidebar_setting">
-                                <span class="custom-switch-indicator"></span>
-                                <span class="control-label p-l-10">Mini Sidebar</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="p-15 border-bottom">
-                        <div class="theme-setting-options">
-                            <label class="m-b-0">
-                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                                       id="sticky_header_setting">
-                                <span class="custom-switch-indicator"></span>
-                                <span class="control-label p-l-10">Sticky Header</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
-                        <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                            <i class="fas fa-undo"></i> Restore Default
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
-    <footer class="main-footer">
-        <div class="footer-left">
-            <!--          <a href="templateshub.net">Templateshub</a></a>-->
-        </div>
-        <div class="footer-right">
-        </div>
-    </footer>
 </div>
-</div>
-<script th:inline="javascript">
-    document.getElementById('files').addEventListener('change', function (e) {
-        var previewContainer = document.getElementById('image-preview');
-        previewContainer.innerHTML = ''; // Xóa bất kỳ hình ảnh trước nào
-
-        var files = e.target.files;
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                var image = document.createElement('img');
-                image.src = e.target.result;
-                image.classList.add('preview-image');
-
-                previewContainer.appendChild(image);
-            }
-
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
 <!-- General JS Scripts -->
 <script th:src="@{/dashboard/js/app.min.js}"></script>
 <!-- JS Libraies -->
-<script th:src="@{/dashboard/bundles/apexcharts/apexcharts.min.js}"></script>
 <!-- Page Specific JS File -->
-<script th:src="@{/dashboard/js/page/index.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/datatables.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/dataTables.buttons.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/buttons.flash.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/jszip.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/pdfmake.min.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/vfs_fonts.js}"></script>
+<script th:src="@{/dashboard/bundles/datatables/export-tables/buttons.print.min.js}"></script>
+<script th:src="@{/dashboard/js/page/datatables.js}"></script>
+
+<!-- JS Libraies -->
+<!--<script th:src="@{/dashboard/bundles/apexcharts/apexcharts.min.js}"></script>-->
+<!--&lt;!&ndash; Page Specific JS File &ndash;&gt;-->
+<!--<script th:src="@{/dashboard/js/page/index.js}"></script>-->
 <!-- Template JS File -->
 <script th:src="@{/dashboard/js/scripts.js}"></script>
 <!-- Custom JS File -->
 <script th:src="@{/dashboard/js/custom.js}"></script>
 </body>
 
-
-<!-- index.html  21 Nov 2019 03:47:04 GMT -->
+<!-- export-table.html  21 Nov 2019 03:56:01 GMT -->
 </html>
