@@ -13,6 +13,7 @@ public interface RolesService {
     Roles add(Roles roles);
     void update(Roles roles);
     void delete(Integer id);
-    Roles findbyname(String roles);
+    Page<Roles> findByName(String name);
     boolean existsByName(String Name);
+    Roles findbyname1(String roles);
 }

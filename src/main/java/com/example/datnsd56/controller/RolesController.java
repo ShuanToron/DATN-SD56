@@ -1,6 +1,7 @@
 package com.example.datnsd56.controller;
 
 import com.example.datnsd56.entity.Roles;
+import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.service.RolesService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -102,5 +103,14 @@ public class RolesController {
     public String delete(@PathVariable("id") Integer id){
         rolesService.delete(id);
         return "redirect:/admin/roles/hien-thi";
+    }
+    @GetMapping("/search")
+//    @PreAuthorize("hasAuthority('admin')")
+    public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+        model.addAttribute("roles",new Roles());
+        Page<Roles> page1 = rolesService.findByName(name);
+//        model.addAttribute("totalPages", page1.getTotalPages());
+        model.addAttribute("list", page1);
+        return "/dashboard/roles/roles";
     }
 }
