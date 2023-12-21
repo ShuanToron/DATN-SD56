@@ -48,66 +48,95 @@
     <!--    <link th:href="@{/../resources/static/website/css/style.css}" rel="stylesheet" />-->
     <link th:href="@{/website/css/style.css}" rel="stylesheet" />
     <style>
-        /* Style for the table */
-        #orderTable {
-            margin-top: 20px;
-            width: 100%;
+        .body-uvoucher {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .voucher-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         }
 
-        #orderTable caption {
-            text-align: left;
-            font-size: 1.5em;
-            color: #4caf50;
-            padding: 10px 20px;
-        }
-
-        #orderTable th,
-        #orderTable td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #orderTable th {
-            background-color: #4caf50;
-            color: #fff;
-        }
-
-        #orderTable img {
-            max-width: 50px;
-            max-height: 50px;
-        }
-
-        /* Style for the footer */
-        .footer {
-            color: #fff;
-        }
-
-        /* Style for the back-to-top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
+        .voucher {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 2px solid #eee;
+            border-radius: 10px;
             padding: 10px;
-            cursor: pointer;
-            display: none;
+            margin-bottom: 15px;
         }
 
-        .back-to-top:hover {
-            background-color: #45a049;
+        .voucher img {
+            max-width: 100px;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
-        #orderTable caption {
-            caption-side: top;
+
+        .voucher-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .voucher-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .voucher-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .voucher-content {
+            flex: 1;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .voucher-title-container {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .voucher-expiry {
+            font-size: 14px;
+            color: #888;
+            text-align: left;
+        }
+
+        .use-voucher-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .use-voucher-button:hover {
+            background-color: #0056b3;
         }
     </style>
+
 </head>
 
 <body>
@@ -247,43 +276,47 @@
     </div>
 </div>
 <!-- Page Header End -->
-<table id="orderTable">
-    <caption style="text-align: left; padding: 10px 20px; text-align: center">
-        <h3 style="color: #45a049">Danh sách đơn hàng</h3>
-    </caption>
+<!--/////////////////////////////////////////////////////////////uservoucher start-->
+<div class="body-uvoucher">
+    <div class="voucher-container">
+        <div class="voucher-title-container">Your Voucher Collection</div>
+        <div class="voucher">
+            <div class="voucher-details">
+                <img th:src="@{/website/img/logo1.png}" alt="Voucher 1" />
+                <div class="voucher-content">
+                    <div class="voucher-title">Discount Voucher 1</div>
+                    <div>Get 30% off on your next purchase.</div>
+                    <div>Expires on: 31/12/2023</div>
+                    <div>Status : true</div>
+                </div>
+                <div class="voucher-actions">
+                    <button class="use-voucher-button">Use Voucher</button>
+                </div>
+            </div>
+        </div>
 
-    <thead>
-    <tr>
-        <th>Đơn hàng</th>
-        <th>Ngày đặt hàng</th>
-        <th>Tổng tiền</th>
-        <th>Trạng thái đơn hàng</th>
-        <th>Thao tác</th>
-    </tr>
-    </thead>
-    <tbody class="align-middle">
-    <tr th:each="order : ${orders}">
-        <td class="align-middle" th:text="${order.id}"></td>
-        <td class="align-middle"
-            th:text="${(order.fullname)}"></td>
-        <td class="align-middle"
-            th:text="'₫' + ${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
-        <td class="align-middle"
-            th:text="${order.orderStatus}">
-        </td>
-        <td class="align-middle">
-            <a class="btn btn-sm btn-primary"
-               th:href="@{'/order-detail/' + ${order.id}}">Xem chi tiết</a>
-            <a class="btn btn-sm btn-danger" th:href="@{'/cancel-order/' + ${order.id}}" th:if="${order.orderStatus == 10}">Huỷ</a>
-        </td>
-    </tr>
-    </tbody>
-    </thead>
-    <tbody>
-    <!-- Các dòng dữ liệu sẽ được thêm vào đây bằng JavaScript -->
-    </tbody>
-</table>
-<!-- Store End -->
+        <div class="voucher">
+            <div class="voucher-details">
+                <img th:src="@{/website/img/logo1.png}" alt="Voucher 2" />
+                <div class="voucher-content">
+                    <div class="voucher-title">Free Shipping Voucher</div>
+                    <div>Enjoy free shipping on all orders.</div>
+                    <div>Expires on: 28/02/2024</div>
+                    <div>Status : true</div>
+
+                </div>
+                <div class="voucher-actions">
+                    <button class="use-voucher-button"><a th:href="@{/product/hien-thi}">Use Voucher</a></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more voucher entries as needed -->
+    </div>
+</div>
+<!--/////////////////////////////////////////////////////////////uservoucher end-->
+
+
 
 <!-- Footer Start -->
 <div
