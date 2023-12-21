@@ -119,7 +119,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
     account.setPassword(hashedPassword);
 
     // Set role ID mặc định là 4 (user)
-    Roles userRole = rolesService.findbyname("user");
+    Roles userRole = rolesService.findbyname1("user");
     account.setRole_id(userRole);
 
     account.setStatuss(true);

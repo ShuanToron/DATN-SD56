@@ -112,7 +112,7 @@ public class ShoeSoleController {
         return "redirect:/admin/san-pham-test/create";
 
     }
-    @GetMapping("search")
+    @GetMapping("/search")
 //    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("shoeSole", new ShoeSole());
