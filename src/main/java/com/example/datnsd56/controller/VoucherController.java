@@ -121,9 +121,15 @@ public class VoucherController {
         return "redirect:/admin/voucher";
     }
     @GetMapping("/lich-su-dung-voucher")
-    public String lSvoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
+    public String lSVoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
 
         return "dashboard/voucher/lich-su-dung-voucher";
+
+    }
+    @GetMapping("/user-voucher")
+    public String userVoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
+
+        return "/website/index/user-voucher.html";
 
     }
 
