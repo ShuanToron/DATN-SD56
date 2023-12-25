@@ -3,9 +3,12 @@ package com.example.datnsd56.controller;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.service.ImageService;
 import com.example.datnsd56.service.ProductDetailsService;
 import com.example.datnsd56.service.ProductsService;
+import com.example.datnsd56.service.VoucherService;
+import com.example.datnsd56.service.impl.VoucherSeviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +34,8 @@ public class ViewProductController {
     ProductsService productsService;
     @Autowired
     ImageService imageService;
+    @Autowired
+    private VoucherSeviceImpl voucherService;
     @GetMapping("/trang-chu")
     public String hienthi(){
         return "/website/index/index";
@@ -40,6 +45,8 @@ public class ViewProductController {
 //List<Products>lists=productsService.getAllPro();
 //        List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPros();
+        List<Voucher> vouchers = voucherService.getAllVouchers();
+        model.addAttribute("vouchers", vouchers);
         // Sắp xếp sản phẩm theo brand
         Collections.sort(lists, Comparator.comparing(product -> product.getBrandId().getName()));
         model.addAttribute("views", lists);

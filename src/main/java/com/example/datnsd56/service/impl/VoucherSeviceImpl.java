@@ -116,7 +116,9 @@ public class VoucherSeviceImpl implements VoucherService  {
     public Optional<Voucher> findByCode(String code) {
         return voucherRepository.findByCode(code);
     }
-
+    public Optional<Voucher> findByid(Integer id) {
+        return voucherRepository.findById(id);
+    }
     @Override
     public List<Voucher> get() {
         return null;

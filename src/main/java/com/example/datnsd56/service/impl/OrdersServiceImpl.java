@@ -188,7 +188,7 @@ private VoucherUsageService voucherUsageService;
             voucherUsage.setVoucher(voucher);
             voucherUsage.setUsedDate(LocalDateTime.now());
             voucherUsage.setIsUsed(true);
-            voucherUsageRepository.save(voucherUsage);
+            voucherUsageService.save(voucherUsage);
 
             // Cập nhật trạng thái voucher đã sử dụng
 //            voucherService.updateVoucherStatus(voucher);
@@ -272,7 +272,7 @@ private VoucherUsageService voucherUsageService;
                     voucherUsage.setIsUsed(true);
 //                    voucherUsage.setUsedOrder(bill);
 
-                    voucherUsageRepository.save(voucherUsage);
+                    voucherUsageService.save(voucherUsage);
 
                     // Cập nhật voucher vào đơn hàng
                     bill.setVoucherId(voucher);

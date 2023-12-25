@@ -349,22 +349,29 @@ https://templatemo.com/tm-559-zay-shop
                     <!-- Nhập mã giảm giá -->
                     <!-- Thêm các thẻ HTML tương ứng vào trang của bạn -->
                     <!-- Thông báo áp dụng mã thành công -->
-                    <div th:if="${ss}" class="alert alert-danger" role="alert">
-                        <span th:text="${ss}"></span>
-                    </div>
-                    <!-- Form để đặt mã giảm giá -->
+                    <!-- Hiển thị danh sách voucher đã lưu -->
                     <div class="form-group">
-                        <label for="promoCode">Mã giảm giá</label>
-                        <input type="text" class="form-control" id="promoCode" name="promoCode" placeholder="Nhập mã giảm giá">
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" id="applyVoucherBtn" type="button" data-href='/user/checkout'>Áp dụng mã giảm giá</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="newTotal">Tổng số tiền mới sau giảm giá</label>
-                        <input type="text" class="form-control" id="newTotal" name="newTotal" readonly>
+                        <label for="selectedVoucher">Chọn hoặc Nhập mã giảm giá</label>
+                        <select class="form-control" id="selectedVoucher" name="selectedVoucher">
+                            <option value="">-- Chọn voucher --</option>
+                            <th:block th:each="voucherUsage : ${voucherUsages}">
+                                <option th:value="${voucherUsage.voucher.code}" th:text="${voucherUsage.voucher.code}"></option>
+                            </th:block>
+                            <option value="manual">Nhập mã voucher</option>
+                        </select>
+                        <input type="text" class="form-control mt-2" id="promoCode" name="promoCode" placeholder="Nhập mã giảm giá">
                     </div>
 
+                    <!-- Nút áp dụng mã giảm giá -->
+                    <button class="btn btn-primary" id="applyVoucherBtn" type="button" onclick="applyVoucher()">Áp dụng mã giảm giá</button>
+
+                    <!-- Hiển thị giá tiền mới sau khi áp dụng mã -->
+                    <p id="totalPrice1"></p>
+
+                    <!-- Thông báo áp dụng mã thành công hoặc thất bại -->
+                    <div th:if="${promoCodeMessage != null}" class="alert alert-info" role="alert">
+                        <span th:text="${promoCodeMessage}"></span>
+                    </div>
 
 
                     <!-- Thông tin sản phẩm -->
@@ -478,40 +485,91 @@ https://templatemo.com/tm-559-zay-shop
 <!-- Bootstrap Bundle with Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Thêm đoạn mã script vào trang HTML của bạn -->
+
+
 <script>
-    document.getElementById("applyVoucherBtn").addEventListener("click", function () {
-        var voucherCode = document.getElementById("promoCode").value;
-
-        fetch('/user/apply-voucher?promoCode=' + voucherCode, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                voucherCode: voucherCode,
-            }),
-        })
-            .then(response => response.text())
-            .then(data => {
-                // Kiểm tra nếu có thông báo thành công
-                if (data.includes("Áp dụng mã giảm giá thành công")) {
-                    // Hiển thị thông báo thành công
-                    document.getElementById("voucherAppliedMessage").innerText = data;
-                    document.getElementById("voucherAppliedMessage").style.display = "block";
-
-                    // Cập nhật giá mới
-                    document.getElementById("totalPrice").value = data.totalPrice; // Cần kiểm tra giá trị được trả về từ server
-                } else {
-                    // Hiển thị thông báo lỗi
-                    document.getElementById("voucherErrorMessage").innerText = data;
-                    document.getElementById("voucherErrorMessage").style.display = "block";
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
+    function reloadPage() {
+        location.reload(true);
+    }
 </script>
+
+<script>
+    function applyVoucher() {
+        var selectedVoucher = document.getElementById("selectedVoucher").value;
+        var promoCode = document.getElementById("promoCode").value;
+        var currentTotalAmount = parseFloat(document.getElementById("totalPrice").innerText);
+
+        // Gửi mã giảm giá lên server để tính giá mới và load lại
+        $.ajax({
+            type: "POST",
+            url: "/user/apply-voucher",
+            data: { voucherCode: selectedVoucher, promoCode: promoCode, currentTotalAmount: currentTotalAmount },
+            success: function(response) {
+                // Cập nhật giá tiền mới
+                document.getElementById("totalPrice1").value = response;
+console.log(response)
+                // Hiển thị thông báo thành công hoặc thất bại
+                // ...
+
+                // Reload trang sau khi áp dụng mã giảm giá thành công
+                // window.location.reload();
+            },
+            error: function(error) {
+                console.error("Error applying voucher: " + error);
+                // Hiển thị thông báo lỗi
+            }
+        });
+    }
+</script>
+<script>
+    // Hàm xử lý sự kiện khi người dùng thay đổi giá trị trong select
+    function handleVoucherSelectionChange() {
+        var selectedVoucher = document.getElementById("selectedVoucher").value;
+
+        // Nếu người dùng chọn "Nhập mã voucher", hiển thị input
+        if (selectedVoucher === "manual") {
+            document.getElementById("promoCode").style.display = "block";
+        } else {
+            document.getElementById("promoCode").style.display = "none";
+        }
+    }
+</script>
+
+
+<!--<script>-->
+<!--    document.getElementById("applyVoucherBtn").addEventListener("click", function () {-->
+<!--        var voucherCode = document.getElementById("promoCode").value;-->
+
+<!--        fetch('/user/apply-voucher?promoCode=' + voucherCode, {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json',-->
+<!--            },-->
+<!--            body: JSON.stringify({-->
+<!--                voucherCode: voucherCode,-->
+<!--            }),-->
+<!--        })-->
+<!--            .then(response => response.text())-->
+<!--            .then(data => {-->
+<!--                // Kiểm tra nếu có thông báo thành công-->
+<!--                if (data.includes("Áp dụng mã giảm giá thành công")) {-->
+<!--                    // Hiển thị thông báo thành công-->
+<!--                    document.getElementById("voucherAppliedMessage").innerText = data;-->
+<!--                    document.getElementById("voucherAppliedMessage").style.display = "block";-->
+
+<!--                    // Cập nhật giá mới-->
+<!--                    document.getElementById("totalPrice").value = data.totalPrice; // Cần kiểm tra giá trị được trả về từ server-->
+<!--                } else {-->
+<!--                    // Hiển thị thông báo lỗi-->
+<!--                    document.getElementById("voucherErrorMessage").innerText = data;-->
+<!--                    document.getElementById("voucherErrorMessage").style.display = "block";-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                console.error('Error:', error);-->
+<!--            });-->
+<!--    });-->
+<!--</script>-->
 
 
 

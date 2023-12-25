@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +55,8 @@ private VoucherUsageRepository voucherUsageRepository;
 @Autowired
 private VoucherService voucherService;
 @Autowired
+private VoucherUsageService voucherUsageService;
+@Autowired
 private OrderSeriveV2 orderServiceImplV2;
     //    @Autowired
 //    private VnpayUtils vnpayUtils;
@@ -70,7 +74,9 @@ private OrderSeriveV2 orderServiceImplV2;
 
             // Tìm địa chỉ mặc định
             List<Address> addressList = addressService.findAccountAddresses(account.getId());
+            List<VoucherUsage> voucherUsages = voucherUsageService.findVoucherUsagesByAccount(account.getId());
 
+            model.addAttribute("voucherUsages", voucherUsages);
             if (addressList.isEmpty()) {
                 // Nếu không có địa chỉ, hiển thị trang giỏ hàng
                 model.addAttribute("cart", cart);
@@ -129,44 +135,34 @@ private OrderSeriveV2 orderServiceImplV2;
     }
 //    @PostMapping("/apply-voucher")
 @PostMapping("/apply-voucher")
-public String applyVoucher(
-    @RequestParam(name = "promoCode") String voucherCode,
-    Principal principal,
-    RedirectAttributes redirectAttributes) {
+@ResponseBody
+public ResponseEntity<BigDecimal> applyVoucher(
+    @RequestParam(name = "voucherCode", required = false) String voucherCode,
+    @RequestParam(name = "selectedVoucherCode", required = false) String selectedVoucherCode,
+    @RequestParam("currentTotalAmount") BigDecimal currentTotalAmount) {
 
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    if (principal == null) {
-        // Xử lý trường hợp người dùng chưa đăng nhập
-        return "redirect:/login";
+    try {
+        Orders order = new Orders();
+//        order.setTotal(currentTotalAmount);
+
+        // Áp dụng mã voucher mà không lưu lịch sử
+        orderServiceImplV2.applyVoucherWithoutSaving(order, voucherCode, selectedVoucherCode);
+
+        // Trả về giá tiền mới sau khi áp dụng mã
+        BigDecimal updatedTotalAmount = order.getTotal();
+        return ResponseEntity.ok(updatedTotalAmount);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BigDecimal.ZERO);
     }
-
-    // Kiểm tra xem mã voucher đã được sử dụng chưa
-
-    // Gọi service để kiểm tra và áp dụng voucher
-    boolean appliedSuccessfully = ordersService.applyVoucher(principal.getName(), voucherCode);
-
-    if (appliedSuccessfully) {
-        // Lấy giá tiền mới sau khi áp dụng voucher
-        BigDecimal newTotal = ordersService.getNewTotalAfterApplyingVoucher(principal.getName());
-
-        // Thêm thông tin giảm giá và giá tiền mới vào flash attribute để truyền qua trang thanh toán
-        redirectAttributes.addFlashAttribute("voucherApplied", true);
-        redirectAttributes.addFlashAttribute("newTotal", newTotal);
-
-
-    } else {
-        // Thông báo lỗi nếu mã voucher không hợp lệ
-        redirectAttributes.addFlashAttribute("voucherError", "Mã voucher không hợp lệ");
-    }
-
-    // Chuyển hướng trở lại trang thanh toán
-    return "redirect:/user/checkout";
 }
+
 
     @PostMapping("/add-order")
     public String placeOrder(@RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId,
                              @RequestParam(name = "paymentMethod") String paymentMethod,
                              @RequestParam(name = "promoCode", required = false) String voucherCode,
+                             @RequestParam(name = "selectedVoucher", required = false) String selectedVoucherCode,
                              Principal principal,
                              RedirectAttributes attributes,
                              HttpSession session,
@@ -198,7 +194,8 @@ public String applyVoucher(
 
             if (address != null) {
                 // Thực hiện đặt hàng
-                Orders order = orderServiceImplV2.placeOrder(cart, String.valueOf(address), voucherCode);
+                Orders order = orderServiceImplV2.placeOrder(cart, String.valueOf(address), voucherCode, selectedVoucherCode);
+
                 if (order != null) {
                     // Kiểm tra xem phương thức thanh toán là VNPAY hay không
                     if ("vnpay".equals(paymentMethod)) {
