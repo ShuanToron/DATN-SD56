@@ -506,3 +506,77 @@
 .copyright a:hover {
     color: #ffffff !important;
 }
+.body-voucher {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    /*background-color: #f8f9fa;*/
+    /*background-image: url("../../dashboard/img/index/gbaner.png");*/
+    margin: 0;
+    padding: 0;
+}
+
+.voucher-container {
+    position: relative;
+    max-width: 300px;
+    max-height: 300px;
+    margin: 50px auto;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    border: 5px solid transparent;
+    background-clip: padding-box;
+    background-image: url("../../dashboard/img/index/vch.png");
+    background-color: #dde0e3;
+}
+
+
+
+.voucher-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ee4d2d;
+    margin-bottom: 10px;
+}
+
+.voucher-discount {
+    font-size: 20px;
+    color: #ee4d2d;
+    margin-bottom: 10px;
+    text-align: left; /* Căn lề sang trái */
+}
+
+.voucher-content {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: left; /* Căn lề sang trái */
+}
+
+.voucher-hsd {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #817b7b;
+    text-align: left; /* Căn lề sang trái */
+}
+
+.save-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ee4d2d;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+    background-color: #ff5c38;
+}

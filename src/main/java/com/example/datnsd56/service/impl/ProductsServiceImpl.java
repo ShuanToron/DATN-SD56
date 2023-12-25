@@ -4,6 +4,7 @@ import com.example.datnsd56.entity.Color;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
+import com.example.datnsd56.entity.Roles;
 import com.example.datnsd56.entity.Size;
 import com.example.datnsd56.repository.ColorRepository;
 import com.example.datnsd56.repository.ImageRepository;
@@ -218,6 +219,13 @@ public class ProductsServiceImpl implements ProductsService {
     public boolean existsByName(String name) {
         return productRepository.existsByName(name);
 
+    }
+
+    @Override
+    public Page<Products> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Products> list=productRepository.findByName(name,page);
+        return list;
     }
 
     public List<Integer> getSelectedColorIds(Integer id) {

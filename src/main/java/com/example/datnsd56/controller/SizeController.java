@@ -140,7 +140,7 @@ public class SizeController {
 
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
 //    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("size", new Size());

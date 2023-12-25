@@ -40,5 +40,5 @@ public interface ProductsService {
     List<Integer> findSelectedSizeIds(@Param("id") Integer id);
     List<Integer> findSelectedColorIds(@Param("id") Integer id);
     boolean existsByName(String name);
-
+    Page<Products> findByName(String name);
 }
