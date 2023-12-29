@@ -188,7 +188,7 @@ private VoucherUsageService voucherUsageService;
             voucherUsage.setVoucher(voucher);
             voucherUsage.setUsedDate(LocalDateTime.now());
             voucherUsage.setIsUsed(true);
-            voucherUsageRepository.save(voucherUsage);
+            voucherUsageService.save(voucherUsage);
 
             // Cập nhật trạng thái voucher đã sử dụng
 //            voucherService.updateVoucherStatus(voucher);
@@ -272,10 +272,10 @@ private VoucherUsageService voucherUsageService;
                     voucherUsage.setIsUsed(true);
 //                    voucherUsage.setUsedOrder(bill);
 
-                    voucherUsageRepository.save(voucherUsage);
+                    voucherUsageService.save(voucherUsage);
 
                     // Cập nhật voucher vào đơn hàng
-                    bill.setVoucherId(voucher);
+                    bill.setVoucher(voucher);
 
 
                 } else {
@@ -406,7 +406,7 @@ private VoucherUsageService voucherUsageService;
 //                // Áp dụng giảm giá từ voucher vào hóa đơn
 //                BigDecimal discountAmount = calculateDiscountAmount(order.getTotal(), voucher);
 //                order.setTotal(order.getTotal().subtract(discountAmount));  // Sử dụng subtract thay vì trừ trực tiếp
-//                order.setVoucherId(voucher);
+//                order.setVoucher(voucher);
 //            }
 //        }
 //        return order;

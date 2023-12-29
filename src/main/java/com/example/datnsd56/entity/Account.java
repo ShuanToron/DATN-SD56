@@ -80,7 +80,10 @@ public class Account {
     @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL)
     private List<Transactions> transactions;
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private Set<VoucherUsage> voucherUsages;
+    private List<VoucherUsage> voucherUsages;
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL)
+    private List<Orders> orders;
+
     public Account(){
         this.cart = new Cart();
     }

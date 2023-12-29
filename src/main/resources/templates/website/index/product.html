@@ -49,6 +49,7 @@
     <!-- Template Stylesheet -->
     <!--    <link th:href="@{/../resources/dashboard/css/style.css}" rel="stylesheet" />-->
     <link th:href="@{/dashboard/css/style1.css}" rel="stylesheet"/>
+
 </head>
 <body>
 <!-- Spinner Start -->
@@ -199,101 +200,42 @@
     <div class="container py-5">
         <p class="fs-5 fw-medium fst-italic text-primary">Voucher</p>
 
-        <div
-                class="owl-carousel product-carousel wow fadeInUp"
-                data-wow-delay="0.4s"
-        >
-<!--          voucher start-->
-            <div class="store-item position-relative text-center">
-                    <div class="body-voucher">
-                <div class="voucher-container">
-
-                    <div class="voucher-discount">
-                        <!-- kiểu giảm  -->
-                        Get 200k Off
-                    </div>
-
-                    <div class="voucher-content">
-                        cho những sản phẩm của SneakerBeer
-                        <!-- nội dung  -->
-                    </div>
-                    <div class="voucher-hsd">HSD: 23/23/2023</div>
-                    <a href="#" class="save-button">Lưu</a>
-                </div>
-                    </div>
-                </div>
-<!--                voucher end-->
-<!--                lăp lại -->
-                <div class="store-item position-relative text-center">
-                    <div class="body-voucher">
-                        <div class="voucher-container">
-
-                            <div class="voucher-discount">
-                                <!-- kiểu giảm  -->
-                                Get 30% Off
-                            </div>
-
-                            <div class="voucher-content">
-                                cho những sản phẩm của của like , adidas
-                                <!-- nội dung  -->
-                            </div>
-                            <div class="voucher-hsd">HSD: 23/23/2023</div>
-                            <a href="#" class="save-button">Lưu</a>
-                        </div>
-                    </div>
-            </div>
-            <!--                kết thúc lặp lại -->
-            <!--                lăp lại -->
-            <div class="store-item position-relative text-center">
+        <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.4s">
+            <div th:if="${not #lists.isEmpty(allVouchers)}" class="store-item position-relative text-center"
+                 th:each="voucher : ${allVouchers}"
+                 th:sortedby="${voucher.expiryDateTime}">
                 <div class="body-voucher">
                     <div class="voucher-container">
 
-                        <div class="voucher-discount">
-                            <!-- kiểu giảm  -->
-                            Get 30% Off
+                        <div class="voucher-discount" >
+                            <div th:if="${voucher.discountType == T(com.example.datnsd56.entity.DiscountType).AMOUNT}">
+                                <p>
+                                    Giảm <span style="color: red" th:text="${#numbers.formatDecimal(voucher.discount, 0, 'COMMA', 0, 'POINT')}"></span> VND
+                                </p>
+                            </div>
+                            <div th:if="${voucher.discountType == T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">
+                                <p>
+                                    Giảm <span style="color: red" th:text="${#numbers.formatDecimal(voucher.discount, 0, 'COMMA', 0, 'POINT')}"></span> %
+                                </p>
+                            </div>
                         </div>
-
-                        <div class="voucher-content">
-                            cho những sản phẩm của của like , adidas
-                            <!-- nội dung  -->
-                        </div>
-                        <div class="voucher-hsd">HSD: 23/23/2023</div>
-                        <a href="#" class="save-button">Lưu</a>
+                        <div class="voucher-content" th:text="${voucher.description}">cho những sản phẩm của của like, adidas</div>
+                        <div class="voucher-hsd" th:text="${'HSD :'+' ' + voucher.expiryDateTime}">HSD: 23/23/2023</div>
+                        <form th:action="@{/product/saveVoucher/{voucherId}(voucherId=${voucher.id})}" method="get">
+                            <button type="submit" class="save-button">  Lưu
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <!--                kết thúc lặp lại -->
-            <!--                lăp lại -->
-            <div class="store-item position-relative text-center">
-                <div class="body-voucher">
-                    <div class="voucher-container">
-
-                        <div class="voucher-discount">
-                            <!-- kiểu giảm  -->
-                            Get 30% Off
-                        </div>
-
-                        <div class="voucher-content">
-                            cho những sản phẩm của của like , adidas
-                            <!-- nội dung  -->
-                        </div>
-                        <div class="voucher-hsd">HSD: 23/23/2023</div>
-                        <a href="#" class="save-button">Lưu</a>
-                    </div>
-                </div>
-            </div>
-            <!--                kết thúc lặp lại -->
-
-            <!-- <a href=""></a> -->
         </div>
-        <div
-                class="section-title text-center mx-auto wow fadeInUp"
-                data-wow-delay="0.1s"
-                style="max-width: 500px"
-        >
-            <!-- <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p> -->
+
+        <!-- <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p> -->
             <h1 class="display-6">Our Products</h1>
+
         </div>
+
+
 
         <!--        &lt;!&ndash; &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;LV &ndash;&gt;-->
         <div
@@ -530,6 +472,53 @@
             }
         });
     });
+</script>
+<script th:inline="javascript">
+    function saveVoucher(voucherId) {
+        var accountId =  /* Lấy accountId của người dùng từ nơi nào đó */;
+        var url = '/api/voucher/save';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { 'accountId': accountId, 'voucherId': voucherId },
+            success: function (response) {
+                alert('Voucher saved successfully');
+                // Cập nhật giao diện nếu cần thiết
+            },
+            error: function (error) {
+                alert('Failed to save voucher: ' + error.responseText);
+            }
+        });
+    }
+
+
+    // Hàm để đọc giá trị từ cookie dựa trên tên
+    function getCookieValue(cookieName) {
+        const name = cookieName + '=';
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookie.split(';');
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+
+        return null;
+    }
+
+    // Lấy giá trị accountId từ cookie có tên 'accountId'
+    var accountId = getCookieValue('accountId');
+
+    // Kiểm tra xem giá trị đã được lấy thành công hay chưa
+    if (accountId) {
+        console.log('AccountId:', accountId);
+    } else {
+        console.log('Không thể lấy được giá trị accountId từ cookie.');
+    }
+
 </script>
 </body>
 </html>

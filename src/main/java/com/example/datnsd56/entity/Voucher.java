@@ -43,9 +43,11 @@ public class Voucher {
     private BigDecimal discount;
     @Column(name = "Active")
     private boolean active;
+    @Column(name = "isVisible")
+    private Boolean isVisible;
     @Column(name = "DiscountType")
     private DiscountType discountType;
-    @OneToMany(mappedBy = "voucherId",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "voucher",cascade = CascadeType.ALL)
     private List<Orders> orders;
     // Constructors, getters, setters
     @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL)

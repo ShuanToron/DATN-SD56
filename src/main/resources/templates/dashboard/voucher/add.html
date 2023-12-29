@@ -309,8 +309,8 @@
                                     <label for="discount">Discount:</label>
                                     <input type="number" id="discount" name="discount" th:field="*{discount}" required>
                                     <select id="discountType" name="discountType" th:field="*{discountType}">
-                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">Percentage</option>
-                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).AMOUNT}">Amount</option>
+                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">%</option>
+                                        <option th:value="${T(com.example.datnsd56.entity.DiscountType).AMOUNT}">VND</option>
                                     </select>
                                 </div>
 

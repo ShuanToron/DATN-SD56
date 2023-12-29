@@ -64,9 +64,9 @@ public class Orders {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
     private List<OrderItem> orderItems;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
-    private Voucher voucherId;
+    private Voucher voucher;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -74,7 +74,16 @@ public class Orders {
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.DETACH)
     private Set<Transactions> transactions;
 
+    public BigDecimal getTotalWithoutDiscount() {
+        BigDecimal totalWithoutDiscount = BigDecimal.ZERO;
 
+        // Tính tổng giá trị dựa trên các OrderItem trong đơn hàng
+        for (OrderItem orderItem : orderItems) {
+            totalWithoutDiscount = totalWithoutDiscount.add(orderItem.getPrice());
+        }
+
+        return totalWithoutDiscount;
+    }
     public String getStatusName(){
         if (this.orderStatus == "10"){
             return "Chờ xác nhận";
