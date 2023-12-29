@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,7 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
+@SessionAttributes("appliedVoucherCode")
 @Controller
 @RequestMapping("/user")
 public class UserBillController {
@@ -74,8 +76,16 @@ private OrderSeriveV2 orderServiceImplV2;
 
             // Tìm địa chỉ mặc định
             List<Address> addressList = addressService.findAccountAddresses(account.getId());
-            List<VoucherUsage> voucherUsages = voucherUsageService.findVoucherUsagesByAccount(account.getId());
+            // Lấy danh sách tất cả voucher
+            List<Voucher> allVouchers = voucherService.getAllls();
 
+            // Lấy danh sách voucher đã lưu cho tài khoản
+            List<VoucherUsage> voucherUsages = voucherUsageService.findVisibleVoucherUsagesByAccount(accountOptional.get().getId());
+
+            // Loại bỏ những voucher đã lưu khỏi danh sách tất cả voucher
+            allVouchers.removeAll(voucherUsages.stream().map(VoucherUsage::getVoucher).collect(Collectors.toList()));
+
+//        model.addAttribute("allVouchers", allVouchers);
             model.addAttribute("voucherUsages", voucherUsages);
             if (addressList.isEmpty()) {
                 // Nếu không có địa chỉ, hiển thị trang giỏ hàng
@@ -100,69 +110,11 @@ private OrderSeriveV2 orderServiceImplV2;
         }
         return "redirect:/login";
     }
-
-    @PostMapping("/setDefaultAddress")
-    public String setDefaultAddress(@RequestParam("addressId") Integer addressId, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-
-        Optional<Account> accountOptional = accountService.finByName(principal.getName());
-        if (accountOptional.isPresent()) {
-            Account account = accountOptional.get();
-            // Đặt địa chỉ có addressId làm địa chỉ mặc định cho tài khoản
-            addressService.setDefaultAddress(account, addressId);
-
-        }
-
-        return "redirect:/user/checkout";
-    }
-
-
-    // Các phương thức khác...
-    @GetMapping("/orders")
-    public String getOrders(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-
-        }
-
-        Optional<Account> account = accountService.finByName(principal.getName());
-        List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
-        model.addAttribute("orders", listOrder);
-
-        return "website/index/danhsachdonhang";
-    }
-//    @PostMapping("/apply-voucher")
-@PostMapping("/apply-voucher")
-@ResponseBody
-public ResponseEntity<BigDecimal> applyVoucher(
-    @RequestParam(name = "voucherCode", required = false) String voucherCode,
-    @RequestParam(name = "selectedVoucherCode", required = false) String selectedVoucherCode,
-    @RequestParam("currentTotalAmount") BigDecimal currentTotalAmount) {
-
-    try {
-        Orders order = new Orders();
-//        order.setTotal(currentTotalAmount);
-
-        // Áp dụng mã voucher mà không lưu lịch sử
-        orderServiceImplV2.applyVoucherWithoutSaving(order, voucherCode, selectedVoucherCode);
-
-        // Trả về giá tiền mới sau khi áp dụng mã
-        BigDecimal updatedTotalAmount = order.getTotal();
-        return ResponseEntity.ok(updatedTotalAmount);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BigDecimal.ZERO);
-    }
-}
-
-
     @PostMapping("/add-order")
     public String placeOrder(@RequestParam(name = "selectedAddressRadio", required = false) Integer selectedAddressId,
                              @RequestParam(name = "paymentMethod") String paymentMethod,
                              @RequestParam(name = "promoCode", required = false) String voucherCode,
-                             @RequestParam(name = "selectedVoucher", required = false) String selectedVoucherCode,
+                             @RequestParam(name = "selectedVoucherCode", required = false) String selectedVoucherCode,
                              Principal principal,
                              RedirectAttributes attributes,
                              HttpSession session,
@@ -194,10 +146,19 @@ public ResponseEntity<BigDecimal> applyVoucher(
 
             if (address != null) {
                 // Thực hiện đặt hàng
+                BigDecimal appliedVoucherTotal = (BigDecimal) session.getAttribute("appliedVoucherTotal");
+
+                // Thực hiện đặt hàng
                 Orders order = orderServiceImplV2.placeOrder(cart, String.valueOf(address), voucherCode, selectedVoucherCode);
 
+                // Kiểm tra xem đã áp dụng voucher chưa và lưu giá mới vào hóa đơn
+                if (appliedVoucherTotal != null && order != null) {
+                    order.setTotal(appliedVoucherTotal);
+                    ordersService.add(order);
+                }
                 if (order != null) {
                     // Kiểm tra xem phương thức thanh toán là VNPAY hay không
+
                     if ("vnpay".equals(paymentMethod)) {
                         // Tạo và lưu thông tin thanh toán vào bảng Transactions
                         Transactions transaction = new Transactions();
@@ -256,6 +217,83 @@ public ResponseEntity<BigDecimal> applyVoucher(
         }
 
         return "redirect:/user/checkout";
+    }
+
+    @PostMapping("/apply-voucher")
+    public ResponseEntity<Map<String, Object>> applyVoucher(
+        @RequestParam(name = "selectedVoucherCode", required = false) String selectedVoucherCode,
+        Principal principal, HttpSession session, Model model) {
+        if (principal == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Account> accountOptional = accountService.finByName(principal.getName());
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            Cart cart = account.getCart();
+
+            if (cart != null) {
+                // Tính toán giá tạm thời khi áp dụng voucher
+                BigDecimal newTotal = orderServiceImplV2.calculateTotalWithVoucher(cart, selectedVoucherCode,principal.getName());
+
+                if (newTotal != null) {
+                    // Lưu giá mới vào session để sử dụng khi đặt hàng
+                    session.setAttribute("appliedVoucherTotal", newTotal);
+
+                    // Thiết lập thông điệp thành công trong Model để truyền về view
+                    model.addAttribute("ss", "Áp dụng mã giảm giá thành công");
+
+                    // Trả về phản hồi JSON với giá mới để cập nhật giao diện người dùng
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("newTotal", newTotal.toString());
+                    response.put("ss", "Áp dụng mã giảm giá thành công");
+                    return ResponseEntity.ok(response);
+                } else {
+                    // Thiết lập thông điệp thất bại trong Model để truyền về view
+                    model.addAttribute("ss", "Áp dụng mã giảm giá thất bại");
+
+                    // Trả về phản hồi lỗi nếu có vấn đề
+                    return ResponseEntity.badRequest().build();
+                }
+            }
+        }
+
+        // Trả về phản hồi lỗi nếu có vấn đề
+        return ResponseEntity.badRequest().build();
+    }
+
+
+    @PostMapping("/setDefaultAddress")
+    public String setDefaultAddress(@RequestParam("addressId") Integer addressId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Account> accountOptional = accountService.finByName(principal.getName());
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            // Đặt địa chỉ có addressId làm địa chỉ mặc định cho tài khoản
+            addressService.setDefaultAddress(account, addressId);
+
+        }
+
+        return "redirect:/user/checkout";
+    }
+
+
+    // Các phương thức khác...
+    @GetMapping("/orders")
+    public String getOrders(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+
+        }
+
+        Optional<Account> account = accountService.finByName(principal.getName());
+        List<Orders> listOrder = ordersService.getAllOrders1(account.get().getId());
+        model.addAttribute("orders", listOrder);
+
+        return "website/index/danhsachdonhang";
     }
 
 

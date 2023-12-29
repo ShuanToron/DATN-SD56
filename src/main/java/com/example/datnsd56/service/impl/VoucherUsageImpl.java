@@ -6,6 +6,8 @@ import com.example.datnsd56.entity.VoucherUsage;
 import com.example.datnsd56.repository.AccountRepository;
 import com.example.datnsd56.repository.VoucherRepository;
 import com.example.datnsd56.repository.VoucherUsageRepository;
+import com.example.datnsd56.service.AccountService;
+import com.example.datnsd56.service.VoucherService;
 import com.example.datnsd56.service.VoucherUsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VoucherUsageImpl implements VoucherUsageService {
@@ -22,6 +25,10 @@ public class VoucherUsageImpl implements VoucherUsageService {
     private AccountRepository accountRepository;
     @Autowired
     private VoucherRepository voucherRepository;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private VoucherService voucherService;
     @Override
     public void save(VoucherUsage voucherUsage) {
         voucherUsageRepository.save(voucherUsage);
@@ -33,6 +40,41 @@ public class VoucherUsageImpl implements VoucherUsageService {
         voucherUsageRepository.save(voucherUsage);
     }
 
+
+
+
+    @Override
+    public boolean isVoucherUsed(String username, String voucherCode) {
+        Optional<Account> accountOptional = accountService.finByName(username);
+        Optional<Voucher> voucherOptional = voucherService.findByCode(voucherCode);
+
+        if (accountOptional.isPresent() && voucherOptional.isPresent()) {
+            Account account = accountOptional.get();
+            Voucher voucher = voucherOptional.get();
+
+            return voucherUsageRepository.existsByAccountAndVoucherAndIsUsed(account, voucher, true);
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public List<VoucherUsage> findVisibleVoucherUsagesByAccount(Integer accountId) {
+        return voucherUsageRepository.findVisibleVoucherUsagesByAccount(accountId);
+    }
+
+//    @Override
+//    public List<VoucherUsage> findByAccountAndVouchers(Account account, String selectedVoucherCode) {
+//        return voucherUsageRepository.findByAccountAndVouchers(account,selectedVoucherCode);
+//    }
+
+    @Override
+    public boolean existsByAccountAndVoucherAndIsUsed(Account account, Voucher voucher, boolean isUsed) {
+        return voucherUsageRepository.existsByAccountAndVoucherAndIsUsed(account,voucher,isUsed);
+    }
+
+
     @Override
     @Transactional
     public void saveVoucherForAccount(Voucher voucher, Account account) {
@@ -41,6 +83,7 @@ public class VoucherUsageImpl implements VoucherUsageService {
         voucherUsage.setVoucher(voucher);
         voucherUsage.setUsedDate(null);  // Chưa sử dụng
         voucherUsage.setIsUsed(false);   // Chưa sử dụng
+        voucherUsage.setIsVisible(true);   // Chưa sử dụng
 
         voucherUsageRepository.save(voucherUsage);
     }

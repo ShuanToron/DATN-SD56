@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class VoucherSeviceImpl implements VoucherService  {
     }
 
     public void saveVoucher(Voucher voucher) {
+        voucher.setDiscount(voucher.getDiscount().setScale(2, RoundingMode.HALF_UP));
         voucherRepository.save(voucher);
     }
     public void updateVoucher(Voucher voucher) {
@@ -142,5 +144,10 @@ public class VoucherSeviceImpl implements VoucherService  {
     @Override
     public void delete(Integer id) {
 
+    }
+
+    @Override
+    public List<Voucher> getAllls() {
+        return voucherRepository.getAllls();
     }
 }

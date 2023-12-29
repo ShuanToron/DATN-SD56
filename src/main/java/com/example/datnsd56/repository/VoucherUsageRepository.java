@@ -17,7 +17,18 @@ public interface VoucherUsageRepository extends JpaRepository<VoucherUsage,Integ
     Optional<VoucherUsage> findByAccountAndVoucherAndIsUsedTrue(Account account, Voucher voucher);
 //    VoucherUsage findByAccountAndVoucher(Account account, Voucher voucher);
     List<VoucherUsage> findByAccountAndVoucher(Account account, Voucher voucher);
-
+    boolean existsByAccountAndVoucherAndIsUsed(Account account, Voucher voucher, boolean isUsed);
+//    List<VoucherUsage> findByAccountAndVouchers(Account account, String selectedVoucherCode);
+//    List<VoucherUsage> findByAccountAndIsUsed(Account account, Boolean isUsed);
+    List<VoucherUsage> findByVoucherAndIsUsed(Voucher voucher, Boolean isUsed);
+    @Query(value= " SELECT * FROM VoucherUsage  WHERE isVisible = true",nativeQuery = true)
+    List<VoucherUsage> findByIsVisibleTrue();
+    @Query("SELECT vu FROM VoucherUsage vu " +
+        "JOIN vu.voucher v " +
+        "WHERE vu.account.id = ?1 " +
+        "AND vu.isVisible = true " +
+        "AND v.expiryDateTime > CURRENT_TIMESTAMP")
+    List<VoucherUsage> findVisibleVoucherUsagesByAccount( Integer accountId);
     @Query(value = "SELECT * FROM VoucherUsage WHERE account_id = ?1", nativeQuery = true)
     List<VoucherUsage> findVoucherUsagesByAccount(Integer accountId);
 

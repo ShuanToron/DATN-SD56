@@ -200,99 +200,37 @@
     <div class="container py-5">
         <p class="fs-5 fw-medium fst-italic text-primary">Voucher</p>
 
-        <div
-                class="owl-carousel product-carousel wow fadeInUp"
-                data-wow-delay="0.4s"
-        >
-<!--          voucher start-->
-            <div class="store-item position-relative text-center">
-                    <div class="body-voucher">
-                <div class="voucher-container">
-
-                    <div class="voucher-discount">
-                        <!-- kiểu giảm  -->
-                        Get 200k Off
-                    </div>
-
-                    <div class="voucher-content">
-                        cho những sản phẩm của SneakerBeer
-                        <!-- nội dung  -->
-                    </div>
-                    <div class="voucher-hsd">HSD: 23/23/2023</div>
-                    <a href="#" class="save-button">Lưu</a>
-                </div>
-                    </div>
-                </div>
-<!--                voucher end-->
-<!--                lăp lại -->
-                <div class="store-item position-relative text-center">
-                    <div class="body-voucher">
-                        <div class="voucher-container">
-
-                            <div class="voucher-discount">
-                                <!-- kiểu giảm  -->
-                                Get 30% Off
-                            </div>
-
-                            <div class="voucher-content">
-                                cho những sản phẩm của của like , adidas
-                                <!-- nội dung  -->
-                            </div>
-                            <div class="voucher-hsd">HSD: 23/23/2023</div>
-                            <a href="#" class="save-button">Lưu</a>
-                        </div>
-                    </div>
-            </div>
-            <!--                kết thúc lặp lại -->
-            <!--                lăp lại -->
-            <div class="store-item position-relative text-center">
+        <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.4s">
+            <div th:if="${not #lists.isEmpty(allVouchers)}" class="store-item position-relative text-center"
+                 th:each="voucher : ${allVouchers}"
+                 th:sortedby="${voucher.expiryDateTime}">
                 <div class="body-voucher">
                     <div class="voucher-container">
 
-                        <div class="voucher-discount">
-                            <!-- kiểu giảm  -->
-                            Get 30% Off
+                        <div class="voucher-discount" >
+                            <div th:if="${voucher.discountType == T(com.example.datnsd56.entity.DiscountType).AMOUNT}">
+                                <p>
+                                    Giảm <span style="color: red" th:text="${#numbers.formatDecimal(voucher.discount, 0, 'COMMA', 0, 'POINT')}"></span> VND
+                                </p>
+                            </div>
+                            <div th:if="${voucher.discountType == T(com.example.datnsd56.entity.DiscountType).PERCENTAGE}">
+                                <p>
+                                    Giảm <span style="color: red" th:text="${#numbers.formatDecimal(voucher.discount, 0, 'COMMA', 0, 'POINT')}"></span> %
+                                </p>
+                            </div>
                         </div>
-
-                        <div class="voucher-content">
-                            cho những sản phẩm của của like , adidas
-                            <!-- nội dung  -->
-                        </div>
-                        <div class="voucher-hsd">HSD: 23/23/2023</div>
-                        <a href="#" class="save-button">Lưu</a>
+                        <div class="voucher-content" th:text="${voucher.description}">cho những sản phẩm của của like, adidas</div>
+                        <div class="voucher-hsd" th:text="${'HSD :'+' ' + voucher.expiryDateTime}">HSD: 23/23/2023</div>
+                        <form th:action="@{/product/saveVoucher/{voucherId}(voucherId=${voucher.id})}" method="get">
+                            <button type="submit" class="save-button">  Lưu
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <!--                kết thúc lặp lại -->
-            <!--                lăp lại -->
-            <div class="store-item position-relative text-center">
-                <div class="body-voucher">
-                    <div class="voucher-container">
-
-                        <div class="voucher-discount">
-                            <!-- kiểu giảm  -->
-                            Get 30% Off
-                        </div>
-
-                        <div class="voucher-content">
-                            cho những sản phẩm của của like , adidas
-                            <!-- nội dung  -->
-                        </div>
-                        <div class="voucher-hsd">HSD: 23/23/2023</div>
-                        <a href="#" class="save-button">Lưu</a>
-                    </div>
-                </div>
-            </div>
-            <!--                kết thúc lặp lại -->
-
-            <!-- <a href=""></a> -->
         </div>
-        <div
-                class="section-title text-center mx-auto wow fadeInUp"
-                data-wow-delay="0.1s"
-                style="max-width: 500px"
-        >
-            <!-- <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p> -->
+
+        <!-- <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p> -->
             <h1 class="display-6">Our Products</h1>
 
         </div>

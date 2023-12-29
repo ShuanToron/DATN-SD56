@@ -19,4 +19,6 @@ List<Voucher> get();
     Voucher add(Voucher voucher);
     void update(Voucher voucher);
     void delete(Integer id);
+    List<Voucher> getAllls();
+
 }

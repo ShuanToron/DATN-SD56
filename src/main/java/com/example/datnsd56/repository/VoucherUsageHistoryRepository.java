@@ -4,6 +4,8 @@ import com.example.datnsd56.entity.Account;
 import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.entity.VoucherUsage;
 import com.example.datnsd56.entity.VoucherUsageHistory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,5 +20,8 @@ public interface VoucherUsageHistoryRepository extends JpaRepository<VoucherUsag
 //
 //    @Query(value = "SELECT * FROM VoucherUsage WHERE account_id = ?1", nativeQuery = true)
 //    List<VoucherUsage> findVoucherUsagesByAccount(Integer accountId);
-
+@Query(value = "SELECT * FROM VoucherUsageHistory  ORDER BY used_date DESC",nativeQuery = true)
+List<VoucherUsageHistory> findAllOrderByUsedDateDesc();
+    @Query(value = "SELECT * FROM VoucherUsageHistory  ORDER BY used_date DESC",nativeQuery = true)
+Page<VoucherUsageHistory> getall(Pageable pageable);
 }

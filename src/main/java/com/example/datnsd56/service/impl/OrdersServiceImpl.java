@@ -275,7 +275,7 @@ private VoucherUsageService voucherUsageService;
                     voucherUsageService.save(voucherUsage);
 
                     // Cập nhật voucher vào đơn hàng
-                    bill.setVoucherId(voucher);
+                    bill.setVoucher(voucher);
 
 
                 } else {
@@ -406,7 +406,7 @@ private VoucherUsageService voucherUsageService;
 //                // Áp dụng giảm giá từ voucher vào hóa đơn
 //                BigDecimal discountAmount = calculateDiscountAmount(order.getTotal(), voucher);
 //                order.setTotal(order.getTotal().subtract(discountAmount));  // Sử dụng subtract thay vì trừ trực tiếp
-//                order.setVoucherId(voucher);
+//                order.setVoucher(voucher);
 //            }
 //        }
 //        return order;

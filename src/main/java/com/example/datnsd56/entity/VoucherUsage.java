@@ -25,7 +25,7 @@ public class VoucherUsage {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
@@ -34,6 +34,8 @@ public class VoucherUsage {
 
     @Column(name = "is_used")
     private Boolean isUsed;
+    @Column(name = "isVisible")
+    private Boolean isVisible;
 
     // Constructors, getters, setters...
 }

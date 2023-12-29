@@ -1,10 +1,8 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.entity.Account;
-import com.example.datnsd56.entity.Customers;
-import com.example.datnsd56.entity.DiscountType;
-import com.example.datnsd56.entity.Voucher;
+import com.example.datnsd56.entity.*;
 import com.example.datnsd56.service.VoucherService;
+import com.example.datnsd56.service.VoucherUsageHistoryService;
 import com.example.datnsd56.service.impl.VoucherSeviceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -34,7 +32,8 @@ import java.util.List;
 public class VoucherController {
     @Autowired
     private VoucherSeviceImpl voucherService;
-
+    @Autowired
+    private VoucherUsageHistoryService voucherUsageHistoryService;
 
     @GetMapping("/hien-thi")
     public String getAllByPage(Model model,@RequestParam(defaultValue = "0") Integer page){
@@ -122,7 +121,9 @@ public class VoucherController {
     }
     @GetMapping("/lich-su-dung-voucher")
     public String lSVoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
+        Page<VoucherUsageHistory> voucherUsageHistories = voucherUsageHistoryService.getall(PageRequest.of(page,5));
 
+model.addAttribute("history",voucherUsageHistories);
         return "dashboard/voucher/lich-su-dung-voucher";
 
     }
