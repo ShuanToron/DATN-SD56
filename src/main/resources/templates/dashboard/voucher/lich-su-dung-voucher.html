@@ -277,6 +277,18 @@
                                     <h4>Lịch sử dùng Voucher</h4>
                                 </div>
                                 <!-- -----o thong ke start -->
+                                <form action="/admin/voucher/voucher-history" method="get">
+                                    <label for="startDate">Ngày bắt đầu:</label>
+                                    <input type="date" id="startDate" name="startDate">
+
+                                    <label for="endDate">Ngày kết thúc:</label>
+                                    <input type="date" id="endDate" name="endDate">
+
+<!--                                    <label for="searchInput">Tìm kiếm:</label>-->
+                                    <input type="hidden" id="searchInput" name="searchInput">
+
+                                    <button type="submit">Lọc</button>
+                                </form>
 
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -295,7 +307,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="ht : ${history.content}">
+                                            <tr th:each="ht : ${history}">
                                                 <td th:text="${ht.voucher.code}"></td>
                                                 <td th:text="${ht.account.name}"></td>
                                                 <td th:text="${#temporals.format(ht.usedDate, 'dd/MM/yyyy HH:mm')}"></td>
@@ -312,39 +324,39 @@
                                         </table>
                                     </div>
                                 </div>
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a
-                                                class="page-link"
-                                                th:if="${history.hasPrevious()}"
-                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${history.number -1})}"
-                                            >
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li
-                                            class="page-item"
-                                            th:each="pageNumber : ${#numbers.sequence(0, history.totalPages-1)}"
-                                        >
-                                            <a
-                                                class="page-link"
-                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${pageNumber})}"
-                                                th:text="${pageNumber+1}"
-                                            ></a>
-                                        </li>
+<!--                                <nav aria-label="Page navigation example">-->
+<!--                                    <ul class="pagination">-->
+<!--                                        <li class="page-item">-->
+<!--                                            <a-->
+<!--                                                class="page-link"-->
+<!--                                                th:if="${history.hasPrevious()}"-->
+<!--                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${history.number -1})}"-->
+<!--                                            >-->
+<!--                                                <span aria-hidden="true">&laquo;</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                        <li-->
+<!--                                            class="page-item"-->
+<!--                                            th:each="pageNumber : ${#numbers.sequence(0, history.totalPages-1)}"-->
+<!--                                        >-->
+<!--                                            <a-->
+<!--                                                class="page-link"-->
+<!--                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${pageNumber})}"-->
+<!--                                                th:text="${pageNumber+1}"-->
+<!--                                            ></a>-->
+<!--                                        </li>-->
 
-                                        <li class="page-item">
-                                            <a
-                                                class="page-link"
-                                                th:if="${history.hasNext()}"
-                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${history.number + 1})}"
-                                            >
-                                                <span aria-hidden="true">&raquo;</span></a
-                                            >
-                                        </li>
-                                    </ul>
-                                </nav>
+<!--                                        <li class="page-item">-->
+<!--                                            <a-->
+<!--                                                class="page-link"-->
+<!--                                                th:if="${history.hasNext()}"-->
+<!--                                                th:href="@{/admin/voucher/lich-su-dung-voucher(page=${history.number + 1})}"-->
+<!--                                            >-->
+<!--                                                <span aria-hidden="true">&raquo;</span></a-->
+<!--                                            >-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </nav>-->
 
                             </div>
                         </div>
@@ -492,7 +504,7 @@
 <!-- JS Libraies -->
 <!-- Page Specific JS File -->
 <script th:src="@{/dashboard/bundles/datatables/datatables.min.js}"></script>
-<script th:src="@{/dashboard/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+<!--<script th:src="@{/dashboard/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>-->
 <script th:src="@{/dashboard/bundles/datatables/export-tables/dataTables.buttons.min.js}"></script>
 <script th:src="@{/dashboard/bundles/datatables/export-tables/buttons.flash.min.js}"></script>
 <script th:src="@{/dashboard/bundles/datatables/export-tables/jszip.min.js}"></script>
