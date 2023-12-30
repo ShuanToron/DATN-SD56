@@ -1,5 +1,6 @@
 package com.example.datnsd56.controller;
 
+import com.example.datnsd56.dto.ProductPriceAndQuantityDTO;
 import com.example.datnsd56.entity.Image;
 import com.example.datnsd56.entity.ProductDetails;
 import com.example.datnsd56.entity.Products;
@@ -39,6 +40,7 @@ public class DetailProductController {
         Products products=new Products();
         model.addAttribute("images",products.getImages());
         model.addAttribute("productIds",productDetailsService.getOneProdcut(id));
+        model.addAttribute("quantitys",productDetailsService.getById(id));
 //        model.addAttribute("sells",productDetailsService.findProductDetailsByColorIdAndSizeIdAndAndProductId(colorid,sizeId,id));
 //        model.addAttribute("sell",productDetailsService.findProductDetailsBySellPrice(id));
         model.addAttribute("views",list);
@@ -47,10 +49,15 @@ public class DetailProductController {
 
     }
     @GetMapping("/getProductPrice")
-    public ResponseEntity<BigDecimal> getPrice(@RequestParam("productId") Integer id, @RequestParam("size") Integer size, @RequestParam("color") Integer color) {
+    public ResponseEntity<ProductPriceAndQuantityDTO> getPrice(@RequestParam("productId") Integer id,
+                                                               @RequestParam("size") Integer size,
+                                                               @RequestParam("color") Integer color) {
         BigDecimal productDetailPrice = productDetailsService.getPrice(id, color, size);
-        System.out.println(productDetailPrice);
-        return ResponseEntity.ok().body(productDetailPrice);
+        Integer productDetailQuantity = productDetailsService.getQuantity(id, color, size);
+
+        ProductPriceAndQuantityDTO responseDTO = new ProductPriceAndQuantityDTO(productDetailPrice, productDetailQuantity);
+
+        return ResponseEntity.ok().body(responseDTO);
     }
     @GetMapping("/display")
     public ResponseEntity<byte[]> getImage(@RequestParam("id") Integer productId,@RequestParam("imageId") Integer imageId) throws SQLException {

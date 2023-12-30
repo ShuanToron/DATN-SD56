@@ -3,6 +3,7 @@ package com.example.datnsd56.repository;
 
 import com.example.datnsd56.entity.OrderItem;
 import com.example.datnsd56.entity.Orders;
+import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.responsi.OrdersCustomer;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
@@ -35,10 +36,13 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     @Query(value = "select * from Orderss b where b.order_status = ?1 and b.account_id= ?2",nativeQuery = true)
     List<Orders> getOrdes(@Param("orderStatus") Integer orderStatus,
                           @Param("accountId") Integer accountId);
+//    Orders applyVoucherToOrder(Orders order, Voucher voucher);
 
 
 //    Page<Orders> findAllByOrderStatusPT(Pageable pageable);
 
     @Query(value = "SELECT * FROM Orderss b WHERE b.account_id = ?1 ORDER BY b.create_date DESC",nativeQuery = true)
     List<Orders> getAllOrders(@Param("accountId") Integer accountId);
+
+//    List<Orders> findByAccountIdOrderByCreateDateDesc(Integer accountId);
 }

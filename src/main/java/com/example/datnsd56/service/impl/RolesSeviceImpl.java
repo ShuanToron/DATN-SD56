@@ -50,8 +50,19 @@ public class RolesSeviceImpl implements RolesService {
     }
 
     @Override
-    public Roles findbyname(String roles) {
+    public Roles findbyname1(String roles) {
       Roles r1 = rolesRepository.findRolesByName("user");
         return r1;
+    }
+    @Override
+    public Page<Roles> findByName(String name) {
+        Pageable page=PageRequest.of(0,5);
+        Page<Roles> list=rolesRepository.findByName(name,page);
+        return list;
+    }
+
+    @Override
+    public boolean existsByName(String Name) {
+        return rolesRepository.existsByName(Name);
     }
 }

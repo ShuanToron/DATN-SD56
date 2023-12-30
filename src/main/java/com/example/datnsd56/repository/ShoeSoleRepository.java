@@ -13,4 +13,5 @@ public interface ShoeSoleRepository extends JpaRepository<ShoeSole, Integer> {
     @Query(value = "select * from Shoe_sole  where name = ?1 ",
             nativeQuery = true)
     Page<ShoeSole> findByName(String name, Pageable pageable);
+    boolean existsByName(String name);
 }

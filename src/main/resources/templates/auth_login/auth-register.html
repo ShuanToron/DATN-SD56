@@ -94,6 +94,12 @@
 <!--                            </form>-->
                             <form th:action="@{/login/add}" method="post" th:object="${account}"
                                   onsubmit="return  confirm('Bạn có thêm không?')">
+                                <div th:if="${errorMessage}" class="alert alert-danger">
+                                    <p th:text="${errorMessage}"></p>
+                                </div>
+                                <div th:if="${Message}" class="alert alert-success">
+                                    <p th:text="${Message}"></p>
+                                </div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Họ và tên</label>
@@ -129,7 +135,7 @@
                                     <div class="form-group">
                                         <label>Ngày sinh</label>
                                         <input type="date" class="form-control" placeholder="Nhập ngày sinh"
-                                               th:field="*{birthdate}" th:value="${account.birthdate}">
+                                               th:field="*{birthdate}" >
                                         <span th:if="${#fields.hasErrors('birthdate')}" style="color: red; font-size: 13px"
                                               th:errors="*{birthdate}"></span>
                                     </div>
@@ -183,8 +189,9 @@
                                             <button class="btn btn-primary mr-1" type="submit">Thêm</button>
                                         </a>
                                     </div>
-                                </div>
                             </form>
+
+                        </div>
                         </div>
                         <div class="mb-4 text-muted text-center">
                             Already Registered? <a th:href="@{/login/custom-login}">Login</a>

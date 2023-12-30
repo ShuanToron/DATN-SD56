@@ -1,14 +1,13 @@
 
 package com.example.datnsd56.service;
 
-import com.example.datnsd56.entity.Cart;
-import com.example.datnsd56.entity.OrderItem;
-import com.example.datnsd56.entity.Orders;
+import com.example.datnsd56.entity.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface OrdersService {
     Orders detailHD(Integer id);
@@ -16,30 +15,20 @@ public interface OrdersService {
     List<Orders> getAll();
 
     Page<Orders> getAllOrders(Integer page);
-
-    Orders getOneBill(Integer id);
-
+    Transactions placeOrder(Cart cart, String address, String paymentMethod);
     void delete(Integer id);
 
-    Orders update(Orders orders, Integer id);
+    Orders update(Orders orders,Integer id);
 
     Orders planceOrder(Cart cart, String address);
-
-    List<Orders> getNoConfirmOrders(Integer accountId);
-
-    List<OrderItem> getLstDetailByOrderId(Integer id);
-
-    List<Orders> getAllOrders1(Integer accountId);
-
-    Orders cancelOrder(Integer Id);
-
-    Orders acceptBill(Integer Id);
-
+   List<Orders> getAllOrders1(Integer accountId);
+    Orders applyVoucherToOrder(Orders order, Voucher voucher);
+Optional<Orders> getOrderId(Integer id);
     Orders add(Orders hoaDon);
-
-    Orders shippingOrder(Integer id, BigDecimal shippingFee);
-
-    Orders completeOrder(Integer id);
-
+    Orders processOrder(Orders order, String voucherCode, Account account);
+    Orders placeOrders(Cart cart, String address, String voucherCode);
+    boolean applyVoucher(String username, String voucherCode);
+     BigDecimal getNewTotalAfterApplyingVoucher(String username);
+    BigDecimal calculateDiscountValue(Voucher voucher, BigDecimal total);
 //    Orders create(JsonNode orderDate);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Random;
 
@@ -47,14 +48,19 @@ public class ShoeSoleController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("shoeSole", shoeSole);
             return "/dashboard/de-giay/update-de-giay";
 
         }
+        // Check if color with the same name already exists
+        if (service.existsByName(shoeSole.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
+            return "redirect:/admin/de-giay/hien-thi";
+        }
         service.update(shoeSole);
-        session.setAttribute("successMessage", "sửa thành công");
+        session.setAttribute("Message", "sửa thành công");
         return "redirect:/admin/de-giay/hien-thi";
     }
 
@@ -65,24 +71,27 @@ public class ShoeSoleController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<ShoeSole> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
             return "/dashboard/de-giay/de-giay";
+        } if (service.existsByName(shoeSole.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
+            return "redirect:/admin/de-giay/hien-thi";
         }
         String code = "DG" + new Random().nextInt(100000);
         shoeSole.setCode(code);
         shoeSole.setStatus(true);
         service.add(shoeSole);
-        session.setAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/de-giay/hien-thi";
 
     }
     @PostMapping("/add1")
-    public String addd(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session) {
+    public String addd(@Valid @ModelAttribute("shoeSole") ShoeSole shoeSole, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<ShoeSole> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -90,15 +99,20 @@ public class ShoeSoleController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/de-giay/de-giay";
         }
+        // Check if color with the same name already exists
+        if (service.existsByName(shoeSole.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ShoeSole with the same name already exists");
+            return "redirect:/admin/de-giay/hien-thi";
+        }
         String code = "DG" + new Random().nextInt(100000);
         shoeSole.setCode(code);
         shoeSole.setStatus(true);
         service.add(shoeSole);
-        session.setAttribute("successMessage", "Thêm thành công");
+        session.setAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
     }
-    @GetMapping("search")
+    @GetMapping("/search")
 //    @PreAuthorize("hasAuthority('admin')")
     public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
         model.addAttribute("shoeSole", new ShoeSole());

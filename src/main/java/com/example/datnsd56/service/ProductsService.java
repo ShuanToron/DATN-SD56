@@ -39,6 +39,6 @@ public interface ProductsService {
     void updateProduct(Products products, MultipartFile[] files) throws IOException, SQLException;
     List<Integer> findSelectedSizeIds(@Param("id") Integer id);
     List<Integer> findSelectedColorIds(@Param("id") Integer id);
-
-
+    boolean existsByName(String name);
+    Page<Products> findByName(String name);
 }

@@ -21,7 +21,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/address")
@@ -90,6 +92,35 @@ public class AddressController {
         return "redirect:/admin/address/hien-thi";
 
     }
+    @GetMapping("/your-form-url")
+    public String showForm(Model model) {
+        model.addAttribute("address", new Address());
+        return "website/index/giohang1";
+    }
+
+//    @PostMapping("/add1")
+//    @PreAuthorize("hasAuthority('admin')")
+//    public String add1(@Valid @ModelAttribute("address") Address address,
+//                       BindingResult result, Model model, HttpSession session,Principal principal) {
+//        if (result.hasErrors()) {
+//            // Xử lý lỗi nếu cần
+//            return "/website/index/giohang1";
+//        }
+//
+//        Optional<Account> accountOptional = accountService.finByName(principal.getName());
+//        if (accountOptional.isPresent()) {
+//            Account account = accountOptional.get();
+//            // Gọi service để thêm mới địa chỉ
+//            addressService.addNewAddress(account, address);
+//
+//            session.setAttribute("successMessage", "Thêm thành công");
+//            return "redirect:/user/checkout";
+//        } else {
+//            // Xử lý trường hợp không tìm thấy tài khoản
+//            return "redirect:/login";
+//        }
+//    }
+
     @PostMapping("/update/{id}")
     @PreAuthorize("hasAuthority('admin')")
     public String update( @Valid @ModelAttribute("address") Address address, BindingResult result,@PathVariable("id") Integer id , Model model, HttpSession session) {

@@ -73,6 +73,6 @@ public class Products {
     private Brand brandId;
 @OneToMany(mappedBy = "productId",cascade =CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Image> images;
-//@OneToMany(mappedBy = "productId",cascade = CascadeType.ALL)
-//    private List<ProductDetails> productDetails;
+@OneToMany(mappedBy = "productId",cascade = CascadeType.ALL)
+    private List<ProductDetails> productDetails;
 }

@@ -91,7 +91,7 @@ public class AccountController {
 //    }
 @PostMapping("/add")
 //@PreAuthorize("hasAuthority('admin') || hasAuthority('user')")
-public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page,RedirectAttributes redirectAttributes) {
     if (result.hasErrors()) {
         // Handle validation errors
         model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
@@ -102,6 +102,12 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
         model.addAttribute("roles", new Roles());
         return "/dashboard/account/account";
     }
+  //   Kiểm tra xem email đã tồn tại hay chưa
+    if (accountService.findByEmail(account.getEmail()) != null) {
+        // Email đã tồn tại, xử lý lỗi và trả về trang tạo tài khoản
+        redirectAttributes.addFlashAttribute("errorMessage", "Email đã tồn tại");
+        return "redirect:/admin/account/hien-thi";
+    }
 
     // Hash the password using BCryptPasswordEncoder
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -110,13 +116,45 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
 
     accountService.add(account);
 
-    session.setAttribute("successMessage", "Thêm thành công");
+    redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
     return "redirect:/admin/account/hien-thi";
 }
+//@PostMapping("/add")
+//public String add(@Valid @ModelAttribute("account") Account account, RedirectAttributes redirectAttributes,BindingResult result, Model model, HttpSession session, @RequestParam(defaultValue = "0") Integer page) {
+//    // Kiểm tra lỗi validation
+//    if (result.hasErrors()) {
+//        // Handle validation errors
+//        model.addAttribute("list", accountService.getAll(Pageable.unpaged()));
+//        Page<Account> page1 = accountService.getAll(PageRequest.of(page, 5));
+//        model.addAttribute("list", page1);
+//        List<Roles> listr = rolesService.getAll();
+//        model.addAttribute("rolelist", listr);
+//        model.addAttribute("roles", new Roles());
+//        return "/dashboard/account/account";
+//    }
+//
+//    // Kiểm tra xem email đã tồn tại hay chưa
+//    if (accountService.findByEmail(account.getEmail()) != null) {
+//        // Email đã tồn tại, xử lý lỗi và trả về trang tạo tài khoản
+//        redirectAttributes.addFlashAttribute("emailError", "Email đã tồn tại");
+//        return "redirect:/admin/account/hien-thi";
+//    }
+//
+//    // Hash mật khẩu bằng BCryptPasswordEncoder
+//    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    String hashedPassword = encoder.encode(account.getPassword());
+//    account.setPassword(hashedPassword);
+//
+//    // Thêm tài khoản vào cơ sở dữ liệu
+//    accountService.add(account);
+//
+//    redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
+//    return "redirect:/admin/account/hien-thi";
+//}
 
     @PostMapping("/add1")
 //    @PreAuthorize("hasAuthority('admin')")
-    public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session){
+    public String add1(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("list",accountService.getAll(Pageable.unpaged()));
             List<Roles> listr=rolesService.getAll();
@@ -126,7 +164,7 @@ public String add(@Valid @ModelAttribute("account") Account account, BindingResu
 
         }
         accountService.add(account);
-        session.setAttribute("successMessage", "Thêm thành công");
+       redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
         return "redirect:/admin/address/hien-thi";
 
 

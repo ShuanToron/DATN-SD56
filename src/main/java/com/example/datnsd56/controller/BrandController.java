@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Random;
 
@@ -46,14 +47,18 @@ public class BrandController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("brand", brand);
             return "/dashboard/thuong-hieu/update-thuong-hieu";
 
+        } // Check if color with the same name already exists
+        if (service.existsByName(brand.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
+            return "redirect:/admin/loai-giay/hien-thi";
         }
         service.update(brand);
-        session.setAttribute("successMessage", "sửa thành công");
+        session.setAttribute("Message", "sửa thành công");
         return "redirect:/admin/thuong-hieu/hien-thi";
     }
 
@@ -65,22 +70,7 @@ public class BrandController {
 
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
-        if (result.hasErrors()) {
-            Page<Brand> page = service.getAll(0);
-            model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("list", page);
-            model.addAttribute("currentPage", 0);
-            return "/dashboard/thuong-hieu/update-thuong-hieu";
-        }
-        service.add(brand);
-        session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/thuong-hieu/hien-thi";
-
-    }
-
-    @PostMapping("/add1")
-    public String add1(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Brand> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -88,12 +78,38 @@ public class BrandController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/thuong-hieu/thuong-hieu";
         }
+        // Check if color with the same name already exists
+        if (service.existsByName(brand.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
+            return "redirect:/admin/thuong-hieu/hien-thi";
+        }
+        String code = "Brand" + new Random().nextInt(100000);
+        brand.setCode(code);
+        brand.setStatus(true);
+        service.add(brand);
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
+        return "redirect:/admin/thuong-hieu/hien-thi";
+
+    }
+
+    @PostMapping("/add1")
+    public String add1(@Valid @ModelAttribute("brand") Brand brand, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            Page<Brand> page = service.getAll(0);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("list", page);
+            model.addAttribute("currentPage", 0);
+            return "/dashboard/thuong-hieu/thuong-hieu";
+        }   if (service.existsByName(brand.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Brand with the same name already exists");
+            return "redirect:/admin/san-pham-test/create";
+        }
         String code = "TH" + new Random().nextInt(100000);
         brand.setCode(code);
         brand.setStatus(true);
         service.add(brand);
-        session.setAttribute("successMessage", "Thêm thành công");
-        return "redirect:/admin/thuong-hieu/hien-thi";
+        redirectAttributes.addFlashAttribute("Message",  "Thêm thành công");
+        return "redirect:/admin/san-pham-test/create";
 
     }
     @GetMapping("search")

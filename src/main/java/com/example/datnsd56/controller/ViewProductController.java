@@ -1,11 +1,8 @@
 package com.example.datnsd56.controller;
 
-import com.example.datnsd56.entity.Image;
-import com.example.datnsd56.entity.ProductDetails;
-import com.example.datnsd56.entity.Products;
-import com.example.datnsd56.service.ImageService;
-import com.example.datnsd56.service.ProductDetailsService;
-import com.example.datnsd56.service.ProductsService;
+import com.example.datnsd56.entity.*;
+import com.example.datnsd56.service.*;
+import com.example.datnsd56.service.impl.VoucherSeviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/product")
@@ -31,15 +30,36 @@ public class ViewProductController {
     ProductsService productsService;
     @Autowired
     ImageService imageService;
+    @Autowired
+    private VoucherSeviceImpl voucherSeviceImpl;
+    @Autowired
+    private VoucherUsageService voucherUsageService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+//    private VoucherSeviceImpl voucherService;
     @GetMapping("/trang-chu")
     public String hienthi(){
         return "/website/index/index";
     }
     @GetMapping("/hien-thi")
-    public String productView(Model model) {
+    public String productView(Model model, Principal principal) {
 //List<Products>lists=productsService.getAllPro();
 //        List<ProductDetails> list = productDetailsService.getAllCTSP();
         List<Products> lists = productsService.getAllPros();
+        Optional<Account> account = accountService.finByName(principal.getName());
+
+
+        // Lấy danh sách tất cả voucher
+        List<Voucher> allVouchers = voucherSeviceImpl.getAllls();
+
+        // Lấy danh sách voucher đã lưu cho tài khoản
+        List<VoucherUsage> voucherUsages = voucherUsageService.findVoucherUsagesByAccount(account.get().getId());
+
+        // Loại bỏ những voucher đã lưu khỏi danh sách tất cả voucher
+        allVouchers.removeAll(voucherUsages.stream().map(VoucherUsage::getVoucher).collect(Collectors.toList()));
+
+        model.addAttribute("allVouchers", allVouchers);
         // Sắp xếp sản phẩm theo brand
         Collections.sort(lists, Comparator.comparing(product -> product.getBrandId().getName()));
         model.addAttribute("views", lists);

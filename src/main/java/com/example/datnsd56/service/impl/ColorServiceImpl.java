@@ -69,4 +69,9 @@ public class ColorServiceImpl implements ColorService {
         Page<Color> list=repository.findByName(name,page);
         return list;
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
 }

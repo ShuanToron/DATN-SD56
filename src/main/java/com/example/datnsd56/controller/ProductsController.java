@@ -13,6 +13,7 @@ import com.example.datnsd56.service.SizeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -122,6 +123,7 @@ public class ProductsController {
             model.addAttribute("listColor", colorService.getAllColor());
             model.addAttribute("listSize", sizeService.getAllSZ());
         }
+
         products.setStatus(1);
         productService.addProduct(products, colorList, kichThuocList, files);
         return "redirect:/admin/san-pham-test/create";
@@ -191,6 +193,7 @@ public class ProductsController {
             model.addAttribute("listColor", colorService.getAllColor());
             model.addAttribute("listSize", sizeService.getAllSZ());
         }
+
         productService.updateProduct(products, files);
         return "redirect:/admin/chi-tiet-san-pham/hien-thi";
     }
@@ -202,5 +205,14 @@ public class ProductsController {
         productService.updateProductDetail(id, soLuong, donGia);
         return "redirect:/admin/san-pham-test/create";
     }
+//    @GetMapping("/search")
+////    @PreAuthorize("hasAuthority('admin')")
+//    public String search(@RequestParam("name") String name,@RequestParam(value = "page", defaultValue = "0") Integer pageNo, Model model) {
+//        model.addAttribute("product", new Products());
+//        Page<Products> page1 = productService.findByName(name);
+////        model.addAttribute("totalPages", page1.getTotalPages());
+////        model.addAttribute("list", page1);
+//        return "/dashboard/roles/roles";
+//    }
 
 }

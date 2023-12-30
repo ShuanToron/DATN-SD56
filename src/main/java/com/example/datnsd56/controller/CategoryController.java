@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Random;
 
@@ -45,14 +46,18 @@ public class CategoryController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Integer id, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("category", category);
             return "/dashboard/loai-giay/update-loai-giay";
 
+        }  if (service.existsByName(category.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
+            return "redirect:/admin/loai-giay/hien-thi";
+
         }
         service.update(category);
-        session.setAttribute("successMessage", "sửa thành công");
+        redirectAttributes.addFlashAttribute("Message", "sửa thành công");
         return "redirect:/admin/loai-giay/hien-thi";
     }
 
@@ -63,7 +68,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Category> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
@@ -71,28 +76,37 @@ public class CategoryController {
             model.addAttribute("currentPage", 0);
             return "/dashboard/loai-giay/loai-giay";
         }
+        // Check if color with the same name already exists
+        if (service.existsByName(category.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
+            return "redirect:/admin/loai-giay/hien-thi";
+
+        }
         String code = "CL" + new Random().nextInt(100000);
         category.setCode(code);
         category.setStatus(true);
         service.add(category);
-        session.setAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/loai-giay/hien-thi";
 
     }
     @PostMapping("/add1")
-    public String addd(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session) {
+    public String addd(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Page<Category> page = service.getAll(0);
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("list", page);
             model.addAttribute("currentPage", 0);
             return "/dashboard/loai-giay/loai-giay";
+        }  if (service.existsByName(category.getName())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Category with the same name already exists");
+            return "redirect:/admin/san-pham-test/create";
         }
         String code = "CL" + new Random().nextInt(100000);
         category.setCode(code);
         category.setStatus(true);
         service.add(category);
-        session.setAttribute("successMessage", "Thêm thành công");
+        redirectAttributes.addFlashAttribute("Message", "Thêm thành công");
         return "redirect:/admin/san-pham-test/create";
 
     }

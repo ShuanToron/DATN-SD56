@@ -18,4 +18,6 @@ public interface BrandService {
 
     void update(Brand brand);
     Page<Brand> findByName(String name);
+    boolean existsByName(String name);
+
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.naming.AuthenticationException;
 import java.util.List;
@@ -74,27 +75,57 @@ public class LoginController  {
 //        session.setAttribute("successMessage", "Thêm thành công");
 //        return "redirect:/product/hien-thi";
 //    }
+//@PostMapping("/add")
+//public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session) {
+//    if (result.hasErrors()) {
+//        return "auth_login/auth-register";
+//    }
+//
+//    // Hash the password using BCryptPasswordEncoder
+//    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    String hashedPassword = encoder.encode(account.getPassword());
+//    account.setPassword(hashedPassword);
+//
+//    // Set the role ID to 4 by default
+//    Roles userRole = rolesService.findbyname("user");
+////    userRole.setId(userRole);
+//    account.setRole_id(userRole);
+//
+//    account.setStatuss(true);
+//    accountService.add(account);
+//
+//
+//    session.setAttribute("successMessage", "Thêm thành công");
+//    return "redirect:/login/custom-login";
+//}
 @PostMapping("/add")
-public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, HttpSession session) {
+public String add(@Valid @ModelAttribute("account") Account account, BindingResult result, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
     if (result.hasErrors()) {
+        model.addAttribute("account",account);
         return "auth_login/auth-register";
     }
 
-    // Hash the password using BCryptPasswordEncoder
+    //   Kiểm tra xem email đã tồn tại hay chưa
+    if (accountService.findByEmail(account.getEmail()) != null) {
+        // Email đã tồn tại, xử lý lỗi và trả về trang tạo tài khoản
+        redirectAttributes.addFlashAttribute("errorMessage", "Email đã tồn tại");
+
+        return "redirect:/login/register";
+    }
+
+    // Hash mật khẩu bằng BCryptPasswordEncoder
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String hashedPassword = encoder.encode(account.getPassword());
     account.setPassword(hashedPassword);
 
-    // Set the role ID to 4 by default
-    Roles userRole = rolesService.findbyname("user");
-//    userRole.setId(userRole);
+    // Set role ID mặc định là 4 (user)
+    Roles userRole = rolesService.findbyname1("user");
     account.setRole_id(userRole);
 
     account.setStatuss(true);
     accountService.add(account);
 
-
-    session.setAttribute("successMessage", "Thêm thành công");
+    session.setAttribute("Message", "Thêm thành công");
     return "redirect:/login/custom-login";
 }
 

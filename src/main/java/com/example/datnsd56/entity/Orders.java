@@ -1,23 +1,14 @@
 
 package com.example.datnsd56.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Orderss")
@@ -73,14 +64,26 @@ public class Orders {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
     private List<OrderItem> orderItems;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
-    private Voucher voucherId;
+    private Voucher voucher;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customers customerId;
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.DETACH)
+    private Set<Transactions> transactions;
 
+    public BigDecimal getTotalWithoutDiscount() {
+        BigDecimal totalWithoutDiscount = BigDecimal.ZERO;
+
+        // Tính tổng giá trị dựa trên các OrderItem trong đơn hàng
+        for (OrderItem orderItem : orderItems) {
+            totalWithoutDiscount = totalWithoutDiscount.add(orderItem.getPrice());
+        }
+
+        return totalWithoutDiscount;
+    }
     public String getStatusName(){
         if (this.orderStatus == 10){
             return "Chờ xác nhận";

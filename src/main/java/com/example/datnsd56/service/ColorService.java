@@ -17,4 +17,5 @@ List<Color> getColorId(Integer id);
 
     void update(Color color);
     Page<Color> findByName(String name);
+    boolean existsByName(String name);
 }

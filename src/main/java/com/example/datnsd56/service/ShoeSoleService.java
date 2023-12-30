@@ -17,4 +17,5 @@ public interface ShoeSoleService {
 
     void update(ShoeSole shoeSole);
     Page<ShoeSole> findByName(String name);
+    boolean existsByName(String name);
 }

@@ -13,4 +13,5 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
     @Query(value = "select * from Material where name = ?1 ",
             nativeQuery = true)
     Page<Material> findByName(String name, Pageable pageable);
+    boolean existsByName(String name);
 }

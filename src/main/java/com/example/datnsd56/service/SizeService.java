@@ -21,5 +21,6 @@ public interface SizeService {
 
     void update(Size size);
     Page<Size> findByName(String name);
+    boolean existsByName(String name);
 
 }

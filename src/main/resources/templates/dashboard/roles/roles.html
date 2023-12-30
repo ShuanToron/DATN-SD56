@@ -197,7 +197,7 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a th:href="@{/admin/account/hien-thi}">
+                    <a th:href="@{/product/hien-thi}">
                         <img alt="image" th:src="@{/website/img/logo1.png}"
                              class="header-logo"/> <span
                             class="logo-name">SneakerBeer</span>
@@ -244,7 +244,23 @@
                             <li><a th:href="@{/admin/roles/hien-thi}">Chức vụ</a></li>
                             <li><a th:href="@{/admin/nhan-vien/hien-thi}">Nhân viên</a></li>
                             <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>
-                            <li><a th:href="@{/admin/account/hien-thi}">Account</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                data-feather="map"></i><span>Voucher</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/voucher/hien-thi}">Danh sách</a></li>
+                            <li><a th:href="@{/admin/voucher/lich-su-dung-voucher}">Lịch Sử Dùng Voucher</a></li>
+                            <li><a th:href="@{/admin/voucher/view-add}">Thêm mới</a></li>
+                            <!--                            <li><a th:href="@{/admin/khach-hang/hien-thi}">Khách hàng</a></li>-->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                data-feather="map"></i><span>Thống Kê</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/thong-ke/hien-thi}">Thống Kê</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -260,6 +276,11 @@
                         </div>
                         <form action="/admin/roles/add" method="post" th:object="${roles}"
                               onsubmit="return  confirm('Bạn có thêm không?')">
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div><div th:if="${Message}" class="alert alert-success">
+                            <p th:text="${Message}"></p>
+                        </div>
                             <div class="card-body">
 <!--                                <div class="form-group">-->
 <!--                                    <label>Mã chức vụ</label>-->
@@ -270,25 +291,25 @@
 <!--                                </div>-->
                                 <div class="form-group">
                                     <label>Tên chức vụ</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên chất liệu"
+                                    <input type="text" class="form-control" placeholder="Nhập tên chức vự"
                                            th:field="*{name}">
                                     <span th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 10px"
                                           th:errors="*{name}"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="d-block">Trạng thái</label>
-                                    <div class="form-check">
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"
-                                               checked="checked">
-                                        <label class="form-check-label">
-                                            Hoạt động
-                                        </label>
-                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="0">
-                                        <label class="form-check-label">
-                                            Không hoạt động
-                                        </label>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="d-block">Trạng thái</label>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input type="radio" name="exampleRadios" th:field="*{status}" value="1"-->
+<!--                                               checked="checked">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Hoạt động-->
+<!--                                        </label>-->
+<!--                                        <input type="radio" checked="checked" name="exampleRadios" th:field="*{status}" value="0">-->
+<!--                                        <label class="form-check-label">-->
+<!--                                            Không hoạt động-->
+<!--                                        </label>    -->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <a th:href="@{/admin/roles/add}">
                                         <button class="btn btn-primary mr-1" type="submit">Thêm</button>
@@ -305,11 +326,14 @@
                         <div class="card-header">
                             <h4>Danh sách chức vụ</h4>
                             <div class="card-header-form">
-                                <form>
+                                <form action="/admin/roles/search " method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <input name="name" type="text" class="form-control" placeholder="Search">
+                                        <div lass="input-group-btn">
+                                            <a href="/admin/roles/search/{name}">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i></button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
