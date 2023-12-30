@@ -33,7 +33,7 @@ public class OrderItem {
     private Integer quantity;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders orders;

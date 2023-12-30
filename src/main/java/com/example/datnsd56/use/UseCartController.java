@@ -109,7 +109,7 @@ public class UseCartController {
     }
 
     @RequestMapping(value = "/user/update-cart", method = RequestMethod.POST, params = "action=update")
-//    @PostMapping("/update-cart")
+//    @PostMapping("/update-cart/{id}")
     public String updateCart(@RequestParam("id") Integer id,
                              @RequestParam("quantity") Integer quantity,
                              Principal principal,

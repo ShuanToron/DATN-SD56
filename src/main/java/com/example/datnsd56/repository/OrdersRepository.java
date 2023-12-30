@@ -1,6 +1,7 @@
 
 package com.example.datnsd56.repository;
 
+import com.example.datnsd56.entity.OrderItem;
 import com.example.datnsd56.entity.Orders;
 import com.example.datnsd56.entity.Voucher;
 import com.example.datnsd56.responsi.OrdersCustomer;
@@ -26,12 +27,14 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
     public Page<OrdersCustomer> hienThiPageHD(Pageable pageable);
 
-    List<Orders> findAllByOrderStatus(String orderStatus);
+    List<Orders> findAllByOrderStatus(Integer orderStatus);
 
-    Page<Orders> findAllByOrderStatus(Pageable pageable,String orderStatus);
+
+
+    Page<Orders> findAllByOrderStatus(Pageable pageable,Integer orderStatus);
 
     @Query(value = "select * from Orderss b where b.order_status = ?1 and b.account_id= ?2",nativeQuery = true)
-    List<Orders> getOrdes(@Param("orderStatus") String orderStatus,
+    List<Orders> getOrdes(@Param("orderStatus") Integer orderStatus,
                           @Param("accountId") Integer accountId);
 //    Orders applyVoucherToOrder(Orders order, Voucher voucher);
 

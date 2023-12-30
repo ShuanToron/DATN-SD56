@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>SneakerBeer</title>
@@ -164,17 +164,20 @@ https://templatemo.com/tm-559-zay-shop
                         <td class="" th:text="${sl.price}"></td>
                         <td class="" th:text="${sl.price * sl.quantity}"></td>
                         <td>
+                            <button class="btn btn-sm btn-primary">
                             <a th:href="@{'/user/delete/'+ ${sl.productDetails.id}}"
                                style="text-decoration: none; padding-right: 20px">
 
                                 <i style="color: black" class="fas fa-trash-alt" title="xóa sản phẩm"></i>
 
-                            </a>
-                            <a style="text-decoration: none; font-weight:bolder;color: black;"
-                               th:href="@{'/product/detail/chi-tiet/' +${sl.productDetails.productId.id}}">
+                            </a></button>
+<!--                            <a style="text-decoration: none; font-weight:bolder;color: black;"-->
+<!--                               th:href="@{'/user/update-cart/' +${sl.productDetails.productId.id}}">-->
 
-                                <i class="fas fa-pencil-alt"   title="thêm màu và size"></i>
-                            </a>
+<!--                                <i class="fas fa-pencil-alt"   title="thêm màu và size"></i>-->
+<!--                            </a>-->
+                            <button class="btn btn-sm btn-primary"
+                                    type="submit" name="action" value="update" title="Update"> <i class="fas fa-pencil-alt"   title="thêm màu và size"></i></button>
                             <!--                                <div id="note" class="hidden">thêm màu và size</div>-->
                         </td>
                     </form>

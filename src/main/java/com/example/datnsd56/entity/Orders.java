@@ -55,7 +55,7 @@ public class Orders {
     private String saleMethod;
 
     @Column(name = "order_status")
-    private String orderStatus;
+    private Integer orderStatus;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
@@ -85,15 +85,15 @@ public class Orders {
         return totalWithoutDiscount;
     }
     public String getStatusName(){
-        if (this.orderStatus == "10"){
+        if (this.orderStatus == 10){
             return "Chờ xác nhận";
-        } else if (this.orderStatus == "3"){
+        } else if (this.orderStatus == 3){
             return "Đã xác nhận";
-        } else if (this.orderStatus == "2"){
+        } else if (this.orderStatus == 2){
             return "Đang giao hàng";
-        } else if (this.orderStatus == "1"){
+        } else if (this.orderStatus == 1){
             return "Đã hoàn thành";
-        } else if (this.orderStatus == "0"){
+        } else if (this.orderStatus == 0){
             return "Đã huỷ";
         } else {
             return null;
