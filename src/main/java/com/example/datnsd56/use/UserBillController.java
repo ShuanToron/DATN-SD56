@@ -12,10 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -62,6 +59,17 @@ public class UserBillController {
         return "website/index/danhsachdonhang";
     }
 
+    @GetMapping("/order-detail/{id}")
+    public String getOrderDetail(@PathVariable Integer id, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Orders bill = ordersService.getOneBill(id);
+        model.addAttribute("order", bill);
+        return "website/index/danhsachdonhangdetail";
+    }
+
+
     @PostMapping("/add-order")
     public String createOrder(Principal principal,
                               RedirectAttributes attributes,
@@ -77,6 +85,17 @@ public class UserBillController {
         ordersService.planceOrder(cart, address);
         session.removeAttribute("totalItems");
         attributes.addFlashAttribute("success", "Đặt hàng thành công!");
+        return "redirect:/user/orders";
+    }
+
+    @GetMapping("/cancel-order/{id}")
+    public String cancelOrder(@PathVariable Integer id, RedirectAttributes attributes,Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Optional<Account> account = accountService.finByName(principal.getName());
+        ordersService.cancelOrder(id);
+        attributes.addFlashAttribute("success", "Huỷ đơn hàng thành công!");
         return "redirect:/user/orders";
     }
 

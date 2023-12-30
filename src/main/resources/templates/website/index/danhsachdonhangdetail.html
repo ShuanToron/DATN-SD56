@@ -185,7 +185,7 @@
                         </button>
                     </div>
                 </form>
-                <a th:href="@{/user/cart}">
+                <a th:href="@{/cart/view-cart}">
                     <button type="button" class="btn btn-sm p-0">
                         <i class="fa fa-cart-plus" style="margin-left: 20px"></i>
                     </button>
@@ -244,34 +244,6 @@
         </nav>
     </div>
 </div>
-<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert"
-     style="margin: 5px">
-    <span th:text="${success}"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<!--<div class="row px-xl-5">-->
-<!--    <div class="col-lg-12 mb-5">-->
-<!--        <ul class="nav nav-tabs bg-secondary text-center">-->
-<!--            <li class="nav-item" style="width: 20%">-->
-<!--                <a class="nav-link text-dark" title="Tất cả" href="#" style="padding: 20px">Tất cả</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item" style="width: 20%">-->
-<!--                <a class="nav-link text-dark" title="Chờ xác nhận" href="#" style="padding: 20px">Chờ xác nhận</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item" style="width: 20%">-->
-<!--                <a class="nav-link text-dark" title="Đang giao hàng" href="#" style="padding: 20px">Đang giao hàng</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item" style="width: 20%">-->
-<!--                <a class="nav-link text-dark" title="Đã giao thành công" href="#" style="padding: 20px">Đã giao thành công</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item" style="width: 20%">-->
-<!--                <a class="nav-link text-dark" title="Đã huỷ" href="#" style="padding: 20px">Đã huỷ</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
 <!-- Page Header End -->
 <table id="orderTable">
     <caption style="text-align: left; padding: 10px 20px; text-align: center">
@@ -280,29 +252,45 @@
 
     <thead>
     <tr>
-        <th>Đơn hàng</th>
-        <th>Ngày đặt hàng</th>
-        <th>Tổng tiền</th>
-        <th>Trạng thái đơn hàng</th>
-        <th>Thao tác</th>
+        <th scope="col">Ảnh</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Màu sắc</th>
+        <th scope="col">Size</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Giá</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Thành tiền</th>
     </tr>
     </thead>
     <tbody class="align-middle">
-    <tr th:each="order : ${orders}">
-        <td class="align-middle" th:text="${order.id}"></td>
-        <td class="align-middle"
-            th:text="${(order.fullname)}"></td>
-        <td class="align-middle"
-            th:text="'₫' + ${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
-        <td class="align-middle"
-            th:text="${order.getStatusName()}">
+    <tr th:each="sl : ${order.getOrderItems()}">
+        <input
+                type="hidden"
+                value="Activewear" th:value="${sl.productDetails.id}" th:name="id"
+                id="productId"
+                name="id"
+        />
+        <td>
+            <img
+                    th:if="${sl.productDetails.productId.images != null and not #lists.isEmpty(sl.productDetails.productId.images)}"
+                    th:src="@{'/user/display?id=' + ${sl.productDetails.productId.id} + '&imageId=' + ${sl.productDetails.productId.images[0].id}}"
+                    alt="Sản phẩm 1"
+                    style="max-width: 80px; max-height: 80px"
+            />
         </td>
+
+        <td th:text="${sl.productDetails.productId.name}"></td>
+        <td th:text="${sl.productDetails.colorId.name}"></td>
+        <td th:text="${sl.productDetails.sizeId.name}"></td>
+        <td th:text="${sl.productDetails.productId.brandId.name}"></td>
+        <td
+            th:text="'₫' + ${#numbers.formatDecimal(sl.price, 0, 'COMMA', 0, 'POINT')}"></td>
         <td class="align-middle">
-            <a class="btn btn-sm btn-primary"
-               th:href="@{'/user/order-detail/' + ${order.id}}">Xem chi tiết</a>
-            <a class="btn btn-sm btn-danger"
-               th:href="@{'/user/cancel-order/' + ${order.id}}" th:if="${order.orderStatus == 10}" >Huỷ</a>
+            <div class="input-group quantity mx-auto" style="width: 100px;">
+                <input type="text" readonly class="form-control form-control-sm bg-secondary text-center" name="quantity" th:value="${sl.quantity}">
+            </div>
         </td>
+        <td class="align-middle" th:text="${sl.price * sl.quantity}"></td>
     </tr>
     </tbody>
     </thead>
@@ -310,6 +298,15 @@
     <!-- Các dòng dữ liệu sẽ được thêm vào đây bằng JavaScript -->
     </tbody>
 </table>
+<div class="text-end">
+
+    Tổng số tiền
+
+    <label for="" style="color: red">
+        : <span id="" th:text="${order.total} + '' +'Đ'"></span>
+    </label>
+
+</div>
 <!-- Store End -->
 
 <!-- Footer Start -->

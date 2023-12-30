@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
 
 
 <!-- export-table.html  21 Nov 2019 03:55:25 GMT -->
@@ -226,7 +227,7 @@
                                 data-feather="layout"></i><span>Hoá đơn</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" th:href="@{/admin/ban-hang}">Bán hàng</a></li>
-                            <li><a class="nav-link" th:href="@{/admin/hoa-don}">Hoá đơn</a></li>
+                            <li><a class="nav-link" th:href="@{/admin/hoa-don/hien-thi}">Hoá đơn</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -260,28 +261,86 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
-                                            <thead>
+                                        <table class="table text-center">
+                                            <thead class="thead-dark">
                                             <tr>
-                                                <th>Khách Hàng</th>
-                                                <th>SDT</th>
-                                                <th>Nhân Viên  </th>
-                                                <th>Trang Thái</th>
-                                                <th>Tổng Tiền </th>
-                                                <th>Ngày </th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Khách Hàng</th>
+                                                <th scope="col">Ngày đặt</th>
+                                                <th scope="col">Tổng</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th scope="col">Thao tác</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-
-                                           <tr>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                           </tr>
+                                            <tr th:each="bill : ${list}">
+                                                <td th:text="${bill.id}"></td>
+                                                <td th:text="${bill.acountId.name}"></td>
+                                                <td th:text="${#dates.format(bill.createDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+                                                <td th:text="'₫' + ${#numbers.formatDecimal(bill.total, 0, 'COMMA', 0, 'POINT')}"></td>
+                                                <td th:text="${bill.getStatusName()}">
+                                                </td>
+                                                <td class="d-flex justify-content-center">
+                                                    <div style="margin-right: 10px">
+                                                        <a th:href="@{'/admin/bill/detail/' + ${bill.id}}">
+                                                            <button type="button" class="btn btn-info">
+                                                                <i class="fa-solid fa-eye mr-1"></i>Chi tiết
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div style="margin-right: 10px">
+                                                        <a th:href="@{'/admin/bill/confirm-bill/' + ${bill.id}}" th:if="${bill.status == 10}">
+                                                            <button type="button" class="btn btn-info">
+                                                                <i class="fa-solid fa-address-book mr-1"></i>Xác nhận
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div style="margin-right: 10px" th:if="${bill.status == 3}">
+                                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                                data-target="#shippingBill">
+                                                            <i class="fa-solid fa-pen mr-1"></i>Giao hàng
+                                                        </button>
+                                                        <!--Confirm Modal -->
+                                                        <div class="modal fade" id="shippingBill" tabindex="-1" role="dialog" aria-labelledby="shippingBill" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="shippingBillLabel">Xác nhận</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+<!--                                                                    <div class="modal-body">-->
+<!--                                                                        <form id="shippingForm" th:action="@{/nova/bill/shipping-bill}" method="post">-->
+<!--                                                                            <div class="form-group">-->
+<!--                                                                                <input type="text" hidden="true" name="id" th:value="${bill.id}">-->
+<!--                                                                                <label for="shippingFee">Nhập phí Ship cho đơn hàng</label>-->
+<!--                                                                                <input type="number" class="form-control" id="shippingFee" name="shippingFee" placeholder="Nhập phí ship">-->
+<!--                                                                            </div>-->
+<!--                                                                            <button type="submit" class="btn btn-primary">Xác nhận</button>-->
+<!--                                                                        </form>-->
+<!--                                                                    </div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--End Modal-->
+                                                    </div>
+                                                    <div style="margin-right: 10px">
+                                                        <a th:href="@{'/admin/hoa-don/complete-bill/' + ${bill.id}}" th:if="${bill.status == 2}">
+                                                            <button type="button" class="btn btn-info">
+                                                                <i class="fa-solid fa-circle mr-1"></i>Hoàn thành
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div style="margin-right: 10px">
+                                                        <a th:href="@{'/admin/hoa-don/cancel-bill/' + ${bill.id}}" th:if="${bill.status == 10 || bill.status == 3}">
+                                                            <button type="button" class="btn btn-info">
+                                                                <i class="fa-solid fa-times mr-1"></i>Huỷ
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
