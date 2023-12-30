@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -119,11 +122,20 @@ public class VoucherController {
         redirectAttributes.addFlashAttribute("successMessage", "Voucher deleted successfully!");
         return "redirect:/admin/voucher";
     }
-    @GetMapping("/lich-su-dung-voucher")
-    public String lSVoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
-        Page<VoucherUsageHistory> voucherUsageHistories = voucherUsageHistoryService.getall(PageRequest.of(page,5));
+//    @GetMapping("/lich-su-dung-voucher")
+//    public String lSVoucher(Model model,@RequestParam(defaultValue = "0") Integer page){
+//        Page<VoucherUsageHistory> voucherUsageHistories = voucherUsageHistoryService.getall(PageRequest.of(page,5));
+//
+//model.addAttribute("history",voucherUsageHistories);
+//        return "dashboard/voucher/lich-su-dung-voucher";
+//
+//    }
 
-model.addAttribute("history",voucherUsageHistories);
+    @GetMapping("/lich-su-dung-voucher")
+    public String lSVoucher1(Model model){
+        List<VoucherUsageHistory> voucherUsageHistories = voucherUsageHistoryService.findAllOrderByUsedDateDesc();
+
+        model.addAttribute("history",voucherUsageHistories);
         return "dashboard/voucher/lich-su-dung-voucher";
 
     }
@@ -133,5 +145,19 @@ model.addAttribute("history",voucherUsageHistories);
         return "/website/index/user-voucher.html";
 
     }
+    @GetMapping("/voucher-history")
+    public String getVoucherHistory(
+        @RequestParam(name = "startDate", required = false) LocalDate startDate,
+        @RequestParam(name = "endDate", required = false) LocalDate endDate,
+        @RequestParam(name = "searchInput", required = false) String searchInput,
+        @PageableDefault(size = 10, sort = "usedDate", direction = Sort.Direction.DESC) Pageable pageable,
+        Model model) {
+
+        Page<VoucherUsageHistory> filteredHistory = voucherUsageHistoryService.filterAndSearch(startDate, endDate, searchInput, pageable);
+        model.addAttribute("history", filteredHistory);
+        return "dashboard/voucher/lich-su-dung-voucher";
+    }
+
+
 
 }

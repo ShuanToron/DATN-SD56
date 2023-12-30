@@ -24,4 +24,5 @@ public interface VoucherUsageHistoryRepository extends JpaRepository<VoucherUsag
 List<VoucherUsageHistory> findAllOrderByUsedDateDesc();
     @Query(value = "SELECT * FROM VoucherUsageHistory  ORDER BY used_date DESC",nativeQuery = true)
 Page<VoucherUsageHistory> getall(Pageable pageable);
+Page<VoucherUsageHistory> findAll(Pageable pageable);
 }
